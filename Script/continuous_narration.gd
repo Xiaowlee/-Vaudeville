@@ -81,7 +81,7 @@ func _show_beat(kind: State) -> void:
 func _update_status() -> void:
 	if state == State.COMPLETE: $Status.text = story.completed_message
 	elif not autostart_voice: $Status.text = unavailable_message
-	elif not voice.listening: $Status.text = unavailable_message
+	elif not voice.listening: $Status.text = voice.player_error if not voice.player_error.is_empty() else unavailable_message
 	elif not voice.worker_ready: $Status.text = starting_message
 	elif state == State.PROMPT: $Status.text = prompt_message
 	elif state == State.READING: $Status.text = reading_message

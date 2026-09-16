@@ -1,4 +1,5 @@
 extends Node
+const PACKAGED_HELPER = preload("res://prototype_1/windows_speech_helper.tres")
 ## Windows-only local phrase recognition, using the installed OS recognizer. No downloads.
 signal transcript_received(text: String)
 signal recognition_rejected(text: String)
@@ -15,29 +16,49 @@ var worker_ready := false
 var worker_io: Dictionary = {}
 var worker_error := ""
 var last_error := ""
+var player_error := ""
+const ERROR_MESSAGES = {
+	"helper_missing": "Speech files are missing. Please download the updated game.",
+	"recognizer_missing": "Install Windows English (United States) speech recognition, then retry.",
+	"microphone_unavailable": "Check Windows microphone access and default input, then retry.",
+	"speech_unavailable": "Windows speech support could not start. Check your Windows speech setup.",
+	"platform": "Voice recognition requires Windows.",
+	"powershell_missing": "Windows PowerShell is unavailable. Speech cannot start.",
+	"storage": "Speech setup could not be saved. Check your user-folder permissions.",
+	"worker": "Speech could not start. Retry microphone; if it persists, share the game log."
+}
 
 func start_listening(target_phrase: String, rejected_phrases: PackedStringArray = [], continuous_mode := false) -> void:
 	stop_listening()
 	last_error = ""
+	player_error = ""
 	worker_error = ""
 	if not enabled or OS.get_name() != "Windows":
-		_fail("SpeechMonitor is disabled" if not enabled else "Speech recognition requires Windows")
+		_fail("SpeechMonitor is disabled" if not enabled else "Speech recognition requires Windows", "platform" if OS.get_name() != "Windows" else "worker")
+		return
+	# A direct resource dependency survives exports even with an empty include filter.
+	var helper_text: String = PACKAGED_HELPER.get_meta("source", "")
+	if helper_text.strip_edges().is_empty():
+		_fail("Packaged speech helper is empty or unreadable", "helper_missing")
 		return
 	result_path = "user://speech_%s_%s.jsonl" % [OS.get_process_id(), Time.get_ticks_usec()]
 	var file := FileAccess.open(result_path, FileAccess.WRITE)
 	if file == null:
-		_fail("Cannot create speech event file: " + str(FileAccess.get_open_error()))
+		_fail("Cannot create speech event file: " + str(FileAccess.get_open_error()), "storage")
 		return
 	file.close()
 	# Copy packaged script to user data so this also works after export.
 	var helper := "user://windows_speech.ps1"
 	var helper_file := FileAccess.open(helper, FileAccess.WRITE)
 	if helper_file == null:
-		_fail("Cannot prepare speech helper: " + str(FileAccess.get_open_error()))
+		_fail("Cannot prepare speech helper: " + str(FileAccess.get_open_error()), "storage")
 		return
-	helper_file.store_string(FileAccess.get_file_as_string("res://prototype_1/windows_speech.ps1"))
+	helper_file.store_string(helper_text)
 	helper_file.close()
 	var powershell := OS.get_environment("SystemRoot").path_join("System32/WindowsPowerShell/v1.0/powershell.exe")
+	if not FileAccess.file_exists(powershell):
+		_fail("Windows PowerShell executable not found", "powershell_missing")
+		return
 	var arguments := PackedStringArray(["-NoProfile", "-NonInteractive", "-WindowStyle", "Hidden", "-ExecutionPolicy", "Bypass", "-File", ProjectSettings.globalize_path(helper), "-OutputPath", ProjectSettings.globalize_path(result_path), "-GameProcessId", str(OS.get_process_id()), "-TargetPhrase", target_phrase])
 	# Windows drops a trailing empty argument. Omit this optional parameter entirely.
 	if not rejected_phrases.is_empty():
@@ -83,7 +104,7 @@ func _process(delta: float) -> void:
 			worker_ready = true
 			status_changed.emit("Mic listening")
 		elif event.get("status") in ["unavailable", "stopped"]:
-			_fail(str(event.get("detail", "Speech worker stopped")))
+			_fail(str(event.get("detail", "Speech worker stopped")), str(event.get("code", "worker")))
 			return
 	if not worker_ready and startup_time > 12.0:
 		_fail("Speech worker did not become ready within 12 seconds")
@@ -116,8 +137,9 @@ func _read_worker_output() -> void:
 		print("[Speech worker ", pipe_name, "] ", output.strip_edges())
 		if pipe_name == "stderr": worker_error += output
 
-func _fail(reason: String) -> void:
+func _fail(reason: String, code := "worker") -> void:
 	last_error = reason
+	player_error = ERROR_MESSAGES.get(code, ERROR_MESSAGES.worker)
 	push_warning("[Speech error] " + reason)
 	stop_listening()
-	status_changed.emit("Voice unavailable · see Output")
+	status_changed.emit(player_error)

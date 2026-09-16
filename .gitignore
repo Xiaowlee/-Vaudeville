@@ -20,3 +20,6 @@ addons/.godot_ai_update/
 .DS_Store
 Thumbs.db
 *.tsbuildinfo
+
+# Local exported playtest builds
+Builds/
