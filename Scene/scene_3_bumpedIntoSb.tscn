@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://13txmliwqlj0"]
+
+[ext_resource type="PackedScene" uid="uid://cnv11mijwe33l" path="res://Scene/scene_2_key.tscn" id="1_2d4r1"]
+[ext_resource type="Script" uid="uid://br8qdhvqo78v7" path="res://Script/sentence_definition.gd" id="2_q03nk"]
+[ext_resource type="Texture2D" uid="uid://bs5f3ykqyd7rm" path="res://Visual Asset/bump.png" id="3_rdoyn"]
+
+[sub_resource type="Resource" id="Resource_q03nk"]
+script = ExtResource("2_q03nk")
+sentence_text = "She walks on the street, before bumping into someone."
+correct_word = "bumping"
+missing_word_index = 6
+distractors = PackedStringArray("book", "phone")
+sentence_id = &"scene_2_key"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rdoyn"]
+atlas = ExtResource("3_rdoyn")
+region = Rect2(0, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e10v5"]
+atlas = ExtResource("3_rdoyn")
+region = Rect2(1920, 0, 1920, 1080)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_708t6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rdoyn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e10v5")
+}],
+"loop": 1,
+"name": &"Bumped",
+"speed": 1.0
+}]
+
+[node name="KeyDoor" unique_id=1763385535 instance=ExtResource("1_2d4r1")]
+sentence_definition = SubResource("Resource_q03nk")
+
+[node name="Room" parent="Margin/Layout" parent_id_path=PackedInt32Array(979380939) index="0" unique_id=664515638]
+action_animation = &"Bumped"
+
+[node name="AnimatedSprite2D" parent="Margin/Layout/Room" index="0" unique_id=2119590199]
+sprite_frames = SubResource("SpriteFrames_708t6")
+animation = &"Bumped"
+autoplay = "Bumped"
+
+[node name="Key" parent="Margin/Layout/Room" index="1" unique_id=1977146762]
+visible = false
+
+[node name="Sentence" parent="Margin/Layout/Story" parent_id_path=PackedInt32Array(1779118976) index="0" unique_id=807243755]
+definition = SubResource("Resource_q03nk")
+
+[node name="PrefixLabel" parent="Margin/Layout/Story/Sentence/HBoxContainer" parent_id_path=PackedInt32Array(807243755, 346061109) index="0" unique_id=1039613551]
+text = "She walks on the street, before"
+
+[node name="SuffixLabel" parent="Margin/Layout/Story/Sentence/HBoxContainer" parent_id_path=PackedInt32Array(807243755, 346061109) index="2" unique_id=929395264]
+text = "into someone."
+
+[node name="On" parent="Margin/Layout/Story" parent_id_path=PackedInt32Array(1779118976) index="1" unique_id=835511553]
+offset_left = -171.0
+offset_top = -164.45001
+offset_right = -9.0
+offset_bottom = -106.45001
+text = "bumping"
+
+[node name="Off" parent="Margin/Layout/Story" parent_id_path=PackedInt32Array(1779118976) index="2" unique_id=2125069934]
+offset_left = 301.0
+offset_top = -75.45001
+offset_right = 411.0
+offset_bottom = -17.450012
+
+[node name="Away" parent="Margin/Layout/Story" parent_id_path=PackedInt32Array(1779118976) index="3" unique_id=933517709]
+offset_left = 625.0
+offset_top = -131.45001
+offset_right = 755.0
+offset_bottom = -73.45001
+
+[editable path="Margin/Layout/Story/Sentence"]

@@ -1,0 +1,22 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Local verification artifacts and tool backups
+.task-backups/
+.task-checks/
+addons/.godot_ai_update/
+# Generated web output and dependencies
+**/node_modules/
+**/.next/
+# Local settings and HTTPS private material
+.env
+.env.*
+!.env.example
+**/.certs/
+*.pfx
+*.p12
+# OS/editor temporary files
+.DS_Store
+Thumbs.db
+*.tsbuildinfo

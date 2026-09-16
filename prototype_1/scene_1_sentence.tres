@@ -1,0 +1,10 @@
+[gd_resource type="Resource" format=3]
+[ext_resource type="Script" path="res://Script/sentence_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+sentence_text = "She picks up the headphones and puts them on."
+correct_word = "headphones"
+missing_word_index = 4
+distractors = PackedStringArray("book", "phone")
+sentence_id = &"scene_1_headphones"
+blank_text = "__________"

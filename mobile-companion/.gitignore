@@ -1,0 +1,9 @@
+node_modules
+.next
+out
+dist
+.certs
+.DS_Store
+.env*.local
+relay/node_modules
+relay/.certs

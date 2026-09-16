@@ -1,0 +1,79 @@
+[gd_resource type="Resource" format=3 uid="uid://4n7kw6r4uu0d"]
+
+[ext_resource type="Script" uid="uid://dqff0s4rrdoiv" path="res://Script/narration_moment.gd" id="Moment"]
+[ext_resource type="Script" uid="uid://c2tb75x41k71y" path="res://Script/narration_story.gd" id="Story"]
+
+[sub_resource type="Resource" id="Moment01"]
+script = ExtResource("Moment")
+narration_text = "She walks through a street filled with people.
+
+Someone looks at her, and she smiles back automatically.
+
+She answers when people speak to her. She laughs when she is supposed to laugh. She keeps walking as though nothing is wrong.
+
+Her life has become a long series of small performances.
+
+Surrounded by people, her mind slowly wanders away from her body.
+
+She looks down at the pavement.
+
+Her shadow is still there.
+
+But it is no longer following her.
+
+The shadow lies flat against the ground, staring back at her.
+
+She stops."
+prompt_text = "For some reason, it feels _____."
+answer_category = "familiar"
+accepted_answers = PackedStringArray("familiar", "known", "recognisable", "remembered", "For some reason, it feels familiar", "For some reason, it feels known", "For some reason, it feels recognisable", "For some reason, it feels remembered")
+response_text = "The shadow slowly raises its head."
+
+[sub_resource type="Resource" id="Moment02"]
+script = ExtResource("Moment")
+narration_text = "Its shape changes.
+
+She recognises something inside it: a younger version of herself, the one who once moved through the world without thinking so carefully about every smile, every answer and every person watching.
+
+She wonders why that version of herself has become a shadow.
+
+Then it speaks."
+prompt_text = "“You are my only _____.”"
+answer_category = "friend"
+accepted_answers = PackedStringArray("friend", "companion", "company", "You are my only friend", "You are my only companion", "You are my only company")
+response_text = "The girl cannot tell whether the words came from the shadow or from somewhere inside herself."
+
+[sub_resource type="Resource" id="Moment03"]
+script = ExtResource("Moment")
+narration_text = "Someone bumps into her shoulder.
+
+She turns around, smiles, and says that everything is fine.
+
+When she looks down again, the shadow is standing beside her.
+
+The shadow does not immediately speak.
+
+Instead, it reaches out its hand.
+
+Around them, everyone else continues walking.
+
+Nobody seems to notice it.
+
+The girl looks at the hand.
+
+For the first time, she wonders whether the shadow is something she has been trying to escape..."
+prompt_text = "...or something she has _____."
+answer_category = "left behind"
+accepted_answers = PackedStringArray("left behind", "forgotten", "abandoned", "lost", "or something she has left behind", "or something she has forgotten", "or something she has abandoned", "or something she has lost")
+response_text = "The shadow stays beside her."
+
+[resource]
+script = ExtResource("Story")
+moments = Array[Resource]([SubResource("Moment01"), SubResource("Moment02"), SubResource("Moment03")])
+ending_text = "Neither of them says anything.
+
+Around them, the street continues as though nothing has happened."
+listening_message = "Listening — read on and respond at the gap."
+retry_message = "Keep reading; at the gap, try again or use the default."
+unavailable_message = "Voice unavailable. Retry microphone or use the default."
+completed_message = "Prototype 1 complete."

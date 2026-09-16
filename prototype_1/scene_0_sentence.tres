@@ -1,0 +1,10 @@
+[gd_resource type="Resource" format=3 uid="uid://bmpvan5ye7kuu"]
+
+[ext_resource type="Script" uid="uid://br8qdhvqo78v7" path="res://Script/sentence_definition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+sentence_text = "She turns on the light."
+correct_word = "on"
+missing_word_index = 2
+sentence_id = &"scene_0_light"

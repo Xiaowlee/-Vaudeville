@@ -1,0 +1,177 @@
+[gd_resource type="Resource" format=3 uid="uid://cofubfme68ffk"]
+
+[ext_resource type="Script" uid="uid://cd0nc4epkanoc" path="res://Script/narration_choice.gd" id="Choice"]
+[ext_resource type="Script" uid="uid://dmkd70c8mtdbx" path="res://Script/narration_option.gd" id="Option"]
+[ext_resource type="Script" uid="uid://c2tb75x41k71y" path="res://Script/narration_story.gd" id="Story"]
+
+[sub_resource type="Resource" id="Option1_1"]
+script = ExtResource("Option")
+category = "frightening"
+accepted_answers = PackedStringArray("frightening", "scary", "terrifying", "afraid", "disturbing")
+response_text = "She takes a step back.
+The shadow looks familiar, but somehow that familiarity makes it worse."
+reconnect_point = "choice_02"
+
+[sub_resource type="Resource" id="Option1_2"]
+script = ExtResource("Option")
+category = "familiar"
+accepted_answers = PackedStringArray("familiar", "known", "recognisable", "remembered")
+response_text = "She does not move.
+Something about the figure feels like remembering someone whose name she has forgotten."
+reconnect_point = "choice_02"
+
+[sub_resource type="Resource" id="Option1_3"]
+script = ExtResource("Option")
+category = "comforting"
+accepted_answers = PackedStringArray("comforting", "safe", "warm", "reassuring")
+response_text = "For the first time that day, she stops forcing herself to smile."
+reconnect_point = "choice_02"
+
+[sub_resource type="Resource" id="Option1_4"]
+script = ExtResource("Option")
+category = "strange"
+accepted_answers = PackedStringArray("strange", "weird", "unusual", "confusing", "curious")
+response_text = "She stares at it, unsure whether she should be afraid or curious."
+reconnect_point = "choice_02"
+
+[sub_resource type="Resource" id="Choice1"]
+script = ExtResource("Choice")
+options = Array[Resource]([SubResource("Option1_1"), SubResource("Option1_2"), SubResource("Option1_3"), SubResource("Option1_4")])
+moment_id = "choice_01"
+narration_text = "She walks through a street filled with people.
+
+Someone looks at her, and she smiles back automatically.
+
+She answers when people speak to her. She laughs when she is supposed to laugh. She keeps walking as though nothing is wrong.
+
+Her life has become a long series of small performances.
+
+Surrounded by people, her mind slowly wanders away from her body.
+
+She looks down at the pavement.
+
+Her shadow is still there.
+
+But it is no longer following her.
+
+The shadow lies flat against the ground, staring back at her.
+
+She stops."
+prompt_text = "For some reason, it feels _____.
+
+frightening / familiar / comforting / strange"
+accepted_answers = null
+
+[sub_resource type="Resource" id="Option2_1"]
+script = ExtResource("Option")
+category = "who are you"
+accepted_answers = PackedStringArray("who are you", "who are you really", "what are you")
+response_text = "“You already know.”"
+reconnect_point = "choice_03"
+
+[sub_resource type="Resource" id="Option2_2"]
+script = ExtResource("Option")
+category = "I know you"
+accepted_answers = PackedStringArray("I know you", "I remember you", "I recognise you")
+response_text = "“Then why did you leave me here?”"
+reconnect_point = "choice_03"
+
+[sub_resource type="Resource" id="Option2_3"]
+script = ExtResource("Option")
+category = "leave me alone"
+accepted_answers = PackedStringArray("leave me alone", "go away", "leave", "stay away")
+response_text = "“I have been alone with you this whole time.”"
+reconnect_point = "choice_03"
+
+[sub_resource type="Resource" id="Choice2"]
+script = ExtResource("Choice")
+options = Array[Resource]([SubResource("Option2_1"), SubResource("Option2_2"), SubResource("Option2_3")])
+moment_id = "choice_02"
+narration_text = "The shadow slowly raises its head.
+
+Its shape changes.
+
+She recognises something inside it: a younger version of herself, the one who once moved through the world without thinking so carefully about every smile, every answer and every person watching.
+
+She wonders why that version of herself has become a shadow.
+
+Then it speaks.
+
+“You are my only friend.”
+
+The girl cannot tell whether the words came from the shadow or from somewhere inside herself.
+
+Someone bumps into her shoulder.
+
+She turns around, smiles, and says that everything is fine.
+
+When she looks down again, the shadow is standing beside her."
+prompt_text = "What should she say to the shadow?
+
+“Who are you?” / “I know you.” / “Leave me alone.”"
+accepted_answers = null
+
+[sub_resource type="Resource" id="Option3_1"]
+script = ExtResource("Option")
+category = "take its hand"
+accepted_answers = PackedStringArray("take its hand", "take her hand", "hold its hand", "reach for it", "accept")
+ends_story = true
+ending_text = "She reaches toward it.
+
+Her hand passes into the darkness.
+
+For a moment, the shadow feels warm.
+
+They begin walking together."
+
+[sub_resource type="Resource" id="Option3_2"]
+script = ExtResource("Option")
+category = "step away"
+accepted_answers = PackedStringArray("step away", "move away", "back away", "refuse", "leave")
+ends_story = true
+ending_text = "She takes one step backward.
+
+The shadow lowers its hand.
+
+But when she begins walking again, it follows.
+
+It does not disappear."
+
+[sub_resource type="Resource" id="Option3_3"]
+script = ExtResource("Option")
+category = "ask it to follow"
+accepted_answers = PackedStringArray("follow me", "come with me", "walk with me", "come along")
+ends_story = true
+ending_text = "“Come with me.”
+
+The shadow moves beside her rather than beneath her.
+
+Nobody else seems to notice.
+
+For now, that is enough."
+
+[sub_resource type="Resource" id="Choice3"]
+script = ExtResource("Choice")
+options = Array[Resource]([SubResource("Option3_1"), SubResource("Option3_2"), SubResource("Option3_3")])
+moment_id = "choice_03"
+narration_text = "The shadow becomes quiet.
+
+Then it reaches out its hand.
+
+Around them, everyone else continues walking.
+
+Nobody seems to notice it.
+
+The girl looks at the hand."
+prompt_text = "What should she do?
+
+Take its hand / Step away / Ask it to follow (“Follow me.”)"
+accepted_answers = null
+
+[resource]
+script = ExtResource("Story")
+moments = Array[Resource]([SubResource("Choice1"), SubResource("Choice2"), SubResource("Choice3")])
+listening_message = "Listening - choose an option aloud."
+retry_message = "Try an option again, or use the default."
+unavailable_message = "Voice unavailable. Retry microphone or use the default."
+completed_message = "Prototype 2 complete."

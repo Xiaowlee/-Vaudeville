@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://b44wydlro56l7"]
+
+[ext_resource type="Texture2D" uid="uid://cm7wdbvnte2jr" path="res://Visual Asset/BG.jpg" id="3_ek71y"]
+[ext_resource type="PackedScene" uid="uid://dgxn7h42qd4w2" path="res://Scene/continuous_narration.tscn" id="Base"]
+[ext_resource type="Resource" uid="uid://cofubfme68ffk" path="res://Story/narrator_agency.tres" id="Story"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gint0"]
+texture = ExtResource("3_ek71y")
+
+[sub_resource type="Theme" id="Theme_8ergx"]
+
+[node name="NarratorAgency" unique_id=290237349 instance=ExtResource("Base")]
+story = ExtResource("Story")
+
+[node name="Panel2" type="Panel" parent="." index="0" unique_id=869506332]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_gint0")
+
+[node name="Background" parent="." index="1"]
+theme = SubResource("Theme_8ergx")
+
+[node name="Title" parent="." index="3"]
+text = "Prototype 2"
+
+[node name="Status" parent="." index="7"]
+visible = true
+
+[node name="RetryMicrophone" parent="." index="10" unique_id=1469238204]
+text = "Retry mic"
