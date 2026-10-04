@@ -14,14 +14,18 @@ func ensure_session() -> void:
  game_relay = ""
  phone_url = ""
  qr = null
- var origin: String = settings.public_origin.trim_suffix("/")
- if OS.has_feature("web"): origin = str(JavaScriptBridge.eval("window.location.origin", true))
+ var origin: String = settings.relay_server.trim_suffix("/")
+ if OS.has_feature("web"):
+  # The website passes its configured relay in the page fragment; otherwise the page's own address (single-host setup).
+  var from_page := str(JavaScriptBridge.eval("new URLSearchParams(window.location.hash.slice(1)).get('relay_origin') || ''", true))
+  if from_page.begins_with("https://") or from_page.begins_with("http://localhost:"): origin = from_page.trim_suffix("/")
+  elif origin.is_empty(): origin = str(JavaScriptBridge.eval("window.location.origin", true))
  if origin.is_empty():
   message = "Phone connection is not configured yet."
   changed.emit()
   return
  busy = true
- message = "Connectingâ€¦"
+ message = "Connecting..."
  changed.emit()
  var request := HTTPRequest.new()
  add_child(request)

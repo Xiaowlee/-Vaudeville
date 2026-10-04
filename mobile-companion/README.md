@@ -96,16 +96,14 @@ Example smile payload:
 
 `face_present` messages are also emitted when the detected face count changes. Godot now receives these signals through `PhoneInputHook` in Scene 2. The relay routes game/phone roles and retains the current request for late phone connections. Success must match its requestId; the phone retries until Godot acknowledges it.
 
-## Future Vercel deployment
+## Public hosting (Vercel website + separate relay)
 
-The Next.js page can later be imported into Vercel as this `mobile-companion` folder. Vercel would supply public HTTPS for the phone site.
+Step-by-step instructions are in `SYSTEMS_DESIGNER_GUIDE.md` ("Public hosting: website on Vercel, relay on Render"). In short:
 
-1. Create a Vercel project from this folder (or a repo that contains it).
-2. Set the Root Directory to `mobile-companion` if the repo is the whole Folio 2 project.
-3. Add `NEXT_PUBLIC_RELAY_URL` in Vercel environment variables, pointing at wherever the relay later runs.
-4. Deploy. The phone would then open the Vercel HTTPS URL.
+- **Vercel**: Root Directory `mobile-companion`, default Next.js build. Environment variable `NEXT_PUBLIC_RELAY_ORIGIN=https://<relay>.onrender.com`. Every route is static; no Vercel Functions are used.
+- **Relay** (`relay/public-relay.mjs`, `npm run public`, configured by the root `render.yaml`): `POST /api/pair` creates a private session and its QR; `/relay` carries WebSockets; `/health` for the host. Environment: `WEBSITE_ORIGIN` (required), `NODE_ENV=production`, optional `EXTRA_ALLOWED_ORIGINS`, `RELAY_PUBLIC_ORIGIN` (defaults to Render's `RENDER_EXTERNAL_URL`).
 
-Do **not** deploy the `relay/` folder to Vercel. Vercel serverless hosting cannot keep a WebSocket relay open. The relay stays a small local (or later always-on) Node process. Permanent hosting and a paid relay are out of scope.
+Do **not** deploy the WebSocket relay as a Vercel Function; it needs a persistent process because sessions live in memory.
 
 ## Stack
 

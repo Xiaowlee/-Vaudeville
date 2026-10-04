@@ -2,4 +2,4 @@
 [ext_resource type="Script" path="res://Script/phone_connection_settings.gd" id="1"]
 [resource]
 script = ExtResource("1")
-public_origin = ""
+relay_server = ""

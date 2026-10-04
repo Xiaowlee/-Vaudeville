@@ -1,12 +1,16 @@
 services:
+  # Relay + pairing only. The website, browser game and phone page are hosted on Vercel.
   - type: web
-    name: vaudeville
+    name: vaudeville-relay
     runtime: node
     plan: free
-    rootDir: mobile-companion
-    buildCommand: npm ci --include=dev && npm ci --prefix relay && npm run build:hosted && npm prune --omit=dev
-    startCommand: npm run host
+    rootDir: mobile-companion/relay
+    buildCommand: npm ci --omit=dev
+    startCommand: npm run public
     healthCheckPath: /health
     envVars:
       - key: NODE_ENV
         value: production
+      # Your Vercel address, e.g. https://vaudeville.vercel.app (entered in the Render dashboard).
+      - key: WEBSITE_ORIGIN
+        sync: false

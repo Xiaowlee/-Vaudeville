@@ -16,6 +16,9 @@ var acknowledged: bool:
 var phone_connected := false
 var last_received_at := 0
 @export_range(3, 30, 1) var connection_timeout_seconds := 8.0
+## Small message that keeps free relay hosting from sleeping while a game is connected.
+@export_range(10, 600, 5) var keepalive_seconds := 60.0
+var keepalive_at := 0
 var generations: Dictionary = {}
 var retry_at := 0
 var was_open := false
@@ -77,6 +80,10 @@ func _process(_delta: float) -> void:
 		last_error = ""
 		_send({"kind":"hello", "role":"game"})
 		for channel in pending: _send(pending[channel])
+		keepalive_at = Time.get_ticks_msec() + int(keepalive_seconds * 1000)
+	if Time.get_ticks_msec() >= keepalive_at:
+		keepalive_at = Time.get_ticks_msec() + int(keepalive_seconds * 1000)
+		_send({"kind":"keepalive"})
 	while socket.get_available_packet_count() > 0:
 		var message = JSON.parse_string(socket.get_packet().get_string_from_utf8())
 		if message is Dictionary: receive(message)

@@ -118,29 +118,40 @@ The phone receives only that game's cue prompts and IFB. Computer and phone need
 Opening the QR again reconnects to the same session. Restarting the game makes a new session. Sessions expire after 12 hours.
 The QR package is free, runs inside your own website service, and does not use an external QR website.
 Do not share a session QR publicly: anyone with it can view that session's cues.
-If the hosting service restarts, return to a freshly opened game and scan its new QR.
+If the relay service restarts, return to a freshly opened game and scan its new QR.
 
-### First public hosting setup
+### Public hosting: website on Vercel, relay on Render
 
-1. Create a Render account at https://render.com and connect the GitHub repository containing these updated files. Nothing has been pushed or published automatically.
-2. Choose New > Blueprint and select that repository. The root render.yaml prepares ONE free web service: website, game and relay together.
-3. Check it still says Free before creating the service. No domain purchase is required. Render supplies an HTTPS address.
-4. Share https://YOUR-SERVICE.onrender.com/play with players. The game automatically uses its own website address for pairing.
-5. For a downloadable Windows build, edit Story/phone_connection.tres > Public Origin to https://YOUR-SERVICE.onrender.com (without /play). Then export Windows again.
-6. Test the computer on Wi-Fi and the phone on mobile data. Scan Connect phone, then Play. Check both prompts and IFB; also test a second independent game.
+Two free services, two addresses:
+- Vercel hosts the website: the browser game (/play), the phone page (/stage) and the exported Godot files. Vercel cannot keep phone connections open, so it does no pairing.
+- Render hosts the small relay (mobile-companion/relay/public-relay.mjs). It creates each private session and its QR, and passes prompts/IFB between that game and its phone.
+The QR opens the Vercel /stage page; the relay address travels inside the link, so the phone then connects to the relay.
 
-The service must remain one instance for this prototype; sessions are held in memory. Restarts/deploys clear them.
-Free hosting may sleep when idle, so the first connection can take longer. This is a playtest setup, not a high-traffic release service.
-A custom domain is optional. If using one, set the hosting environment value PUBLIC_ORIGIN to that HTTPS address.
-The public service uses the host's HTTPS certificate; no home IP, router setup or self-signed certificate acceptance is required.
+1. Push the reviewed files to GitHub (see "What to commit" below). Nothing has been pushed or published automatically.
+2. Vercel (https://vercel.com, sign in with GitHub, Hobby/free): Add New > Project > import the repository. Set Root Directory to mobile-companion. Leave Framework (Next.js), Build Command and Install Command on their defaults. Deploy once to learn the address, e.g. https://YOUR-SITE.vercel.app.
+3. Render (https://render.com, free): New > Blueprint > select the same repository. The root render.yaml creates one free relay service. When asked, set WEBSITE_ORIGIN to your Vercel address (https://YOUR-SITE.vercel.app, no slash or path). Check it says Free. Render gives an address such as https://YOUR-RELAY.onrender.com.
+4. Back in Vercel: Settings > Environment Variables > add NEXT_PUBLIC_RELAY_ORIGIN = https://YOUR-RELAY.onrender.com (Production). Then Deployments > Redeploy, because this value is built into the page.
+5. Players open https://YOUR-SITE.vercel.app/play.
+6. Downloadable Windows build: open Story/phone_connection.tres > Relay Server and enter https://YOUR-RELAY.onrender.com (the relay, not the Vercel site). Export Windows again.
+7. Test: computer on Wi-Fi, phone on mobile data (Wi-Fi off). Open /play, press Connect phone, scan the QR, then Play. Check prompts and IFB appear and clear; test a second game in another browser to confirm it gets its own QR.
+
+Environment values:
+- Render: WEBSITE_ORIGIN (required, your Vercel address) and NODE_ENV=production (already in render.yaml). Optional EXTRA_ALLOWED_ORIGINS: comma-separated extra website addresses, e.g. a custom domain. RENDER_EXTERNAL_URL is supplied by Render automatically; RELAY_PUBLIC_ORIGIN overrides it if you give the relay a custom domain.
+- Vercel: NEXT_PUBLIC_RELAY_ORIGIN only. No secrets are needed anywhere.
+
+Free relay limits (Render free web service): it sleeps after about 15 minutes without traffic and takes up to about a minute to wake, so the first Connect phone after a quiet period may be slow (the game waits up to 90 seconds). While a game or phone is connected, both send a tiny keep-alive message every 60 seconds (PhoneCueBridge / MobileDisplay > Keepalive Seconds) so it stays awake during play. Sleeping, restarting or redeploying clears all sessions: reopen the game for a new QR. Keep it as one instance; sessions live in its memory. 750 free hours per month covers one always-on service.
+Vercel limits: each playthrough downloads about 52 MB (computer) and 38 MB (phone); the Hobby plan's monthly transfer is ample for playtests. Deploy through GitHub rather than the Vercel CLI, which limits static uploads to 100 MB.
+Security: the relay only accepts pairing and connections from your website addresses (plus desktop builds, which carry the private session token). HTTPS/WSS certificates are supplied by Vercel and Render and are verified normally; no home IP, router setup or certificate acceptance is involved.
 
 ### Updating the exported files
 
 In Godot's Export window, export Game (Web) and Mobile Display (Web).
 The output belongs in mobile-companion/public/game and mobile-companion/public/mobile-display respectively.
-Commit those files with the code before redeploying. Do not upload .env.local, .certs, node_modules, .task-backups or .task-checks.
-The old local commands (npm run dev and npm run relay) still exist. Public hosting builds with npm run build:hosted and starts with npm run host. The hosted build uses .next-hosted so it does not overwrite the old local website build. Stop any hosted development preview before building it.
-For a local browser smoke test: set PORT=3100 and PUBLIC_ORIGIN=http://localhost:3100, then npm run host (without NODE_ENV=production).
+Commit and push those files with the code; Vercel redeploys automatically after each push. The relay only needs redeploying when files in mobile-companion/relay change.
+What to commit: Scene, Script, Story, UI, addons, assets, project files, mobile-companion (including public/game and public/mobile-display), render.yaml and the guides. Never commit .env.local, .certs, node_modules, .next, .next-hosted, .godot, .task-backups, .task-checks or Builds. The .gitignore files already exclude these; still read the list of changed files before committing.
+The old local commands (npm run dev and npm run relay) still work unchanged on the same Wi-Fi.
+Local test of the two-address setup: in mobile-companion/relay run PORT=3100, WEBSITE_ORIGIN=http://localhost:3000 and RELAY_PUBLIC_ORIGIN=http://localhost:3100 with npm run public; in mobile-companion build with NEXT_PUBLIC_RELAY_ORIGIN=http://localhost:3100 (npm run build, then npx next start). Then RELAY_BASE=http://localhost:3100 WEBSITE=http://localhost:3000 node relay/test-public.mjs.
+The older single-address option (npm run build:hosted, then npm run host with PUBLIC_ORIGIN) remains for local testing; it is no longer the recommended public setup.
 A localhost QR is only for automated/local testing; it is not a working phone link on another device.
 
 ### Speech recognition
@@ -157,4 +168,5 @@ Browser recognition may send audio to its provider and require internet. Test ac
 
 Two simulated games passed isolation, prompt/IFB separation, acknowledgements, invalid token, phone/game role protection, reconnect and disconnect clearing.
 Godot exports and website production build were checked. Real phone scanning, mobile-data access and spoken-recognition accuracy still need human playtesting after hosting.
+Vercel + separate relay (local check only): website and relay on different addresses passed pairing, phone links on the website address, relay addresses, cross-origin and rejected-origin checks, keep-alive, and all isolation/reconnect checks above; actual Godot pairing + Mobile scene passed against the relay-only server. Public Vercel/Render deployment has not been performed.
 Production npm audit: no reported vulnerabilities at this check. Legacy local-certificate development dependencies still report two high advisories; they are omitted from the hosted runtime.

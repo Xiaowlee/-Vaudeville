@@ -10,6 +10,8 @@ extends Control
 ## Empty receives cues for every phone. A ?recipient= value in the page address overrides this.
 @export var recipient := ""
 @export_range(0.5, 30, 0.1) var reconnect_seconds := 2.0
+## Small message that keeps free relay hosting from sleeping while the phone is connected.
+@export_range(10, 600, 5) var keepalive_seconds := 60.0
 @export_group("Layout")
 @export_node_path("PanelContainer") var cue_card_path := NodePath("CueCard")
 @export_node_path("PanelContainer") var ifb_path := NodePath("IFB")
@@ -22,6 +24,7 @@ var active := {"prompt": "", "ifb": ""}
 var retry_at := 0
 var was_open := false
 var url := ""
+var keepalive_at := 0
 
 func _ready() -> void:
 	if phone_design_size.x > 0 and phone_design_size.y > 0:
@@ -46,6 +49,10 @@ func _process(_delta: float) -> void:
 		was_open = true
 		print("[MobileDisplay] connected")
 		send({"kind":"hello", "role":"stage_phone", "recipient":resolved_recipient()})
+		keepalive_at = Time.get_ticks_msec() + int(keepalive_seconds * 1000)
+	if Time.get_ticks_msec() >= keepalive_at:
+		keepalive_at = Time.get_ticks_msec() + int(keepalive_seconds * 1000)
+		send({"kind":"keepalive"})
 	while socket.get_available_packet_count() > 0:
 		var message = JSON.parse_string(socket.get_packet().get_string_from_utf8())
 		if message is Dictionary: receive(message)
