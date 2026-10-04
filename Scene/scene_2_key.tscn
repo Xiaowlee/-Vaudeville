@@ -1,7 +1,8 @@
-[gd_scene format=3 uid="uid://cnv11mijwe33l"]
+[gd_scene format=3 uid="uid://di208qgbnfmr2"]
+
+[ext_resource type="PackedScene" path="res://Scene/2.0_00_onboarding.tscn" id="RecoveredBase"]
 
 [ext_resource type="Texture2D" uid="uid://bafxlr6ccpiwa" path="res://Visual Asset/key.png" id="4_jofdn"]
-[ext_resource type="PackedScene" uid="uid://smp6r1vyfos5" path="res://Scene/prototype_1.tscn" id="Base"]
 [ext_resource type="Texture2D" uid="uid://da4a3a3f0eb6h" path="res://Visual Asset/door.png" id="Door"]
 [ext_resource type="Resource" path="res://prototype_1/scene_2_sentence.tres" id="Sentence"]
 
@@ -35,8 +36,9 @@ animations = [{
 "speed": 1.0
 }]
 
-[node name="KeyDoor" unique_id=1763385535 instance=ExtResource("Base")]
+[node name="KeyDoor" unique_id=1763385535 instance=ExtResource("RecoveredBase")]
 sentence_definition = ExtResource("Sentence")
+intro_scene = "res://Scene/Intro.tscn"
 next_scene = "uid://13txmliwqlj0"
 animation_name = &""
 starts_dark = false

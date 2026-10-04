@@ -1,0 +1,959 @@
+[gd_resource type="Resource" format=3 uid="uid://c6b2odogdfidt"]
+
+[ext_resource type="Script" uid="uid://biykveos2te1g" path="res://Script/beat_audio_cue.gd" id="2_myqfn"]
+[ext_resource type="Script" uid="uid://br0motrf27aiy" path="res://Script/performer_beat.gd" id="Beat"]
+[ext_resource type="Script" uid="uid://dml3kgwlh5qnk" path="res://Script/performer_interaction.gd" id="Interaction"]
+[ext_resource type="Script" uid="uid://b00f3lb35xiys" path="res://Script/performer_response.gd" id="Option"]
+[ext_resource type="Script" uid="uid://br35h3hucn2f4" path="res://Script/performer_story.gd" id="Story"]
+[ext_resource type="Texture2D" uid="uid://daq8wqexdndi3" path="res://Visual Asset/Performer/Folio 2 Sample 1.jpg" id="V1"]
+[ext_resource type="Texture2D" uid="uid://dp2nieplqxacm" path="res://Visual Asset/Performer/Folio 2 Sample 2.jpg" id="V2"]
+[ext_resource type="Texture2D" uid="uid://bh2ll5pmnywgx" path="res://Visual Asset/Performer/Folio 2 Sample 3.jpg" id="V3"]
+[ext_resource type="Texture2D" uid="uid://60gsartcdql1" path="res://Visual Asset/Performer/Folio 2 Sample 4.jpg" id="V4"]
+[ext_resource type="Texture2D" uid="uid://b6405vobihmoe" path="res://Visual Asset/Performer/Folio 2 Sample 5.jpg" id="V5"]
+[ext_resource type="Texture2D" uid="uid://cmsgcyp43kcgf" path="res://Visual Asset/Performer/Folio 2 Sample 6.jpg" id="V6"]
+[ext_resource type="Texture2D" uid="uid://cgb06nkdwkr3h" path="res://Visual Asset/Performer/Folio 2 Sample 8.jpg" id="V8"]
+[ext_resource type="Texture2D" uid="uid://b0baap3ljjn4j" path="res://Visual Asset/Performer/Folio 2 Sample 9.jpg" id="V9"]
+[ext_resource type="Texture2D" uid="uid://4u8hw3gljuut" path="res://Visual Asset/Performer/Folio 2 Sample 10.jpg" id="V10"]
+[ext_resource type="Texture2D" uid="uid://c7iq4jkfb8gdu" path="res://Visual Asset/Performer/Folio 2 Sample 11.jpg" id="V11"]
+
+[sub_resource type="Resource" id="p01_01"]
+resource_name = "p01_01 — Chapter 1"
+script = ExtResource("Beat")
+text = "She is walking home at night."
+visual = ExtResource("V1")
+beat_id = "p01_01"
+next_beat_id = "p01_02"
+source_passage = "Chapter 1"
+
+[sub_resource type="Resource" id="p01_02"]
+resource_name = "p01_02 — Chapter 1"
+script = ExtResource("Beat")
+text = "A streetlight turns on above her."
+visual = ExtResource("V1")
+beat_id = "p01_02"
+next_beat_id = "p01_03"
+source_passage = "Chapter 1"
+
+[sub_resource type="Resource" id="p01_03"]
+resource_name = "p01_03 — Chapter 1"
+script = ExtResource("Beat")
+text = "She looks down on the foot, a dark silhouette waiting for her."
+visual = ExtResource("V2")
+beat_id = "p01_03"
+next_beat_id = "p01_04"
+source_passage = "Chapter 1"
+
+[sub_resource type="Resource" id="p01_04"]
+resource_name = "p01_04 — Chapter 1"
+script = ExtResource("Beat")
+text = "Her shadow has stopped moving."
+visual = ExtResource("V3")
+beat_id = "p01_04"
+next_beat_id = "p01_05"
+source_passage = "Chapter 1"
+
+[sub_resource type="Resource" id="i1o0"]
+script = ExtResource("Option")
+category = "Start the game"
+accepted_answers = PackedStringArray("who are you", "hello", "what are you")
+reconnect_point = "p02_01"
+
+[sub_resource type="Resource" id="i1unknown"]
+script = ExtResource("Option")
+category = "UNKNOWN"
+accepted_answers = null
+
+[sub_resource type="Resource" id="i1"]
+script = ExtResource("Interaction")
+prompt_a = "Suggested response — editable:
+“who are you”"
+prompt_c = "What does she say to the shadow?"
+retry_unknown = true
+author_notes = "Suggested input vocabulary; review before study. Twine prompt: INTERACTION"
+options = Array[ExtResource("Option")]([SubResource("i1o0"), SubResource("i1unknown")])
+allowed_categories_a = null
+response_pause = 0.3
+
+[sub_resource type="Resource" id="p01_05"]
+resource_name = "p01_05 — Chapter 1"
+script = ExtResource("Beat")
+text = "The shadow slowly raises its head and looks at her."
+visual = ExtResource("V4")
+beat_id = "p01_05"
+interaction = SubResource("i1")
+source_passage = "Chapter 1"
+
+[sub_resource type="Resource" id="p02_01"]
+resource_name = "p02_01 — Start the game"
+script = ExtResource("Beat")
+text = "It reacts to what she say."
+visual = ExtResource("V5")
+beat_id = "p02_01"
+kind = 1
+next_beat_id = "p02_02"
+source_passage = "Start the game"
+
+[sub_resource type="Resource" id="p02_02"]
+resource_name = "p02_02 — Start the game"
+script = ExtResource("Beat")
+text = "Its raining"
+visual = ExtResource("V6")
+beat_id = "p02_02"
+next_beat_id = "p02_03"
+source_passage = "Start the game"
+
+[sub_resource type="Resource" id="p02_03"]
+resource_name = "p02_03 — Start the game"
+script = ExtResource("Beat")
+text = "She sprint forward for shelter."
+visual = ExtResource("V8")
+beat_id = "p02_03"
+next_beat_id = "p02_04"
+source_passage = "Start the game"
+
+[sub_resource type="Resource" id="p02_04"]
+resource_name = "p02_04 — Start the game"
+script = ExtResource("Beat")
+text = "But she stops"
+visual = ExtResource("V9")
+beat_id = "p02_04"
+next_beat_id = "p02_05"
+source_passage = "Start the game"
+
+[sub_resource type="Resource" id="p02_05"]
+resource_name = "p02_05 — Start the game"
+script = ExtResource("Beat")
+text = "And turning her head back."
+visual = ExtResource("V10")
+beat_id = "p02_05"
+next_beat_id = "p02_06"
+source_passage = "Start the game"
+
+[sub_resource type="Resource" id="p02_06"]
+resource_name = "p02_06 — Start the game"
+script = ExtResource("Beat")
+text = "Near the streetlight she just stood."
+visual = ExtResource("V11")
+beat_id = "p02_06"
+next_beat_id = "p02_07"
+source_passage = "Start the game"
+
+[sub_resource type="Resource" id="i2o0"]
+script = ExtResource("Option")
+category = "Curious-She runs back to the shadow"
+accepted_answers = PackedStringArray("go back to the shadow", "run back", "approach the shadow")
+reconnect_point = "p03_01"
+
+[sub_resource type="Resource" id="i2o1"]
+script = ExtResource("Option")
+category = "keep walking away"
+accepted_answers = PackedStringArray("keep walking", "walk away", "leave the shadow")
+reconnect_point = "p15_01"
+
+[sub_resource type="Resource" id="i2o2"]
+script = ExtResource("Option")
+category = "test it"
+accepted_answers = PackedStringArray("test it", "test the shadow", "try moving")
+reconnect_point = "p16_01"
+
+[sub_resource type="Resource" id="i2unknown"]
+script = ExtResource("Option")
+category = "UNKNOWN"
+accepted_answers = null
+
+[sub_resource type="Resource" id="i2"]
+script = ExtResource("Interaction")
+prompt_a = "Suggested response — editable:
+“go back to the shadow”
+“keep walking”
+“test it”"
+prompt_c = "what does she think of the shadow / what will she do
+Speak your response."
+agency_type = 1
+retry_unknown = true
+author_notes = "Suggested input vocabulary; review before study. Twine prompt: what does she think of the shadow / what will she do"
+options = Array[ExtResource("Option")]([SubResource("i2o0"), SubResource("i2o1"), SubResource("i2o2"), SubResource("i2unknown")])
+allowed_categories_a = null
+response_pause = 0.3
+
+[sub_resource type="Resource" id="p02_07"]
+resource_name = "p02_07 — Start the game"
+script = ExtResource("Beat")
+text = "It stays where it is."
+visual = ExtResource("V11")
+beat_id = "p02_07"
+interaction = SubResource("i2")
+source_passage = "Start the game"
+
+[sub_resource type="Resource" id="p03_01"]
+resource_name = "p03_01 — Curious-She runs back to the shadow"
+script = ExtResource("Beat")
+text = "She slowly approaches the shadow."
+beat_id = "p03_01"
+next_beat_id = "p03_02"
+source_passage = "Curious-She runs back to the shadow"
+
+[sub_resource type="Resource" id="p03_02"]
+resource_name = "p03_02 — Curious-She runs back to the shadow"
+script = ExtResource("Beat")
+text = "She stand their for a while"
+beat_id = "p03_02"
+next_beat_id = "p03_03"
+source_passage = "Curious-She runs back to the shadow"
+
+[sub_resource type="Resource" id="i3o0"]
+script = ExtResource("Option")
+category = "What are you doing, why"
+accepted_answers = PackedStringArray("what are you doing", "why are you doing this", "why")
+reconnect_point = "p04_01"
+
+[sub_resource type="Resource" id="i3unknown"]
+script = ExtResource("Option")
+category = "UNKNOWN"
+accepted_answers = null
+
+[sub_resource type="Resource" id="i3"]
+script = ExtResource("Interaction")
+prompt_a = "Suggested response — editable:
+“what are you doing”"
+prompt_c = "what does she say
+Speak your response."
+retry_unknown = true
+author_notes = "Suggested input vocabulary; review before study. Twine prompt: what does she say"
+options = Array[ExtResource("Option")]([SubResource("i3o0"), SubResource("i3unknown")])
+allowed_categories_a = null
+response_pause = 0.3
+
+[sub_resource type="Resource" id="p03_03"]
+resource_name = "p03_03 — Curious-She runs back to the shadow"
+script = ExtResource("Beat")
+text = "Staring at the shadow until her uniform get fully soaked"
+beat_id = "p03_03"
+interaction = SubResource("i3")
+source_passage = "Curious-She runs back to the shadow"
+
+[sub_resource type="Resource" id="p04_01"]
+resource_name = "p04_01 — What are you doing, why"
+script = ExtResource("Beat")
+text = "It cannot speak, she keep staring at it"
+beat_id = "p04_01"
+next_beat_id = "p04_02"
+source_passage = "What are you doing, why"
+
+[sub_resource type="Resource" id="p04_02"]
+resource_name = "p04_02 — What are you doing, why"
+script = ExtResource("Beat")
+text = "Her leg collapse under the heavy feeling bore inside her heart."
+beat_id = "p04_02"
+next_beat_id = "p04_03"
+source_passage = "What are you doing, why"
+
+[sub_resource type="Resource" id="p04_03"]
+resource_name = "p04_03 — What are you doing, why"
+script = ExtResource("Beat")
+text = "Her tears blends with the rain drops"
+beat_id = "p04_03"
+next_beat_id = "p04_04"
+source_passage = "What are you doing, why"
+
+[sub_resource type="Resource" id="p04_04"]
+resource_name = "p04_04 — What are you doing, why"
+script = ExtResource("Beat")
+text = "Someone passing by notice her crying."
+beat_id = "p04_04"
+next_beat_id = "p04_05"
+source_passage = "What are you doing, why"
+
+[sub_resource type="Resource" id="p04_05"]
+resource_name = "p04_05 — What are you doing, why"
+script = ExtResource("Beat")
+text = "They approaches. Shelter her with their umbrella"
+beat_id = "p04_05"
+next_beat_id = "p04_06"
+source_passage = "What are you doing, why"
+
+[sub_resource type="Resource" id="i4o0"]
+script = ExtResource("Option")
+category = "Her ex boyfriend"
+accepted_answers = PackedStringArray("her ex boyfriend", "her ex", "ex boyfriend")
+reconnect_point = "p05_01"
+
+[sub_resource type="Resource" id="i4o1"]
+script = ExtResource("Option")
+category = "Her close friend"
+accepted_answers = PackedStringArray("her close friend", "her friend", "close friend")
+reconnect_point = "p08_01"
+
+[sub_resource type="Resource" id="i4unknown"]
+script = ExtResource("Option")
+category = "UNKNOWN"
+accepted_answers = null
+
+[sub_resource type="Resource" id="i4"]
+script = ExtResource("Interaction")
+prompt_a = "Suggested response — editable:
+“her ex boyfriend”
+“her close friend”"
+prompt_c = "who is he/she
+Speak your response."
+agency_type = 2
+retry_unknown = true
+author_notes = "Suggested input vocabulary; review before study. Twine prompt: who is he/she"
+options = Array[ExtResource("Option")]([SubResource("i4o0"), SubResource("i4o1"), SubResource("i4unknown")])
+allowed_categories_a = null
+response_pause = 0.3
+
+[sub_resource type="Resource" id="p04_06"]
+resource_name = "p04_06 — What are you doing, why"
+script = ExtResource("Beat")
+text = "She looks up."
+beat_id = "p04_06"
+interaction = SubResource("i4")
+source_passage = "What are you doing, why"
+
+[sub_resource type="Resource" id="i5o0"]
+script = ExtResource("Option")
+category = "why are you here, what are you doing"
+accepted_answers = PackedStringArray("why are you here", "what are you doing here")
+reconnect_point = "p06_01"
+
+[sub_resource type="Resource" id="i5o1"]
+script = ExtResource("Option")
+category = "say something funny or ragebait the boy"
+accepted_answers = PackedStringArray("nice weather for a reunion", "say something funny", "tease him", "ragebait the boy")
+reconnect_point = "p12_01"
+
+[sub_resource type="Resource" id="i5unknown"]
+script = ExtResource("Option")
+category = "UNKNOWN"
+accepted_answers = null
+
+[sub_resource type="Resource" id="i5"]
+script = ExtResource("Interaction")
+prompt_a = "Suggested response — editable:
+“why are you here”
+“nice weather for a reunion”"
+prompt_c = "what does she say
+Speak your response."
+retry_unknown = true
+author_notes = "Suggested input vocabulary; review before study. Twine prompt: what does she say"
+options = Array[ExtResource("Option")]([SubResource("i5o0"), SubResource("i5o1"), SubResource("i5unknown")])
+allowed_categories_a = null
+response_pause = 0.3
+
+[sub_resource type="Resource" id="p05_01"]
+resource_name = "p05_01 — Her ex boyfriend"
+script = ExtResource("Beat")
+text = "She stares at him for long. Her limbs petrified."
+beat_id = "p05_01"
+interaction = SubResource("i5")
+source_passage = "Her ex boyfriend"
+
+[sub_resource type="Resource" id="p06_01"]
+resource_name = "p06_01 — why are you here, what are you doing"
+script = ExtResource("Beat")
+text = "he stared at her for a while. Something zipped his mouth before he manage to pull out short replies"
+beat_id = "p06_01"
+next_beat_id = "p06_02"
+source_passage = "why are you here, what are you doing"
+
+[sub_resource type="Resource" id="p06_02"]
+resource_name = "p06_02 — why are you here, what are you doing"
+script = ExtResource("Beat")
+text = "“I don’t know either."
+beat_id = "p06_02"
+next_beat_id = "p06_03"
+source_passage = "why are you here, what are you doing"
+
+[sub_resource type="Resource" id="p06_03"]
+resource_name = "p06_03 — why are you here, what are you doing"
+script = ExtResource("Beat")
+text = "You might get wet"
+beat_id = "p06_03"
+next_beat_id = "p06_04"
+source_passage = "why are you here, what are you doing"
+
+[sub_resource type="Resource" id="i6o0"]
+script = ExtResource("Option")
+category = "rejection"
+accepted_answers = PackedStringArray("leave me here for a while", "leave me here", "reject his help")
+reconnect_point = "p07_01"
+
+[sub_resource type="Resource" id="i6unknown"]
+script = ExtResource("Option")
+category = "UNKNOWN"
+accepted_answers = null
+
+[sub_resource type="Resource" id="i6"]
+script = ExtResource("Interaction")
+prompt_a = "Suggested response — editable:
+“leave me here for a while”"
+prompt_c = "What is she gonna do
+Speak your response."
+agency_type = 1
+retry_unknown = true
+author_notes = "Suggested input vocabulary; review before study. Twine prompt: What is she gonna do"
+options = Array[ExtResource("Option")]([SubResource("i6o0"), SubResource("i6unknown")])
+allowed_categories_a = null
+response_pause = 0.3
+
+[sub_resource type="Resource" id="p06_04"]
+resource_name = "p06_04 — why are you here, what are you doing"
+script = ExtResource("Beat")
+text = "Lets head inside first.”"
+beat_id = "p06_04"
+interaction = SubResource("i6")
+source_passage = "why are you here, what are you doing"
+
+[sub_resource type="Resource" id="p07_01"]
+resource_name = "p07_01 — rejection"
+script = ExtResource("Beat")
+text = "“I’m fine, just leave me here for a while”"
+beat_id = "p07_01"
+next_beat_id = "p07_02"
+source_passage = "rejection"
+
+[sub_resource type="Resource" id="p07_02"]
+resource_name = "p07_02 — rejection"
+script = ExtResource("Beat")
+text = "“I can’t let you here all alone and get sick the next day”"
+beat_id = "p07_02"
+next_beat_id = "p07_03"
+source_passage = "rejection"
+
+[sub_resource type="Resource" id="p07_03"]
+resource_name = "p07_03 — rejection"
+script = ExtResource("Beat")
+text = "He reaches inside his bag and pulled out a single-used raincoat, covering her soaked body and dragged her up."
+beat_id = "p07_03"
+next_beat_id = "p07_04"
+source_passage = "rejection"
+
+[sub_resource type="Resource" id="p07_04"]
+resource_name = "p07_04 — rejection"
+script = ExtResource("Beat")
+text = "“No. Don’t do this”"
+beat_id = "p07_04"
+next_beat_id = "p07_05"
+source_passage = "rejection"
+
+[sub_resource type="Resource" id="p07_05"]
+resource_name = "p07_05 — rejection"
+script = ExtResource("Beat")
+text = "Despite her yelling all out at him, she shows no signs of resistance, letting the boy half soaked, taking her arms with all of his force, pulled her to nearby shelter."
+beat_id = "p07_05"
+next_beat_id = "p07_06"
+source_passage = "rejection"
+
+[sub_resource type="Resource" id="p07_06"]
+resource_name = "p07_06 — rejection"
+script = ExtResource("Beat")
+text = "They hid under a fast food restaurant. They kept the sign board light on all night, luminate the faces of the once coupled drying themselves up."
+beat_id = "p07_06"
+next_beat_id = "p07_07"
+source_passage = "rejection"
+
+[sub_resource type="Resource" id="p07_07"]
+resource_name = "p07_07 — rejection"
+script = ExtResource("Beat")
+text = "“So... what happen... Why all of the sudden you stand there”"
+beat_id = "p07_07"
+source_passage = "rejection"
+provisional_route_endpoint = true
+
+[sub_resource type="Resource" id="p08_01"]
+resource_name = "p08_01 — Her close friend"
+script = ExtResource("Beat")
+text = "She avoids her gaze, pretending not knowing what is happening."
+beat_id = "p08_01"
+next_beat_id = "p08_02"
+source_passage = "Her close friend"
+
+[sub_resource type="Resource" id="p08_02"]
+resource_name = "p08_02 — Her close friend"
+script = ExtResource("Beat")
+text = "“Are you OK deer?"
+beat_id = "p08_02"
+next_beat_id = "p08_03"
+source_passage = "Her close friend"
+
+[sub_resource type="Resource" id="i8o0"]
+script = ExtResource("Option")
+category = "pretend everything is fine"
+accepted_answers = PackedStringArray("I\'m fine", "everything is fine", "pretend everything is fine")
+reconnect_point = "p09_01"
+
+[sub_resource type="Resource" id="i8unknown"]
+script = ExtResource("Option")
+category = "UNKNOWN"
+accepted_answers = null
+
+[sub_resource type="Resource" id="i8"]
+script = ExtResource("Interaction")
+prompt_a = "Suggested response — editable:
+“I'm fine”"
+prompt_c = "What is her response/ what is she gonna do
+Speak your response."
+retry_unknown = true
+author_notes = "Suggested input vocabulary; review before study. Twine prompt: What is her response/ what is she gonna do"
+options = Array[ExtResource("Option")]([SubResource("i8o0"), SubResource("i8unknown")])
+allowed_categories_a = null
+response_pause = 0.3
+
+[sub_resource type="Resource" id="p08_03"]
+resource_name = "p08_03 — Her close friend"
+script = ExtResource("Beat")
+text = "You are gonna drink more water if you don’t move.”"
+beat_id = "p08_03"
+interaction = SubResource("i8")
+source_passage = "Her close friend"
+
+[sub_resource type="Resource" id="p09_01"]
+resource_name = "p09_01 — pretend everything is fine"
+script = ExtResource("Beat")
+text = "Her friend keep staring at the girl, something is up in their mind."
+beat_id = "p09_01"
+next_beat_id = "p09_02"
+source_passage = "pretend everything is fine"
+
+[sub_resource type="Resource" id="i9o0"]
+script = ExtResource("Option")
+category = "Reject the proposal"
+accepted_answers = PackedStringArray("no thank you", "reject the proposal", "decline the offer")
+reconnect_point = "p10_01"
+
+[sub_resource type="Resource" id="i9o1"]
+script = ExtResource("Option")
+category = "Accept the proposal"
+accepted_answers = PackedStringArray("let\'s go", "accept the proposal", "accept the offer")
+reconnect_point = "p11_01"
+
+[sub_resource type="Resource" id="i9unknown"]
+script = ExtResource("Option")
+category = "UNKNOWN"
+accepted_answers = null
+
+[sub_resource type="Resource" id="i9"]
+script = ExtResource("Interaction")
+prompt_a = "Suggested response — editable:
+“no thank you”
+“let's go”"
+prompt_c = "what is she gonna do next
+Speak your response."
+agency_type = 1
+retry_unknown = true
+author_notes = "Suggested input vocabulary; review before study. Twine prompt: what is she gonna do next"
+options = Array[ExtResource("Option")]([SubResource("i9o0"), SubResource("i9o1"), SubResource("i9unknown")])
+allowed_categories_a = null
+response_pause = 0.3
+
+[sub_resource type="Resource" id="p09_02"]
+resource_name = "p09_02 — pretend everything is fine"
+script = ExtResource("Beat")
+text = "“let’s go, I know a mochi shop near here. It’s on me”"
+beat_id = "p09_02"
+interaction = SubResource("i9")
+source_passage = "pretend everything is fine"
+
+[sub_resource type="Resource" id="p10_01"]
+resource_name = "p10_01 — Reject the proposal"
+script = ExtResource("Beat")
+text = "Her friend stood their, dumbfounded by her response. She seems confused, as the silences enters the conversation."
+beat_id = "p10_01"
+next_beat_id = "p10_02"
+source_passage = "Reject the proposal"
+
+[sub_resource type="Resource" id="p10_02"]
+resource_name = "p10_02 — Reject the proposal"
+script = ExtResource("Beat")
+text = "“well then do you wanna talk it out? the elephant in the room?”"
+beat_id = "p10_02"
+source_passage = "Reject the proposal"
+provisional_route_endpoint = true
+
+[sub_resource type="Resource" id="p11_01"]
+resource_name = "p11_01 — Accept the proposal"
+script = ExtResource("Beat")
+text = "She stands up to her friend’s offer, trying to hide her feelings and put on a smile on her face. She replies with a mockery tone."
+beat_id = "p11_01"
+next_beat_id = "p11_02"
+source_passage = "Accept the proposal"
+
+[sub_resource type="Resource" id="p11_02"]
+resource_name = "p11_02 — Accept the proposal"
+script = ExtResource("Beat")
+text = "“You sure girl? I might order the whole store out and you will be broke in no time”"
+beat_id = "p11_02"
+next_beat_id = "p11_03"
+source_passage = "Accept the proposal"
+
+[sub_resource type="Resource" id="p11_03"]
+resource_name = "p11_03 — Accept the proposal"
+script = ExtResource("Beat")
+text = "“WDYM buddy. Don’t do this to me”"
+beat_id = "p11_03"
+source_passage = "Accept the proposal"
+provisional_route_endpoint = true
+
+[sub_resource type="Resource" id="p12_01"]
+resource_name = "p12_01 — say something funny or ragebait the boy"
+script = ExtResource("Beat")
+text = "“That is my sentence."
+beat_id = "p12_01"
+next_beat_id = "p12_02"
+source_passage = "say something funny or ragebait the boy"
+
+[sub_resource type="Resource" id="p12_02"]
+resource_name = "p12_02 — say something funny or ragebait the boy"
+script = ExtResource("Beat")
+text = "You stupid gremline."
+beat_id = "p12_02"
+next_beat_id = "p12_03"
+source_passage = "say something funny or ragebait the boy"
+
+[sub_resource type="Resource" id="p12_03"]
+resource_name = "p12_03 — say something funny or ragebait the boy"
+script = ExtResource("Beat")
+text = "Why sitting in the rain like this."
+beat_id = "p12_03"
+next_beat_id = "p12_04"
+source_passage = "say something funny or ragebait the boy"
+
+[sub_resource type="Resource" id="p12_04"]
+resource_name = "p12_04 — say something funny or ragebait the boy"
+script = ExtResource("Beat")
+text = "It will do you no good."
+beat_id = "p12_04"
+next_beat_id = "p12_05"
+source_passage = "say something funny or ragebait the boy"
+
+[sub_resource type="Resource" id="i12o0"]
+script = ExtResource("Option")
+category = "Accept whatever he is saying"
+accepted_answers = PackedStringArray("all right lets go", "accept his help", "all right")
+reconnect_point = "p13_01"
+
+[sub_resource type="Resource" id="i12unknown"]
+script = ExtResource("Option")
+category = "UNKNOWN"
+accepted_answers = null
+
+[sub_resource type="Resource" id="i12"]
+script = ExtResource("Interaction")
+prompt_a = "Suggested response — editable:
+“all right lets go”"
+prompt_c = "What/ How did she replied
+Speak your response."
+retry_unknown = true
+author_notes = "Suggested input vocabulary; review before study. Twine prompt: What/ How did she replied"
+options = Array[ExtResource("Option")]([SubResource("i12o0"), SubResource("i12unknown")])
+allowed_categories_a = null
+response_pause = 0.3
+
+[sub_resource type="Resource" id="p12_05"]
+resource_name = "p12_05 — say something funny or ragebait the boy"
+script = ExtResource("Beat")
+text = "You don’t have much time left already.”"
+beat_id = "p12_05"
+interaction = SubResource("i12")
+source_passage = "say something funny or ragebait the boy"
+
+[sub_resource type="Resource" id="p13_01"]
+resource_name = "p13_01 — Accept whatever he is saying"
+script = ExtResource("Beat")
+text = "“Haizz."
+beat_id = "p13_01"
+next_beat_id = "p13_02"
+source_passage = "Accept whatever he is saying"
+
+[sub_resource type="Resource" id="p13_02"]
+resource_name = "p13_02 — Accept whatever he is saying"
+script = ExtResource("Beat")
+text = "Anyway, I must get you to the shelter first”."
+beat_id = "p13_02"
+next_beat_id = "p13_03"
+source_passage = "Accept whatever he is saying"
+
+[sub_resource type="Resource" id="p13_03"]
+resource_name = "p13_03 — Accept whatever he is saying"
+script = ExtResource("Beat")
+text = "He reaches inside his bag and pulled out a single-used raincoat, covering her soaked body and dragged her up."
+beat_id = "p13_03"
+next_beat_id = "p13_04"
+source_passage = "Accept whatever he is saying"
+
+[sub_resource type="Resource" id="p13_04"]
+resource_name = "p13_04 — Accept whatever he is saying"
+script = ExtResource("Beat")
+text = "“Right.” She replies"
+beat_id = "p13_04"
+next_beat_id = "p13_05"
+source_passage = "Accept whatever he is saying"
+
+[sub_resource type="Resource" id="p13_05"]
+resource_name = "p13_05 — Accept whatever he is saying"
+script = ExtResource("Beat")
+text = "Despite her yelling all out at him, she shows no signs of resistance, letting the boy half soaked, taking her arms with all of his force, pulled her to nearby shelter."
+beat_id = "p13_05"
+next_beat_id = "p14_01"
+source_passage = "Accept whatever he is saying"
+
+[sub_resource type="Resource" id="p14_01"]
+resource_name = "p14_01 — Next"
+script = ExtResource("Beat")
+text = "They hid under a fast food restaurant. They kept the sign board light on all night, luminate the faces of the once coupled drying themselves up."
+beat_id = "p14_01"
+next_beat_id = "p14_02"
+source_passage = "Next"
+
+[sub_resource type="Resource" id="p14_02"]
+resource_name = "p14_02 — Next"
+script = ExtResource("Beat")
+text = "“Don’t do this again ok?”"
+beat_id = "p14_02"
+next_beat_id = "p14_03"
+source_passage = "Next"
+
+[sub_resource type="Resource" id="p14_03"]
+resource_name = "p14_03 — Next"
+script = ExtResource("Beat")
+text = "yapping the guy peeping at her through the umbrella, before staring away."
+beat_id = "p14_03"
+next_beat_id = "p14_04"
+source_passage = "Next"
+
+[sub_resource type="Resource" id="p14_04"]
+resource_name = "p14_04 — Next"
+script = ExtResource("Beat")
+text = "She says nothing. Neither does him."
+beat_id = "p14_04"
+next_beat_id = "p14_05"
+source_passage = "Next"
+
+[sub_resource type="Resource" id="p14_05"]
+resource_name = "p14_05 — Next"
+script = ExtResource("Beat")
+text = "“I think I gotta go, my driver is waiting."
+beat_id = "p14_05"
+next_beat_id = "p14_06"
+source_passage = "Next"
+
+[sub_resource type="Resource" id="p14_06"]
+resource_name = "p14_06 — Next"
+script = ExtResource("Beat")
+text = "If you need anything, just lemme know.”"
+beat_id = "p14_06"
+next_beat_id = "p14_07"
+source_passage = "Next"
+
+[sub_resource type="Resource" id="p14_07"]
+resource_name = "p14_07 — Next"
+script = ExtResource("Beat")
+text = "He slowly stands up, open his umbrella again and begins to walk away."
+beat_id = "p14_07"
+source_passage = "Next"
+provisional_route_endpoint = true
+
+[sub_resource type="Resource" id="p15_01"]
+resource_name = "p15_01 — keep walking away"
+script = ExtResource("Beat")
+text = "Her footstep stalled faster  as she sprints to the nearby shelter under a fastfood restaurant."
+beat_id = "p15_01"
+next_beat_id = "p15_02"
+source_passage = "keep walking away"
+
+[sub_resource type="Resource" id="p15_02"]
+resource_name = "p15_02 — keep walking away"
+script = ExtResource("Beat")
+text = "Getting herself dry while waiting for the rain to let down (stops)"
+beat_id = "p15_02"
+next_beat_id = "p15_03"
+source_passage = "keep walking away"
+
+[sub_resource type="Resource" id="p15_03"]
+resource_name = "p15_03 — keep walking away"
+script = ExtResource("Beat")
+text = "“what is that thing?"
+beat_id = "p15_03"
+next_beat_id = "p15_04"
+source_passage = "keep walking away"
+
+[sub_resource type="Resource" id="p15_04"]
+resource_name = "p15_04 — keep walking away"
+script = ExtResource("Beat")
+text = "Is that, my own shadow”"
+beat_id = "p15_04"
+next_beat_id = "p15_05"
+source_passage = "keep walking away"
+
+[sub_resource type="Resource" id="p15_05"]
+resource_name = "p15_05 — keep walking away"
+script = ExtResource("Beat")
+text = "She pant. Her breadth is getting heavier. Her brain feels dizzy as she closes her eyes shut."
+beat_id = "p15_05"
+next_beat_id = "p15_06"
+source_passage = "keep walking away"
+
+[sub_resource type="Resource" id="i15o0"]
+script = ExtResource("Option")
+category = "underneath her foot"
+accepted_answers = PackedStringArray("underneath her foot", "under her feet", "normal shadow")
+reconnect_point = "p19_01"
+
+[sub_resource type="Resource" id="i15o1"]
+script = ExtResource("Option")
+category = "It disappear"
+accepted_answers = PackedStringArray("it disappears", "the shadow disappears", "it disappeared")
+reconnect_point = "p21_01"
+
+[sub_resource type="Resource" id="i15o2"]
+script = ExtResource("Option")
+category = "Something else, no longer her own shadow"
+accepted_answers = PackedStringArray("something else", "a different shadow", "the shadow changes")
+reconnect_point = "p22_01"
+
+[sub_resource type="Resource" id="i15unknown"]
+script = ExtResource("Option")
+category = "UNKNOWN"
+accepted_answers = null
+
+[sub_resource type="Resource" id="i15"]
+script = ExtResource("Interaction")
+prompt_a = "Suggested response — editable:
+“underneath her foot”
+“it disappears”
+“something else”"
+prompt_c = "where is her shadow
+Speak your response."
+agency_type = 2
+retry_unknown = true
+author_notes = "Suggested input vocabulary; review before study. Twine prompt: where is her shadow"
+options = Array[ExtResource("Option")]([SubResource("i15o0"), SubResource("i15o1"), SubResource("i15o2"), SubResource("i15unknown")])
+allowed_categories_a = null
+response_pause = 0.3
+
+[sub_resource type="Resource" id="p15_06"]
+resource_name = "p15_06 — keep walking away"
+script = ExtResource("Beat")
+text = "The girl find herself looking down at her feet."
+beat_id = "p15_06"
+interaction = SubResource("i15")
+source_passage = "keep walking away"
+
+[sub_resource type="Resource" id="i16o0"]
+script = ExtResource("Option")
+category = "it copies her movement"
+accepted_answers = PackedStringArray("it copies her movement", "it copies her", "copy her movement")
+reconnect_point = "p17_01"
+
+[sub_resource type="Resource" id="i16o1"]
+script = ExtResource("Option")
+category = "It does not move"
+accepted_answers = PackedStringArray("it does not move", "it stays still", "no movement")
+reconnect_point = "p18_01"
+
+[sub_resource type="Resource" id="i16unknown"]
+script = ExtResource("Option")
+category = "UNKNOWN"
+accepted_answers = null
+
+[sub_resource type="Resource" id="i16"]
+script = ExtResource("Interaction")
+prompt_a = "Suggested response — editable:
+“it copies her movement”
+“it does not move”"
+prompt_c = "what will the shadow response
+Speak your response."
+agency_type = 2
+retry_unknown = true
+negation_guard = false
+author_notes = "Suggested input vocabulary; review before study. Twine prompt: what will the shadow response"
+options = Array[ExtResource("Option")]([SubResource("i16o0"), SubResource("i16o1"), SubResource("i16unknown")])
+allowed_categories_a = null
+response_pause = 0.3
+
+[sub_resource type="Resource" id="p16_01"]
+resource_name = "p16_01 — test it"
+script = ExtResource("Beat")
+text = "not lending trust to her eyes, she raise her hand and try to make a sudden movement."
+beat_id = "p16_01"
+interaction = SubResource("i16")
+source_passage = "test it"
+
+[sub_resource type="Resource" id="p17_01"]
+resource_name = "p17_01 — it copies her movement"
+script = ExtResource("Beat")
+text = "The shadow subtlely changes its pose, even though she was standing away from it, she can clearly see it. It is copying her"
+beat_id = "p17_01"
+source_passage = "it copies her movement"
+provisional_route_endpoint = true
+
+[sub_resource type="Resource" id="p18_01"]
+resource_name = "p18_01 — It does not move"
+script = ExtResource("Beat")
+text = "“Strange. Then what is it? something should have got into my eyes.\""
+beat_id = "p18_01"
+next_beat_id = "p18_02"
+source_passage = "It does not move"
+
+[sub_resource type="Resource" id="p18_02"]
+resource_name = "p18_02 — It does not move"
+script = ExtResource("Beat")
+text = "Before she turn around and walk away once again, as the rain starts to pick up."
+beat_id = "p18_02"
+source_passage = "It does not move"
+provisional_route_endpoint = true
+
+[sub_resource type="Resource" id="p19_01"]
+resource_name = "p19_01 — underneath her foot"
+script = ExtResource("Beat")
+text = "Sigh"
+beat_id = "p19_01"
+next_beat_id = "p19_02"
+source_passage = "underneath her foot"
+
+[sub_resource type="Resource" id="p19_02"]
+resource_name = "p19_02 — underneath her foot"
+script = ExtResource("Beat")
+text = "It must have been her dreams."
+beat_id = "p19_02"
+next_beat_id = "p19_03"
+source_passage = "underneath her foot"
+
+[sub_resource type="Resource" id="p19_03"]
+resource_name = "p19_03 — underneath her foot"
+script = ExtResource("Beat")
+text = "Before she even have a moment to process, someone enters her vision and snuck next to her, under the same shelter."
+beat_id = "p19_03"
+next_beat_id = "p20_01"
+source_passage = "underneath her foot"
+
+[sub_resource type="Resource" id="p20_01"]
+resource_name = "p20_01 — who is that"
+script = ExtResource("Beat")
+text = "It was her ex"
+beat_id = "p20_01"
+source_passage = "who is that"
+provisional_route_endpoint = true
+
+[sub_resource type="Resource" id="p21_01"]
+resource_name = "p21_01 — It disappear"
+script = ExtResource("Beat")
+text = "She sees nothing. Her shadow. The strangest things ever happen to human. Yet not to her.  It already happen to her a few times, but never to leave her side this far."
+beat_id = "p21_01"
+source_passage = "It disappear"
+provisional_route_endpoint = true
+
+[sub_resource type="Resource" id="p22_01"]
+resource_name = "p22_01 — Something else, no longer her own shadow"
+script = ExtResource("Beat")
+text = "Spooky"
+beat_id = "p22_01"
+source_passage = "Something else, no longer her own shadow"
+provisional_route_endpoint = true
+author_notes = "Original user-authored placeholder from Twine; provisional endpoint, not invented closure."
+
+[resource]
+script = ExtResource("Story")
+beats = Array[ExtResource("Beat")]([SubResource("p01_01"), SubResource("p01_02"), SubResource("p01_03"), SubResource("p01_04"), SubResource("p01_05"), SubResource("p02_01"), SubResource("p02_02"), SubResource("p02_03"), SubResource("p02_04"), SubResource("p02_05"), SubResource("p02_06"), SubResource("p02_07"), SubResource("p03_01"), SubResource("p03_02"), SubResource("p03_03"), SubResource("p04_01"), SubResource("p04_02"), SubResource("p04_03"), SubResource("p04_04"), SubResource("p04_05"), SubResource("p04_06"), SubResource("p05_01"), SubResource("p06_01"), SubResource("p06_02"), SubResource("p06_03"), SubResource("p06_04"), SubResource("p07_01"), SubResource("p07_02"), SubResource("p07_03"), SubResource("p07_04"), SubResource("p07_05"), SubResource("p07_06"), SubResource("p07_07"), SubResource("p08_01"), SubResource("p08_02"), SubResource("p08_03"), SubResource("p09_01"), SubResource("p09_02"), SubResource("p10_01"), SubResource("p10_02"), SubResource("p11_01"), SubResource("p11_02"), SubResource("p11_03"), SubResource("p12_01"), SubResource("p12_02"), SubResource("p12_03"), SubResource("p12_04"), SubResource("p12_05"), SubResource("p13_01"), SubResource("p13_02"), SubResource("p13_03"), SubResource("p13_04"), SubResource("p13_05"), SubResource("p14_01"), SubResource("p14_02"), SubResource("p14_03"), SubResource("p14_04"), SubResource("p14_05"), SubResource("p14_06"), SubResource("p14_07"), SubResource("p15_01"), SubResource("p15_02"), SubResource("p15_03"), SubResource("p15_04"), SubResource("p15_05"), SubResource("p15_06"), SubResource("p16_01"), SubResource("p17_01"), SubResource("p18_01"), SubResource("p18_02"), SubResource("p19_01"), SubResource("p19_02"), SubResource("p19_03"), SubResource("p20_01"), SubResource("p21_01"), SubResource("p22_01")])
+completed_message = "Current route complete."

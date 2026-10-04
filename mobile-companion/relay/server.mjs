@@ -1,3 +1,4 @@
+import { installProtocol } from "./protocol.mjs";
 import { createServer } from "node:https";
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -64,48 +65,7 @@ wss.on("error", (error) => {
   console.error("[relay] WebSocket server error", error);
 });
 
-// One local game and phone; retain only the current request, never face success.
-let game = null;
-let request = null;
-function phones() { return [...wss.clients].filter(c => c.role === "phone" && c.readyState === 1); }
-function send(client, message) { if (client?.readyState === 1) client.send(JSON.stringify(message)); }
-function phoneStatus() { send(game, {kind: "phone_status", connected: phones().length > 0}); }
-wss.on("connection", (socket) => {
-  socket.on("message", data => {
-    let message;
-    try { message = JSON.parse(data.toString()); } catch { return; }
-    if (!message || typeof message !== "object") return;
-    if (message.kind === "hello") {
-      if (message.role === "game") {
-        if (game && game !== socket) game.close();
-        game = socket;
-        socket.role = "game";
-        request = null;
-      } else if (message.role === "phone") {
-        socket.role = "phone";
-        if (request) send(socket, request);
-      }
-      phoneStatus();
-    } else if (socket === game) {
-      if (message.kind === "face_request" && typeof message.requestId === "string" && message.cue === "smile") request = message;
-      else if (message.kind === "face_cancel" && message.requestId === request?.requestId) request = null;
-      else if (message.kind !== "face_ack") return;
-      for (const phone of phones()) send(phone, message);
-    } else if (socket.role === "phone") {
-      if (message.kind === "face_present" && typeof message.present === "boolean") send(game, message);
-      if (message.kind === "face_cue" && request && message.requestId === request.requestId && message.cue === request.cue && message.met === true) send(game, message);
-    }
-  });
-  socket.on("error", error => console.error("[relay] socket error", error.message));
-  socket.on("close", () => {
-    if (socket === game) {
-      for (const phone of phones()) send(phone, {kind: "face_cancel", requestId: request?.requestId});
-      game = null;
-      request = null;
-    }
-    phoneStatus();
-  });
-});
+installProtocol(wss);
 
 server.on("error", (error) => {
   console.error("[relay] HTTPS server error", error);

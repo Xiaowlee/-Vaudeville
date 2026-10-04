@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: vaudeville
+    runtime: node
+    plan: free
+    rootDir: mobile-companion
+    buildCommand: npm ci --include=dev && npm ci --prefix relay && npm run build:hosted && npm prune --omit=dev
+    startCommand: npm run host
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production

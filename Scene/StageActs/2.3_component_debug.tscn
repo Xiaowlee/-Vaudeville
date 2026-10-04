@@ -1,0 +1,16 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://Script/StageActs/stage_debug.gd" id="Script"]
+[node name="DebugPanel" type="CanvasLayer"]
+layer = 100
+visible = false
+script = ExtResource("Script")
+[node name="Panel" type="PanelContainer" parent="."]
+offset_right = 760.0
+offset_bottom = 150.0
+mouse_filter = 2
+[node name="Margin" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+mouse_filter = 2
+[node name="Details" type="Label" parent="Panel/Margin"]
+layout_mode = 2
+text = "DEBUG"

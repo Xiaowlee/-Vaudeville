@@ -1,0 +1,7 @@
+[gd_scene format=3]
+
+; Compatibility path for editor tabs opened before the approved rename.
+; The numbered scene remains the source. Keep until open edits have been saved.
+[ext_resource type="PackedScene" path="res://Scene/00_shared_ui_audio.tscn" id="RenamedScene"]
+
+[node name="UIAudio" instance=ExtResource("RenamedScene")]

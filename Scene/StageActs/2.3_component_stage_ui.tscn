@@ -1,0 +1,256 @@
+[gd_scene format=3 uid="uid://cfq7vims3ic0"]
+
+[ext_resource type="AudioStream" uid="uid://char0b0tuqv04" path="res://Sound/clicksoundeffect.mp3" id="Ack"]
+[ext_resource type="Texture2D" uid="uid://y88ktfr2vcyu" path="res://Visual Asset/Dialogue box.png" id="Panel"]
+[ext_resource type="Script" uid="uid://c7pun2kai7uj" path="res://Script/StageActs/stage_ui.gd" id="Script"]
+[ext_resource type="Theme" uid="uid://p3m2d0y1qrtb" path="res://UI/prototype_theme.tres" id="Theme"]
+[ext_resource type="Resource" path="res://Story/StageActs/typewriter_defaults.tres" id="Typing"]
+
+[sub_resource type="StyleBoxFlat" id="NPCStyle"]
+bg_color = Color(0.1, 0.12, 0.3, 0.94)
+
+[sub_resource type="StyleBoxTexture" id="Bubble"]
+texture = ExtResource("Panel")
+
+[sub_resource type="StyleBoxFlat" id="CueStyle"]
+bg_color = Color(0.95, 0.9, 0.74, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_00ams"]
+bg_color = Color(1, 0.67898107, 0.9471733, 1)
+
+[sub_resource type="StyleBoxFlat" id="PlayerStyle"]
+bg_color = Color(0.3, 0.12, 0.36, 0.94)
+
+[node name="StageUI" type="Control" unique_id=195706465]
+z_index = 10
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("Theme")
+script = ExtResource("Script")
+typing_settings = ExtResource("Typing")
+
+[node name="NPCDialogue" type="PanelContainer" parent="." unique_id=1900912006]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.03
+anchor_top = 0.68
+anchor_right = 0.48
+anchor_bottom = 0.98
+mouse_filter = 2
+theme_override_styles/panel = SubResource("NPCStyle")
+
+[node name="Margin" type="MarginContainer" parent="NPCDialogue" unique_id=1252561325]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 44
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
+
+[node name="Text" type="RichTextLabel" parent="NPCDialogue/Margin" unique_id=1979457821]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.05, 0.04, 0.12, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/normal_font_size = 24
+
+[node name="SpeakerLayer" type="Control" parent="NPCDialogue" unique_id=1966652412]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Speaker" type="Label" parent="NPCDialogue/SpeakerLayer" unique_id=612674590]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 10.0
+offset_right = 480.0
+offset_bottom = 36.0
+theme_override_colors/font_color = Color(0.95, 0.8, 0.94, 1)
+theme_override_font_sizes/font_size = 18
+
+[node name="PlayerThought" type="PanelContainer" parent="." unique_id=1450457113]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.55
+anchor_top = 0.13
+anchor_right = 0.96
+anchor_bottom = 0.35
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Bubble")
+
+[node name="Margin" type="MarginContainer" parent="PlayerThought" unique_id=359975666]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
+
+[node name="Text" type="RichTextLabel" parent="PlayerThought/Margin" unique_id=1297815460]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.05, 0.04, 0.12, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/normal_font_size = 24
+
+[node name="CueCard" type="PanelContainer" parent="." unique_id=1944297061]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.16
+anchor_top = 0.43
+anchor_right = 0.84
+anchor_bottom = 0.58
+mouse_filter = 2
+theme_override_styles/panel = SubResource("CueStyle")
+
+[node name="Margin" type="MarginContainer" parent="CueCard" unique_id=1430093419]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
+
+[node name="Text" type="RichTextLabel" parent="CueCard/Margin" unique_id=401488838]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.12, 0.1, 0.16, 1)
+theme_override_colors/font_outline_color = Color(0.05, 0.04, 0.12, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/normal_font_size = 24
+
+[node name="LocalIFB" type="PanelContainer" parent="." unique_id=1287358353]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.27
+anchor_top = 0.499
+anchor_right = 0.73
+anchor_bottom = 0.64
+offset_top = -0.2000122
+offset_right = 6.1035156e-05
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_00ams")
+
+[node name="Margin" type="MarginContainer" parent="LocalIFB" unique_id=1403176890]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
+
+[node name="Text" type="RichTextLabel" parent="LocalIFB/Margin" unique_id=742883852]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.05, 0.04, 0.12, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/normal_font_size = 24
+
+[node name="Menu" type="Button" parent="." unique_id=1113136162]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -160.0
+offset_top = 24.0
+offset_right = -30.0
+offset_bottom = 72.0
+grow_horizontal = 0
+text = "Menu"
+
+[node name="PlayerTranscript" type="PanelContainer" parent="." unique_id=1078129974]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.52000004
+anchor_top = 0.711
+anchor_right = 0.97
+anchor_bottom = 0.98
+offset_left = -6.1035156e-05
+offset_top = 0.19995117
+offset_bottom = -23.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("PlayerStyle")
+
+[node name="Margin" type="MarginContainer" parent="PlayerTranscript" unique_id=223513366]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
+
+[node name="Text" type="RichTextLabel" parent="PlayerTranscript/Margin" unique_id=165022396]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.05, 0.04, 0.12, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/normal_font_size = 24
+
+[node name="PreShow" type="PanelContainer" parent="." unique_id=1841740848]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.03
+anchor_top = 0.70900005
+anchor_right = 0.48000002
+anchor_bottom = 0.98
+offset_top = -0.2000122
+offset_right = -6.1035156e-05
+offset_bottom = -20.0
+theme_override_styles/panel = SubResource("NPCStyle")
+
+[node name="Margin" type="MarginContainer" parent="PreShow" unique_id=1727045583]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
+
+[node name="Lines" type="VBoxContainer" parent="PreShow/Margin" unique_id=2080229509]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Dialogue" type="Label" parent="PreShow/Margin/Lines" unique_id=330375769]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+autowrap_mode = 2
+
+[node name="Prompt" type="Label" parent="PreShow/Margin/Lines" unique_id=415559669]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.8, 0.94, 1)
+theme_override_font_sizes/font_size = 22
+autowrap_mode = 2
+
+[node name="DialogueVoice" type="AudioStreamPlayer" parent="." unique_id=1357372375]
+
+[node name="Speak" type="Button" parent="." unique_id=1937016515]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -34.070007
+offset_bottom = -7.0700073
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_disabled_color = Color(0.95, 0.9, 0.96, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/disabled = SubResource("PlayerStyle")
+disabled = true
+text = "Please wait"
+
+[node name="Acknowledgement" type="AudioStreamPlayer" parent="." unique_id=2138415837]
+stream = ExtResource("Ack")
+volume_db = -18.0

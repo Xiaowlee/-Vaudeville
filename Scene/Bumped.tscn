@@ -1,33 +1,7 @@
-[gd_scene format=3 uid="uid://b63vekaftiiux"]
+[gd_scene format=3]
 
-[ext_resource type="Texture2D" uid="uid://bs5f3ykqyd7rm" path="res://Visual Asset/bump.png" id="1_rvsji"]
+; Compatibility path for editor tabs opened before the approved rename.
+; The numbered scene remains the source. Keep until open edits have been saved.
+[ext_resource type="PackedScene" path="res://Scene/2.0_component_bump_animation.tscn" id="RenamedScene"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ttea0"]
-atlas = ExtResource("1_rvsji")
-region = Rect2(0, 0, 1920, 1080)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_r7c3y"]
-atlas = ExtResource("1_rvsji")
-region = Rect2(1920, 0, 1920, 1080)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_8ergx"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ttea0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_r7c3y")
-}],
-"loop": 0,
-"name": &"default",
-"speed": 1.0
-}]
-
-[node name="Bumped" type="Sprite2D" unique_id=373449142]
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2084108540]
-position = Vector2(690, 473)
-sprite_frames = SubResource("SpriteFrames_8ergx")
-frame = 1
-frame_progress = 1.0
+[node name="Bumped" instance=ExtResource("RenamedScene")]

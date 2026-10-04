@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://bo0o2crcsscjq"]
+
+[ext_resource type="Texture2D" uid="uid://da4a3a3f0eb6h" path="res://Visual Asset/door.png" id="1_tma5e"]
+[ext_resource type="Texture2D" uid="uid://bafxlr6ccpiwa" path="res://Visual Asset/key.png" id="2_iimwj"]
+[ext_resource type="PackedScene" uid="uid://oqtaq5ctnl37" path="res://Scene/2.0_component_character_standby.tscn" id="3_vm1mu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jm7ap"]
+atlas = ExtResource("1_tma5e")
+region = Rect2(0, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0cfxl"]
+atlas = ExtResource("1_tma5e")
+region = Rect2(1920, 0, 1920, 1080)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8ergx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jm7ap")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0cfxl")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 1.0
+}]
+
+[node name="Sprite2D" type="Sprite2D" unique_id=1447978905]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1224035421]
+position = Vector2(785, 457)
+sprite_frames = SubResource("SpriteFrames_8ergx")
+frame = 1
+frame_progress = 0.47285843
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1487271817]
+position = Vector2(278, 793.00006)
+scale = Vector2(0.6212963, 0.6212963)
+texture = ExtResource("2_iimwj")
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=316525568]
+
+[node name="Sprite2D3" parent="." unique_id=986627318 instance=ExtResource("3_vm1mu")]
+position = Vector2(-683, 369)
+scale = Vector2(0.71, 0.71)

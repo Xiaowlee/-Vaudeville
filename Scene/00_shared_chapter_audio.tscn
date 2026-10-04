@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bfa6133lesemv"]
+
+[ext_resource type="Script" uid="uid://d0c36txvqh3yg" path="res://Script/chapter_audio.gd" id="Script"]
+
+[node name="ChapterAudio" type="Node" unique_id=196888765]
+script = ExtResource("Script")
+
+[node name="Ambience" type="AudioStreamPlayer" parent="."]
+
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=2101203698]
+
+[node name="Weather" type="AudioStreamPlayer" parent="." unique_id=151640768]
+
+[node name="Movement" type="AudioStreamPlayer" parent="." unique_id=212262381]
+
+[node name="OneShot" type="AudioStreamPlayer" parent="." unique_id=890957385]

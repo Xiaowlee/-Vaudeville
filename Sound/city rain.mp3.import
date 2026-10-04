@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bq2ciavgycpow"
+path="res://.godot/imported/city rain.mp3-d80f00d741aa99e0c6a8c07b4ceae9d0.mp3str"
+
+[deps]
+
+source_file="res://Sound/city rain.mp3"
+dest_files=["res://.godot/imported/city rain.mp3-d80f00d741aa99e0c6a8c07b4ceae9d0.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

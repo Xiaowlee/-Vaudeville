@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://c2w3vptdskwcs"]
+
+[ext_resource type="PackedScene" uid="uid://b8x4703svpogc" path="res://Scene/2.2_shared_performer_base.tscn" id="Base"]
+[ext_resource type="Resource" path="res://Story/prototype_c.tres" id="Variant"]
+
+[ext_resource type="Resource" path="res://Story/benchmark_c.tres" id="Benchmark"]
+
+[node name="PrototypeC" unique_id=173975730 instance=ExtResource("Base")]
+variant = ExtResource("Variant")
+story_source = ExtResource("Benchmark")
+use_scene_text_colour = true
+
+[node name="PanelContainer" parent="." index="4" unique_id=1399829317]
+offset_top = -236.0

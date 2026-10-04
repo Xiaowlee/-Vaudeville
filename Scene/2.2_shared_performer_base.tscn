@@ -1,0 +1,133 @@
+[gd_scene format=3 uid="uid://b8x4703svpogc"]
+
+[ext_resource type="Texture2D" uid="uid://cm7wdbvnte2jr" path="res://Visual Asset/BG.jpg" id="4_1r0kp"]
+[ext_resource type="PackedScene" uid="uid://cg8ycvmwbdltt" path="res://Scene/00_shared_narration_base.tscn" id="Base"]
+[ext_resource type="Script" uid="uid://dsds712nwfne0" path="res://Script/performer_controller.gd" id="Controller"]
+[ext_resource type="Resource" uid="uid://b0hov8ouy5khr" path="res://Story/performer_story.tres" id="SharedStory"]
+
+[ext_resource type="PackedScene" path="res://Scene/00_shared_chapter_audio.tscn" id="Audio"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oh8ny"]
+texture = ExtResource("4_1r0kp")
+
+[node name="PerformerShared" unique_id=773508277 instance=ExtResource("Base")]
+script = ExtResource("Controller")
+story_source = ExtResource("SharedStory")
+variant = null
+interaction_minimum_confidence = 0.35
+narration_minimum_confidence = 0.6
+developer_skip_enabled = true
+uncertain_message = "Heard uncertainly"
+story = null
+autostart_voice = true
+story_text_path = NodePath("%StoryText")
+response_label_path = NodePath("VisualPlaceholder/Label")
+recognition_display_duration = 0.8
+transition_delay = 0.25
+prompt_delay = 0.25
+reading_coverage = 0.65
+active_colour = Color(0.28, 0.25, 0.34, 1)
+inactive_colour = Color(0.28, 0.25, 0.34, 0.45)
+reading_message = "NARRATING — read the passage aloud."
+prompt_message = "LISTENING — say your response now."
+response_message = "STORY RESPONSE — read what happens next."
+recognised_message = "RECOGNISED"
+retry_reading_message = "TRY AGAIN — repeat the passage at your own pace."
+retry_prompt_message = "TRY AGAIN — please say your response again."
+unavailable_message = "Microphone unavailable — retry microphone or ask the facilitator."
+starting_message = "Microphone starting — please wait."
+fallback_message = "Default selected — continuing without voice recognition."
+transition_message = "Continue narration…"
+reading_fallback_text = "Reading fallback"
+prompt_fallback_text = "Use default"
+
+[node name="Background" parent="." index="0" unique_id=1021069083]
+z_index = -3
+
+[node name="Panel" type="Panel" parent="." index="1" unique_id=606576963]
+z_index = -2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_oh8ny")
+
+[node name="VisualPlaceholder" parent="." index="2" unique_id=1396161876]
+custom_minimum_size = Vector2(200, 100)
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" parent="VisualPlaceholder" index="0" unique_id=1847346513]
+visible = false
+text = "Visual slot — assign a sketch to this beat"
+
+
+[node name="Status" parent="." index="5" unique_id=748855276]
+anchor_top = 0.85
+anchor_bottom = 0.89
+theme_override_colors/font_color = Color(0.97, 0.94, 0.98, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.05, 0.16, 1)
+theme_override_constants/outline_size = 6
+text = ""
+autowrap_mode = 2
+
+[node name="Title" parent="." index="6" unique_id=514013865]
+theme_override_colors/font_color = Color(0.97, 0.94, 0.98, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.05, 0.16, 1)
+theme_override_constants/outline_size = 6
+text = "Performer / Storyteller"
+
+[node name="DefaultResponse" type="Button" parent="." index="8" unique_id=344679345]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.89
+anchor_right = 0.42
+anchor_bottom = 0.97
+theme_override_font_sizes/font_size = 22
+text = "Use default"
+
+[node name="RetryMicrophone" type="Button" parent="." index="9" unique_id=1469238204]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.55
+anchor_top = 0.89
+anchor_right = 0.9
+anchor_bottom = 0.97
+theme_override_font_sizes/font_size = 22
+text = "Retry microphone"
+
+[node name="Recognition" type="Label" parent="." index="11" unique_id=1087780211]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.89
+anchor_right = 0.9
+anchor_bottom = 0.94
+theme_override_colors/font_color = Color(0.97, 0.94, 0.98, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.05, 0.16, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 18
+autowrap_mode = 2
+max_lines_visible = 2
+
+[node name="BeatVisual" type="TextureRect" parent="." index="12" unique_id=1199680336]
+visible = false
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Ambience" parent="."]
+autoplay = false
+
+[node name="ChapterAudio" parent="." instance=ExtResource("Audio")]

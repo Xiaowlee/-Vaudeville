@@ -1,33 +1,7 @@
-[gd_scene format=3 uid="uid://oqtaq5ctnl37"]
+[gd_scene format=3]
 
-[ext_resource type="Texture2D" uid="uid://huy6eyrd7mat" path="res://Visual Asset/standby.png" id="1_e28fy"]
+; Compatibility path for editor tabs opened before the approved rename.
+; The numbered scene remains the source. Keep until open edits have been saved.
+[ext_resource type="PackedScene" path="res://Scene/2.0_component_character_standby.tscn" id="RenamedScene"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_koakj"]
-atlas = ExtResource("1_e28fy")
-region = Rect2(0, 0, 1920, 1080)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_h547d"]
-atlas = ExtResource("1_e28fy")
-region = Rect2(1920, 0, 1920, 1080)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_8ergx"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_koakj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_h547d")
-}],
-"loop": true,
-"name": &"default",
-"speed": 1.0
-}]
-
-[node name="Sprite2D" type="Sprite2D" unique_id=986627318]
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=585636355]
-position = Vector2(712, 457)
-sprite_frames = SubResource("SpriteFrames_8ergx")
-autoplay = "default"
-frame_progress = 0.50604975
+[node name="Sprite2D" instance=ExtResource("RenamedScene")]

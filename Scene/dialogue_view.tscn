@@ -1,0 +1,7 @@
+[gd_scene format=3]
+
+; Compatibility path for editor tabs opened before the approved rename.
+; The numbered scene remains the source. Keep until open edits have been saved.
+[ext_resource type="PackedScene" path="res://Scene/2.3_template_dialogue_view.tscn" id="RenamedScene"]
+
+[node name="DialogueView" instance=ExtResource("RenamedScene")]

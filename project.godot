@@ -11,7 +11,8 @@ config_version=5
 [application]
 
 config/name="Folio 2 Test 2"
-run/main_scene="res://Scene/Intro.tscn"
+run/main_scene="res://Scene/00_main_menu.tscn"
+run/main_scene.mobile_display="res://Scene/StageActs/Mobile.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -21,7 +22,10 @@ driver/enable_input=true
 
 [autoload]
 
-DialogueManager="*uid://c3rodes2l3gxb"
+PhoneSession="*res://Script/phone_session.gd"
+
+UIAudio="*res://Scene/00_shared_ui_audio.tscn"
+DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 
 [display]
@@ -34,12 +38,18 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/godot_ai/plugin.cfg")
+enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/godot_ai/plugin.cfg", "res://addons/mobile_display_export/plugin.cfg")
+
+[internationalization]
+
+locale/translations_pot_files=PackedStringArray("res://Story/StageActs/Test.dialogue")
 
 [physics]
 
 3d/physics_engine="Jolt Physics"
 
 [rendering]
+
+renderer/rendering_method.web="gl_compatibility"
 
 rendering_device/driver.windows="d3d12"

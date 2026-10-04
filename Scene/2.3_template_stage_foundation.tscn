@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://bhpnbwwyucijj"]
+
+[ext_resource type="PackedScene" uid="uid://bfa6133lesemv" path="res://Scene/00_shared_chapter_audio.tscn" id="Audio"]
+[ext_resource type="PackedScene" path="res://Scene/2.3_template_debug.tscn" id="Debug"]
+[ext_resource type="PackedScene" path="res://Scene/2.3_template_dialogue_view.tscn" id="Dialogue"]
+[ext_resource type="Script" uid="uid://b7cw4mccbpmf8" path="res://Script/stage_director.gd" id="Director"]
+[ext_resource type="Resource" uid="uid://b1kxaso87e64q" path="res://Story/prototype_a.tres" id="Mode"]
+[ext_resource type="PackedScene" path="res://Scene/00_shared_phone_cue_bridge.tscn" id="Phone"]
+[ext_resource type="PackedScene" path="res://Scene/00_shared_speech_monitor.tscn" id="Speech"]
+[ext_resource type="PackedScene" uid="uid://bin8u2w5lnn8a" path="res://Scene/00_shared_stage_view.tscn" id="Stage"]
+
+[node name="StagePerformance" type="Control" unique_id=553067863]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StageView" parent="." unique_id=1194448970 instance=ExtResource("Stage")]
+layout_mode = 1
+
+[node name="DialogueView" parent="." unique_id=233421213 instance=ExtResource("Dialogue")]
+
+[node name="SpeechMonitor" parent="." unique_id=1515023371 instance=ExtResource("Speech")]
+
+[node name="PhoneCueBridge" parent="." unique_id=674639773 instance=ExtResource("Phone")]
+
+[node name="ChapterAudio" parent="." unique_id=2009675629 instance=ExtResource("Audio")]
+
+[node name="DebugOverlay" parent="." unique_id=419474037 instance=ExtResource("Debug")]
+visible = true
+
+[node name="PerformanceDirector" type="Control" parent="." unique_id=161983645]
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("Director")
+variant = ExtResource("Mode")
+beat_visual_path = NodePath("../StageView/BeatVisual")
+visual_placeholder_path = NodePath("../StageView/VisualPlaceholder")
+chapter_audio_path = NodePath("../ChapterAudio")
+story_text_path = NodePath("../DialogueView/PanelContainer/MarginContainer/StoryText")
+default_button_path = NodePath("../DebugOverlay/HiddenBindings/DefaultResponse")
+retry_button_path = NodePath("../DebugOverlay/HiddenBindings/RetryMicrophone")
+status_label_path = NodePath("../DebugOverlay/Panel/Rows/Status")
+recognition_label_path = NodePath("../DebugOverlay/Panel/Rows/Recognition")
+prompt_label_path = NodePath("../DialogueView/PanelContainer/MarginContainer/Prompt")
+speech_monitor_path = NodePath("../SpeechMonitor")
+intro_scene = "res://Scene/00_main_menu.tscn"
+back_button_path = NodePath("../DebugOverlay/HiddenBindings/Back")

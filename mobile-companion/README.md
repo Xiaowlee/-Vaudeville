@@ -119,7 +119,7 @@ Do **not** deploy the `relay/` folder to Vercel. Vercel serverless hosting canno
 1. Restart the web app with `npm run dev` in mobile-companion, and restart the relay with `npm start` in mobile-companion/relay so both load the updated code.
 2. On the same Wi-Fi, visit https://192.168.0.61:8787 to accept the existing local certificate if needed, then open https://192.168.0.61:3000. Desktop preview stays https://localhost:3000. The existing .env.local is unchanged.
 3. Enable the phone camera, hold one face and tap Continue. It waits until Scene 2 requests a smile. Scenes 0 and 1 do not request facial input.
-4. In Godot, run Scene/scene_2_key.tscn directly (F6), or play through Scenes 0 and 1.
+4. In Godot, run Scene/2.0_02_key_door.tscn directly (F6), or play through Scenes 0 and 1.
 5. Smile and hold on the phone. Its existing hold feedback ends in OK. The laptop inserts the key word, waits 0.6 seconds, then shows Read out loud.
 6. Say “She picks the key and opens the door.” The existing recognizer accepts the narration and the supplied door animation plays once, holding open. No Scene 3 destination is assigned yet.
 
@@ -128,3 +128,35 @@ Godot uses wss://127.0.0.1:8787 with the existing .certs/cert.pem as its trusted
 If the relay disconnects before success, the browser and Godot retry. Each new Scene 2 instance requests a fresh smile; a prior scene's success cannot unlock it. Ctrl+Enter is the existing development-only voice fallback, available after face success. It does not verify real speech.
 
 Automated validation passed for Scenes 0, 1 and 2. Scene 2 used a synthetic phone over real secure WebSockets and synthetic transcripts. Actual phone camera and human voice remain to be playtested.
+
+## Stage phone display (Godot web export)
+
+The QR on the main menu opens `https://192.168.0.61:3000/stage`. That page now shows the Godot web export of `Scene/StageActs/Mobile.tscn`, served from `public/mobile-display/`. The older text-only stage page is still available at `/stage/text`. The face companion stays at `/`.
+
+- **CueCard** (existing) shows the player's line prompt when the stage reveals it.
+- **IFB** (new panel in the same scene) shows private instructions from each beat's Phone / IFB cue, after that cue's delay.
+- The two areas are separate relay channels (`prompt` and `ifb`), so one never erases the other. Both clear when the player responds, when the story moves to the next beat, or when the game disconnects. A phone that reconnects only gets the cues that are still active.
+- The desktop stage no longer shows the cue card or a local IFB fallback (`StageUI > Desktop Cue Card` is off, and `IFB > Local Fallback` is off, in the 2.3 stage scene).
+
+### Edit the layout
+
+Open `Scene/StageActs/Mobile.tscn` in Godot. Move, resize, recolour or change fonts on `CueCard` and `IFB` (each contains `Margin/Text`). The root node's Inspector has the relay settings, panel paths, **Hide Empty Panels**, and **Phone Design Size** (the reference resolution on the phone, 540�960 by default). You can test the scene directly with F6 while the relay is running.
+
+### Rebuild after editing Mobile.tscn
+
+In Godot, use **Project > Export > Mobile Display (Web) > Export Project** and keep the path `mobile-companion/public/mobile-display/index.html`. Turn **Export With Debug** off. Or, from the project folder:
+
+```powershell
+& "C:\Users\Xiaow\Downloads\Godot_v4.7.1-stable_win64.exe\Godot_v4.7.1-stable_win64_console.exe" --headless --path . --export-release "Mobile Display (Web)" mobile-companion/public/mobile-display/index.html
+```
+
+This needs the Godot 4.7.1 **Web** export templates. The preset exports only `Mobile.tscn` and its script. A `mobile_display` feature tag makes it the start scene, and `addons/mobile_display_export` leaves the desktop autoloads out of this export only. No speech recognition, story controller or stage scene is included. Thread support is off, so no special cross-origin headers are needed.
+
+### Start for a phone test
+
+1. `npm run dev` in `mobile-companion`.
+2. `npm start` in `mobile-companion/relay`.
+3. On the phone (same Wi-Fi), open `https://192.168.0.61:8787` once and accept the local certificate. Then scan the QR or open `https://192.168.0.61:3000/stage`.
+4. Run the stage game in Godot.
+
+`relay/test-stage-channels.cjs` is a synthetic check of the two channels (run it while the relay is running).

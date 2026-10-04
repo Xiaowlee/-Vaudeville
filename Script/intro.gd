@@ -2,12 +2,21 @@ extends Control
 ## Scene routes only; menu wording and appearance belong to Intro.tscn.
 @export_file("*.tscn") var prototype_1_scene: String
 @export_file("*.tscn") var prototype_2_scene: String
+@export_file("*.tscn") var previous_scene: String
+@export_file("*.tscn") var stage_scene: String
+@export_file("*.tscn") var earlier_scene: String
+@export_file("*.tscn") var back_scene: String
 var opening := false
 func _ready() -> void:
-	$Menu/Prototype1.pressed.connect(_open.bind(prototype_1_scene))
-	$Menu/Prototype2.pressed.connect(_open.bind(prototype_2_scene))
+	if not stage_scene.is_empty(): PhoneSession.ensure_session()
+	for pair in [["Prototype1", prototype_1_scene], ["Prototype2", prototype_2_scene], ["PerformerA", "res://Scene/2.2_a_performer_baseline.tscn"], ["PerformerC", "res://Scene/2.2_c_increased_agency.tscn"], ["StagePrototype", stage_scene], ["Previous", previous_scene], ["Earlier", earlier_scene], ["Back", back_scene]]:
+		var button = get_node_or_null("Menu/" + pair[0])
+		if button != null: button.pressed.connect(_open.bind(pair[1]))
+	$Menu/Quit.visible = not OS.has_feature("web")
 	$Menu/Quit.pressed.connect(func(): get_tree().quit())
-	$Menu/Prototype1.grab_focus()
+	var first_button = get_node_or_null("Menu/StagePrototype")
+	if first_button == null: first_button = $Menu/Prototype1
+	first_button.grab_focus()
 func _open(path: String) -> void:
 	if opening: return
 	opening = true

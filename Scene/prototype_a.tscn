@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://da7ehlwepifkh"]
+
+[ext_resource type="PackedScene" uid="uid://cf66ay16jowsq" path="res://Scene/performer_shared.tscn" id="Base"]
+[ext_resource type="Resource" uid="uid://bm5rb42mqgpin" path="res://Story/benchmark_a.tres" id="Benchmark"]
+[ext_resource type="Resource" uid="uid://b1kxaso87e64q" path="res://Story/prototype_a.tres" id="Variant"]
+
+[node name="PrototypeA" unique_id=898136512 instance=ExtResource("Base")]
+story_source = ExtResource("Benchmark")
+variant = ExtResource("Variant")
+game_response_message = "STORY RESPONSE — watch what happens."
+ending_message = "ENDING"
+provisional_endpoint_message = "Current route stops here — provisional endpoint."
+beat_visual_path = NodePath("BeatVisual")
+visual_placeholder_path = NodePath("VisualPlaceholder")
+chapter_audio_path = NodePath("ChapterAudio")
+default_button_path = NodePath("DefaultResponse")
+retry_button_path = NodePath("RetryMicrophone")
+status_label_path = NodePath("Status")
+recognition_label_path = NodePath("Recognition")
+prompt_label_path = NodePath("%Prompt")
+speech_monitor_path = NodePath("SpeechMonitor")
+use_scene_text_colour = true
+
+[node name="VisualPlaceholder" parent="." index="2" unique_id=1396161876]
+custom_minimum_size = Vector2(0, 0)
+
+[node name="Back" parent="." index="3" unique_id=182058486]
+offset_bottom = 0.0
+
+[node name="PanelContainer" parent="." index="4" unique_id=1399829317]
+offset_top = -238.0
+
+[node name="MarginContainer" parent="PanelContainer" index="0" unique_id=1576298597]
+theme_override_constants/margin_bottom = 110
+
+[node name="StoryText" parent="PanelContainer/MarginContainer" index="0" unique_id=1968956350]
+custom_minimum_size = Vector2(0, 120)
+
+[node name="Status" parent="." index="5" unique_id=748855276]
+offset_top = -174.0
+offset_bottom = -174.0

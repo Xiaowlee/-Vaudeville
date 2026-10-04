@@ -1,0 +1,90 @@
+[gd_scene format=3 uid="uid://bjk8behbkxan1"]
+
+[ext_resource type="Script" uid="uid://cxl7vctt17165" path="res://Script/intro.gd" id="1_m1ph0"]
+[ext_resource type="Texture2D" uid="uid://cm7wdbvnte2jr" path="res://Visual Asset/BG.jpg" id="2_lebhk"]
+[ext_resource type="Texture2D" uid="uid://diu3clejabikd" path="res://Visual Asset/logo2.png" id="3_xi1yc"]
+[ext_resource type="Theme" uid="uid://p3m2d0y1qrtb" path="res://UI/prototype_theme.tres" id="MenuTheme"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_onfqo"]
+texture = ExtResource("2_lebhk")
+
+[node name="Control" type="Control" unique_id=707068634]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("MenuTheme")
+script = ExtResource("1_m1ph0")
+prototype_1_scene = "res://Scene/continuous_narration.tscn"
+prototype_2_scene = "res://Scene/narrator_agency.tscn"
+earlier_scene = "res://Scene/prototype_1.tscn"
+back_scene = "res://Scene/Intro.tscn"
+
+[node name="Panel" type="Panel" parent="." unique_id=1179351320]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_onfqo")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=406773399]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -426.66663
+offset_top = -310.0
+offset_right = 426.66663
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_xi1yc")
+expand_mode = 1
+
+[node name="Menu" type="VBoxContainer" parent="." unique_id=2091905211]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.12
+anchor_top = 0.53
+anchor_right = 0.88
+anchor_bottom = 0.98
+grow_horizontal = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Prototype1" type="Button" parent="Menu" unique_id=1451230569]
+layout_mode = 2
+text = "Prototype 1: Continuous Narration"
+
+[node name="Prototype2" type="Button" parent="Menu" unique_id=1246728127]
+layout_mode = 2
+text = "Prototype 2: Narrator Agency"
+
+[node name="Earlier" type="Button" parent="Menu" unique_id=1782049908]
+layout_mode = 2
+text = "Earlier drag / voice prototype"
+
+[node name="Back" type="Button" parent="Menu" unique_id=1559345163]
+layout_mode = 2
+text = "Back"
+
+[node name="Quit" type="Button" parent="Menu" unique_id=965762882]
+layout_mode = 2
+text = "Quit"
+
+[node name="Title" type="Label" parent="." unique_id=1955794663]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06
+anchor_top = 0.07
+anchor_right = 0.78
+anchor_bottom = 0.17
+theme_override_font_sizes/font_size = 32
+text = "Previous prototypes"
+autowrap_mode = 2

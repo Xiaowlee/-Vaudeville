@@ -10,7 +10,7 @@ signal interaction_state_changed(state: String)
 		sentence_definition = value
 		if is_node_ready() and Engine.is_editor_hint(): _preview_content()
 @export_group("Transition")
-@export_file("*.tscn") var intro_scene := "res://Scene/Intro.tscn"
+@export_file("*.tscn") var intro_scene := "res://Scene/00_main_menu.tscn"
 @export_file("*.tscn") var next_scene := ""
 @export var auto_advance := true
 @export_range(0.0, 60.0, 0.1, "or_greater") var transition_delay := 5.0

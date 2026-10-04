@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://cdubf7ryq2jm3"]
+
+[ext_resource type="PackedScene" uid="uid://cf66ay16jowsq" path="res://Scene/performer_shared.tscn" id="Base"]
+[ext_resource type="Resource" uid="uid://c6b2odogdfidt" path="res://Story/benchmark_c.tres" id="Benchmark"]
+[ext_resource type="Resource" uid="uid://cfyy0kq3td5bm" path="res://Story/prototype_c.tres" id="Variant"]
+
+[node name="PrototypeC" unique_id=173975730 instance=ExtResource("Base")]
+story_source = ExtResource("Benchmark")
+variant = ExtResource("Variant")
+game_response_message = "STORY RESPONSE — watch what happens."
+ending_message = "ENDING"
+provisional_endpoint_message = "Current route stops here — provisional endpoint."
+beat_visual_path = NodePath("BeatVisual")
+visual_placeholder_path = NodePath("VisualPlaceholder")
+chapter_audio_path = NodePath("ChapterAudio")
+default_button_path = NodePath("DefaultResponse")
+retry_button_path = NodePath("RetryMicrophone")
+status_label_path = NodePath("Status")
+recognition_label_path = NodePath("Recognition")
+prompt_label_path = NodePath("%Prompt")
+speech_monitor_path = NodePath("SpeechMonitor")
+use_scene_text_colour = true
+
+[node name="PanelContainer" parent="." index="4" unique_id=1399829317]
+offset_top = -236.0

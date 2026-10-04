@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://bin8u2w5lnn8a"]
+
+[ext_resource type="Texture2D" uid="uid://huv03blbvr2q" path="res://Visual Asset/Folio 2 audience.png" id="1_li7on"]
+[ext_resource type="Texture2D" uid="uid://di4001i0hhwbj" path="res://Visual Asset/Folio 2 stage.png" id="2_56wau"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5j0sh"]
+texture = ExtResource("1_li7on")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8ergx"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8ergx"]
+texture = ExtResource("2_56wau")
+
+[node name="StageView" type="Control" unique_id=157931224]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Background" type="ColorRect" parent="." unique_id=1369477448]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0017723908, 0.08822719, 0.39638048, 1)
+
+[node name="Panel2" type="Panel" parent="." unique_id=1919007163]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_5j0sh")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Panel2" unique_id=1662604379]
+sprite_frames = SubResource("SpriteFrames_8ergx")
+
+[node name="Panel" type="Panel" parent="." unique_id=723249484]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_8ergx")

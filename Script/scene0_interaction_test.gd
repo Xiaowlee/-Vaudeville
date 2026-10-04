@@ -40,7 +40,7 @@ func drag(card: Control, target: Vector2) -> void:
 func run() -> void:
 	root.size = Vector2i(1152, 800)
 	root.content_scale_size = Vector2i(1152, 800)
-	var scene = load("res://Scene/prototype_1.tscn").instantiate()
+	var scene = load("res://Scene/2.0_00_onboarding.tscn").instantiate()
 	root.add_child(scene)
 	current_scene = scene
 	scene.get_node("SpeechMonitor").enabled = false
@@ -86,11 +86,11 @@ func run() -> void:
 	await room.play_once()
 	check(sprite.animation == &"standby" and sprite.is_playing(), "Configurable return to standby")
 	# Temporary valid destination proves the real timeout path without adding story scenes.
-	scene.next_scene = "res://Scene/Intro.tscn"
+	scene.next_scene = "res://Scene/00_main_menu.tscn"
 	scene.auto_timer.start(scene.transition_delay)
 	await create_timer(4.7).timeout
 	check(current_scene == scene, "No early auto-advance")
 	await create_timer(0.5).timeout
-	check(current_scene.scene_file_path == "res://Scene/Intro.tscn", "Five-second auto-advance loads destination")
+	check(current_scene.scene_file_path == "res://Scene/00_main_menu.tscn", "Five-second auto-advance loads destination")
 	print("SCENE0_TEST_FAILURES=", failures)
 	quit(failures)

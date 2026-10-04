@@ -1,0 +1,1515 @@
+[gd_resource type="Resource" script_class="StageSequence" format=3 uid="uid://siaufnavhtkl"]
+
+[ext_resource type="Script" uid="uid://pa4rdldteasv" path="res://Script/StageActs/stage_beat.gd" id="1_00ams"]
+[ext_resource type="Script" uid="uid://cdadys7g57yjd" path="res://Script/StageActs/stage_actor_action.gd" id="2_l3c0v"]
+[ext_resource type="Script" uid="uid://cuj6ojslscak5" path="res://Script/StageActs/Authoring/story_block.gd" id="2_r50jo"]
+[ext_resource type="Script" uid="uid://biykveos2te1g" path="res://Script/beat_audio_cue.gd" id="3_gkxkd"]
+[ext_resource type="Script" uid="uid://bleod24l07ll1" path="res://Script/StageActs/Authoring/story_entry.gd" id="3_pay4l"]
+[ext_resource type="AudioStream" uid="uid://y805m2incxqp" path="res://Sound/dueg-oth-musik-adel-142724.mp3" id="4_l3c0v"]
+[ext_resource type="Script" uid="uid://d3yipqwmxswux" path="res://Script/StageActs/stage_response.gd" id="4_mihv6"]
+[ext_resource type="Script" uid="uid://ldlhfcbkd326" path="res://Script/StageActs/Authoring/dialogue_line_data.gd" id="4_ubu7r"]
+[ext_resource type="Script" uid="uid://cl1xq630bom38" path="res://Script/phone_cue.gd" id="5_drrnr"]
+[ext_resource type="Script" uid="uid://dl7h32o01bsit" path="res://Script/StageActs/stage_sequence.gd" id="6_j0s1j"]
+[ext_resource type="Script" uid="uid://ccble2exofseg" path="res://Script/StageActs/Authoring/player_interaction_data.gd" id="6_vrawv"]
+[ext_resource type="Script" uid="uid://b5i7bgn72fh5r" path="res://Script/StageActs/Authoring/stage_event.gd" id="7_n2cai"]
+[ext_resource type="AudioStream" uid="uid://cw5v313lst3g5" path="res://Sound/jarasnat-curtain-version-1-337564.mp3" id="8_fpt6u"]
+[ext_resource type="AudioStream" uid="uid://bqo808ltb65pv" path="res://Sound/freesound_community-people-ambience-large-hall-02-17006.mp3" id="9_uh6y8"]
+[ext_resource type="Script" uid="uid://ci0okgw1pmc6f" path="res://Script/StageActs/Authoring/stage_presentation_options.gd" id="13_wg7fo"]
+[ext_resource type="AudioStream" uid="uid://c6fsv0dy604vb" path="res://Sound/voicebosch-a-gentlemanx27s-cough-179346.mp3" id="14_r50jo"]
+
+[sub_resource type="Resource" id="Resource_j4dgc"]
+resource_name = "Stage Manager: Places, everyone."
+script = ExtResource("4_ubu7r")
+speaker = "Stage Manager"
+text = "Places, everyone."
+voice_audio = ExtResource("14_r50jo")
+voice_end_mode = 1
+
+[sub_resource type="Resource" id="Resource_jws8c"]
+resource_name = "Stage Manager: We are now hop upon a wonderful fairytale story that I'm sur"
+script = ExtResource("4_ubu7r")
+speaker = "Stage Manager"
+text = "We are now hop upon a wonderful fairytale story that I'm sure you have never heard of."
+voice_audio = ExtResource("14_r50jo")
+voice_end_mode = 1
+
+[sub_resource type="Resource" id="Resource_md8fj"]
+resource_name = "Stage Manager: Without further ado..."
+script = ExtResource("4_ubu7r")
+speaker = "Stage Manager"
+text = "Without further ado..."
+voice_audio = ExtResource("14_r50jo")
+voice_end_mode = 1
+
+[sub_resource type="Resource" id="Resource_lnw6b"]
+resource_name = "Stage Manager: Let the show begin."
+script = ExtResource("4_ubu7r")
+speaker = "Stage Manager"
+text = "Let the show begin."
+voice_audio = ExtResource("14_r50jo")
+wait_after = 1.0
+voice_end_mode = 1
+
+[sub_resource type="Resource" id="Resource_b2a2d"]
+resource_name = "Fade audience"
+script = ExtResource("7_n2cai")
+event_type = 3
+
+[sub_resource type="Resource" id="Resource_73iru"]
+resource_name = "Curtain sound"
+script = ExtResource("7_n2cai")
+event_type = 1
+audio = ExtResource("8_fpt6u")
+
+[sub_resource type="Resource" id="Resource_nings"]
+resource_name = "Open curtain"
+script = ExtResource("7_n2cai")
+event_type = 10
+animation = &"default"
+
+[sub_resource type="Resource" id="Resource_2jpfm"]
+resource_name = "Of course. Take a moment."
+script = ExtResource("4_ubu7r")
+text = "Of course. Take a moment."
+wait_after = 2.0
+voice_end_mode = 1
+
+[sub_resource type="Resource" id="Resource_7151s"]
+resource_name = "Stage Manager: Shall we begin?"
+script = ExtResource("4_ubu7r")
+speaker = "Stage Manager"
+text = "Shall we begin?"
+wait_after = 1.0
+voice_end_mode = 1
+
+[sub_resource type="Resource" id="Resource_bnppx"]
+resource_name = "Wait for YES or NO"
+script = ExtResource("6_vrawv")
+input_mode = 2
+accepted_phrases = PackedStringArray()
+cue_card_text = "SAY YES OR NO"
+pre_show_input = true
+reminder_enabled = true
+reminder = SubResource("Resource_7151s")
+yes_phrases = PackedStringArray("yes", "yeah", "yep", "yes please", "sure", "okay", "ok", "of course", "absolutely", "lets begin", "let us begin", "im ready", "I am ready")
+no_phrases = PackedStringArray("no", "nope", "not yet", "no thanks", "not ready", "not now", "wait", "give me a moment")
+no_reply = SubResource("Resource_2jpfm")
+
+[sub_resource type="Resource" id="Resource_34e10"]
+resource_name = "Audience starts"
+script = ExtResource("7_n2cai")
+event_type = 2
+audio = ExtResource("9_uh6y8")
+
+[sub_resource type="Resource" id="Resource_nskqm"]
+resource_name = "Wait before Stage Manager"
+script = ExtResource("7_n2cai")
+duration = 2.5
+
+[sub_resource type="Resource" id="Resource_t2ir8"]
+resource_name = "PRESHOW"
+script = ExtResource("2_r50jo")
+block_id = "PRESHOW"
+start_events = Array[ExtResource("7_n2cai")]([SubResource("Resource_34e10"), SubResource("Resource_nskqm")])
+dialogue_lines = Array[ExtResource("4_ubu7r")]([SubResource("Resource_j4dgc"), SubResource("Resource_jws8c"), SubResource("Resource_md8fj"), SubResource("Resource_lnw6b")])
+player_interaction = SubResource("Resource_bnppx")
+end_events = Array[ExtResource("7_n2cai")]([SubResource("Resource_b2a2d"), SubResource("Resource_73iru"), SubResource("Resource_nings")])
+pre_show = true
+
+[sub_resource type="Resource" id="Action_0_0"]
+script = ExtResource("2_l3c0v")
+actor_id = "mother"
+visibility = 1
+
+[sub_resource type="Resource" id="Action_0_1"]
+script = ExtResource("2_l3c0v")
+actor_id = "player"
+visibility = 1
+
+[sub_resource type="Resource" id="Action_0_2"]
+script = ExtResource("2_l3c0v")
+actor_id = "actor_2"
+visibility = 2
+
+[sub_resource type="Resource" id="Resource_qyty3"]
+script = ExtResource("3_gkxkd")
+channel = 0
+action = 1
+stream = ExtResource("4_l3c0v")
+volume_db = -10.0
+metadata/_custom_type_script = "uid://biykveos2te1g"
+
+[sub_resource type="Resource" id="Resource_wvkp1"]
+script = ExtResource("13_wg7fo")
+stage_description = "A small storybook-like section of the stage becomes visible.
+
+Do NOT reveal the full theatre yet.
+
+A warm light reveals a family tableau.
+
+The Princess appears first as a child.
+
+Other figures surround her.
+
+The scene should feel artificial and theatrical, like actors creating a fairy tale in front of an audience."
+actor_actions = Array[ExtResource("2_l3c0v")]([SubResource("Action_0_0"), SubResource("Action_0_1"), SubResource("Action_0_2")])
+ambience = Array[ExtResource("3_gkxkd")]([SubResource("Resource_qyty3")])
+delay_after_response = 0.0
+sfx_on_start = Array[AudioStream]([null])
+
+[sub_resource type="Resource" id="Resource_hoscv"]
+resource_name = "Narrator: Once upon a time, there is a lovely family in the town.  T"
+script = ExtResource("4_ubu7r")
+speaker = "Narrator"
+text = "Once upon a time, there is a lovely family in the town.
+
+There, they just bore a new little princess."
+voice_audio = ExtResource("14_r50jo")
+wait_after = 5.0
+delivery = 1
+presentation = SubResource("Resource_wvkp1")
+entry_id = "A1.01"
+
+[sub_resource type="Resource" id="Resource_ou338"]
+script = ExtResource("13_wg7fo")
+delay_after_response = 0.0
+
+[sub_resource type="Resource" id="Resource_lnp7v"]
+resource_name = "Narrator: She grows up with brilliant beauty, with a majestic voice, b"
+script = ExtResource("4_ubu7r")
+speaker = "Narrator"
+text = "She grows up with brilliant beauty, with a majestic voice, blonde hair, and a marvelous, gentle personality."
+voice_audio = ExtResource("14_r50jo")
+wait_after = 7.0
+delivery = 1
+presentation = SubResource("Resource_ou338")
+entry_id = "A1.growing"
+
+[sub_resource type="Resource" id="Resource_saomc"]
+script = ExtResource("13_wg7fo")
+stage_description = "Time passes visually.
+
+The child's position changes.
+
+Lights shift.
+
+The Princess is now seventeen.
+
+Mother enters the lit area.
+
+She approaches the Princess."
+notes = "TODO: assign authored poses, lighting, blocking and sound in Actor Actions / Audio when assets are ready. Stage Description is preserved authoring data, not automatically generated animation."
+show_npc_dialogue = false
+delay_before_input = 1.0
+delay_after_response = 0.0
+
+[sub_resource type="Resource" id="Resource_wd7y3"]
+resource_name = "A1.time_passes"
+script = ExtResource("4_ubu7r")
+presentation = SubResource("Resource_saomc")
+entry_id = "A1.time_passes"
+
+[sub_resource type="Resource" id="Resource_4ajfu"]
+resource_name = "A1.time_passes"
+script = ExtResource("7_n2cai")
+event_type = 12
+description = "Time passes visually.
+
+The child's position changes.
+
+Lights shift.
+
+The Princess is now seventeen.
+
+Mother enters the lit area.
+
+She approaches the Princess."
+dialogue = SubResource("Resource_wd7y3")
+presentation = SubResource("Resource_saomc")
+entry_id = "A1.time_passes"
+
+[sub_resource type="Resource" id="Resource_th4ao"]
+resource_name = "A1_STORYBOOK_INTRO"
+script = ExtResource("2_r50jo")
+block_id = "A1_STORYBOOK_INTRO"
+dialogue_lines = Array[ExtResource("4_ubu7r")]([SubResource("Resource_hoscv"), SubResource("Resource_lnp7v")])
+following_moments = Array[ExtResource("3_pay4l")]([SubResource("Resource_4ajfu")])
+
+[sub_resource type="Resource" id="Resource_0xg10"]
+script = ExtResource("13_wg7fo")
+stage_description = "Mother keeps smiling at first.
+
+She briefly glances toward the player, slightly confused.
+
+She stays in character because the show is still running."
+notes = "TODO: assign authored poses, lighting, blocking and sound in Actor Actions / Audio when assets are ready. Stage Description is preserved authoring data, not automatically generated animation."
+show_npc_dialogue = false
+delay_before_input = 1.0
+delay_after_response = 0.0
+
+[sub_resource type="Resource" id="Resource_v1fm4"]
+resource_name = "A1.first_reaction"
+script = ExtResource("4_ubu7r")
+presentation = SubResource("Resource_0xg10")
+entry_id = "A1.first_reaction"
+
+[sub_resource type="Resource" id="Resource_ijn0u"]
+resource_name = "A1.first_reaction"
+script = ExtResource("7_n2cai")
+event_type = 12
+description = "Mother keeps smiling at first.
+
+She briefly glances toward the player, slightly confused.
+
+She stays in character because the show is still running."
+dialogue = SubResource("Resource_v1fm4")
+presentation = SubResource("Resource_0xg10")
+entry_id = "A1.first_reaction"
+
+[sub_resource type="Resource" id="Resource_ggqyd"]
+script = ExtResource("13_wg7fo")
+stage_description = "Mother freezes.
+
+Her performance smile drops slightly.
+
+She glances toward backstage.
+
+She realises something is actually wrong."
+delay_before_input = 2.0
+delay_after_response = 2.5
+
+[sub_resource type="Resource" id="Resource_b4a1x"]
+resource_name = "What do you wish to become?"
+script = ExtResource("4_ubu7r")
+text = "What do you wish to become?"
+actor_id = "mother"
+presentation = SubResource("Resource_ggqyd")
+entry_id = "A1.2"
+
+[sub_resource type="Resource" id="Resource_ko05e"]
+resource_name = "A1.2"
+script = ExtResource("6_vrawv")
+dialogue = SubResource("Resource_b4a1x")
+input_mode = 6
+accepted_phrases = PackedStringArray()
+timeout = 8.0
+accept_uncertain_attempt = true
+npc_success_response = "...She doesn't remember her lines."
+npc_timeout_response = "...She doesn't remember her lines."
+fallback_beat = "A1.backstage"
+presentation = SubResource("Resource_ggqyd")
+yes_phrases = PackedStringArray()
+no_phrases = PackedStringArray()
+entry_id = "A1.2"
+
+[sub_resource type="Resource" id="Resource_32stb"]
+script = ExtResource("13_wg7fo")
+stage_description = "Mother subtly raises one hand toward backstage.
+
+She makes a small signalling gesture.
+
+Someone behind the curtain notices.
+
+A backstage worker / prompter prepares assistance.
+
+After a short delay:
+
+A cue appears.
+
+THIS IS THE FIRST TIME THE PLAYER SEES THE PROMPTER.
+
+It should feel like something backstage has been sent to rescue the performance."
+notes = "TODO: assign authored poses, lighting, blocking and sound in Actor Actions / Audio when assets are ready. Stage Description is preserved authoring data, not automatically generated animation."
+show_npc_dialogue = false
+delay_before_input = 1.0
+delay_after_response = 0.0
+
+[sub_resource type="Resource" id="Resource_i8p1n"]
+resource_name = "A1.backstage"
+script = ExtResource("4_ubu7r")
+presentation = SubResource("Resource_32stb")
+entry_id = "A1.backstage"
+
+[sub_resource type="Resource" id="Resource_0m50y"]
+resource_name = "A1.backstage"
+script = ExtResource("7_n2cai")
+event_type = 12
+description = "Mother subtly raises one hand toward backstage.
+
+She makes a small signalling gesture.
+
+Someone behind the curtain notices.
+
+A backstage worker / prompter prepares assistance.
+
+After a short delay:
+
+A cue appears.
+
+THIS IS THE FIRST TIME THE PLAYER SEES THE PROMPTER.
+
+It should feel like something backstage has been sent to rescue the performance."
+dialogue = SubResource("Resource_i8p1n")
+presentation = SubResource("Resource_32stb")
+entry_id = "A1.backstage"
+
+[sub_resource type="Resource" id="Resource_atx0o"]
+script = ExtResource("13_wg7fo")
+stage_description = "Mother subtly raises one hand toward backstage.
+
+She makes a small signalling gesture.
+
+Someone behind the curtain notices.
+
+A backstage worker / prompter prepares assistance.
+
+After a short delay:
+
+A cue appears.
+
+THIS IS THE FIRST TIME THE PLAYER SEES THE PROMPTER.
+
+It should feel like something backstage has been sent to rescue the performance."
+show_npc_dialogue = false
+delay_before_input = 2.0
+delay_after_response = 2.5
+
+[sub_resource type="Resource" id="Resource_uwvgp"]
+resource_name = "A1.3"
+script = ExtResource("4_ubu7r")
+actor_id = "mother"
+presentation = SubResource("Resource_atx0o")
+entry_id = "A1.3"
+
+[sub_resource type="Resource" id="Resource_aowm6"]
+resource_name = "A1.3"
+script = ExtResource("6_vrawv")
+dialogue = SubResource("Resource_uwvgp")
+input_mode = 1
+expected_line = "I want to become a writer, just like you."
+accepted_phrases = PackedStringArray()
+cue_card_text = "I want to become a writer, just like you."
+show_cue_card = true
+cue_delay = 1.5
+timeout = 35.0
+npc_success_response = "A writer?"
+presentation = SubResource("Resource_atx0o")
+legacy_type = 2
+yes_phrases = PackedStringArray()
+no_phrases = PackedStringArray()
+entry_id = "A1.3"
+
+[sub_resource type="Resource" id="Resource_su0ip"]
+script = ExtResource("13_wg7fo")
+stage_description = "Mother relaxes slightly because the play is moving again.
+
+She returns fully to character."
+notes = "TODO: assign authored poses, lighting, blocking and sound in Actor Actions / Audio when assets are ready. Stage Description is preserved authoring data, not automatically generated animation."
+show_npc_dialogue = false
+delay_before_input = 1.0
+delay_after_response = 0.0
+
+[sub_resource type="Resource" id="Resource_g2cf2"]
+resource_name = "A1.relief"
+script = ExtResource("4_ubu7r")
+presentation = SubResource("Resource_su0ip")
+entry_id = "A1.relief"
+
+[sub_resource type="Resource" id="Resource_m0mar"]
+resource_name = "A1.relief"
+script = ExtResource("7_n2cai")
+event_type = 12
+description = "Mother relaxes slightly because the play is moving again.
+
+She returns fully to character."
+dialogue = SubResource("Resource_g2cf2")
+presentation = SubResource("Resource_su0ip")
+entry_id = "A1.relief"
+
+[sub_resource type="Resource" id="Resource_f0hox"]
+script = ExtResource("13_wg7fo")
+stage_description = "Mother turns toward the Princess.
+
+She waits.
+
+There is an obvious pause.
+
+The audience expects the Princess to speak."
+notes = "First forgotten-line attempt. ANY speech or healthy silence follows existing awkward response; no cue. Technical rejection goes to assistance, never punished as a wrong performance."
+delay_before_input = 9.0
+delay_after_response = 2.5
+
+[sub_resource type="Resource" id="Resource_p5yll"]
+resource_name = "Darling, dear, you're almost 18 now.  Have you got anythin"
+script = ExtResource("4_ubu7r")
+text = "Darling, dear, you're almost 18 now.
+
+Have you got anything in your mind who you want to become before that?"
+actor_id = "mother"
+presentation = SubResource("Resource_f0hox")
+entry_id = "A1.1"
+
+[sub_resource type="Resource" id="Resource_iwo8w"]
+resource_name = "A1.1"
+script = ExtResource("6_vrawv")
+dialogue = SubResource("Resource_p5yll")
+input_mode = 6
+accepted_phrases = PackedStringArray()
+timeout = 8.0
+accept_uncertain_attempt = true
+npc_success_response = "[...pss Hey. That's not your line.]"
+npc_timeout_response = "...That's not your line, darling."
+fallback_beat = "A1.backstage"
+timeout_beat = "A1.first_reaction"
+presentation = SubResource("Resource_f0hox")
+yes_phrases = PackedStringArray()
+no_phrases = PackedStringArray()
+entry_id = "A1.1"
+
+[sub_resource type="Resource" id="Resource_1vh8q"]
+resource_name = "A1_FORGOTTEN_LINES"
+script = ExtResource("2_r50jo")
+block_id = "A1_FORGOTTEN_LINES"
+player_interaction = SubResource("Resource_iwo8w")
+following_moments = Array[ExtResource("3_pay4l")]([SubResource("Resource_ijn0u"), SubResource("Resource_ko05e"), SubResource("Resource_0m50y"), SubResource("Resource_aowm6"), SubResource("Resource_m0mar")])
+
+[sub_resource type="Resource" id="Resource_hwhs3"]
+script = ExtResource("13_wg7fo")
+show_npc_dialogue = false
+delay_before_input = 2.0
+delay_after_response = 2.5
+
+[sub_resource type="Resource" id="Resource_o15h2"]
+resource_name = "A1.5"
+script = ExtResource("4_ubu7r")
+actor_id = "mother"
+presentation = SubResource("Resource_hwhs3")
+entry_id = "A1.5"
+
+[sub_resource type="Resource" id="Resource_g4taw"]
+resource_name = "A1.5"
+script = ExtResource("6_vrawv")
+dialogue = SubResource("Resource_o15h2")
+input_mode = 1
+expected_line = "Then I'll make the stories worth the pain."
+accepted_phrases = PackedStringArray()
+cue_card_text = "I'll be fine.
+
+By the time, I will make more happy people reading my books than caring about the little bumps, pain in my finger."
+show_cue_card = true
+timeout = 35.0
+npc_success_response = "That's my girl."
+presentation = SubResource("Resource_hwhs3")
+legacy_type = 2
+yes_phrases = PackedStringArray()
+no_phrases = PackedStringArray()
+entry_id = "A1.5"
+
+[sub_resource type="Resource" id="Resource_v5u2t"]
+script = ExtResource("13_wg7fo")
+show_npc_dialogue = false
+delay_before_input = 2.0
+delay_after_response = 2.5
+
+[sub_resource type="Resource" id="Resource_0df0t"]
+resource_name = "A1.4"
+script = ExtResource("4_ubu7r")
+wait_after = 9.0
+actor_id = "mother"
+presentation = SubResource("Resource_v5u2t")
+entry_id = "A1.4"
+
+[sub_resource type="Resource" id="Resource_464rp"]
+resource_name = "A1.4"
+script = ExtResource("6_vrawv")
+dialogue = SubResource("Resource_0df0t")
+input_mode = 1
+expected_line = "I want to create stories people can gather around and remember."
+accepted_phrases = PackedStringArray()
+cue_card_text = "I want to create stories people can gather around and remember."
+show_cue_card = true
+timeout = 35.0
+npc_success_response = "That's lovely, dear, but I hope you won't get overwhelmed by the sheer pain in your fingers and getting calluses, writing so much with you."
+presentation = SubResource("Resource_v5u2t")
+legacy_type = 2
+yes_phrases = PackedStringArray()
+no_phrases = PackedStringArray()
+entry_id = "A1.4"
+
+[sub_resource type="Resource" id="Resource_6byic"]
+resource_name = "A1_WRITER_CONVERSATION"
+script = ExtResource("2_r50jo")
+block_id = "A1_WRITER_CONVERSATION"
+player_interaction = SubResource("Resource_464rp")
+following_moments = Array[ExtResource("3_pay4l")]([SubResource("Resource_g4taw")])
+
+[sub_resource type="Resource" id="Resource_p18na"]
+script = ExtResource("13_wg7fo")
+delay_after_response = 0.0
+
+[sub_resource type="Resource" id="Resource_jnnkp"]
+resource_name = "We should have a lot of work to do before your birthday come"
+script = ExtResource("4_ubu7r")
+text = "We should have a lot of work to do before your birthday comes."
+wait_after = 5.0
+actor_id = "mother"
+presentation = SubResource("Resource_p18na")
+entry_id = "A1.party_1"
+
+[sub_resource type="Resource" id="Resource_oo4iw"]
+script = ExtResource("13_wg7fo")
+delay_after_response = 0.0
+
+[sub_resource type="Resource" id="Resource_p0a5l"]
+resource_name = "Me and father are gonna organize a big party."
+script = ExtResource("4_ubu7r")
+text = "Me and father are gonna organize a big party."
+wait_after = 5.0
+actor_id = "mother"
+presentation = SubResource("Resource_oo4iw")
+entry_id = "A1.party_2"
+
+[sub_resource type="Resource" id="Resource_ve4ms"]
+script = ExtResource("13_wg7fo")
+delay_after_response = 0.0
+
+[sub_resource type="Resource" id="Resource_u2dso"]
+resource_name = "We're gonna invite people all around the kingdom to visit, t"
+script = ExtResource("4_ubu7r")
+text = "We're gonna invite people all around the kingdom to visit, to attend your own birthday."
+wait_after = 5.0
+actor_id = "mother"
+presentation = SubResource("Resource_ve4ms")
+entry_id = "A1.party_3"
+
+[sub_resource type="Resource" id="Resource_cur3n"]
+script = ExtResource("13_wg7fo")
+delay_after_response = 0.0
+
+[sub_resource type="Resource" id="Resource_mri5x"]
+resource_name = "Narrator: In this world, reaching eighteen is more than simply having "
+script = ExtResource("4_ubu7r")
+speaker = "Narrator"
+text = "In this world, reaching eighteen is more than simply having a birthday."
+wait_after = 5.0
+delivery = 1
+presentation = SubResource("Resource_cur3n")
+entry_id = "A1.context_1"
+
+[sub_resource type="Resource" id="Resource_ehns8"]
+script = ExtResource("13_wg7fo")
+delay_after_response = 0.0
+
+[sub_resource type="Resource" id="Resource_t27he"]
+resource_name = "Narrator: When young people reach eighteen, they stand before their fa"
+script = ExtResource("4_ubu7r")
+speaker = "Narrator"
+text = "When young people reach eighteen, they stand before their family and community and publicly announce the vocation or path they intend to follow."
+wait_after = 8.0
+delivery = 1
+presentation = SubResource("Resource_ehns8")
+entry_id = "A1.context_2"
+
+[sub_resource type="Resource" id="Resource_s4mmq"]
+script = ExtResource("13_wg7fo")
+delay_after_response = 0.0
+
+[sub_resource type="Resource" id="Resource_cegiv"]
+resource_name = "Narrator: Everyone already expects the Princess to follow her mother."
+script = ExtResource("4_ubu7r")
+speaker = "Narrator"
+text = "Everyone already expects the Princess to follow her mother.
+
+Everyone expects her to become a writer."
+wait_after = 5.0
+delivery = 1
+presentation = SubResource("Resource_s4mmq")
+entry_id = "A1.context_3"
+
+[sub_resource type="Resource" id="Resource_5ki15"]
+script = ExtResource("13_wg7fo")
+stage_description = "Mother looks toward the Princess proudly.
+
+The Princess follows her offstage.
+
+The warm fairy-tale light slowly fades."
+notes = "TODO: assign authored poses, lighting, blocking and sound in Actor Actions / Audio when assets are ready. Stage Description is preserved authoring data, not automatically generated animation."
+show_npc_dialogue = false
+delay_before_input = 1.0
+delay_after_response = 0.0
+
+[sub_resource type="Resource" id="Resource_yfrhl"]
+resource_name = "A1.exit"
+script = ExtResource("4_ubu7r")
+presentation = SubResource("Resource_5ki15")
+entry_id = "A1.exit"
+
+[sub_resource type="Resource" id="Resource_xdu24"]
+resource_name = "A1.exit"
+script = ExtResource("7_n2cai")
+event_type = 12
+description = "Mother looks toward the Princess proudly.
+
+The Princess follows her offstage.
+
+The warm fairy-tale light slowly fades."
+dialogue = SubResource("Resource_yfrhl")
+presentation = SubResource("Resource_5ki15")
+entry_id = "A1.exit"
+
+[sub_resource type="Resource" id="Resource_xx330"]
+resource_name = "A1_BIRTHDAY_PREPARATION"
+script = ExtResource("2_r50jo")
+block_id = "A1_BIRTHDAY_PREPARATION"
+dialogue_lines = Array[ExtResource("4_ubu7r")]([SubResource("Resource_jnnkp"), SubResource("Resource_p0a5l"), SubResource("Resource_u2dso"), SubResource("Resource_mri5x"), SubResource("Resource_t27he"), SubResource("Resource_cegiv")])
+following_moments = Array[ExtResource("3_pay4l")]([SubResource("Resource_xdu24")])
+
+[sub_resource type="Resource" id="Resource_2ysuu"]
+script = ExtResource("13_wg7fo")
+stage_description = "The remaining lights fade.
+
+The curtains completely close.
+
+Audience ambience grows slightly louder.
+
+Time passes.
+
+Backstage movement can be heard.
+
+Sets are rearranged behind the curtain.
+
+Music begins.
+
+The curtains slowly OPEN.
+
+THIS is the first major reveal of the full stage.
+
+The small fairy-tale tableau has transformed into a large birthday / declaration hall.
+
+There are decorations.
+
+Musicians are positioned nearby.
+
+People move around preparing the ceremony.
+
+The stage should now feel significantly larger than Act 1."
+notes = "Narration is presented while the curtain is closed; actual opening completion gates Act 2. TODO: audience murmurs, backstage movement and authored music/lighting assets."
+delay_after_response = 0.0
+
+[sub_resource type="Resource" id="Resource_upkqs"]
+resource_name = "Narrator: One month passes.  The day of the celebration finally arri"
+script = ExtResource("4_ubu7r")
+speaker = "Narrator"
+text = "One month passes.
+
+The day of the celebration finally arrives."
+wait_after = 5.0
+delivery = 1
+presentation = SubResource("Resource_2ysuu")
+entry_id = "A1.to_A2"
+
+[sub_resource type="Resource" id="Resource_0ebb0"]
+resource_name = "A1.to_A2"
+script = ExtResource("7_n2cai")
+event_type = 13
+description = "The remaining lights fade.
+
+The curtains completely close.
+
+Audience ambience grows slightly louder.
+
+Time passes.
+
+Backstage movement can be heard.
+
+Sets are rearranged behind the curtain.
+
+Music begins.
+
+The curtains slowly OPEN.
+
+THIS is the first major reveal of the full stage.
+
+The small fairy-tale tableau has transformed into a large birthday / declaration hall.
+
+There are decorations.
+
+Musicians are positioned nearby.
+
+People move around preparing the ceremony.
+
+The stage should now feel significantly larger than Act 1."
+dialogue = SubResource("Resource_upkqs")
+presentation = SubResource("Resource_2ysuu")
+entry_id = "A1.to_A2"
+
+[sub_resource type="Resource" id="Resource_2n2u8"]
+resource_name = "A1_TO_A2_TRANSITION"
+script = ExtResource("2_r50jo")
+block_id = "A1_TO_A2_TRANSITION"
+following_moments = Array[ExtResource("3_pay4l")]([SubResource("Resource_0ebb0")])
+
+[sub_resource type="Resource" id="Resource_3h35e"]
+script = ExtResource("13_wg7fo")
+delay_after_response = 0.0
+
+[sub_resource type="Resource" id="Resource_r2cy6"]
+resource_name = "Narrator: People from around the kingdom gather for the Princess's eig"
+script = ExtResource("4_ubu7r")
+speaker = "Narrator"
+text = "People from around the kingdom gather for the Princess's eighteenth birthday and declaration."
+wait_after = 5.0
+delivery = 1
+presentation = SubResource("Resource_3h35e")
+entry_id = "A2.context"
+
+[sub_resource type="Resource" id="Resource_oor0q"]
+script = ExtResource("13_wg7fo")
+delay_after_response = 0.0
+
+[sub_resource type="Resource" id="Resource_o7n8j"]
+resource_name = "Look at that, child.  Today is the day.  Today is a wond"
+script = ExtResource("4_ubu7r")
+text = "Look at that, child.
+
+Today is the day.
+
+Today is a wonderful day.
+
+You're gonna be a true adult."
+wait_after = 5.0
+actor_id = "mother"
+presentation = SubResource("Resource_oor0q")
+entry_id = "A2.warmth"
+
+[sub_resource type="Resource" id="Resource_26a0f"]
+script = ExtResource("13_wg7fo")
+stage_description = "Mother laughs softly."
+notes = "TODO: assign authored poses, lighting, blocking and sound in Actor Actions / Audio when assets are ready. Stage Description is preserved authoring data, not automatically generated animation."
+show_npc_dialogue = false
+delay_before_input = 1.0
+delay_after_response = 0.0
+
+[sub_resource type="Resource" id="Resource_dt7kg"]
+resource_name = "A2.laugh"
+script = ExtResource("4_ubu7r")
+presentation = SubResource("Resource_26a0f")
+entry_id = "A2.laugh"
+
+[sub_resource type="Resource" id="Resource_q1bdx"]
+resource_name = "A2.laugh"
+script = ExtResource("7_n2cai")
+event_type = 12
+description = "Mother laughs softly."
+dialogue = SubResource("Resource_dt7kg")
+presentation = SubResource("Resource_26a0f")
+entry_id = "A2.laugh"
+
+[sub_resource type="Resource" id="Resource_iig7d"]
+script = ExtResource("13_wg7fo")
+stage_description = "Two possible entrances are visible / indicated as part of the stage preparation.
+
+Mother looks between them.
+
+Whatever the player chooses: Mother acknowledges it. Stage crew adjusts. The story reconverges."
+delay_before_input = 2.0
+delay_after_response = 2.5
+
+[sub_resource type="Resource" id="Resource_watib"]
+resource_name = "Right.  Darl, isn't it quite croweded around here? Which "
+script = ExtResource("4_ubu7r")
+text = "Right.
+
+Darl, isn't it quite croweded around here?
+Which entrance should we take to get it?"
+actor_id = "mother"
+presentation = SubResource("Resource_iig7d")
+entry_id = "A2.1"
+
+[sub_resource type="Resource" id="Resource_xkyg4"]
+resource_name = "LEFT"
+script = ExtResource("4_mihv6")
+intent = "LEFT"
+accepted_phrases = PackedStringArray("left", "the left", "go left", "lets go left", "take the left entrance", "the left entrance")
+npc_response = "The left entrance, then."
+
+[sub_resource type="Resource" id="Resource_0rvn5"]
+resource_name = "RIGHT"
+script = ExtResource("4_mihv6")
+intent = "RIGHT"
+accepted_phrases = PackedStringArray("right", "the right", "go right", "lets go right", "take the right entrance", "the right entrance")
+npc_response = "The right entrance, then."
+
+[sub_resource type="Resource" id="Resource_igaaa"]
+resource_name = "A2.1"
+script = ExtResource("6_vrawv")
+dialogue = SubResource("Resource_watib")
+input_mode = 3
+accepted_phrases = PackedStringArray()
+responses = Array[ExtResource("4_mihv6")]([SubResource("Resource_xkyg4"), SubResource("Resource_0rvn5")])
+cue_card_text = "LEFT / RIGHT"
+show_cue_card = true
+timeout = 35.0
+presentation = SubResource("Resource_iig7d")
+yes_phrases = PackedStringArray()
+no_phrases = PackedStringArray()
+entry_id = "A2.1"
+
+[sub_resource type="Resource" id="Resource_v1ahg"]
+script = ExtResource("13_wg7fo")
+stage_description = "Musicians wait nearby for their signal.
+
+Mother glances toward them."
+delay_before_input = 2.0
+delay_after_response = 2.5
+
+[sub_resource type="Resource" id="Resource_whuhg"]
+resource_name = "Oh good. I forgot the musician is still waiting for our sig"
+script = ExtResource("4_ubu7r")
+text = "Oh good.
+I forgot the musician is still waiting for our signal.
+
+Shall I tell them to begin?"
+actor_id = "mother"
+presentation = SubResource("Resource_v1ahg")
+entry_id = "A2.2"
+
+[sub_resource type="Resource" id="Resource_aeoh6"]
+resource_name = "A2.2"
+script = ExtResource("6_vrawv")
+dialogue = SubResource("Resource_whuhg")
+input_mode = 4
+expected_intent = "AGREE"
+accepted_phrases = PackedStringArray("yes", "sure", "okay", "ok", "go ahead", "let them begin", "why not", "sounds good", "yes please", "tell them to begin", "of course")
+cue_card_text = "AGREE"
+show_cue_card = true
+timeout = 35.0
+npc_success_response = "I'll let them know."
+presentation = SubResource("Resource_v1ahg")
+yes_phrases = PackedStringArray()
+no_phrases = PackedStringArray()
+entry_id = "A2.2"
+
+[sub_resource type="Resource" id="Resource_smovq"]
+script = ExtResource("13_wg7fo")
+stage_description = "Mother signals toward the musicians.
+
+A small musical phrase / preparation sound can begin."
+notes = "TODO: assign authored poses, lighting, blocking and sound in Actor Actions / Audio when assets are ready. Stage Description is preserved authoring data, not automatically generated animation."
+show_npc_dialogue = false
+delay_before_input = 1.0
+delay_after_response = 0.0
+
+[sub_resource type="Resource" id="Resource_c0fvl"]
+resource_name = "A2.musician_signal"
+script = ExtResource("4_ubu7r")
+presentation = SubResource("Resource_smovq")
+entry_id = "A2.musician_signal"
+
+[sub_resource type="Resource" id="Resource_6fe77"]
+resource_name = "A2.musician_signal"
+script = ExtResource("7_n2cai")
+event_type = 12
+description = "Mother signals toward the musicians.
+
+A small musical phrase / preparation sound can begin."
+dialogue = SubResource("Resource_c0fvl")
+presentation = SubResource("Resource_smovq")
+entry_id = "A2.musician_signal"
+
+[sub_resource type="Resource" id="Resource_tj8sf"]
+script = ExtResource("13_wg7fo")
+notes = "Existing ANY_SPEECH: any recognised call/name attempt is accepted; no name understanding is claimed."
+delay_before_input = 2.0
+delay_after_response = 2.5
+
+[sub_resource type="Resource" id="Resource_b40js"]
+resource_name = "We need someone to bring the declaration book.  Could you "
+script = ExtResource("4_ubu7r")
+text = "We need someone to bring the declaration book.
+
+Could you call someone over?"
+actor_id = "mother"
+presentation = SubResource("Resource_tj8sf")
+entry_id = "A2.3"
+
+[sub_resource type="Resource" id="Resource_of887"]
+resource_name = "A2.3"
+script = ExtResource("6_vrawv")
+dialogue = SubResource("Resource_b40js")
+input_mode = 5
+expected_intent = "CALL"
+accepted_phrases = PackedStringArray()
+cue_card_text = "CALL SOMEONE"
+show_cue_card = true
+timeout = 35.0
+npc_success_response = "Thank you.
+
+We'll have it brought over."
+presentation = SubResource("Resource_tj8sf")
+yes_phrases = PackedStringArray()
+no_phrases = PackedStringArray()
+entry_id = "A2.3"
+
+[sub_resource type="Resource" id="Resource_72jeh"]
+script = ExtResource("13_wg7fo")
+stage_description = "A backstage worker responds to the call.
+
+They move toward the declaration scroll/book.
+
+Mother barely cares which name the player actually used."
+notes = "TODO: assign authored poses, lighting, blocking and sound in Actor Actions / Audio when assets are ready. Stage Description is preserved authoring data, not automatically generated animation."
+show_npc_dialogue = false
+delay_before_input = 1.0
+delay_after_response = 0.0
+
+[sub_resource type="Resource" id="Resource_lvdm6"]
+resource_name = "A2.worker"
+script = ExtResource("4_ubu7r")
+presentation = SubResource("Resource_72jeh")
+entry_id = "A2.worker"
+
+[sub_resource type="Resource" id="Resource_o5gy5"]
+resource_name = "A2.worker"
+script = ExtResource("7_n2cai")
+event_type = 12
+description = "A backstage worker responds to the call.
+
+They move toward the declaration scroll/book.
+
+Mother barely cares which name the player actually used."
+dialogue = SubResource("Resource_lvdm6")
+presentation = SubResource("Resource_72jeh")
+entry_id = "A2.worker"
+
+[sub_resource type="Resource" id="Resource_x47gm"]
+script = ExtResource("13_wg7fo")
+stage_description = "Something changes backstage.
+
+The cue / script update changes suddenly.
+
+Mother continues performing as if nothing is wrong."
+notes = "Late DECLINE cue: Cue Delay now measures time in the player input turn, not time spent listening to Mother."
+delay_before_input = 7.0
+delay_after_response = 2.5
+
+[sub_resource type="Resource" id="Resource_ik5ix"]
+resource_name = "When the herald asks for your declaration, you'll tell every"
+script = ExtResource("4_ubu7r")
+text = "When the herald asks for your declaration, you'll tell everyone that you're entering the writing profession, won't you?"
+actor_id = "mother"
+presentation = SubResource("Resource_x47gm")
+entry_id = "A2.4"
+
+[sub_resource type="Resource" id="Resource_2aom1"]
+resource_name = "A2.4"
+script = ExtResource("6_vrawv")
+dialogue = SubResource("Resource_ik5ix")
+input_mode = 4
+expected_intent = "DECLINE"
+accepted_phrases = PackedStringArray("no", "actually no", "I won\'t", "I will not", "I\'m not sure anymore", "I am not sure anymore", "I changed my mind", "not anymore", "I dont want to", "I\'m not sure", "I\'ve changed my mind")
+cue_card_text = "DECLINE"
+show_cue_card = true
+cue_delay = 5.0
+timeout = 35.0
+npc_success_response = "No?
+
+...Very well.
+
+There's still time before the declaration."
+presentation = SubResource("Resource_x47gm")
+yes_phrases = PackedStringArray()
+no_phrases = PackedStringArray()
+entry_id = "A2.4"
+
+[sub_resource type="Resource" id="Resource_47hfm"]
+script = ExtResource("13_wg7fo")
+stage_description = "Mother's reaction is slightly strange.
+
+For the first time, the prepared fairy-tale rhythm feels unstable."
+notes = "TODO: assign authored poses, lighting, blocking and sound in Actor Actions / Audio when assets are ready. Stage Description is preserved authoring data, not automatically generated animation."
+show_npc_dialogue = false
+delay_before_input = 1.0
+delay_after_response = 0.0
+
+[sub_resource type="Resource" id="Resource_af5f3"]
+resource_name = "A2.unstable"
+script = ExtResource("4_ubu7r")
+presentation = SubResource("Resource_47hfm")
+entry_id = "A2.unstable"
+
+[sub_resource type="Resource" id="Resource_k54gh"]
+resource_name = "A2.unstable"
+script = ExtResource("7_n2cai")
+event_type = 12
+description = "Mother's reaction is slightly strange.
+
+For the first time, the prepared fairy-tale rhythm feels unstable."
+dialogue = SubResource("Resource_af5f3")
+presentation = SubResource("Resource_47hfm")
+entry_id = "A2.unstable"
+
+[sub_resource type="Resource" id="Resource_qxv2x"]
+script = ExtResource("13_wg7fo")
+show_npc_dialogue = false
+
+[sub_resource type="Resource" id="Resource_31m08"]
+resource_name = "A2.princess"
+script = ExtResource("4_ubu7r")
+actor_id = "player"
+presentation = SubResource("Resource_qxv2x")
+entry_id = "A2.princess"
+
+[sub_resource type="Resource" id="Resource_roevg"]
+resource_name = "A2.princess"
+script = ExtResource("6_vrawv")
+dialogue = SubResource("Resource_31m08")
+input_mode = 1
+expected_line = "Mom, I'm just 18. I'm still your little baby princess."
+accepted_phrases = PackedStringArray()
+show_cue_card = true
+presentation = SubResource("Resource_qxv2x")
+legacy_type = 2
+yes_phrases = PackedStringArray()
+no_phrases = PackedStringArray()
+entry_id = "A2.princess"
+
+[sub_resource type="Resource" id="Resource_d77d1"]
+resource_name = "A2_DECLARATION_PREP"
+script = ExtResource("2_r50jo")
+block_id = "A2_DECLARATION_PREP"
+dialogue_lines = Array[ExtResource("4_ubu7r")]([SubResource("Resource_r2cy6"), SubResource("Resource_o7n8j")])
+player_interaction = SubResource("Resource_roevg")
+following_moments = Array[ExtResource("3_pay4l")]([SubResource("Resource_q1bdx"), SubResource("Resource_igaaa"), SubResource("Resource_aeoh6"), SubResource("Resource_6fe77"), SubResource("Resource_of887"), SubResource("Resource_o5gy5"), SubResource("Resource_2aom1"), SubResource("Resource_k54gh")])
+
+[sub_resource type="Resource" id="Resource_nb14f"]
+script = ExtResource("13_wg7fo")
+delay_after_response = 0.0
+
+[sub_resource type="Resource" id="Resource_4b8kq"]
+resource_name = "Narrator: The ceremony begins.  The Princess is almost ready to make"
+script = ExtResource("4_ubu7r")
+speaker = "Narrator"
+text = "The ceremony begins.
+
+The Princess is almost ready to make her declaration."
+wait_after = 5.0
+delivery = 1
+presentation = SubResource("Resource_nb14f")
+entry_id = "A3.context"
+
+[sub_resource type="Resource" id="Resource_u4cxa"]
+script = ExtResource("13_wg7fo")
+stage_description = "Mother laughs softly."
+notes = "TODO: assign authored poses, lighting, blocking and sound in Actor Actions / Audio when assets are ready. Stage Description is preserved authoring data, not automatically generated animation."
+show_npc_dialogue = false
+delay_before_input = 1.0
+delay_after_response = 0.0
+
+[sub_resource type="Resource" id="Resource_li7ns"]
+resource_name = "A3.laugh"
+script = ExtResource("4_ubu7r")
+presentation = SubResource("Resource_u4cxa")
+entry_id = "A3.laugh"
+
+[sub_resource type="Resource" id="Resource_ao8q2"]
+resource_name = "A3.laugh"
+script = ExtResource("7_n2cai")
+event_type = 12
+description = "Mother laughs softly."
+dialogue = SubResource("Resource_li7ns")
+presentation = SubResource("Resource_u4cxa")
+entry_id = "A3.laugh"
+
+[sub_resource type="Resource" id="Resource_gb7dr"]
+script = ExtResource("2_l3c0v")
+actor_id = "actor_2"
+visibility = 1
+
+[sub_resource type="Resource" id="Resource_qpmu5"]
+script = ExtResource("13_wg7fo")
+stage_description = "Before the ceremony continues:
+
+someone enters from the wrong side of the stage.
+
+This is NOT part of the expected blocking.
+
+Mother notices immediately.
+
+Backstage notices.
+
+The rhythm of the performance breaks.
+
+Actor 2 walks into the light.
+
+Initially label:
+
+UNKNOWN ACTOR
+
+or
+
+UNKNOWN VOICE.
+
+Do not reveal who they are."
+actor_actions = Array[ExtResource("2_l3c0v")]([SubResource("Resource_gb7dr")])
+
+[sub_resource type="Resource" id="Resource_8ptxb"]
+resource_name = "Are you?"
+script = ExtResource("4_ubu7r")
+text = "Are you?"
+actor_id = "actor_2"
+presentation = SubResource("Resource_qpmu5")
+entry_id = "A3.1_enter"
+
+[sub_resource type="Resource" id="Resource_1t0sp"]
+script = ExtResource("13_wg7fo")
+delay_after_response = 5.0
+
+[sub_resource type="Resource" id="Resource_5m20v"]
+resource_name = "A princess.  A writer.  Her daughter.  Is that who you"
+script = ExtResource("4_ubu7r")
+text = "A princess.
+
+A writer.
+
+Her daughter.
+
+Is that who you are?"
+actor_id = "actor_2"
+presentation = SubResource("Resource_1t0sp")
+entry_id = "A3.1_question"
+
+[sub_resource type="Resource" id="Resource_c3n6y"]
+script = ExtResource("13_wg7fo")
+stage_description = "Mother turns sharply toward Actor 2.
+
+She is clearly not expecting them.
+
+Backstage hesitates."
+notes = "TODO: assign authored poses, lighting, blocking and sound in Actor Actions / Audio when assets are ready. Stage Description is preserved authoring data, not automatically generated animation."
+show_npc_dialogue = false
+delay_before_input = 1.0
+delay_after_response = 0.0
+
+[sub_resource type="Resource" id="Resource_sd33b"]
+resource_name = "A3.backstage_notice"
+script = ExtResource("4_ubu7r")
+presentation = SubResource("Resource_c3n6y")
+entry_id = "A3.backstage_notice"
+
+[sub_resource type="Resource" id="Resource_7bh6c"]
+resource_name = "A3.backstage_notice"
+script = ExtResource("7_n2cai")
+event_type = 12
+description = "Mother turns sharply toward Actor 2.
+
+She is clearly not expecting them.
+
+Backstage hesitates."
+dialogue = SubResource("Resource_sd33b")
+presentation = SubResource("Resource_c3n6y")
+entry_id = "A3.backstage_notice"
+
+[sub_resource type="Resource" id="Resource_i6rxd"]
+script = ExtResource("5_drrnr")
+text = "DO NOT ENGAGE.
+CONTINUE THE PLAY."
+delay_seconds = 1.0
+
+[sub_resource type="Resource" id="Resource_vfd10"]
+script = ExtResource("13_wg7fo")
+notes = "Private cue preserved without adding unsupplied Mother dialogue."
+show_npc_dialogue = false
+delay_after_response = 5.0
+send_phone_cue = true
+phone_cue = SubResource("Resource_i6rxd")
+
+[sub_resource type="Resource" id="Resource_vex5t"]
+resource_name = "A3.1"
+script = ExtResource("4_ubu7r")
+actor_id = "mother"
+presentation = SubResource("Resource_vfd10")
+entry_id = "A3.1"
+
+[sub_resource type="Resource" id="Resource_7qh6b"]
+resource_name = "A3.1"
+script = ExtResource("6_vrawv")
+dialogue = SubResource("Resource_vex5t")
+accepted_phrases = PackedStringArray()
+send_phone_cue = true
+phone_cue = SubResource("Resource_i6rxd")
+presentation = SubResource("Resource_vfd10")
+legacy_type = 4
+yes_phrases = PackedStringArray()
+no_phrases = PackedStringArray()
+entry_id = "A3.1"
+
+[sub_resource type="Resource" id="Resource_h64vb"]
+script = ExtResource("5_drrnr")
+text = "DO NOT ENGAGE.
+CONTINUE THE PLAY."
+delay_seconds = 1.0
+
+[sub_resource type="Resource" id="Resource_ql75y"]
+script = ExtResource("13_wg7fo")
+delay_before_input = 2.0
+delay_after_response = 2.5
+send_phone_cue = true
+phone_cue = SubResource("Resource_h64vb")
+
+[sub_resource type="Resource" id="Resource_cvqb4"]
+resource_name = "You say you'll become a writer.  Did you choose that yours"
+script = ExtResource("4_ubu7r")
+text = "You say you'll become a writer.
+
+Did you choose that yourself?"
+actor_id = "actor_2"
+presentation = SubResource("Resource_ql75y")
+entry_id = "A3.2"
+
+[sub_resource type="Resource" id="Resource_jfotn"]
+resource_name = "YES"
+script = ExtResource("4_mihv6")
+intent = "YES"
+accepted_phrases = PackedStringArray("yes", "yes I did", "I did", "I chose it", "it was my choice", "of course", "yeah")
+npc_response = "Then say it without reading it."
+
+[sub_resource type="Resource" id="Resource_iy61d"]
+resource_name = "NO"
+script = ExtResource("4_mihv6")
+intent = "NO"
+accepted_phrases = PackedStringArray("no", "no I didnt", "I didnt", "not really", "it wasnt my choice", "she chose it", "nope")
+npc_response = "Then why are you about to declare it?"
+
+[sub_resource type="Resource" id="Resource_0n3fw"]
+resource_name = "A3.2"
+script = ExtResource("6_vrawv")
+dialogue = SubResource("Resource_cvqb4")
+input_mode = 2
+accepted_phrases = PackedStringArray()
+responses = Array[ExtResource("4_mihv6")]([SubResource("Resource_jfotn"), SubResource("Resource_iy61d")])
+timeout = 35.0
+npc_unclear_response = "You don't have to answer quickly."
+npc_timeout_response = "You don't have to answer quickly."
+unmatched_action = 1
+send_phone_cue = true
+phone_cue = SubResource("Resource_h64vb")
+presentation = SubResource("Resource_ql75y")
+yes_phrases = PackedStringArray()
+no_phrases = PackedStringArray()
+entry_id = "A3.2"
+
+[sub_resource type="Resource" id="Resource_iwovd"]
+script = ExtResource("13_wg7fo")
+delay_after_response = 7.0
+
+[sub_resource type="Resource" id="Resource_e4cnv"]
+resource_name = "Enough.  Her decision has been made.  We are here to cel"
+script = ExtResource("4_ubu7r")
+text = "Enough.
+
+Her decision has been made.
+
+We are here to celebrate my daughter's eighteenth birthday and declaration."
+actor_id = "mother"
+presentation = SubResource("Resource_iwovd")
+entry_id = "A3.3_mother"
+
+[sub_resource type="Resource" id="Resource_b7jl1"]
+script = ExtResource("5_drrnr")
+text = "KEEP THE PLAY MOVING."
+delay_seconds = 1.0
+
+[sub_resource type="Resource" id="Resource_nkgn6"]
+script = ExtResource("13_wg7fo")
+delay_after_response = 4.0
+send_phone_cue = true
+phone_cue = SubResource("Resource_b7jl1")
+
+[sub_resource type="Resource" id="Resource_6fx0d"]
+resource_name = "Then let her tell us herself."
+script = ExtResource("4_ubu7r")
+text = "Then let her tell us herself."
+actor_id = "actor_2"
+presentation = SubResource("Resource_nkgn6")
+entry_id = "A3.3"
+
+[sub_resource type="Resource" id="Resource_4ug7k"]
+script = ExtResource("5_drrnr")
+text = "KEEP THE PLAY MOVING."
+delay_seconds = 1.0
+
+[sub_resource type="Resource" id="Resource_eqc4f"]
+script = ExtResource("13_wg7fo")
+delay_after_response = 6.0
+send_phone_cue = true
+phone_cue = SubResource("Resource_4ug7k")
+
+[sub_resource type="Resource" id="Resource_c5gmg"]
+resource_name = "Why writing?  Because you love it?  Or because someone h"
+script = ExtResource("4_ubu7r")
+text = "Why writing?
+
+Because you love it?
+
+Or because someone handed you the answer?"
+actor_id = "actor_2"
+presentation = SubResource("Resource_eqc4f")
+entry_id = "A3.4_question"
+
+[sub_resource type="Resource" id="Resource_8w6hm"]
+script = ExtResource("5_drrnr")
+text = "KEEP THE PLAY MOVING."
+delay_seconds = 1.0
+
+[sub_resource type="Resource" id="Resource_brbum"]
+script = ExtResource("13_wg7fo")
+notes = "Preserves FOLLOW_PLAY / ENGAGE_ACTOR_2 and existing neutral reaction for clear unclassified/free speech. All reconverge. No semantic AI inference."
+delay_before_input = 2.0
+delay_after_response = 2.5
+send_phone_cue = true
+phone_cue = SubResource("Resource_8w6hm")
+
+[sub_resource type="Resource" id="Resource_vx5o1"]
+resource_name = "Darling.  Ignore him.  The guests are waiting."
+script = ExtResource("4_ubu7r")
+text = "Darling.
+
+Ignore him.
+
+The guests are waiting."
+actor_id = "mother"
+presentation = SubResource("Resource_brbum")
+entry_id = "A3.4"
+
+[sub_resource type="Resource" id="Resource_3q16d"]
+resource_name = "FOLLOW_PLAY"
+script = ExtResource("4_mihv6")
+intent = "FOLLOW_PLAY"
+accepted_phrases = PackedStringArray("lets continue", "continue the play", "keep the play moving", "the guests are waiting", "lets go", "we should go", "I want to continue", "ignore him")
+npc_response = "Yes.
+
+The hall is waiting."
+
+[sub_resource type="Resource" id="Resource_vksbh"]
+resource_name = "ENGAGE_ACTOR_2"
+script = ExtResource("4_mihv6")
+intent = "ENGAGE_ACTOR_2"
+accepted_phrases = PackedStringArray("let him speak", "I want to answer", "I want to hear him", "what do you mean", "why do you ask", "I choose for myself", "wait I want to listen")
+npc_response = "...Very well.
+
+Speak."
+
+[sub_resource type="Resource" id="Resource_qjise"]
+resource_name = "A3.4"
+script = ExtResource("6_vrawv")
+dialogue = SubResource("Resource_vx5o1")
+input_mode = 4
+accepted_phrases = PackedStringArray()
+responses = Array[ExtResource("4_mihv6")]([SubResource("Resource_3q16d"), SubResource("Resource_vksbh")])
+timeout = 35.0
+npc_unclear_response = "We should return to the hall."
+unmatched_action = 1
+send_phone_cue = true
+phone_cue = SubResource("Resource_8w6hm")
+presentation = SubResource("Resource_brbum")
+yes_phrases = PackedStringArray()
+no_phrases = PackedStringArray()
+entry_id = "A3.4"
+
+[sub_resource type="Resource" id="Resource_4tqdh"]
+script = ExtResource("13_wg7fo")
+stage_description = "The performance is no longer running smoothly.
+
+Mother waits.
+
+Backstage does not know which cue to give.
+
+Actor 2 looks directly at the Princess."
+notes = "TODO: assign authored poses, lighting, blocking and sound in Actor Actions / Audio when assets are ready. Stage Description is preserved authoring data, not automatically generated animation."
+show_npc_dialogue = false
+delay_before_input = 1.0
+delay_after_response = 0.0
+
+[sub_resource type="Resource" id="Resource_81e0e"]
+resource_name = "A3.hold"
+script = ExtResource("4_ubu7r")
+presentation = SubResource("Resource_4tqdh")
+entry_id = "A3.hold"
+
+[sub_resource type="Resource" id="Resource_anrfy"]
+resource_name = "A3.hold"
+script = ExtResource("7_n2cai")
+event_type = 12
+description = "The performance is no longer running smoothly.
+
+Mother waits.
+
+Backstage does not know which cue to give.
+
+Actor 2 looks directly at the Princess."
+dialogue = SubResource("Resource_81e0e")
+presentation = SubResource("Resource_4tqdh")
+entry_id = "A3.hold"
+
+[sub_resource type="Resource" id="Resource_fkw8m"]
+script = ExtResource("13_wg7fo")
+stage_description = "Lights hold.
+
+End prototype."
+notes = "TODO: assign final lighting hold when ready. No additional ending or Acts 4–7."
+delay_after_response = 6.0
+
+[sub_resource type="Resource" id="Resource_txpxf"]
+resource_name = "Then ask yourself something.  Do you remember yesterday?"
+script = ExtResource("4_ubu7r")
+text = "Then ask yourself something.
+
+Do you remember yesterday?"
+actor_id = "actor_2"
+presentation = SubResource("Resource_fkw8m")
+entry_id = "A3.5"
+
+[sub_resource type="Resource" id="Resource_ohmsq"]
+script = ExtResource("13_wg7fo")
+delay_before_input = 2.0
+delay_after_response = 2.5
+
+[sub_resource type="Resource" id="Resource_mokld"]
+resource_name = "Eighteen years old.  Soon you'll speak before the whole ha"
+script = ExtResource("4_ubu7r")
+text = "Eighteen years old.
+
+Soon you'll speak before the whole hall."
+actor_id = "mother"
+presentation = SubResource("Resource_ohmsq")
+entry_id = "A3.0"
+
+[sub_resource type="Resource" id="Resource_o2ado"]
+resource_name = "A3.0"
+script = ExtResource("6_vrawv")
+dialogue = SubResource("Resource_mokld")
+input_mode = 1
+expected_line = "I'm still your little princess."
+accepted_phrases = PackedStringArray()
+cue_card_text = "Mom...I'm still your little princess.
+I'm still feel nervouse"
+show_cue_card = true
+timeout = 35.0
+presentation = SubResource("Resource_ohmsq")
+legacy_type = 2
+yes_phrases = PackedStringArray()
+no_phrases = PackedStringArray()
+entry_id = "A3.0"
+
+[sub_resource type="Resource" id="Resource_ugxyu"]
+resource_name = "A3_INTERRUPTION"
+script = ExtResource("2_r50jo")
+block_id = "A3_INTERRUPTION"
+dialogue_lines = Array[ExtResource("4_ubu7r")]([SubResource("Resource_4b8kq")])
+player_interaction = SubResource("Resource_o2ado")
+following_moments = Array[ExtResource("3_pay4l")]([SubResource("Resource_ao8q2"), SubResource("Resource_8ptxb"), SubResource("Resource_5m20v"), SubResource("Resource_7bh6c"), SubResource("Resource_7qh6b"), SubResource("Resource_0n3fw"), SubResource("Resource_e4cnv"), SubResource("Resource_6fx0d"), SubResource("Resource_c5gmg"), SubResource("Resource_qjise"), SubResource("Resource_anrfy"), SubResource("Resource_txpxf")])
+
+[resource]
+script = ExtResource("6_j0s1j")
+blocks = Array[ExtResource("2_r50jo")]([SubResource("Resource_t2ir8"), SubResource("Resource_th4ao"), SubResource("Resource_1vh8q"), SubResource("Resource_6byic"), SubResource("Resource_xx330"), SubResource("Resource_2n2u8"), SubResource("Resource_d77d1"), SubResource("Resource_ugxyu")])

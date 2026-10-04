@@ -4,7 +4,7 @@ func run() -> void:
 	root.size = Vector2i(1152, 800)
 	root.content_scale_size = Vector2i(1152, 800)
 	for flags in range(8):
-		var scene = load("res://Scene/scene_1_headphones.tscn").instantiate()
+		var scene = load("res://Scene/2.0_01_headphones.tscn").instantiate()
 		scene.sentence_definition = scene.sentence_definition.duplicate()
 		var config = scene.sentence_definition
 		config.require_drag = bool(flags & 1)
@@ -47,7 +47,7 @@ func run() -> void:
 	# Layout bounds: test the actual inherited scene at two display widths.
 	for width in [1152, 1440]:
 		root.size = Vector2i(width, 800)
-		var scene = load("res://Scene/scene_1_headphones.tscn").instantiate()
+		var scene = load("res://Scene/2.0_01_headphones.tscn").instantiate()
 		scene.get_node("SpeechMonitor").enabled = false
 		root.add_child(scene)
 		current_scene = scene

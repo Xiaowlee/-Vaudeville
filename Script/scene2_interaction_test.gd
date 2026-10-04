@@ -2,7 +2,7 @@ extends "res://Script/scene0_interaction_test.gd"
 
 func run() -> void:
 	root.size = Vector2i(1152, 800)
-	var scene = load("res://Scene/scene_2_key.tscn").instantiate()
+	var scene = load("res://Scene/2.0_02_key_door.tscn").instantiate()
 	scene.get_node("SpeechMonitor").enabled = false
 	var hook = scene.get_node("PhoneInputHook")
 	hook.relay_url = "wss://127.0.0.1:18787"

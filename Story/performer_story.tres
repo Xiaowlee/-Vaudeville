@@ -1,0 +1,185 @@
+[gd_resource type="Resource" format=3 uid="uid://b0hov8ouy5khr"]
+
+[ext_resource type="Script" uid="uid://biykveos2te1g" path="res://Script/beat_audio_cue.gd" id="1_mxg1p"]
+[ext_resource type="Texture2D" uid="uid://daq8wqexdndi3" path="res://Visual Asset/Performer/Folio 2 Sample 1.jpg" id="2_83t8q"]
+[ext_resource type="Texture2D" uid="uid://dp2nieplqxacm" path="res://Visual Asset/Performer/Folio 2 Sample 2.jpg" id="3_41bcr"]
+[ext_resource type="Texture2D" uid="uid://bh2ll5pmnywgx" path="res://Visual Asset/Performer/Folio 2 Sample 3.jpg" id="4_h5i2t"]
+[ext_resource type="Texture2D" uid="uid://60gsartcdql1" path="res://Visual Asset/Performer/Folio 2 Sample 4.jpg" id="5_mxg1p"]
+[ext_resource type="Texture2D" uid="uid://b6405vobihmoe" path="res://Visual Asset/Performer/Folio 2 Sample 5.jpg" id="6_n1lx1"]
+[ext_resource type="Texture2D" uid="uid://cmsgcyp43kcgf" path="res://Visual Asset/Performer/Folio 2 Sample 6.jpg" id="7_12fyy"]
+[ext_resource type="Texture2D" uid="uid://cgb06nkdwkr3h" path="res://Visual Asset/Performer/Folio 2 Sample 8.jpg" id="8_3yc5a"]
+[ext_resource type="Texture2D" uid="uid://cxomhl7o5vepe" path="res://Visual Asset/Performer/Folio 2 Sample 7.jpg" id="9_h5i2t"]
+[ext_resource type="Texture2D" uid="uid://b0baap3ljjn4j" path="res://Visual Asset/Performer/Folio 2 Sample 9.jpg" id="9_rq3bo"]
+[ext_resource type="Texture2D" uid="uid://4u8hw3gljuut" path="res://Visual Asset/Performer/Folio 2 Sample 10.jpg" id="10_eubre"]
+[ext_resource type="Texture2D" uid="uid://c7iq4jkfb8gdu" path="res://Visual Asset/Performer/Folio 2 Sample 11.jpg" id="12_mxg1p"]
+[ext_resource type="Script" uid="uid://br0motrf27aiy" path="res://Script/performer_beat.gd" id="Beat"]
+[ext_resource type="Script" uid="uid://dml3kgwlh5qnk" path="res://Script/performer_interaction.gd" id="Interaction"]
+[ext_resource type="Script" uid="uid://b00f3lb35xiys" path="res://Script/performer_response.gd" id="Option"]
+[ext_resource type="Script" uid="uid://br35h3hucn2f4" path="res://Script/performer_story.gd" id="Story"]
+
+[sub_resource type="Resource" id="Beat01"]
+resource_name = "Beat 01"
+script = ExtResource("Beat")
+text = "She is walking home at night."
+visual = ExtResource("2_83t8q")
+beat_id = "Beat01"
+
+[sub_resource type="Resource" id="Beat02"]
+resource_name = "Beat 02"
+script = ExtResource("Beat")
+text = "A streetlight turns on above her."
+visual = ExtResource("2_83t8q")
+beat_id = "Beat02"
+
+[sub_resource type="Resource" id="Beat03"]
+resource_name = "Beat 03"
+script = ExtResource("Beat")
+text = "She looks down. A dark silhouette waits at her feet."
+visual = ExtResource("3_41bcr")
+beat_id = "Beat03"
+
+[sub_resource type="Resource" id="Beat04"]
+resource_name = "Beat 04"
+script = ExtResource("Beat")
+text = "Her shadow has stopped moving."
+visual = ExtResource("4_h5i2t")
+beat_id = "Beat04"
+
+[sub_resource type="Resource" id="1_QUESTION"]
+resource_name = "QUESTION"
+script = ExtResource("Option")
+category = "QUESTION"
+accepted_answers = PackedStringArray("who are you", "what are you", "why are you here")
+
+[sub_resource type="Resource" id="1_REJECTION"]
+resource_name = "REJECTION"
+script = ExtResource("Option")
+category = "REJECTION"
+accepted_answers = PackedStringArray("leave me alone", "go away", "stop following me")
+
+[sub_resource type="Resource" id="1_RECOGNITION"]
+resource_name = "RECOGNITION"
+script = ExtResource("Option")
+category = "RECOGNITION"
+accepted_answers = PackedStringArray("you\'re me", "you are me", "I know you", "I remember you")
+
+[sub_resource type="Resource" id="1_GREETING"]
+resource_name = "GREETING"
+script = ExtResource("Option")
+category = "GREETING"
+accepted_answers = PackedStringArray("hello", "can you hear me", "are you okay")
+
+[sub_resource type="Resource" id="1_UNKNOWN"]
+resource_name = "UNKNOWN"
+script = ExtResource("Option")
+category = "UNKNOWN"
+accepted_answers = PackedStringArray()
+
+[sub_resource type="Resource" id="Interaction1"]
+script = ExtResource("Interaction")
+prompt_a = "Say her line:
+
+“Who are you?”"
+prompt_c = "What does she say to the shadow?"
+options = Array[ExtResource("Option")]([SubResource("1_QUESTION"), SubResource("1_REJECTION"), SubResource("1_RECOGNITION"), SubResource("1_GREETING"), SubResource("1_UNKNOWN")])
+allowed_categories_a = PackedStringArray("QUESTION")
+
+[sub_resource type="Resource" id="Beat05"]
+resource_name = "Beat 05"
+script = ExtResource("Beat")
+text = "The shadow slowly raises its head and looks at her."
+visual = ExtResource("5_mxg1p")
+beat_id = "Beat05"
+interaction = SubResource("Interaction1")
+
+[sub_resource type="Resource" id="Beat06"]
+resource_name = "Beat 06"
+script = ExtResource("Beat")
+text = "The shadow reacts to what she says."
+visual = ExtResource("6_n1lx1")
+beat_id = "Beat06"
+
+[sub_resource type="Resource" id="Beat07"]
+resource_name = "Beat 07"
+script = ExtResource("Beat")
+text = "Rain begins to fall."
+visual = ExtResource("7_12fyy")
+beat_id = "Beat07"
+
+[sub_resource type="Resource" id="Beat08"]
+resource_name = "Beat 08"
+script = ExtResource("Beat")
+text = "She sprints forward for shelter."
+visual = ExtResource("8_3yc5a")
+beat_id = "Beat08"
+
+[sub_resource type="Resource" id="Resource_n1lx1"]
+resource_name = "Beat 11"
+script = ExtResource("Beat")
+text = "The rain gets heavier.	"
+visual = ExtResource("9_h5i2t")
+beat_id = "Resource_n1lx1"
+
+[sub_resource type="Resource" id="Beat09"]
+resource_name = "Beat 09"
+script = ExtResource("Beat")
+text = "But she stops."
+visual = ExtResource("9_rq3bo")
+beat_id = "Beat09"
+
+[sub_resource type="Resource" id="Beat10"]
+resource_name = "Beat 10"
+script = ExtResource("Beat")
+text = "She turns her head back."
+visual = ExtResource("10_eubre")
+beat_id = "Beat10"
+
+[sub_resource type="Resource" id="2_INVITE"]
+resource_name = "INVITE"
+script = ExtResource("Option")
+category = "INVITE"
+accepted_answers = PackedStringArray("follow me", "come with me", "walk with me", "come along")
+ends_story = true
+
+[sub_resource type="Resource" id="2_REJECTION"]
+resource_name = "REJECTION"
+script = ExtResource("Option")
+category = "REJECTION"
+accepted_answers = PackedStringArray("leave me alone", "go away", "stay here")
+ends_story = true
+
+[sub_resource type="Resource" id="2_QUESTION"]
+resource_name = "QUESTION"
+script = ExtResource("Option")
+category = "QUESTION"
+accepted_answers = PackedStringArray("who are you", "why are you here", "what are you")
+ends_story = true
+
+[sub_resource type="Resource" id="2_UNKNOWN"]
+resource_name = "UNKNOWN"
+script = ExtResource("Option")
+category = "UNKNOWN"
+accepted_answers = PackedStringArray()
+ends_story = true
+
+[sub_resource type="Resource" id="Interaction2"]
+script = ExtResource("Interaction")
+prompt_a = "Speak her response:
+“Come with me.”
+“Leave me alone.”
+“Who are you?”"
+prompt_c = "What does she say to the shadow now?"
+options = Array[ExtResource("Option")]([SubResource("2_INVITE"), SubResource("2_REJECTION"), SubResource("2_QUESTION"), SubResource("2_UNKNOWN")])
+allowed_categories_a = PackedStringArray("INVITE", "REJECTION", "QUESTION")
+
+[sub_resource type="Resource" id="Beat11"]
+resource_name = "Beat 11"
+script = ExtResource("Beat")
+text = "Near the streetlight where she was standing, the shadow remains."
+visual = ExtResource("12_mxg1p")
+beat_id = "Beat11"
+interaction = SubResource("Interaction2")
+
+[resource]
+script = ExtResource("Story")
+beats = Array[ExtResource("Beat")]([SubResource("Beat01"), SubResource("Beat02"), SubResource("Beat03"), SubResource("Beat04"), SubResource("Beat05"), SubResource("Beat06"), SubResource("Beat07"), SubResource("Beat08"), SubResource("Resource_n1lx1"), SubResource("Beat09"), SubResource("Beat10"), SubResource("Beat11")])

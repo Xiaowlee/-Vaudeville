@@ -1,0 +1,133 @@
+[gd_scene format=3 uid="uid://cg8ycvmwbdltt"]
+
+[ext_resource type="Texture2D" uid="uid://y88ktfr2vcyu" path="res://Visual Asset/Dialogue box.png" id="3_w575i"]
+[ext_resource type="AudioStream" uid="uid://ck0c1pfp6m42e" path="res://Sound/soft_air_placeholder.wav" id="Ambient"]
+[ext_resource type="Script" uid="uid://bs0ql1gi00440" path="res://Script/prototype_screen.gd" id="Controller"]
+[ext_resource type="Theme" uid="uid://p3m2d0y1qrtb" path="res://UI/prototype_theme.tres" id="Theme"]
+[ext_resource type="Script" uid="uid://i7o67fw7st8c" path="res://Script/speech_transcriber.gd" id="Voice"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_orkkj"]
+texture = ExtResource("3_w575i")
+
+[node name="NarrationBase" type="Control" unique_id=1341459880]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("Theme")
+script = ExtResource("Controller")
+intro_scene = "res://Scene/00_main_menu.tscn"
+
+[node name="Background" type="ColorRect" parent="." unique_id=1021069083]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.92, 0.91, 0.98, 1)
+
+[node name="VisualPlaceholder" type="ColorRect" parent="." unique_id=1396161876]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.83, 0.81, 0.93, 1)
+
+[node name="Label" type="Label" parent="VisualPlaceholder" unique_id=1847346513]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Visual placeholder"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Back" type="Button" parent="." unique_id=182058486]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.82
+anchor_top = 0.06
+anchor_right = 0.95
+anchor_bottom = 0.13
+offset_bottom = 6.0
+text = "Back"
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1399829317]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -261.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxTexture_orkkj")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1576298597]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="StoryText" type="RichTextLabel" parent="PanelContainer/MarginContainer" unique_id=1968956350]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.05, 0.04, 0.12, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/normal_font_size = 28
+text = "Story text placeholder. Edit this text in the Inspector."
+
+[node name="Prompt" type="RichTextLabel" parent="PanelContainer/MarginContainer" unique_id=1769462739]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.05, 0.04, 0.12, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/normal_font_size = 28
+text = "Prompt preview — temporarily show this and hide StoryText to edit."
+
+[node name="Status" type="Label" parent="." unique_id=748855276]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.9
+anchor_right = 0.9
+anchor_bottom = 0.96
+offset_top = -229.0
+offset_bottom = -229.0
+theme_override_colors/font_color = Color(0.95217425, 0.94693214, 0.96649796, 1)
+theme_override_font_sizes/font_size = 18
+text = "Structure preview — narration is not active yet."
+horizontal_alignment = 1
+
+[node name="Title" type="Label" parent="." unique_id=514013865]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06
+anchor_top = 0.07
+anchor_right = 0.78
+anchor_bottom = 0.17
+theme_override_font_sizes/font_size = 32
+text = "Prototype"
+autowrap_mode = 2
+
+[node name="SpeechMonitor" type="Node" parent="." unique_id=2146746441]
+script = ExtResource("Voice")
+
+[node name="Ambience" type="AudioStreamPlayer" parent="." unique_id=943447029]
+stream = ExtResource("Ambient")
+volume_db = -24.0
+autoplay = true

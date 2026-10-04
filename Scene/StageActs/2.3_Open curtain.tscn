@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://k8rcxbt5okws"]
+
+[ext_resource type="Texture2D" uid="uid://4gp3u853nr2y" path="res://Visual Asset/Folio 2 curtain.jpg" id="1_s5x13"]
+[ext_resource type="Texture2D" uid="uid://bm5kbuvo8slne" path="res://Visual Asset/Folio 2 curtain open.png" id="2_ndrol"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8ergx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_s5x13")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ndrol")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 1.0
+}]
+
+[node name="Sprite2D" type="Sprite2D" unique_id=240451421]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=997972138]
+sprite_frames = SubResource("SpriteFrames_8ergx")
+frame_progress = 0.77432597

@@ -1,62 +1,7 @@
-[gd_scene format=3 uid="uid://gts46sdne4km"]
+[gd_scene format=3]
 
-[ext_resource type="Texture2D" uid="uid://cxqo2i3lspahl" path="res://Visual Asset/wear.png" id="1_qcr13"]
-[ext_resource type="Texture2D" uid="uid://c0lth6tyt10e0" path="res://Visual Asset/headphine object.png" id="2_2cl15"]
+; Compatibility path for editor tabs opened before the approved rename.
+; The numbered scene remains the source. Keep until open edits have been saved.
+[ext_resource type="PackedScene" path="res://Scene/2.0_component_headphones_animation.tscn" id="RenamedScene"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2cl15"]
-atlas = ExtResource("1_qcr13")
-region = Rect2(0, 0, 1920, 1080)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ar5wi"]
-atlas = ExtResource("1_qcr13")
-region = Rect2(1920, 0, 1920, 1080)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_8ergx"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2cl15")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ar5wi")
-}],
-"loop": 0,
-"name": &"default",
-"speed": 1.0
-}]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vnbna"]
-atlas = ExtResource("2_2cl15")
-region = Rect2(0, 0, 1920, 1080)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5i4c8"]
-atlas = ExtResource("2_2cl15")
-region = Rect2(1920, 0, 1920, 1080)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_5j0sh"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vnbna")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5i4c8")
-}],
-"loop": 0,
-"name": &"default",
-"speed": 1.0
-}]
-
-[node name="Sprite2D" type="Sprite2D" unique_id=689580211]
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=59410188]
-position = Vector2(703, 468)
-sprite_frames = SubResource("SpriteFrames_8ergx")
-frame = 1
-frame_progress = 1.0
-
-[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="." unique_id=292394441]
-position = Vector2(652, 361)
-sprite_frames = SubResource("SpriteFrames_5j0sh")
-frame = 1
-frame_progress = 1.0
+[node name="Sprite2D" instance=ExtResource("RenamedScene")]

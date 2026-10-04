@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="Script" path="res://Script/ui_audio.gd" id="Script"]
+[ext_resource type="AudioStream" path="res://Sound/clicksoundeffect.mp3" id="Click"]
+[node name="UIAudio" type="AudioStreamPlayer"]
+script = ExtResource("Script")
+stream = ExtResource("Click")
+volume_db = -12.0

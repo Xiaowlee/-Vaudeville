@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://cnv11mijwe33l"]
+
+[ext_resource type="Texture2D" uid="uid://bafxlr6ccpiwa" path="res://Visual Asset/key.png" id="4_jofdn"]
+[ext_resource type="PackedScene" uid="uid://smp6r1vyfos5" path="res://Scene/2.0_00_onboarding.tscn" id="Base"]
+[ext_resource type="Texture2D" uid="uid://da4a3a3f0eb6h" path="res://Visual Asset/door.png" id="Door"]
+[ext_resource type="Resource" path="res://prototype_1/scene_2_sentence.tres" id="Sentence"]
+
+[sub_resource type="AtlasTexture" id="Closed"]
+atlas = ExtResource("Door")
+region = Rect2(0, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="Open"]
+atlas = ExtResource("Door")
+region = Rect2(1920, 0, 1920, 1080)
+
+[sub_resource type="SpriteFrames" id="DoorFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Closed")
+}, {
+"duration": 1.0,
+"texture": SubResource("Open")
+}],
+"loop": 0,
+"name": &"door_open",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Closed")
+}],
+"loop": 1,
+"name": &"standby",
+"speed": 1.0
+}]
+
+[node name="KeyDoor" unique_id=1763385535 instance=ExtResource("Base")]
+sentence_definition = ExtResource("Sentence")
+next_scene = "uid://13txmliwqlj0"
+animation_name = &""
+starts_dark = false
+requires_face_first = true
+
+[node name="Room" parent="Margin/Layout" parent_id_path=PackedInt32Array(979380939) index="0" unique_id=664515638]
+layout_mode = 1
+anchors_preset = 5
+offset_top = 0.0
+offset_bottom = 420.0
+grow_horizontal = 2
+action_animation = &"door_open"
+
+[node name="AnimatedSprite2D" parent="Margin/Layout/Room" index="0" unique_id=2119590199]
+position = Vector2(538, 201)
+sprite_frames = SubResource("DoorFrames")
+
+[node name="Key" type="Sprite2D" parent="Margin/Layout/Room" index="1" unique_id=1977146762]
+position = Vector2(326, 273)
+scale = Vector2(0.36969256, 0.36969253)
+texture = ExtResource("4_jofdn")
+
+[node name="Sentence" parent="Margin/Layout/Story" parent_id_path=PackedInt32Array(1779118976) index="0" unique_id=807243755]
+definition = ExtResource("Sentence")
+ready_color = Color(0.28, 0.25, 0.34, 1)
+
+[node name="HBoxContainer" parent="Margin/Layout/Story/Sentence" index="0" unique_id=346061109]
+offset_left = -360.0
+offset_right = 360.0
+
+[node name="PrefixLabel" parent="Margin/Layout/Story/Sentence/HBoxContainer" index="0" unique_id=1039613551]
+text = "She picks the"
+
+[node name="SuffixLabel" parent="Margin/Layout/Story/Sentence/HBoxContainer" index="2" unique_id=929395264]
+text = "and opens the door."
+
+[node name="ReadOutLoudLabel" parent="Margin/Layout/Story/Sentence" index="1" unique_id=66799957]
+theme_override_colors/font_color = Color(0.28, 0.25, 0.34, 1)
+
+[node name="On" parent="Margin/Layout/Story" parent_id_path=PackedInt32Array(1779118976) index="1" unique_id=835511553]
+offset_left = 303.0
+offset_top = -81.45001
+offset_right = 413.0
+offset_bottom = -23.450012
+text = "key"
+
+[node name="Off" parent="Margin/Layout/Story" parent_id_path=PackedInt32Array(1779118976) index="2" unique_id=2125069934]
+offset_left = -78.0
+offset_top = -202.45001
+offset_right = 32.0
+offset_bottom = -144.45001
+text = "book"
+
+[node name="Away" parent="Margin/Layout/Story" parent_id_path=PackedInt32Array(1779118976) index="3" unique_id=933517709]
+text = "phone"
+
+[node name="MicIndicator" parent="Margin/Layout/Story" parent_id_path=PackedInt32Array(1779118976) index="4" unique_id=1204377585]
+theme_override_colors/font_color = Color(0.28, 0.25, 0.34, 1)
+
+[editable path="Margin/Layout/Story/Sentence"]

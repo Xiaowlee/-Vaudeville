@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bdc2755x4nnj7"]
+
+[ext_resource type="Script" uid="uid://b3gliqreru4wa" path="res://Script/phone_cue_bridge.gd" id="Script"]
+
+[node name="PhoneCueBridge" type="Node" unique_id=980098026]
+script = ExtResource("Script")

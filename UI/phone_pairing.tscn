@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://cubvhdryuidcv"]
+
+[ext_resource type="FontFile" uid="uid://di3h2p4jyrmkt" path="res://Font/JacquesFrancois-Regular.ttf" id="2_f2fp1"]
+[ext_resource type="Script" uid="uid://0ffi41yy65rc" path="res://Script/phone_pairing.gd" id="Script"]
+
+[sub_resource type="StyleBoxFlat" id="CardStyle"]
+bg_color = Color(0.96862745, 0.91764706, 0.95686275, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="PhonePairing" type="Control" unique_id=1472216598]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("Script")
+
+[node name="ConnectPhone" type="Button" parent="." unique_id=1710513124]
+layout_mode = 0
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -264.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = 78.0
+theme_override_font_sizes/font_size = 24
+text = "Connect phone"
+
+[node name="Card" type="Panel" parent="." unique_id=374194059]
+visible = false
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = -251.0
+offset_right = 210.0
+offset_bottom = 251.0
+theme_override_styles/panel = SubResource("CardStyle")
+
+[node name="Lines" type="VBoxContainer" parent="Card" unique_id=518306822]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 18.0
+offset_right = 400.0
+offset_bottom = 484.0
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Card/Lines" unique_id=768757266]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.08, 0.08, 0.12, 1)
+theme_override_fonts/font = ExtResource("2_f2fp1")
+theme_override_font_sizes/font_size = 24
+text = "Scan with your phone"
+horizontal_alignment = 1
+
+[node name="QR" type="TextureRect" parent="Card/Lines" unique_id=272100204]
+texture_filter = 1
+custom_minimum_size = Vector2(296, 296)
+layout_mode = 2
+size_flags_horizontal = 4
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Address" type="Label" parent="Card/Lines" unique_id=994647200]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.08, 0.08, 0.12, 1)
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+
+[node name="Wifi" type="Label" parent="Card/Lines" unique_id=1555554206]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.08, 0.08, 0.12, 1)
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
+
+[node name="Close" type="Button" parent="Card/Lines" unique_id=1562679641]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Close"

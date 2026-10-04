@@ -1,4 +1,4 @@
-param([string]$OutputPath, [int]$GameProcessId, [string]$TargetPhrase, [string]$RejectPhrases = '', [string]$AudioPath = '', [switch]$Continuous)
+param([string]$OutputPath, [int]$GameProcessId, [string]$TargetPhrase, [string]$RejectPhrases = '', [string]$AudioPath = '', [switch]$Continuous, [switch]$Dictation)
 $ErrorActionPreference = 'Stop'
 $encoding = New-Object System.Text.UTF8Encoding($false)
 function Send-Event($data) {
@@ -15,6 +15,10 @@ try {
     $culture = New-Object System.Globalization.CultureInfo('en-US')
     $recognizer = New-Object System.Speech.Recognition.SpeechRecognitionEngine($culture)
     $failureCode = 'speech_unavailable'
+    if ($Dictation) {
+        $failureCode = 'dictation_unavailable'
+        $recognizer.LoadGrammar((New-Object System.Speech.Recognition.DictationGrammar))
+    } else {
     # System.Speech phrase grammar, not a fictitious Vosk API or literal [unk].
     $builder = New-Object System.Speech.Recognition.GrammarBuilder
     $builder.Culture = $culture
@@ -27,6 +31,7 @@ try {
     $grammar = New-Object System.Speech.Recognition.Grammar($builder)
     $grammar.Name = 'scene_target'
     $recognizer.LoadGrammar($grammar)
+    }
     $failureCode = 'microphone_unavailable'
     if ($AudioPath) { $recognizer.SetInputToWaveFile($AudioPath) }
     else { $recognizer.SetInputToDefaultAudioDevice() }
@@ -38,7 +43,7 @@ try {
     $recognizer.RecognizeAsync([System.Speech.Recognition.RecognizeMode]::Multiple)
     $failureCode = 'worker'
     $format = $recognizer.AudioFormat
-    Send-Event @{status='listening'; engine=$recognizer.RecognizerInfo.Description; culture=$recognizer.RecognizerInfo.Culture.Name; input=$(if ($AudioPath) {$AudioPath} else {'Windows default recording device'}); sample_rate=$format.SamplesPerSecond; bits=$format.BitsPerSample; channels=$format.ChannelCount; target=$TargetPhrase}
+    Send-Event @{status='listening'; mode=$(if ($Dictation) {'dictation'} else {'phrases'}); engine=$recognizer.RecognizerInfo.Description; culture=$recognizer.RecognizerInfo.Culture.Name; input=$(if ($AudioPath) {$AudioPath} else {'Windows default recording device'}); sample_rate=$format.SamplesPerSecond; bits=$format.BitsPerSample; channels=$format.ChannelCount; target=$TargetPhrase}
     $deadline = [DateTime]::UtcNow.AddMinutes(10)
     $done = $false
     while (-not $done -and ($Continuous -or [DateTime]::UtcNow -lt $deadline) -and ($AudioPath -or (Get-Process -Id $GameProcessId -ErrorAction SilentlyContinue))) {

@@ -1,0 +1,124 @@
+[gd_scene format=3 uid="uid://bcc0sd3rv7bfj"]
+
+[ext_resource type="Script" uid="uid://cxl7vctt17165" path="res://Script/intro.gd" id="1_m1ph0"]
+[ext_resource type="Texture2D" uid="uid://cm7wdbvnte2jr" path="res://Visual Asset/BG.jpg" id="2_lebhk"]
+[ext_resource type="Texture2D" uid="uid://diu3clejabikd" path="res://Visual Asset/logo2.png" id="3_xi1yc"]
+[ext_resource type="Theme" uid="uid://p3m2d0y1qrtb" path="res://UI/prototype_theme.tres" id="MenuTheme"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_onfqo"]
+texture = ExtResource("2_lebhk")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g68wp"]
+content_margin_left = 20.0
+content_margin_top = 12.0
+content_margin_right = 20.0
+content_margin_bottom = 12.0
+bg_color = Color(0.16470589, 0.3529412, 0.8862745, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hd2pk"]
+content_margin_left = 20.0
+content_margin_top = 12.0
+content_margin_right = 20.0
+content_margin_bottom = 12.0
+bg_color = Color(0.16470589, 0.3529412, 0.8862745, 1)
+
+[node name="Control" type="Control" unique_id=707068634]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("MenuTheme")
+script = ExtResource("1_m1ph0")
+prototype_1_scene = "res://Scene/2.1_continuous_narration.tscn"
+prototype_2_scene = "res://Scene/2.1_narrator_agency.tscn"
+earlier_scene = "res://Scene/2.0_00_onboarding.tscn"
+back_scene = "res://Scene/00_main_menu.tscn"
+
+[node name="Panel" type="Panel" parent="." unique_id=1179351320]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_onfqo")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=406773399]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -426.66663
+offset_top = -310.0
+offset_right = 426.66663
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_xi1yc")
+expand_mode = 1
+
+[node name="Menu" type="VBoxContainer" parent="." unique_id=2091905211]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.12
+anchor_top = 0.25
+anchor_right = 0.88
+anchor_bottom = 0.95
+grow_horizontal = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="Earlier" type="Button" parent="Menu" unique_id=1160231897]
+layout_mode = 2
+text = "2.0"
+
+[node name="Prototype2" type="Button" parent="Menu" unique_id=1246728127]
+layout_mode = 2
+text = "2.1.2"
+
+[node name="Prototype1" type="Button" parent="Menu" unique_id=1451230569]
+layout_mode = 2
+text = "2.1.1"
+
+[node name="PerformerA" type="Button" parent="Menu" unique_id=131980377]
+layout_mode = 2
+text = "2.2.1"
+
+[node name="PerformerC" type="Button" parent="Menu" unique_id=213123174]
+layout_mode = 2
+text = "2.2.2"
+
+[node name="Back" type="Button" parent="Menu" unique_id=2137949648]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96862745, 0.91764706, 0.95686275, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_g68wp")
+text = "Back"
+
+[node name="Quit" type="Button" parent="Menu" unique_id=965762882]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96862745, 0.91764706, 0.95686275, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_hd2pk")
+text = "Quit"
+
+[node name="Title" type="Label" parent="." unique_id=1955794663]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.25
+offset_top = -256.0
+offset_right = 260.25
+offset_bottom = -178.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 44
+text = "Previous prototypes"
+horizontal_alignment = 1
+autowrap_mode = 2

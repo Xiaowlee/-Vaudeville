@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="StageTypingSettings" format=3]
+[ext_resource type="Script" path="res://Script/StageActs/typing_settings.gd" id="Script"]
+[resource]
+script = ExtResource("Script")
+typing_enabled = true
+characters_per_second = 40.0
+comma_pause = 0.1
+punctuation_pause = 0.22
+delay_before_typing = 0.0
+delay_after_typing = 0.15

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" format=3 uid="uid://cfyy0kq3td5bm"]
+
+[ext_resource type="Script" uid="uid://b6hwrgnkootwo" path="res://Script/performer_variant.gd" id="Variant"]
+
+[resource]
+script = ExtResource("Variant")
+free_response = true
+negation_words = PackedStringArray("not", "never", "dont", "cannot", "cant", "wont")

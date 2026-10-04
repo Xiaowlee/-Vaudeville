@@ -1,7 +1,13 @@
 extends Node
+const BROWSER = preload("res://Script/browser_speech.gd")
+## Developer-only backend choice. No player-facing engine selector.
+@export_enum("Automatic", "Windows", "Browser") var recognition_backend := 0
+var using_browser := false
 const PACKAGED_HELPER = preload("res://prototype_1/windows_speech_helper.tres")
 ## Windows-only local phrase recognition, using the installed OS recognizer. No downloads.
 signal transcript_received(text: String)
+signal partial_transcript_received(text: String)
+signal final_transcript_received(text: String)
 signal recognition_rejected(text: String)
 signal status_changed(message: String)
 @export var enabled := true
@@ -18,6 +24,8 @@ var worker_error := ""
 var last_error := ""
 var player_error := ""
 const ERROR_MESSAGES = {
+	"browser": "Speech unavailable. Check browser microphone permission, then retry.",
+	"dictation_unavailable": "Free speech is unavailable on this Windows setup. Please report this to the facilitator.",
 	"helper_missing": "Speech files are missing. Please download the updated game.",
 	"recognizer_missing": "Install Windows English (United States) speech recognition, then retry.",
 	"microphone_unavailable": "Check Windows microphone access and default input, then retry.",
@@ -28,11 +36,23 @@ const ERROR_MESSAGES = {
 	"worker": "Speech could not start. Retry microphone; if it persists, share the game log."
 }
 
-func start_listening(target_phrase: String, rejected_phrases: PackedStringArray = [], continuous_mode := false) -> void:
+func start_listening(target_phrase: String, rejected_phrases: PackedStringArray = [], continuous_mode := false, dictation_mode := false) -> void:
 	stop_listening()
 	last_error = ""
 	player_error = ""
 	worker_error = ""
+	if enabled and (recognition_backend == 2 or (recognition_backend == 0 and OS.has_feature("web"))):
+		if not OS.has_feature("web"):
+			_fail("Browser speech requires the web export", "browser")
+			return
+		using_browser = true
+		listening = true
+		worker_ready = false
+		startup_time = 0.0
+		var error := BROWSER.start()
+		if not error.is_empty(): _fail(error, "browser")
+		else: status_changed.emit("Mic starting…")
+		return
 	if not enabled or OS.get_name() != "Windows":
 		_fail("SpeechMonitor is disabled" if not enabled else "Speech recognition requires Windows", "platform" if OS.get_name() != "Windows" else "worker")
 		return
@@ -59,11 +79,15 @@ func start_listening(target_phrase: String, rejected_phrases: PackedStringArray 
 	if not FileAccess.file_exists(powershell):
 		_fail("Windows PowerShell executable not found", "powershell_missing")
 		return
-	var arguments := PackedStringArray(["-NoProfile", "-NonInteractive", "-WindowStyle", "Hidden", "-ExecutionPolicy", "Bypass", "-File", ProjectSettings.globalize_path(helper), "-OutputPath", ProjectSettings.globalize_path(result_path), "-GameProcessId", str(OS.get_process_id()), "-TargetPhrase", target_phrase])
+	var arguments := PackedStringArray(["-NoProfile", "-NonInteractive", "-WindowStyle", "Hidden", "-ExecutionPolicy", "Bypass", "-File", ProjectSettings.globalize_path(helper), "-OutputPath", ProjectSettings.globalize_path(result_path), "-GameProcessId", str(OS.get_process_id())])
+	# Dictation/any-speech has no target. Windows drops empty string arguments.
+	if not target_phrase.is_empty():
+		arguments.append_array(PackedStringArray(["-TargetPhrase", target_phrase]))
 	# Windows drops a trailing empty argument. Omit this optional parameter entirely.
 	if not rejected_phrases.is_empty():
 		arguments.append_array(PackedStringArray(["-RejectPhrases", "|".join(rejected_phrases)]))
 	if continuous_mode: arguments.append("-Continuous")
+	if dictation_mode: arguments.append("-Dictation")
 	worker_io = OS.execute_with_pipe(powershell, arguments, false)
 	worker_pid = worker_io.get("pid", -1)
 	listening = worker_pid > 0
@@ -74,6 +98,20 @@ func start_listening(target_phrase: String, rejected_phrases: PackedStringArray 
 
 func _process(delta: float) -> void:
 	if not listening: return
+	if using_browser:
+		for event in BROWSER.events():
+			if not listening: return
+			match event.get("kind", ""):
+				"ready":
+					worker_ready = true
+					status_changed.emit("Mic listening")
+				"partial": partial_transcript_received.emit(str(event.text))
+				"final":
+					final_transcript_received.emit(str(event.text))
+					transcript_received.emit(str(event.text))
+				"error", "ended":
+					_fail(str(event.get("text", "Browser listening ended; retry microphone")), "browser")
+		return
 	startup_time += delta
 	poll_time += delta
 	if poll_time < 0.2: return
@@ -95,6 +133,8 @@ func _process(delta: float) -> void:
 		file.close()
 	for event in events:
 		print("[Speech bridge] ", event)
+		if event.get("kind") == "partial": partial_transcript_received.emit(str(event.get("text", "")))
+		elif event.get("kind") in ["final", "rejected"]: final_transcript_received.emit(str(event.get("text", "")))
 		if event.get("kind") == "final" and float(event.get("confidence", 0.0)) >= minimum_confidence:
 			transcript_received.emit(str(event.text))
 			if not listening: return
@@ -113,6 +153,8 @@ func _process(delta: float) -> void:
 		_fail(worker_error.strip_edges() if not worker_error.is_empty() else "Speech worker exited without a diagnostic")
 
 func stop_listening() -> void:
+	if using_browser: BROWSER.stop()
+	using_browser = false
 	listening = false
 	if worker_pid > 0 and OS.is_process_running(worker_pid):
 		OS.kill(worker_pid)

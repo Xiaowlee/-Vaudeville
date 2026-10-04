@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://80ygtruwb4rj"]
+
+[ext_resource type="Texture2D" uid="uid://d12v3b2r8icll" path="res://Visual Asset/Folio 2 character.png" id="2_tbksl"]
+[ext_resource type="Texture2D" uid="uid://cymc3qh6i1j7o" path="res://Visual Asset/Folio 2 MC.png" id="3_xwbd8"]
+[ext_resource type="Script" uid="uid://lbdusies4sa" path="res://Script/StageActs/stage_actor.gd" id="Script"]
+
+[node name="Actor" type="Control" unique_id=607315541]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("Script")
+
+[node name="Body" type="Polygon2D" parent="." unique_id=2058936328]
+visible = false
+color = Color(0.25, 0.23, 0.37, 1)
+polygon = PackedVector2Array(-35, -220, 35, -220, 65, -65, 24, -65, 24, 0, 8, 0, 0, -65, -8, 0, -24, 0, -24, -65, -65, -65)
+
+[node name="Head" type="Polygon2D" parent="." unique_id=1415866710]
+visible = false
+color = Color(0.25, 0.23, 0.37, 1)
+polygon = PackedVector2Array(-25, -262, -16, -280, 16, -280, 25, -262, 22, -235, 0, -225, -22, -235)
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1806984866]
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1554940456]
+
+[node name="Folio2Character" type="Sprite2D" parent="." unique_id=1986820457]
+position = Vector2(326.54, -81)
+scale = Vector2(0.315, 0.315)
+texture = ExtResource("2_tbksl")
+
+[node name="Folio2Mc" type="Sprite2D" parent="." unique_id=569491854]
+position = Vector2(69.24998, 25.663261)
+scale = Vector2(0.6794218, 0.6794217)
+texture = ExtResource("3_xwbd8")
+
+[node name="Voice" type="AudioStreamPlayer" parent="."]

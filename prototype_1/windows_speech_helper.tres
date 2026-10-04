@@ -1,4 +1,72 @@
-[gd_resource type="Resource" format=3]
+[gd_resource type="Resource" format=3 uid="uid://bwcwojduk12j0"]
 
 [resource]
-metadata/source = "param([string]$OutputPath, [int]$GameProcessId, [string]$TargetPhrase, [string]$RejectPhrases = '', [string]$AudioPath = '', [switch]$Continuous)\n$ErrorActionPreference = 'Stop'\n$encoding = New-Object System.Text.UTF8Encoding($false)\nfunction Send-Event($data) {\n    [System.IO.File]::AppendAllText($OutputPath, (($data | ConvertTo-Json -Compress) + \"`n\"), $encoding)\n}\n$recognizer = $null\n$subscriptions = @()\n$failureCode = 'speech_unavailable'\ntry {\n    Add-Type -AssemblyName System.Speech\n    $failureCode = 'recognizer_missing'\n    $installed = @([System.Speech.Recognition.SpeechRecognitionEngine]::InstalledRecognizers() | Where-Object { $_.Culture.Name -eq 'en-US' })\n    if ($installed.Count -eq 0) { throw 'No installed en-US Windows speech recognizer.' }\n    $culture = New-Object System.Globalization.CultureInfo('en-US')\n    $recognizer = New-Object System.Speech.Recognition.SpeechRecognitionEngine($culture)\n    $failureCode = 'speech_unavailable'\n    # System.Speech phrase grammar, not a fictitious Vosk API or literal [unk].\n    $builder = New-Object System.Speech.Recognition.GrammarBuilder\n    $builder.Culture = $culture\n    $choices = New-Object System.Speech.Recognition.Choices\n    $choices.Add($TargetPhrase)\n    foreach ($phrase in $RejectPhrases.Split('|')) {\n        if ($phrase) { $choices.Add($phrase) }\n    }\n    $builder.Append($choices)\n    $grammar = New-Object System.Speech.Recognition.Grammar($builder)\n    $grammar.Name = 'scene_target'\n    $recognizer.LoadGrammar($grammar)\n    $failureCode = 'microphone_unavailable'\n    if ($AudioPath) { $recognizer.SetInputToWaveFile($AudioPath) }\n    else { $recognizer.SetInputToDefaultAudioDevice() }\n    $recognizer.EndSilenceTimeout = [TimeSpan]::FromMilliseconds(700)\n    $recognizer.InitialSilenceTimeout = [TimeSpan]::Zero\n    foreach ($name in @('SpeechHypothesized','SpeechRecognized','SpeechRecognitionRejected','AudioSignalProblemOccurred','RecognizeCompleted')) {\n        $subscriptions += Register-ObjectEvent -InputObject $recognizer -EventName $name -SourceIdentifier $name\n    }\n    $recognizer.RecognizeAsync([System.Speech.Recognition.RecognizeMode]::Multiple)\n    $failureCode = 'worker'\n    $format = $recognizer.AudioFormat\n    Send-Event @{status='listening'; engine=$recognizer.RecognizerInfo.Description; culture=$recognizer.RecognizerInfo.Culture.Name; input=$(if ($AudioPath) {$AudioPath} else {'Windows default recording device'}); sample_rate=$format.SamplesPerSecond; bits=$format.BitsPerSample; channels=$format.ChannelCount; target=$TargetPhrase}\n    $deadline = [DateTime]::UtcNow.AddMinutes(10)\n    $done = $false\n    while (-not $done -and ($Continuous -or [DateTime]::UtcNow -lt $deadline) -and ($AudioPath -or (Get-Process -Id $GameProcessId -ErrorAction SilentlyContinue))) {\n        $event = Wait-Event -Timeout 1\n        if ($null -eq $event) { continue }\n        $argsData = $event.SourceEventArgs\n        switch ($event.SourceIdentifier) {\n            'SpeechHypothesized' { Send-Event @{kind='partial'; text=$argsData.Result.Text} }\n            'SpeechRecognized' { Send-Event @{kind='final'; text=$argsData.Result.Text; confidence=$argsData.Result.Confidence} }\n            'SpeechRecognitionRejected' { Send-Event @{kind='rejected'; text=$argsData.Result.Text; confidence=$argsData.Result.Confidence} }\n            'AudioSignalProblemOccurred' { Send-Event @{kind='audio_problem'; detail=[string]$argsData.AudioSignalProblem; level=$argsData.AudioLevel} }\n            'RecognizeCompleted' { $done = $true }\n        }\n        Remove-Event -EventIdentifier $event.EventIdentifier\n    }\n    Send-Event @{status='stopped'}\n} catch {\n    Send-Event @{status='unavailable'; code=$failureCode; detail=$_.Exception.Message}\n} finally {\n    foreach ($subscription in $subscriptions) { Unregister-Event -SubscriptionId $subscription.SubscriptionId -ErrorAction SilentlyContinue }\n    if ($null -ne $recognizer) { $recognizer.RecognizeAsyncCancel(); $recognizer.Dispose() }\n}\n"
+metadata/source = "param([string]$OutputPath, [int]$GameProcessId, [string]$TargetPhrase, [string]$RejectPhrases = '', [string]$AudioPath = '', [switch]$Continuous, [switch]$Dictation)
+$ErrorActionPreference = 'Stop'
+$encoding = New-Object System.Text.UTF8Encoding($false)
+function Send-Event($data) {
+    [System.IO.File]::AppendAllText($OutputPath, (($data | ConvertTo-Json -Compress) + \"`n\"), $encoding)
+}
+$recognizer = $null
+$subscriptions = @()
+$failureCode = 'speech_unavailable'
+try {
+    Add-Type -AssemblyName System.Speech
+    $failureCode = 'recognizer_missing'
+    $installed = @([System.Speech.Recognition.SpeechRecognitionEngine]::InstalledRecognizers() | Where-Object { $_.Culture.Name -eq 'en-US' })
+    if ($installed.Count -eq 0) { throw 'No installed en-US Windows speech recognizer.' }
+    $culture = New-Object System.Globalization.CultureInfo('en-US')
+    $recognizer = New-Object System.Speech.Recognition.SpeechRecognitionEngine($culture)
+    $failureCode = 'speech_unavailable'
+    if ($Dictation) {
+        $failureCode = 'dictation_unavailable'
+        $recognizer.LoadGrammar((New-Object System.Speech.Recognition.DictationGrammar))
+    } else {
+    # System.Speech phrase grammar, not a fictitious Vosk API or literal [unk].
+    $builder = New-Object System.Speech.Recognition.GrammarBuilder
+    $builder.Culture = $culture
+    $choices = New-Object System.Speech.Recognition.Choices
+    $choices.Add($TargetPhrase)
+    foreach ($phrase in $RejectPhrases.Split('|')) {
+        if ($phrase) { $choices.Add($phrase) }
+    }
+    $builder.Append($choices)
+    $grammar = New-Object System.Speech.Recognition.Grammar($builder)
+    $grammar.Name = 'scene_target'
+    $recognizer.LoadGrammar($grammar)
+    }
+    $failureCode = 'microphone_unavailable'
+    if ($AudioPath) { $recognizer.SetInputToWaveFile($AudioPath) }
+    else { $recognizer.SetInputToDefaultAudioDevice() }
+    $recognizer.EndSilenceTimeout = [TimeSpan]::FromMilliseconds(700)
+    $recognizer.InitialSilenceTimeout = [TimeSpan]::Zero
+    foreach ($name in @('SpeechHypothesized','SpeechRecognized','SpeechRecognitionRejected','AudioSignalProblemOccurred','RecognizeCompleted')) {
+        $subscriptions += Register-ObjectEvent -InputObject $recognizer -EventName $name -SourceIdentifier $name
+    }
+    $recognizer.RecognizeAsync([System.Speech.Recognition.RecognizeMode]::Multiple)
+    $failureCode = 'worker'
+    $format = $recognizer.AudioFormat
+    Send-Event @{status='listening'; mode=$(if ($Dictation) {'dictation'} else {'phrases'}); engine=$recognizer.RecognizerInfo.Description; culture=$recognizer.RecognizerInfo.Culture.Name; input=$(if ($AudioPath) {$AudioPath} else {'Windows default recording device'}); sample_rate=$format.SamplesPerSecond; bits=$format.BitsPerSample; channels=$format.ChannelCount; target=$TargetPhrase}
+    $deadline = [DateTime]::UtcNow.AddMinutes(10)
+    $done = $false
+    while (-not $done -and ($Continuous -or [DateTime]::UtcNow -lt $deadline) -and ($AudioPath -or (Get-Process -Id $GameProcessId -ErrorAction SilentlyContinue))) {
+        $event = Wait-Event -Timeout 1
+        if ($null -eq $event) { continue }
+        $argsData = $event.SourceEventArgs
+        switch ($event.SourceIdentifier) {
+            'SpeechHypothesized' { Send-Event @{kind='partial'; text=$argsData.Result.Text} }
+            'SpeechRecognized' { Send-Event @{kind='final'; text=$argsData.Result.Text; confidence=$argsData.Result.Confidence} }
+            'SpeechRecognitionRejected' { Send-Event @{kind='rejected'; text=$argsData.Result.Text; confidence=$argsData.Result.Confidence} }
+            'AudioSignalProblemOccurred' { Send-Event @{kind='audio_problem'; detail=[string]$argsData.AudioSignalProblem; level=$argsData.AudioLevel} }
+            'RecognizeCompleted' { $done = $true }
+        }
+        Remove-Event -EventIdentifier $event.EventIdentifier
+    }
+    Send-Event @{status='stopped'}
+} catch {
+    Send-Event @{status='unavailable'; code=$failureCode; detail=$_.Exception.Message}
+} finally {
+    foreach ($subscription in $subscriptions) { Unregister-Event -SubscriptionId $subscription.SubscriptionId -ErrorAction SilentlyContinue }
+    if ($null -ne $recognizer) { $recognizer.RecognizeAsyncCancel(); $recognizer.Dispose() }
+}
+"

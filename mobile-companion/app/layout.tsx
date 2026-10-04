@@ -3,11 +3,11 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Face companion",
-  description: "Phone front-camera smile cue for the desktop story game.",
+  title: "Vaudeville",
+  description: "Vaudeville game and phone companion.",
   appleWebApp: {
     capable: true,
-    title: "Face companion",
+    title: "Vaudeville",
   },
 };
 

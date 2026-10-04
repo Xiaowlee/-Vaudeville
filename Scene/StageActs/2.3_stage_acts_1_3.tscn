@@ -1,0 +1,137 @@
+[gd_scene format=3 uid="uid://wjt6xtet4arv"]
+
+[ext_resource type="AudioStream" uid="uid://cw5v313lst3g5" path="res://Sound/jarasnat-curtain-version-1-337564.mp3" id="17_hcyf1"]
+[ext_resource type="PackedScene" uid="uid://80ygtruwb4rj" path="res://Scene/StageActs/2.3_component_actor.tscn" id="Actor"]
+[ext_resource type="Resource" path="res://Story/StageActs/actor_2.tres" id="actor_2"]
+[ext_resource type="PackedScene" uid="uid://bfa6133lesemv" path="res://Scene/00_shared_chapter_audio.tscn" id="Audio"]
+[ext_resource type="Texture2D" uid="uid://4gp3u853nr2y" path="res://Visual Asset/Folio 2 curtain.jpg" id="CurtainClosed"]
+[ext_resource type="Texture2D" uid="uid://bm5kbuvo8slne" path="res://Visual Asset/Folio 2 curtain open.png" id="CurtainOpen"]
+[ext_resource type="PackedScene" path="res://Scene/StageActs/2.3_component_debug.tscn" id="Debug"]
+[ext_resource type="Script" uid="uid://bf2p8qxlghrv" path="res://Script/StageActs/stage_flow.gd" id="Flow"]
+[ext_resource type="Script" uid="uid://b05nje18w8j0d" path="res://Script/StageActs/stage_ifb.gd" id="IFB"]
+[ext_resource type="Resource" path="res://Story/StageActs/mother.tres" id="mother"]
+[ext_resource type="PackedScene" path="res://Scene/00_shared_phone_cue_bridge.tscn" id="Phone"]
+[ext_resource type="Resource" path="res://Story/StageActs/player.tres" id="player"]
+[ext_resource type="Script" uid="uid://bfxawdqtn5r2y" path="res://Script/StageActs/pre_show.gd" id="PreShow"]
+[ext_resource type="PackedScene" path="res://Scene/00_shared_speech_monitor.tscn" id="Speech"]
+[ext_resource type="Resource" uid="uid://siaufnavhtkl" path="res://Story/StageActs/acts_1_3.tres" id="Story"]
+[ext_resource type="AudioStream" uid="uid://char0b0tuqv04" path="res://Sound/clicksoundeffect.mp3" id="TransitionSound"]
+[ext_resource type="PackedScene" uid="uid://cfq7vims3ic0" path="res://Scene/StageActs/2.3_component_stage_ui.tscn" id="UI"]
+[ext_resource type="PackedScene" uid="uid://bin8u2w5lnn8a" path="res://Scene/00_shared_stage_view.tscn" id="View"]
+
+[sub_resource type="SpriteFrames" id="CurtainFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("CurtainClosed")
+}, {
+"duration": 1.0,
+"texture": ExtResource("CurtainOpen")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 1.0
+}]
+
+[node name="MainStage" type="Control" unique_id=104998034]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StageView" parent="." unique_id=2125066022 instance=ExtResource("View")]
+layout_mode = 1
+
+[node name="Actors" type="Control" parent="." unique_id=757628603]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="mother" parent="Actors" unique_id=479358913 instance=ExtResource("Actor")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.22
+anchor_top = 0.78
+anchor_right = 0.22
+anchor_bottom = 0.78
+offset_left = -27.440002
+offset_top = -172.0
+offset_right = -27.440002
+offset_bottom = -172.0
+identity = ExtResource("mother")
+
+[node name="player" parent="Actors" unique_id=1922310637 instance=ExtResource("Actor")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.78
+anchor_top = 0.78
+anchor_right = 0.78
+anchor_bottom = 0.78
+offset_left = -126.55994
+offset_top = -166.0
+offset_right = -126.55994
+offset_bottom = -166.0
+identity = ExtResource("player")
+static_visual_path = NodePath("Folio2Mc")
+
+[node name="actor_2" parent="Actors" unique_id=698848047 instance=ExtResource("Actor")]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.78
+anchor_right = 0.5
+anchor_bottom = 0.78
+offset_left = -51.0
+offset_top = -164.0
+offset_right = -51.0
+offset_bottom = -164.0
+identity = ExtResource("actor_2")
+
+[node name="StageUI" parent="." unique_id=1005698321 instance=ExtResource("UI")]
+layout_mode = 1
+desktop_cue_card = false
+
+[node name="Curtain" type="Node2D" parent="." unique_id=240451421]
+z_index = 9
+position = Vector2(716, 436)
+scale = Vector2(0.765, 0.765)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Curtain" unique_id=2144093343]
+position = Vector2(-73.20262, -28.758171)
+sprite_frames = SubResource("CurtainFrames")
+
+[node name="SpeechMonitor" parent="." unique_id=31337952 instance=ExtResource("Speech")]
+
+[node name="ChapterAudio" parent="." unique_id=1854878112 instance=ExtResource("Audio")]
+
+[node name="DebugPanel" parent="." unique_id=647645652 instance=ExtResource("Debug")]
+
+[node name="PhoneCueBridge" parent="." unique_id=2137775060 instance=ExtResource("Phone")]
+enabled = true
+
+[node name="IFB" type="Node" parent="." unique_id=2017966867]
+script = ExtResource("IFB")
+mirror_locally = false
+local_fallback = false
+
+[node name="GameController" type="Node" parent="." unique_id=100967748]
+script = ExtResource("Flow")
+sequence = ExtResource("Story")
+autostart_sequence = false
+
+[node name="PreShow" type="Node" parent="." unique_id=189129937]
+script = ExtResource("PreShow")
+curtain_open_sfx = ExtResource("17_hcyf1")
+curtain_close_sfx = ExtResource("17_hcyf1")
+curtain_animation = &"default"
+transition_sound = ExtResource("TransitionSound")
+full_stage_art = Array[NodePath]([NodePath("../StageView/Panel"), NodePath("../StageView/Panel2")])
+
+[node name="Voice" type="AudioStreamPlayer" parent="PreShow" unique_id=652147083]
