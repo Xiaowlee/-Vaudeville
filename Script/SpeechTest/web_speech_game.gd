@@ -35,6 +35,7 @@ func start_game() -> void:
  speech.raw_recognition.connect(func(event):
   if event.get("type") == "speech_result":
    $Debug/Panel/Buttons/Status.text = "DEBUG " + ("final: " if event.get("is_final", false) else "hearing: ") + str(event.get("transcript", "")))
+ game.get_node("StageUI").starting_text = "Click Start microphone in the browser"
  game.get_node("PhoneCueBridge").enabled = true
  add_child(game)
  $Debug/Panel/Buttons/Play.disabled = true

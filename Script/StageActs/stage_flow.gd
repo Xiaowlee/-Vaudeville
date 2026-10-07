@@ -120,7 +120,7 @@ func _process(delta: float) -> void:
 				state = "LISTENING"
 				ui.set_turn("LISTENING")
 				elapsed = 0
-			elif elapsed >= beat.technical_failure_delay:
+			elif elapsed >= beat.technical_failure_delay and not speech.waiting_for_browser_microphone():
 				state = "MIC_ERROR"
 				ui.set_turn("ERROR")
 		"LISTENING":

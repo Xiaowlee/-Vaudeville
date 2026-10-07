@@ -183,7 +183,7 @@ func _process(delta: float) -> void:
 				state = "LISTENING"
 				elapsed = 0
 				ui.set_turn("LISTENING")
-			elif elapsed >= microphone_retry_delay:
+			elif elapsed >= microphone_retry_delay and not speech.waiting_for_browser_microphone():
 				status = speech.last_error
 				state = "MIC_ERROR"
 				ui.set_turn("ERROR")

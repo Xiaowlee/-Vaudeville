@@ -27,6 +27,8 @@ signal raw_recognition(event: Dictionary)
 @export_range(0, 5, 0.5) var experimental_boost := 4.0
 var relay_turn := ""
 var relay_bridge: Node
+func waiting_for_browser_microphone() -> bool:
+	return recognition_backend == 3 and listening and not worker_ready and is_instance_valid(relay_bridge) and relay_bridge.socket.get_ready_state() == WebSocketPeer.STATE_OPEN
 func _relay_event(event: Dictionary) -> void:
 	if recognition_backend != 3 or not listening or str(event.get("session_id", "")) != relay_turn: return
 	raw_recognition.emit(event.duplicate(true))
