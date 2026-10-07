@@ -189,7 +189,12 @@ func _process(delta: float) -> void:
 				ui.set_turn("ERROR")
 		"LISTENING":
 			maybe_remind()
-			if state == "LISTENING" and autostart_voice and not speech.listening: listen()
+			if state == "LISTENING" and autostart_voice and not speech.listening:
+				if speech.recognition_backend == 3 and not speech.last_error.is_empty():
+					status = speech.last_error
+					state = "MIC_ERROR"
+					ui.set_turn("ERROR")
+				else: listen()
 		"ACKNOWLEDGED":
 			if elapsed >= acknowledgement_delay: run_events(opening_block.end_events, "ACT")
 		"NO_WAIT":
