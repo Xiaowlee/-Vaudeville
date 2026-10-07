@@ -1,10 +1,48 @@
 extends Node
 const BROWSER = preload("res://Script/browser_speech.gd")
 ## Developer-only backend choice. No player-facing engine selector.
-@export_enum("Automatic", "Windows", "Browser") var recognition_backend := 0
+@export_enum("Automatic", "CURRENT - Windows", "Browser export", "WEB_SPEECH - Experimental relay") var recognition_backend := 0
+@export_enum("en-US", "en-AU") var browser_language := "en-US"
 var using_browser := false
+var using_android := false
+var android_plugin: Object
+var android_continuous := false
+var android_language := "en-AU"
+var android_turn := 0
+func _android_failure(reason: String) -> void:
+	last_error = reason
+	player_error = reason
+	stop_listening()
+	status_changed.emit(reason)
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_PAUSED and using_android:
+		_android_failure("Microphone paused. Tap to speak again.")
+
 const PACKAGED_HELPER = preload("res://prototype_1/windows_speech_helper.tres")
 ## Windows-only local phrase recognition, using the installed OS recognizer. No downloads.
+signal raw_recognition(event: Dictionary)
+@export_enum("en-AU", "en-US") var experimental_language := "en-AU"
+@export var experimental_phrase_bias := false
+@export var experimental_phrases: PackedStringArray = []
+@export_range(0, 5, 0.5) var experimental_boost := 4.0
+var relay_turn := ""
+var relay_bridge: Node
+func _relay_event(event: Dictionary) -> void:
+	if recognition_backend != 3 or not listening or str(event.get("session_id", "")) != relay_turn: return
+	raw_recognition.emit(event.duplicate(true))
+	match event.get("type", ""):
+		"speech_result":
+			if event.get("is_final", false):
+				final_transcript_received.emit(str(event.get("transcript", "")))
+				transcript_received.emit(str(event.get("transcript", "")))
+			else: partial_transcript_received.emit(str(event.get("transcript", "")))
+		"speech_status":
+			if event.get("status") == "listening":
+				worker_ready = true
+				status_changed.emit("Mic listening")
+		"speech_error":
+			if event.get("recoverable", false): status_changed.emit(str(event.get("error", "Retrying recognition")))
+			else: _fail(str(event.get("error", "Browser recognition failed")), "browser")
 signal transcript_received(text: String)
 signal partial_transcript_received(text: String)
 signal final_transcript_received(text: String)
@@ -41,6 +79,40 @@ func start_listening(target_phrase: String, rejected_phrases: PackedStringArray 
 	last_error = ""
 	player_error = ""
 	worker_error = ""
+	if enabled and recognition_backend == 0 and OS.get_name() == "Android":
+		if not Engine.has_singleton("AndroidSpeech"):
+			_android_failure("Android speech plugin missing. Export with Gradle Build enabled.")
+			return
+		android_plugin = Engine.get_singleton("AndroidSpeech")
+		if not android_plugin.permitted():
+			OS.request_permission("android.permission.RECORD_AUDIO")
+			_android_failure("Allow microphone access, then tap to speak again. Settings are in the main menu.")
+			return
+		if not android_plugin.available():
+			_android_failure("No Android speech service is installed or enabled.")
+			return
+		var preferences := ConfigFile.new()
+		if preferences.load("user://android_microphone.cfg") == OK: android_language = str(preferences.get_value("speech", "language", "en-AU"))
+		using_android = true
+		android_continuous = continuous_mode
+		listening = true
+		worker_ready = false
+		startup_time = 0.0
+		android_plugin.start(android_language)
+		status_changed.emit("Mic starting…")
+		return
+	if enabled and recognition_backend == 3:
+		relay_bridge = get_tree().get_first_node_in_group("speech_relay_bridge")
+		if relay_bridge == null or relay_bridge.socket.get_ready_state() != WebSocketPeer.STATE_OPEN:
+			_fail("Speech relay is not connected. Pair the DEBUG browser first.", "browser")
+			return
+		if not relay_bridge.speech_received.is_connected(_relay_event): relay_bridge.speech_received.connect(_relay_event)
+		relay_turn = Crypto.new().generate_random_bytes(16).hex_encode()
+		listening = true
+		worker_ready = false
+		relay_bridge.send_speech({"type":"speech_control", "action":"start", "session_id":relay_turn, "language":experimental_language, "bias_enabled":experimental_phrase_bias, "phrases":experimental_phrases, "boost":experimental_boost})
+		status_changed.emit("Open DEBUG browser and click Start microphone")
+		return
 	if enabled and (recognition_backend == 2 or (recognition_backend == 0 and OS.has_feature("web"))):
 		if not OS.has_feature("web"):
 			_fail("Browser speech requires the web export", "browser")
@@ -49,7 +121,7 @@ func start_listening(target_phrase: String, rejected_phrases: PackedStringArray 
 		listening = true
 		worker_ready = false
 		startup_time = 0.0
-		var error := BROWSER.start()
+		var error := BROWSER.start(browser_language)
 		if not error.is_empty(): _fail(error, "browser")
 		else: status_changed.emit("Mic starting…")
 		return
@@ -98,9 +170,41 @@ func start_listening(target_phrase: String, rejected_phrases: PackedStringArray 
 
 func _process(delta: float) -> void:
 	if not listening: return
+	if using_android:
+		var processing_turn := android_turn
+		startup_time += delta
+		for _index in range(128):
+			var raw: String = android_plugin.poll()
+			if raw.is_empty(): break
+			var event = JSON.parse_string(raw)
+			if not event is Dictionary: continue
+			raw_recognition.emit(event)
+			if not listening or processing_turn != android_turn: return
+			match event.get("kind", ""):
+				"ready":
+					worker_ready = true
+					status_changed.emit("Mic listening")
+				"partial": partial_transcript_received.emit(str(event.text))
+				"final":
+					final_transcript_received.emit(str(event.text))
+					if not listening or processing_turn != android_turn: return
+					transcript_received.emit(str(event.text))
+					if not listening or processing_turn != android_turn: return
+					if android_continuous:
+						worker_ready = false
+						startup_time = 0.0
+						android_plugin.start(android_language)
+					else: stop_listening()
+				"error":
+					_android_failure(str(event.text))
+					return
+		if listening and not worker_ready and startup_time > 15.0: _android_failure("Android speech did not start. Check Microphone settings and retry.")
+		return
+	if recognition_backend == 3: return
 	if using_browser:
 		for event in BROWSER.events():
 			if not listening: return
+			raw_recognition.emit(event)
 			match event.get("kind", ""):
 				"ready":
 					worker_ready = true
@@ -132,6 +236,7 @@ func _process(delta: float) -> void:
 			events.append(event)
 		file.close()
 	for event in events:
+		raw_recognition.emit(event.duplicate(true))
 		print("[Speech bridge] ", event)
 		if event.get("kind") == "partial": partial_transcript_received.emit(str(event.get("text", "")))
 		elif event.get("kind") in ["final", "rejected"]: final_transcript_received.emit(str(event.get("text", "")))
@@ -153,6 +258,12 @@ func _process(delta: float) -> void:
 		_fail(worker_error.strip_edges() if not worker_error.is_empty() else "Speech worker exited without a diagnostic")
 
 func stop_listening() -> void:
+	android_turn += 1
+	if using_android and is_instance_valid(android_plugin): android_plugin.stop()
+	using_android = false
+	if not relay_turn.is_empty() and is_instance_valid(relay_bridge):
+		relay_bridge.send_speech({"type":"speech_control", "action":"stop", "session_id":relay_turn})
+	relay_turn = ""
 	if using_browser: BROWSER.stop()
 	using_browser = false
 	listening = false
@@ -181,7 +292,7 @@ func _read_worker_output() -> void:
 
 func _fail(reason: String, code := "worker") -> void:
 	last_error = reason
-	player_error = ERROR_MESSAGES.get(code, ERROR_MESSAGES.worker)
+	player_error = reason if code == "browser" else ERROR_MESSAGES.get(code, ERROR_MESSAGES.worker)
 	push_warning("[Speech error] " + reason)
 	stop_listening()
 	status_changed.emit(player_error)

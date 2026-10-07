@@ -8,6 +8,10 @@ extends Control
 @export_file("*.tscn") var back_scene: String
 var opening := false
 func _ready() -> void:
+	var microphone = get_node_or_null("Menu/Microphone")
+	if microphone != null:
+		microphone.visible = OS.get_name() == "Android"
+		microphone.pressed.connect($MicrophoneSettings.show_panel)
 	if not stage_scene.is_empty(): PhoneSession.ensure_session()
 	for pair in [["Prototype1", prototype_1_scene], ["Prototype2", prototype_2_scene], ["PerformerA", "res://Scene/2.2_a_performer_baseline.tscn"], ["PerformerC", "res://Scene/2.2_c_increased_agency.tscn"], ["StagePrototype", stage_scene], ["Previous", previous_scene], ["Earlier", earlier_scene], ["Back", back_scene]]:
 		var button = get_node_or_null("Menu/" + pair[0])

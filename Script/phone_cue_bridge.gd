@@ -1,4 +1,9 @@
 extends Node
+signal speech_received(message: Dictionary)
+func _ready() -> void:
+	add_to_group("speech_relay_bridge")
+func send_speech(message: Dictionary) -> void:
+	_send(message)
 ## Sends stage cues to the phone display through the local relay.
 ## Channels are independent: "prompt" (CueCard line prompts) and "ifb" (private instructions).
 const CHANNELS := ["prompt", "ifb"]
@@ -89,6 +94,8 @@ func _process(_delta: float) -> void:
 		if message is Dictionary: receive(message)
 func receive(message: Dictionary) -> void:
 	last_received_at = Time.get_ticks_msec()
+	if message.get("type", "") in ["speech_result", "speech_status", "speech_error"]:
+		speech_received.emit(message)
 	if message.get("kind") == "stage_phone_status":
 		phone_connected = message.get("connected", false)
 		var acknowledged_ids: Array = message.get("acknowledged", [])

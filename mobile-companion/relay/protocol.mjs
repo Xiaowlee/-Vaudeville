@@ -4,6 +4,9 @@ export function installProtocol(wss) {
 const STAGE_CHANNELS = ["prompt", "ifb"];
 let game = null;
 let request = null;
+let speechTurn = null;
+const speechClients = () => [...wss.clients].filter(c => c.role === "speech_client" && c.readyState === 1);
+const tellSpeech = message => { for (const c of speechClients()) send(c,message); };
 const stageCues = {prompt: null, ifb: null};
 function stagePhones() { return [...wss.clients].filter(c => c.role === "stage_phone" && c.readyState === 1); }
 function matchesStage(phone, cue) { return !!cue && (!cue.recipient || cue.recipient === phone.recipient); }
@@ -48,12 +51,17 @@ wss.on("connection", (socket, req) => {
     if (message.kind === "hello") {
       if (socket.role || (socket.allowedRole && message.role !== socket.allowedRole)) { socket.close(1008, "Invalid role"); return; }
       if (message.role === "game") {
-        if (game && game !== socket) game.close();
+        if (game && game !== socket) { tellSpeech({type:"speech_control",action:"stop",session_id:speechTurn?.session_id}); speechTurn=null; game.close(); }
         clearStage();
         console.log(`[relay] game connected ${socket.address}`);
         game = socket;
         socket.role = "game";
         request = null;
+      } else if (message.role === "speech_client") {
+        if (speechClients().length) { socket.close(1008, "One speech tester per session"); return; }
+        socket.role = "speech_client";
+        send(socket, {type:"speech_status", status:"connected"});
+        if (speechTurn) send(socket, speechTurn);
       } else if (message.role === "stage_phone") {
         socket.role = "stage_phone";
         socket.recipient = typeof message.recipient === "string" ? message.recipient : "";
@@ -66,6 +74,12 @@ wss.on("connection", (socket, req) => {
       }
       phoneStatus();
     } else if (socket === game) {
+      if (message.type === "speech_control") {
+        if (typeof message.session_id !== "string" || !["start","stop"].includes(message.action)) return;
+        speechTurn = message.action === "start" ? message : null;
+        tellSpeech(message); return;
+      }
+      if (["speech_observation","speech_attempt"].includes(message.type)) { tellSpeech(message); return; }
       if (message.kind === "stage_cue") {
         if (typeof message.requestId !== "string" || typeof message.text !== "string" || typeof message.recipient !== "string") return;
         const channel = STAGE_CHANNELS.includes(message.channel) ? message.channel : "ifb";
@@ -86,6 +100,12 @@ wss.on("connection", (socket, req) => {
       else if (message.kind === "face_cancel" && message.requestId === request?.requestId) request = null;
       else if (message.kind !== "face_ack") return;
       for (const phone of phones()) send(phone, message);
+    } else if (socket.role === "speech_client") {
+      if (!speechTurn || message.session_id !== speechTurn.session_id || message.source !== "web_speech") return;
+      if (!["speech_result","speech_status","speech_error"].includes(message.type)) return;
+      if (message.type === "speech_result" && (typeof message.transcript !== "string" || typeof message.is_final !== "boolean" || !Array.isArray(message.alternatives) || message.alternatives.length > 3)) return;
+      if (message.type === "speech_result" && message.alternatives.some(a => !a || typeof a.transcript !== "string" || (a.confidence !== null && (typeof a.confidence !== "number" || !Number.isFinite(a.confidence))))) return;
+      send(game, message);
     } else if (socket.role === "stage_phone") {
       const cue = STAGE_CHANNELS.map(name => stageCues[name]).find(c => c && c.requestId === message.requestId);
       if (message.kind === "stage_ack" && cue && matchesStage(socket, cue)) {
@@ -106,7 +126,10 @@ wss.on("connection", (socket, req) => {
       for (const phone of phones()) send(phone, {kind: "face_cancel", requestId: request?.requestId});
       game = null;
       request = null;
+      tellSpeech({type:"speech_control",action:"stop",session_id:speechTurn?.session_id});
+      speechTurn = null;
     }
+    if (socket.role === "speech_client" && speechTurn) send(game,{type:"speech_error",source:"web_speech",session_id:speechTurn.session_id,error:"browser_disconnected"});
     if (socket.role === "stage_phone") console.log(`[relay] stage phone disconnected ${socket.address}`);
     phoneStatus();
   });

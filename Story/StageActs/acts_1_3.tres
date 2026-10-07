@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://d3yipqwmxswux" path="res://Script/StageActs/stage_response.gd" id="4_mihv6"]
 [ext_resource type="Script" uid="uid://ldlhfcbkd326" path="res://Script/StageActs/Authoring/dialogue_line_data.gd" id="4_ubu7r"]
 [ext_resource type="Script" uid="uid://cl1xq630bom38" path="res://Script/phone_cue.gd" id="5_drrnr"]
+[ext_resource type="AudioStream" uid="uid://bg62xampcsqm7" path="res://Sound/Actor 1 noise/-01.mp3" id="5_gkxkd"]
 [ext_resource type="Script" uid="uid://dl7h32o01bsit" path="res://Script/StageActs/stage_sequence.gd" id="6_j0s1j"]
 [ext_resource type="Script" uid="uid://ccble2exofseg" path="res://Script/StageActs/Authoring/player_interaction_data.gd" id="6_vrawv"]
 [ext_resource type="Script" uid="uid://b5i7bgn72fh5r" path="res://Script/StageActs/Authoring/stage_event.gd" id="7_n2cai"]
@@ -294,8 +295,8 @@ input_mode = 6
 accepted_phrases = PackedStringArray()
 timeout = 8.0
 accept_uncertain_attempt = true
-npc_success_response = "...She doesn't remember her lines."
-npc_timeout_response = "...She doesn't remember her lines."
+npc_success_response = "[...psss hey.Don't you remember your  lines.]"
+npc_timeout_response = "[...Oh crap. You forgot your script. Lemme call some help]"
 fallback_beat = "A1.backstage"
 presentation = SubResource("Resource_ggqyd")
 yes_phrases = PackedStringArray()
@@ -440,11 +441,12 @@ delay_before_input = 9.0
 delay_after_response = 2.5
 
 [sub_resource type="Resource" id="Resource_p5yll"]
-resource_name = "Darling, dear, you're almost 18 now.  Have you got anythin"
+resource_name = "Darling, dear, you're almost 18. It's that time of the year "
 script = ExtResource("4_ubu7r")
-text = "Darling, dear, you're almost 18 now.
+text = "Darling, dear, you're almost 18. It's that time of the year
 
-Have you got anything in your mind who you want to become before that?"
+Say, have you got anything in your mind who you want to become before that?"
+voice_audio = ExtResource("5_gkxkd")
 actor_id = "mother"
 presentation = SubResource("Resource_f0hox")
 entry_id = "A1.1"

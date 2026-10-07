@@ -1,5 +1,7 @@
-[gd_resource type="Resource" load_steps=2 format=3]
-[ext_resource type="Script" path="res://Script/phone_connection_settings.gd" id="1"]
+[gd_resource type="Resource" format=3 uid="uid://bpfx8g8a83nss"]
+
+[ext_resource type="Script" uid="uid://cjwkfus4x3kkt" path="res://Script/phone_connection_settings.gd" id="1"]
+
 [resource]
 script = ExtResource("1")
-relay_server = ""
+relay_server = "https://vaudeville-relay.onrender.com"

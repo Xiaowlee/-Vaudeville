@@ -38,24 +38,25 @@ export function createSessions({relayOrigin, websiteOrigin, extraOrigins = [], t
     const count = limits.get(ip) || 0;
     if (count >= 60 || rooms.size >= 200) return reply(req, res, 429, {error: "Please retry later"});
     limits.set(ip, count + 1);
-    const id = secret(), gameToken = secret(), phoneToken = secret();
-    const room = {wss: new WebSocketServer({noServer: true, maxPayload: 16384}), gameToken, phoneToken, expires: Date.now() + ttl};
+    const id = secret(), gameToken = secret(), phoneToken = secret(), speechToken = secret();
+    const room = {wss: new WebSocketServer({noServer: true, maxPayload: 16384}), gameToken, phoneToken, speechToken, expires: Date.now() + ttl};
     installProtocol(room.wss);
     rooms.set(id, room);
     const relay = relayOrigin.replace(/^http/, "ws") + "/relay";
     const phoneRelay = `${relay}?room=${id}&token=${phoneToken}`;
     const gameRelay = `${relay}?room=${id}&token=${gameToken}`;
     // Fragment stays out of ordinary website request/access logs.
+    const speechUrl = `${websiteOrigin}/speech-test#relay=${encodeURIComponent(`${relay}?room=${id}&token=${speechToken}`)}`;
     const phoneUrl = `${websiteOrigin}/stage#relay=${encodeURIComponent(phoneRelay)}`;
     const qr = await QRCode.toString(phoneUrl, {type: "svg", errorCorrectionLevel: "M", margin: 4});
-    return reply(req, res, 201, {game_relay: gameRelay, phone_url: phoneUrl, qr_svg: qr, expires_at: room.expires});
+    return reply(req, res, 201, {speech_url: speechUrl, game_relay: gameRelay, phone_url: phoneUrl, qr_svg: qr, expires_at: room.expires});
   }
 
   function handleUpgrade(req, socket, head) {
     const url = new URL(req.url, relayOrigin);
     const room = rooms.get(url.searchParams.get("room"));
     const token = url.searchParams.get("token");
-    const role = room && (token === room.gameToken ? "game" : token === room.phoneToken ? "stage_phone" : "");
+    const role = room && (token === room.gameToken ? "game" : token === room.phoneToken ? "stage_phone" : token === room.speechToken ? "speech_client" : "");
     if (url.pathname !== "/relay" || !originAllowed(req.headers.origin) || !role || room.expires < Date.now() || room.wss.clients.size >= 8) {
       socket.write("HTTP/1.1 403 Forbidden\r\nConnection: close\r\n\r\n");
       socket.destroy();

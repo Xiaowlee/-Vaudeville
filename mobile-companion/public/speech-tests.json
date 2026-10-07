@@ -1,0 +1,71 @@
+[
+  {
+    "id": "headphones",
+    "target_text": "She picks the headphones up.",
+    "keywords": [
+      "headphones"
+    ],
+    "source": "User-provided difficult test example"
+  },
+  {
+    "id": "shadow",
+    "target_text": "Her shadow has stopped moving.",
+    "keywords": [
+      "shadow",
+      "stopped"
+    ],
+    "source": "Story/benchmark_a.tres"
+  },
+  {
+    "id": "writer",
+    "target_text": "I want to become a writer, just like you.",
+    "keywords": [
+      "writer"
+    ],
+    "source": "Story/StageActs/acts_1_3.tres"
+  },
+  {
+    "id": "stories_pain",
+    "target_text": "Then I'll make the stories worth the pain.",
+    "keywords": [
+      "stories",
+      "pain"
+    ],
+    "source": "Story/StageActs/acts_1_3.tres"
+  },
+  {
+    "id": "remember",
+    "target_text": "I want to create stories people can gather around and remember.",
+    "keywords": [
+      "stories",
+      "remember"
+    ],
+    "source": "Story/StageActs/acts_1_3.tres"
+  },
+  {
+    "id": "preshow",
+    "target_text": "Without further ado...",
+    "keywords": [
+      "further",
+      "ado"
+    ],
+    "source": "Story/StageActs/acts_1_3.tres"
+  },
+  {
+    "id": "birthday",
+    "target_text": "We should have a lot of work to do before your birthday comes.",
+    "keywords": [
+      "birthday"
+    ],
+    "source": "Story/StageActs/acts_1_3.tres"
+  },
+  {
+    "id": "kingdom",
+    "target_text": "We're gonna invite people all around the kingdom to visit, to attend your own birthday.",
+    "keywords": [
+      "kingdom",
+      "birthday"
+    ],
+    "source": "Story/StageActs/acts_1_3.tres"
+  }
+]

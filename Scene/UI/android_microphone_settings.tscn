@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=3]
+[ext_resource type="Script" path="res://Script/android_microphone_settings.gd" id="1"]
+[ext_resource type="Script" path="res://Script/speech_transcriber.gd" id="2"]
+[sub_resource type="Theme" id="Readable"]
+default_font_size = 24
+Label/colors/font_color = Color(1, 1, 1, 1)
+
+[node name="MicrophoneSettings" type="Window"]
+title = "Microphone"
+size = Vector2i(800, 650)
+visible = false
+exclusive = true
+theme = SubResource("Readable")
+script = ExtResource("1")
+[node name="Margin" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+[node name="Content" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+[node name="Info" type="Label" parent="Margin/Content"]
+layout_mode = 2
+text = "Uses Android’s speech service and system microphone. Audio may be processed online."
+autowrap_mode = 2
+[node name="Language" type="OptionButton" parent="Margin/Content"]
+layout_mode = 2
+[node name="Allow" type="Button" parent="Margin/Content"]
+layout_mode = 2
+text = "Enable microphone"
+[node name="Test" type="Button" parent="Margin/Content"]
+layout_mode = 2
+text = "Test microphone"
+[node name="Stop" type="Button" parent="Margin/Content"]
+layout_mode = 2
+text = "Stop test"
+[node name="AppSettings" type="Button" parent="Margin/Content"]
+layout_mode = 2
+text = "Open app permissions"
+[node name="Status" type="Label" parent="Margin/Content"]
+layout_mode = 2
+autowrap_mode = 2
+[node name="Transcript" type="Label" parent="Margin/Content"]
+layout_mode = 2
+autowrap_mode = 2
+size_flags_vertical = 3
+[node name="Close" type="Button" parent="Margin/Content"]
+layout_mode = 2
+text = "Close"
+[node name="SpeechMonitor" type="Node" parent="."]
+script = ExtResource("2")

@@ -170,3 +170,56 @@ Two simulated games passed isolation, prompt/IFB separation, acknowledgements, i
 Godot exports and website production build were checked. Real phone scanning, mobile-data access and spoken-recognition accuracy still need human playtesting after hosting.
 Vercel + separate relay (local check only): website and relay on different addresses passed pairing, phone links on the website address, relay addresses, cross-origin and rejected-origin checks, keep-alive, and all isolation/reconnect checks above; actual Godot pairing + Mobile scene passed against the relay-only server. Public Vercel/Render deployment has not been performed.
 Production npm audit: no reported vulnerabilities at this check. Legacy local-certificate development dependencies still report two high advisories; they are omitted from the hosted runtime.
+
+
+## Optional speech comparison — 5 October 2026
+
+Your normal game still uses Windows System.Speech. The new experiment lives separately in `Scene/Debug/speech_comparison.tscn`; open that scene and press F6.
+
+1. For browser testing, deploy the updated **mobile-companion website to Vercel AND relay to its existing host** first. This change has not been deployed automatically. Restart the test scene after deployment so it gets a fresh pairing link.
+2. Click **Connect / open DEBUG browser**. Use that private session link on the computer with your microphone. If your default browser is not Brave, copy the opened address to Brave. Keep only one test browser tab connected.
+3. Choose a sentence and A, B or C. A is your current Windows recognizer (en-US). B is browser recognition without keyword hints. C requests keyword hints where supported. Select en-US for a fair A/B comparison; en-AU is also available for separate browser tests.
+4. Click **Start attempt** in Godot. For B/C, also click **Start microphone** on the browser page. Read the sentence, wait for final words, then click **Finish attempt** in Godot. Repeat twice per sentence/condition. Finish before starting a different condition.
+5. Results save to `user://speech-comparison.json`; the DEBUG status displays its full Windows location. Browser **Export JSON** saves its received results separately.
+
+The page works by checking the browser's speech API, rather than restricting the browser name. This does not guarantee Brave provides a working recognition service. Unsupported APIs, permission failures and service errors are shown; no alternate provider is silently selected. Capture only begins after you click Start microphone. Audio may be processed by the browser's provider; only recognized text travels through the game relay. No audio recording is saved by this tool.
+
+Edit the eight test sentences/keywords in `mobile-companion/public/speech-tests.json`. These are test copies, not story edits. Scoring uses final top-choice words only, whole keywords/phrases, and counts empty attempts as zero. Errors are recorded separately. Alternatives are retained but do not inflate keyword recall. Unsupported phrase hints are marked as not applied. Confidence values come from different providers and are not directly comparable. Timing includes setup and speaking, not just recognition processing.
+
+The ordinary game UI and story matching are unchanged. The developer-only SpeechMonitor Recognition Backend property also exposes the experimental relay backend; native gameplay requires an enabled, paired PhoneCueBridge and browser tab. Keep Automatic for ordinary playtesting until the experiment has been evaluated. Only one backend is started at a time.
+
+
+## Android microphone (October 5)
+
+The APK now selects Android's installed speech service automatically. Windows keeps its existing recognizer; browser exports keep their browser recognizer. No story responses or matching rules were changed.
+
+On Android, open **Microphone** in the main menu:
+1. Tap **Enable microphone** and allow access.
+2. Choose English (Australia) or English (United States).
+3. Tap **Test microphone**, speak one short sentence and wait for the final words.
+4. Close the panel and start the game. Tap the existing speaking control when it is your turn.
+
+If permission was denied, **Open app permissions** opens this app's Android settings. If no speech service is installed/enabled, the panel reports it; this is different from a broken microphone. Android manages the input microphone (including headset routing); this panel does not pretend to offer an independently selectable input device. The installed provider may process speech online. No audio recording is saved by our adapter. Leaving the app, closing the test or ending the turn cancels capture; late results are discarded.
+
+Export requirements: keep **Use Gradle Build** and **Record Audio** enabled in the Android preset, and the **Android Speech** editor plugin enabled. The new native library must be included in a newly exported APK. Old APKs cannot gain this feature by changing settings. If exporting from another checkout, install Godot's Android build template using Project > Install Android Build Template. The local android/ template folder is ignored by Git. Gradle may need to download build dependencies on the first export.
+
+Files: `addons/android_speech/` contains the native adapter, compiled AAR and export plugin. `Scene/UI/android_microphone_settings.tscn` holds the editable settings layout; `Script/android_microphone_settings.gd` handles its buttons. `Script/speech_transcriber.gd` connects Android events to the existing game signals. Language is stored in `user://android_microphone.cfg`. The AAR can be rebuilt using the included build_plugin.py with the existing JDK, Android platform jar and matching Godot android_source.zip.
+
+Android microphone test APK: `Builds/android-microphone-test.apk`. Native plugin registration, permission declarations, bytecode inclusion and signing verified. Install it on the phone, then use main menu > Microphone > Enable microphone > Test microphone. Actual on-device recognition still requires playtesting. The required SDK platform 36/build-tools 36.1 and Gradle 8.11.1 are now available on this machine.
+
+
+## Desktop game with a browser microphone (7 October)
+
+Open `Scene/Debug/web_speech_game.tscn` and press F6. This is a separate test launcher; F5 still uses the normal game.
+
+1. Click **Connect session**.
+2. Click **Open browser microphone**. Allow microphone access when your browser asks.
+3. Click **Play existing story** in Godot.
+4. On each player turn, click the game's existing **Speak** control, then **Start microphone** on the browser page. Keep that page open on the computer whose microphone you want to use.
+5. Speak the requested response. The DEBUG panel shows recognized words; the existing story decides what happens next. Repeat step 4 for each turn.
+
+The browser hears you, sends the words through the existing relay, and Godot receives them. The normal Windows recognition option remains available through the ordinary game. This test does not fix or replace Android recognition. Brave may lack a working recognition service even when it has microphone permission; use a supported browser if it reports service unavailable.
+
+**Deployment still required:** on 7 October the public website's `/speech-test` page returned 404. Deploy the existing local `mobile-companion` website changes to Vercel and its relay changes to the relay host before testing this public connection. The relay must return a `speech_url` when pairing. No deployment was performed in this pass.
+
+Editable test settings: select the root of `web_speech_game.tscn` to choose language or the existing game scene. No story text or accepted responses were changed. Checks cover scene loading and backend selection, not real microphone accuracy.

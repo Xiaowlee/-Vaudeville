@@ -138,7 +138,7 @@ The QR on the main menu opens `https://192.168.0.61:3000/stage`. That page now s
 
 ### Edit the layout
 
-Open `Scene/StageActs/Mobile.tscn` in Godot. Move, resize, recolour or change fonts on `CueCard` and `IFB` (each contains `Margin/Text`). The root node's Inspector has the relay settings, panel paths, **Hide Empty Panels**, and **Phone Design Size** (the reference resolution on the phone, 540×960 by default). You can test the scene directly with F6 while the relay is running.
+Open `Scene/StageActs/Mobile.tscn` in Godot. Move, resize, recolour or change fonts on `CueCard` and `IFB` (each contains `Margin/Text`). The root node's Inspector has the relay settings, panel paths, **Hide Empty Panels**, and **Phone Design Size** (the reference resolution on the phone, 540ï¿½960 by default). You can test the scene directly with F6 while the relay is running.
 
 ### Rebuild after editing Mobile.tscn
 
