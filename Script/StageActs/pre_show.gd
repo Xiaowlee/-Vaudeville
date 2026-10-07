@@ -188,6 +188,11 @@ func _process(delta: float) -> void:
 				state = "MIC_ERROR"
 				ui.set_turn("ERROR")
 		"LISTENING":
+			if speech.recognition_backend == 3 and speech.listening and not speech.worker_ready:
+				state = "STARTING"
+				elapsed = 0
+				ui.set_turn("STARTING")
+				return
 			maybe_remind()
 			if state == "LISTENING" and autostart_voice and not speech.listening:
 				if speech.recognition_backend == 3 and not speech.last_error.is_empty():

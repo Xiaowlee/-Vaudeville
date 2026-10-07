@@ -43,7 +43,9 @@ func _relay_event(event: Dictionary) -> void:
 				worker_ready = true
 				status_changed.emit("Mic listening")
 		"speech_error":
-			if event.get("recoverable", false): status_changed.emit(str(event.get("error", "Retrying recognition")))
+			if event.get("recoverable", false):
+				if event.get("error") == "browser_disconnected": worker_ready = false
+				status_changed.emit(str(event.get("error", "Retrying recognition")))
 			else: _fail(str(event.get("error", "Browser recognition failed")), "browser")
 signal transcript_received(text: String)
 signal partial_transcript_received(text: String)

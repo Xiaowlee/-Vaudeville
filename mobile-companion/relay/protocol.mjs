@@ -129,7 +129,7 @@ wss.on("connection", (socket, req) => {
       tellSpeech({type:"speech_control",action:"stop",session_id:speechTurn?.session_id});
       speechTurn = null;
     }
-    if (socket.role === "speech_client" && speechTurn) send(game,{type:"speech_error",source:"web_speech",session_id:speechTurn.session_id,error:"browser_disconnected"});
+    if (socket.role === "speech_client" && speechTurn) send(game,{type:"speech_error",source:"web_speech",session_id:speechTurn.session_id,error:"browser_disconnected",recoverable:true});
     if (socket.role === "stage_phone") console.log(`[relay] stage phone disconnected ${socket.address}`);
     phoneStatus();
   });
