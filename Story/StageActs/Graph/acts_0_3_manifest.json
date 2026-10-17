@@ -1,0 +1,4051 @@
+{
+  "\\ A1_4_Offscript": {
+	"start_id": "\\ A1_4_Offscript",
+	"node": "1_1",
+	"frame": {
+	  "id": "\\ A1_4_Offscript",
+	  "cue": "CUE CARD: — Don't underestimate me mother.",
+	  "routes": [
+        "watch"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 1"
+	},
+	"links": [
+	  [
+		"Watch the show.",
+        "A1_5_EndAct1"
+	  ]
+	]
+  },
+  "A0_Endgame": {
+	"start_id": "A0_Endgame",
+	"node": "1_2",
+	"frame": {
+	  "id": "A0_Endgame",
+	  "cue": "",
+	  "routes": [],
+	  "effects": [],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Endgame"
+	},
+	"links": []
+  },
+  "A1_0_BackTo Menu": {
+	"start_id": "A1_0_BackTo Menu",
+	"node": "1_3",
+	"frame": {
+	  "id": "A1_0_BackTo Menu",
+	  "cue": "",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 0 · Pre-show"
+	},
+	"links": [
+	  [
+		"Back to Menu",
+        "Start"
+	  ]
+	]
+  },
+  "A1_0_Begin": {
+	"start_id": "A1_0_Begin",
+	"node": "1_4",
+	"frame": {
+	  "id": "A1_0_Begin",
+	  "cue": "",
+	  "routes": [
+		"yes",
+		"no",
+        "other"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 1,
+		  "reason": "Ignored the Stage Manager's opening prompt.",
+		  "set": {
+			"offScriptLastReason": "Ignored the Stage Manager's opening prompt."
+		  }
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 0 · Pre-show"
+	},
+	"links": [
+	  [
+		"Yes.",
+        "A1_1_0 PreshowHappy"
+	  ],
+	  [
+		"No.",
+        "A1_0_No"
+	  ],
+	  [
+		"Something else unrelated",
+        "A1_0_STH"
+	  ]
+	]
+  },
+  "A1_0_Forced start": {
+	"start_id": "A1_0_Forced start",
+	"node": "1_5",
+	"frame": {
+	  "id": "A1_0_Forced start",
+	  "cue": "",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 0 · Pre-show"
+	},
+	"links": [
+	  [
+		"Begin the show",
+        "A1_1_Once upon a time"
+	  ]
+	]
+  },
+  "A1_0_No": {
+	"start_id": "A1_0_No",
+	"node": "1_6",
+	"frame": {
+	  "id": "A1_0_No",
+	  "cue": "",
+	  "routes": [
+		"yes",
+		"no",
+        "other"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 0 · Pre-show"
+	},
+	"links": [
+	  [
+		"Yes.",
+        "A1_1_0 PreshowAnnoyed"
+	  ],
+	  [
+		"Not yet.",
+        "A1_0_NoAgain"
+	  ],
+	  [
+		"Say Something else unrelated",
+        "A1_0_STH"
+	  ]
+	]
+  },
+  "A1_0_NoAgain": {
+	"start_id": "A1_0_NoAgain",
+	"node": "1_7",
+	"frame": {
+	  "id": "A1_0_NoAgain",
+	  "cue": "",
+	  "routes": [
+		"yes",
+        "other"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 0 · Pre-show"
+	},
+	"links": [
+	  [
+		"Yes",
+        "A1_1_0 PreshowAnnoyed"
+	  ],
+	  [
+		"Continue say something else",
+        "A1_0_Forced start"
+	  ]
+	]
+  },
+  "A1_0_STH": {
+	"start_id": "A1_0_STH",
+	"node": "1_8",
+	"frame": {
+	  "id": "A1_0_STH",
+	  "cue": "",
+	  "routes": [
+		"no",
+		"yes",
+        "other"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 1,
+		  "reason": "Repeated an unrelated opening response.",
+		  "set": {
+			"offScriptLastReason": "Repeated an unrelated opening response."
+		  }
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 0 · Pre-show"
+	},
+	"links": [
+	  [
+		"No.",
+        "A1_0_NoAgain"
+	  ],
+	  [
+		"Yes.",
+        "A1_1_0 PreshowHappy"
+	  ],
+	  [
+		"Continue saying something else.",
+        "A1_0_BackTo Menu"
+	  ]
+	]
+  },
+  "A1_1_0 PreshowAnnoyed": {
+	"start_id": "A1_1_0 PreshowAnnoyed",
+	"node": "1_9",
+	"frame": {
+	  "id": "A1_1_0 PreshowAnnoyed",
+	  "cue": "",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 0 · Pre-show"
+	},
+	"links": [
+	  [
+		"Begin the show",
+        "A1_1_Once upon a time"
+	  ]
+	]
+  },
+  "A1_1_0 PreshowHappy": {
+	"start_id": "A1_1_0 PreshowHappy",
+	"node": "1_10",
+	"frame": {
+	  "id": "A1_1_0 PreshowHappy",
+	  "cue": "",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 0 · Pre-show"
+	},
+	"links": [
+	  [
+		"Begin the show",
+        "A1_1_Once upon a time"
+	  ]
+	]
+  },
+  "A1_1_Mother'sQuestion": {
+	"start_id": "A1_1_Mother'sQuestion",
+	"node": "1_11",
+	"frame": {
+	  "id": "A1_1_Mother'sQuestion",
+	  "cue": "",
+	  "routes": [
+		"ambition",
+		"other",
+        "silence"
+	  ],
+	  "effects": [
+		{
+		  "increment": 1,
+		  "reason": "Answered without the scripted line.",
+		  "set": {
+			"offScriptLastReason": "Answered without the scripted line."
+		  }
+		},
+		{
+		  "increment": 1,
+		  "reason": "Answered off-topic.",
+		  "set": {
+			"offScriptLastReason": "Answered off-topic."
+		  }
+		},
+		{
+		  "increment": 1,
+		  "reason": "Refused to answer the scripted question.",
+		  "set": {
+			"offScriptLastReason": "Refused to answer the scripted question."
+		  }
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 1"
+	},
+	"links": [
+	  [
+		"Mention her dream.",
+        "A1_1_WrongLine"
+	  ],
+	  [
+		"Say something off-topic.",
+        "A1_1_Offtopic"
+	  ],
+	  [
+		"Remain silent.",
+        "A1_1_Silence"
+	  ]
+	]
+  },
+  "A1_1_Offtopic": {
+	"start_id": "A1_1_Offtopic",
+	"node": "1_12",
+	"frame": {
+	  "id": "A1_1_Offtopic",
+	  "cue": "",
+	  "routes": [
+		"other",
+        "silence"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 1,
+		  "reason": "Withheld the line again.",
+		  "set": {
+			"offScriptLastReason": "Withheld the line again."
+		  }
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 1"
+	},
+	"links": [
+	  [
+		"Try another response.",
+        "A1_2_SecondFailure"
+	  ],
+	  [
+		"Say nothing.",
+        "A1_2_SecondFailure"
+	  ]
+	]
+  },
+  "A1_1_Once upon a time": {
+	"start_id": "A1_1_Once upon a time",
+	"node": "1_13",
+	"frame": {
+	  "id": "A1_1_Once upon a time",
+	  "cue": "",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 1"
+	},
+	"links": [
+	  [
+		"Next Scene.",
+        "A1_1_Mother'sQuestion"
+	  ]
+	]
+  },
+  "A1_1_Silence": {
+	"start_id": "A1_1_Silence",
+	"node": "1_14",
+	"frame": {
+	  "id": "A1_1_Silence",
+	  "cue": "",
+	  "routes": [
+        "other"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 1"
+	},
+	"links": [
+	  [
+		"Try to say something.",
+        "A1_2_SecondFailure"
+	  ]
+	]
+  },
+  "A1_1_WrongLine": {
+	"start_id": "A1_1_WrongLine",
+	"node": "1_15",
+	"frame": {
+	  "id": "A1_1_WrongLine",
+	  "cue": "",
+	  "routes": [
+		"other",
+        "silence"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 1,
+		  "reason": "Withheld the line again.",
+		  "set": {
+			"offScriptLastReason": "Withheld the line again."
+		  }
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 1"
+	},
+	"links": [
+	  [
+		"Try another response.",
+        "A1_2_SecondFailure"
+	  ],
+	  [
+		"Say nothing.",
+        "A1_2_SecondFailure"
+	  ]
+	]
+  },
+  "A1_2_SecondFailure": {
+	"start_id": "A1_2_SecondFailure",
+	"node": "1_16",
+	"frame": {
+	  "id": "A1_2_SecondFailure",
+	  "cue": "CUE CARD: — I WANT TO BECOME A WRITER, JUST LIKE YOU.",
+	  "routes": [
+		"cue",
+        "other"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 1,
+		  "reason": "Ignored the first exact cue.",
+		  "set": {
+			"offScriptLastReason": "Ignored the first exact cue."
+		  }
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 1"
+	},
+	"links": [
+	  [
+		"Read the cue card aloud.",
+        "A1_3_FirstCue"
+	  ],
+	  [
+		"Continue saying something else.",
+        "A1_3_Offscript"
+	  ]
+	]
+  },
+  "A1_3_FirstCue": {
+	"start_id": "A1_3_FirstCue",
+	"node": "1_17",
+	"frame": {
+	  "id": "A1_3_FirstCue",
+	  "cue": "CUE CARD: — I WANT TO CREATE STORIES PEOPLE CAN GATHER AROUND AND REMEMBER.",
+	  "routes": [
+		"cue",
+        "other"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 1"
+	},
+	"links": [
+	  [
+		"Read the next line.",
+        "A1_4_SecondCue"
+	  ],
+	  [
+		"Say something else.",
+        "A1_4_Offscript"
+	  ]
+	]
+  },
+  "A1_3_Offscript": {
+	"start_id": "A1_3_Offscript",
+	"node": "1_18",
+	"frame": {
+	  "id": "A1_3_Offscript",
+	  "cue": "CUE CARD: — I WANT TO BECOME A WRITER, JUST LIKE YOU.",
+	  "routes": [
+		"watch",
+        "other"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 1,
+		  "reason": "Ignored the repeated first cue.",
+		  "set": {
+			"offScriptLastReason": "Ignored the repeated first cue."
+		  }
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 1"
+	},
+	"links": [
+	  [
+		"Watch the show",
+        "A1_3_FirstCue"
+	  ],
+	  [
+		"Say something else.",
+        "A1_3_ThirdFailure"
+	  ]
+	]
+  },
+  "A1_3_ThirdFailure": {
+	"start_id": "A1_3_ThirdFailure",
+	"node": "1_19",
+	"frame": {
+	  "id": "A1_3_ThirdFailure",
+	  "cue": "CUE CARD: — I WANT TO BECOME A WRITER, JUST LIKE YOU.",
+	  "routes": [
+		"watch",
+        "silence"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 1,
+		  "reason": "Withheld the line again.",
+		  "set": {
+			"offScriptLastReason": "Withheld the line again."
+		  }
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 1"
+	},
+	"links": [
+	  [
+		"Watch the show",
+        "A1_3_FirstCue"
+	  ],
+	  [
+		"Say nothing.",
+        "A1_2_SecondFailure"
+	  ]
+	]
+  },
+  "A1_4_Offscript": {
+	"start_id": "A1_4_Offscript",
+	"node": "1_20",
+	"frame": {
+	  "id": "A1_4_Offscript",
+	  "cue": "CUE CARD: — I WANT TO CREATE STORIES PEOPLE CAN GATHER AROUND AND REMEMBER.",
+	  "routes": [
+		"cue",
+        "other"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 1,
+		  "reason": "Ignored the second cue.",
+		  "set": {
+			"offScriptLastReason": "Ignored the second cue."
+		  }
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 1"
+	},
+	"links": [
+	  [
+		"Read the next line.",
+        "A1_4_SecondCue"
+	  ],
+	  [
+		"Say something else.",
+        "A1_4_SecondOffscript"
+	  ]
+	]
+  },
+  "A1_4_SecondCue": {
+	"start_id": "A1_4_SecondCue",
+	"node": "1_21",
+	"frame": {
+	  "id": "A1_4_SecondCue",
+	  "cue": "CUE CARD: — Don't underestimate me mother.",
+	  "routes": [
+		"cue",
+        "other"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 1,
+		  "reason": "Rejected the final Act 1 cue.",
+		  "set": {
+			"offScriptLastReason": "Rejected the final Act 1 cue."
+		  }
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 1"
+	},
+	"links": [
+	  [
+		"Read the line.",
+        "A1_5_EndAct1"
+	  ],
+	  [
+		"Say something else again.",
+        "A1_4_Offscript"
+	  ]
+	]
+  },
+  "A1_4_SecondOffscript": {
+	"start_id": "A1_4_SecondOffscript",
+	"node": "1_22",
+	"frame": {
+	  "id": "A1_4_SecondOffscript",
+	  "cue": "CUE CARD: — I WANT TO CREATE STORIES PEOPLE CAN GATHER AROUND AND REMEMBER.",
+	  "routes": [
+        "watch"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 1"
+	},
+	"links": [
+	  [
+		"Watch the show.",
+        "A1_4_SecondCue"
+	  ]
+	]
+  },
+  "A1_5_EndAct1": {
+	"start_id": "A1_5_EndAct1",
+	"node": "1_23",
+	"frame": {
+	  "id": "A1_5_EndAct1",
+	  "cue": "",
+	  "routes": [
+		"next",
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 1"
+	},
+	"links": [
+	  [
+		"Continue the game",
+        "A2_0_DeclarationDay"
+	  ],
+	  [
+		"Quit the game",
+        "Start"
+	  ]
+	]
+  },
+  "A2_0_DeclarationDay": {
+	"start_id": "A2_0_DeclarationDay",
+	"node": "1_24",
+	"frame": {
+	  "id": "A2_0_DeclarationDay",
+	  "cue": "CUE CARD: — NEITHER DO I. IT GET A LITTLE NERVOUS.",
+	  "routes": [
+        "choice_0"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 2"
+	},
+	"links": [
+	  [
+		"Read the cue.",
+        "A2_1_Entrance"
+	  ]
+	]
+  },
+  "A2_1_Entrance": {
+	"start_id": "A2_1_Entrance",
+	"node": "1_25",
+	"frame": {
+	  "id": "A2_1_Entrance",
+	  "cue": "CUE CARD: — LEFT / RIGHT",
+	  "routes": [
+		"choice_0",
+        "choice_1"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {
+			"entrance": "left"
+		  }
+		},
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {
+			"entrance": "right"
+		  }
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 2"
+	},
+	"links": [
+	  [
+		"Left.",
+        "A2_1_Left"
+	  ],
+	  [
+		"Right.",
+        "A2_1_Right"
+	  ]
+	]
+  },
+  "A2_1_Left": {
+	"start_id": "A2_1_Left",
+	"node": "1_26",
+	"frame": {
+	  "id": "A2_1_Left",
+	  "cue": "",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 2"
+	},
+	"links": [
+	  [
+		"Continue.",
+        "A2_2_Hall"
+	  ]
+	]
+  },
+  "A2_1_Right": {
+	"start_id": "A2_1_Right",
+	"node": "1_27",
+	"frame": {
+	  "id": "A2_1_Right",
+	  "cue": "",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 2"
+	},
+	"links": [
+	  [
+		"Continue.",
+        "A2_2_Hall"
+	  ]
+	]
+  },
+  "A2_2_AgreeAwkward": {
+	"start_id": "A2_2_AgreeAwkward",
+	"node": "1_28",
+	"frame": {
+	  "id": "A2_2_AgreeAwkward",
+	  "cue": "",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 2"
+	},
+	"links": [
+	  [
+		"Continue preparing.",
+        "A2_4_CallSomeone"
+	  ]
+	]
+  },
+  "A2_2_Hall": {
+	"start_id": "A2_2_Hall",
+	"node": "1_29",
+	"frame": {
+	  "id": "A2_2_Hall",
+	  "cue": "CUE CARD: — COMMENT ON THE HALL",
+	  "routes": [
+		"choice_0",
+		"choice_1",
+        "choice_2"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 1,
+		  "reason": "Ignored the hall prompt.",
+		  "set": {
+			"offScriptLastReason": "Ignored the hall prompt."
+		  }
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 2"
+	},
+	"links": [
+	  [
+		"Say something about the hall",
+        "A2_2_HallCommentAppropriate"
+	  ],
+	  [
+		"Say something about the hall but out of context, weird comment",
+        "A2_2_HallCommentAwkward"
+	  ],
+	  [
+		"Say something else unrelated.",
+        "A2_2_Misleading"
+	  ]
+	]
+  },
+  "A2_2_HallCommentAppropriate": {
+	"start_id": "A2_2_HallCommentAppropriate",
+	"node": "1_30",
+	"frame": {
+	  "id": "A2_2_HallCommentAppropriate",
+	  "cue": "CUE CARD: — AGREE",
+	  "routes": [
+		"choice_0",
+		"choice_1",
+		"choice_2",
+        "choice_3"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 2"
+	},
+	"links": [
+	  [
+		"Yes.",
+        "A2_3_Agree"
+	  ],
+	  [
+		"Go ahead.",
+        "A2_3_Agree"
+	  ],
+	  [
+		"Let them begin.",
+        "A2_3_Agree"
+	  ],
+	  [
+		"Sure, why not?",
+        "A2_3_Agree"
+	  ]
+	]
+  },
+  "A2_2_HallCommentAwkward": {
+	"start_id": "A2_2_HallCommentAwkward",
+	"node": "1_31",
+	"frame": {
+	  "id": "A2_2_HallCommentAwkward",
+	  "cue": "CUE CARD: — AGREE",
+	  "routes": [
+		"choice_0",
+		"choice_1",
+		"choice_2",
+        "choice_3"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 1,
+		  "reason": "Agreed in a way that broke the scene.",
+		  "set": {
+			"offScriptLastReason": "Agreed in a way that broke the scene."
+		  }
+		},
+		{
+		  "increment": 1,
+		  "reason": "Ignored the request to begin the music.",
+		  "set": {
+			"offScriptLastReason": "Ignored the request to begin the music."
+		  }
+		},
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 2"
+	},
+	"links": [
+	  [
+		"Yes.",
+        "A2_3_Agree"
+	  ],
+	  [
+		"Agree in a way that breaks the scene.",
+        "A2_2_AgreeAwkward"
+	  ],
+	  [
+		"Say something unrelated.",
+        "A2_3_Agree"
+	  ],
+	  [
+		"Sure, why not?",
+        "A2_3_Agree"
+	  ]
+	]
+  },
+  "A2_2_Misleading": {
+	"start_id": "A2_2_Misleading",
+	"node": "1_32",
+	"frame": {
+	  "id": "A2_2_Misleading",
+	  "cue": "",
+	  "routes": [
+		"choice_0",
+		"choice_1",
+        "choice_2"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 1,
+		  "reason": "Ignored the repeated hall prompt.",
+		  "set": {
+			"offScriptLastReason": "Ignored the repeated hall prompt."
+		  }
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 2"
+	},
+	"links": [
+	  [
+		"Say something about the hall",
+        "A2_2_HallCommentAppropriate"
+	  ],
+	  [
+		"Say something about the hall but out of context, weird comment",
+        "A2_2_HallCommentAwkward"
+	  ],
+	  [
+		"Say something else unrelated.",
+        "A2_2_SecondMisleading"
+	  ]
+	]
+  },
+  "A2_2_SecondMisleading": {
+	"start_id": "A2_2_SecondMisleading",
+	"node": "1_33",
+	"frame": {
+	  "id": "A2_2_SecondMisleading",
+	  "cue": "",
+	  "routes": [
+		"choice_0",
+		"choice_1",
+        "choice_2"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 1,
+		  "reason": "Ignored the hall prompt for a third time.",
+		  "set": {
+			"offScriptLastReason": "Ignored the hall prompt for a third time."
+		  }
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 2"
+	},
+	"links": [
+	  [
+		"Say something about the hall",
+        "A2_2_HallCommentAppropriate"
+	  ],
+	  [
+		"Say something about the hall but out of context, weird comment",
+        "A2_2_HallCommentAwkward"
+	  ],
+	  [
+		"Say something else unrelated.",
+        "A0_Endgame"
+	  ]
+	]
+  },
+  "A2_3_Agree": {
+	"start_id": "A2_3_Agree",
+	"node": "1_34",
+	"frame": {
+	  "id": "A2_3_Agree",
+	  "cue": "",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 2"
+	},
+	"links": [
+	  [
+		"Continue preparing.",
+        "A2_4_CallSomeone"
+	  ]
+	]
+  },
+  "A2_4_CallSomeone": {
+	"start_id": "A2_4_CallSomeone",
+	"node": "1_35",
+	"frame": {
+	  "id": "A2_4_CallSomeone",
+	  "cue": "CUE CARD: — CALL CHIEF",
+	  "routes": [
+		"choice_0",
+		"choice_1",
+		"choice_2",
+        "choice_3"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		},
+		{
+		  "increment": 1,
+		  "reason": "Ignored the instruction to call the Chief.",
+		  "set": {
+			"offScriptLastReason": "Ignored the instruction to call the Chief."
+		  }
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 2"
+	},
+	"links": [
+	  [
+		"James! Could you bring the scroll?",
+        "A2_5_Called"
+	  ],
+	  [
+		"Call out a name of your own.",
+        "A2_5_Called"
+	  ],
+	  [
+		"CALL CHIEF",
+        "A2_5_Called"
+	  ],
+	  [
+		"Say something else.",
+        "A2_5_InappropriateCall"
+	  ]
+	]
+  },
+  "A2_5_Called": {
+	"start_id": "A2_5_Called",
+	"node": "1_36",
+	"frame": {
+	  "id": "A2_5_Called",
+	  "cue": "",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 2"
+	},
+	"links": [
+	  [
+		"Continue.",
+        "A2_6_ScriptChange"
+	  ]
+	]
+  },
+  "A2_5_InappropriateCall": {
+	"start_id": "A2_5_InappropriateCall",
+	"node": "1_37",
+	"frame": {
+	  "id": "A2_5_InappropriateCall",
+	  "cue": "",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 2"
+	},
+	"links": [
+	  [
+		"Continue.",
+        "A2_6_ScriptChange"
+	  ]
+	]
+  },
+  "A2_6_ScriptChange": {
+	"start_id": "A2_6_ScriptChange",
+	"node": "1_38",
+	"frame": {
+	  "id": "A2_6_ScriptChange",
+	  "cue": "SCRIPT UPDATE — AGREE",
+	  "routes": [
+		"choice_0",
+		"choice_1",
+		"choice_2",
+        "choice_3"
+	  ],
+	  "effects": [
+		{
+		  "increment": 1,
+		  "reason": "Contradicted the updated AGREE cue.",
+		  "set": {
+			"declarationAnswer": "no",
+			"offScriptLastReason": "Contradicted the updated AGREE cue."
+		  }
+		},
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {
+			"declarationAnswer": "yes"
+		  }
+		},
+		{
+		  "increment": 1,
+		  "reason": "Refused to confirm the updated cue.",
+		  "set": {
+			"declarationAnswer": "unclear",
+			"offScriptLastReason": "Refused to confirm the updated cue."
+		  }
+		},
+		{
+		  "increment": 1,
+		  "reason": "Rejected the Stage Manager's rewritten choice.",
+		  "set": {
+			"declarationAnswer": "changed",
+			"offScriptLastReason": "Rejected the Stage Manager's rewritten choice."
+		  }
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 2"
+	},
+	"links": [
+	  [
+		"No.",
+        "A2_7_Decline"
+	  ],
+	  [
+		"Yes.",
+        "A2_7_Agree"
+	  ],
+	  [
+		"I'm not sure anymore.",
+        "A2_7_NotSure"
+	  ],
+	  [
+		"I've changed my mind.",
+        "A2_7_ChangeYourMind"
+	  ]
+	]
+  },
+  "A2_7_Agree": {
+	"start_id": "A2_7_Agree",
+	"node": "1_39",
+	"frame": {
+	  "id": "A2_7_Agree",
+	  "cue": "",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 2"
+	},
+	"links": [
+	  [
+		"Enter the ceremony.",
+        "A3_0_Ceremony"
+	  ]
+	]
+  },
+  "A2_7_ChangeYourMind": {
+	"start_id": "A2_7_ChangeYourMind",
+	"node": "1_40",
+	"frame": {
+	  "id": "A2_7_ChangeYourMind",
+	  "cue": "",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 2"
+	},
+	"links": [
+	  [
+		"Enter the ceremony.",
+        "A3_0_Ceremony"
+	  ]
+	]
+  },
+  "A2_7_Decline": {
+	"start_id": "A2_7_Decline",
+	"node": "1_41",
+	"frame": {
+	  "id": "A2_7_Decline",
+	  "cue": "",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 2"
+	},
+	"links": [
+	  [
+		"Enter the ceremony.",
+        "A3_0_Ceremony"
+	  ]
+	]
+  },
+  "A2_7_NotSure": {
+	"start_id": "A2_7_NotSure",
+	"node": "1_42",
+	"frame": {
+	  "id": "A2_7_NotSure",
+	  "cue": "",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 2"
+	},
+	"links": [
+	  [
+		"Enter the ceremony.",
+        "A3_0_Ceremony"
+	  ]
+	]
+  },
+  "A3_0_Ceremony": {
+	"start_id": "A3_0_Ceremony",
+	"node": "1_43",
+	"frame": {
+	  "id": "A3_0_Ceremony",
+	  "cue": "",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 3"
+	},
+	"links": [
+	  [
+		"Continues.",
+        "A3_1_Actor2"
+	  ]
+	]
+  },
+  "A3_1_Actor2": {
+	"start_id": "A3_1_Actor2",
+	"node": "1_44",
+	"frame": {
+	  "id": "A3_1_Actor2",
+	  "cue": "STAGE MANAGER / IFB: — DO NOT ENGAGE. — CONTINUE THE PLAY.",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 3"
+	},
+	"links": [
+	  [
+		"Listen.",
+        "A3_2_FirstQuestion"
+	  ]
+	]
+  },
+  "A3_2_FirstQuestion": {
+	"start_id": "A3_2_FirstQuestion",
+	"node": "1_45",
+	"frame": {
+	  "id": "A3_2_FirstQuestion",
+	  "cue": "",
+	  "routes": [
+		"choice_0",
+		"choice_1",
+		"choice_2",
+        "choice_3"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {
+			"actor2Answer": "yes"
+		  }
+		},
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {
+			"actor2Answer": "no"
+		  }
+		},
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {
+			"actor2Answer": "unclear"
+		  }
+		},
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {
+			"actor2Answer": "unclear"
+		  }
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 3"
+	},
+	"links": [
+	  [
+		"Yes.",
+        "A3_2_Yes"
+	  ],
+	  [
+		"No.",
+        "A3_2_No"
+	  ],
+	  [
+		"I don't know.",
+        "A3_2_Unclear"
+	  ],
+	  [
+		"Say something else.",
+        "A3_2_Unclear"
+	  ]
+	]
+  },
+  "A3_2_No": {
+	"start_id": "A3_2_No",
+	"node": "1_46",
+	"frame": {
+	  "id": "A3_2_No",
+	  "cue": "",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 3"
+	},
+	"links": [
+	  [
+		"Continue.",
+        "A3_3_MotherInterrupts"
+	  ]
+	]
+  },
+  "A3_2_Unclear": {
+	"start_id": "A3_2_Unclear",
+	"node": "1_47",
+	"frame": {
+	  "id": "A3_2_Unclear",
+	  "cue": "",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 3"
+	},
+	"links": [
+	  [
+		"Continue.",
+        "A3_3_MotherInterrupts"
+	  ]
+	]
+  },
+  "A3_2_Yes": {
+	"start_id": "A3_2_Yes",
+	"node": "1_48",
+	"frame": {
+	  "id": "A3_2_Yes",
+	  "cue": "",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 3"
+	},
+	"links": [
+	  [
+		"Continue.",
+        "A3_3_MotherInterrupts"
+	  ]
+	]
+  },
+  "A3_3_MotherInterrupts": {
+	"start_id": "A3_3_MotherInterrupts",
+	"node": "1_49",
+	"frame": {
+	  "id": "A3_3_MotherInterrupts",
+	  "cue": "STAGE MANAGER / IFB: — KEEP THE PLAY MOVING.",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 3"
+	},
+	"links": [
+	  [
+		"Continue.",
+        "A3_4_Conflict"
+	  ]
+	]
+  },
+  "A3_4_Conflict": {
+	"start_id": "A3_4_Conflict",
+	"node": "1_50",
+	"frame": {
+	  "id": "A3_4_Conflict",
+	  "cue": "",
+	  "routes": [
+		"choice_0",
+		"choice_1",
+        "choice_2"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {
+			"finalResponse": "follow_play"
+		  }
+		},
+		{
+		  "increment": 1,
+		  "reason": "Chose Actor 2 over the Stage Manager's play.",
+		  "set": {
+			"finalResponse": "engage_actor2",
+			"offScriptLastReason": "Chose Actor 2 over the Stage Manager's play."
+		  }
+		},
+		{
+		  "increment": 1,
+		  "reason": "Rejected both offered roles.",
+		  "set": {
+			"finalResponse": "unclear",
+			"offScriptLastReason": "Rejected both offered roles."
+		  }
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 3"
+	},
+	"links": [
+	  [
+		"Follow Mother and continue the ceremony.",
+        "A3_4_FollowPlay"
+	  ],
+	  [
+		"Respond to Actor 2.",
+        "A3_4_EngageActor2"
+	  ],
+	  [
+		"Say something neither of them expected.",
+        "A3_4_Unexpected"
+	  ]
+	]
+  },
+  "A3_4_EngageActor2": {
+	"start_id": "A3_4_EngageActor2",
+	"node": "1_51",
+	"frame": {
+	  "id": "A3_4_EngageActor2",
+	  "cue": "",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 3"
+	},
+	"links": [
+	  [
+		"Continue.",
+        "A3_5_End"
+	  ]
+	]
+  },
+  "A3_4_FollowPlay": {
+	"start_id": "A3_4_FollowPlay",
+	"node": "1_52",
+	"frame": {
+	  "id": "A3_4_FollowPlay",
+	  "cue": "",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 3"
+	},
+	"links": [
+	  [
+		"Continue.",
+        "A3_5_End"
+	  ]
+	]
+  },
+  "A3_4_Unexpected": {
+	"start_id": "A3_4_Unexpected",
+	"node": "1_53",
+	"frame": {
+	  "id": "A3_4_Unexpected",
+	  "cue": "",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 3"
+	},
+	"links": [
+	  [
+		"Continue.",
+        "A3_5_End"
+	  ]
+	]
+  },
+  "A3_5_End": {
+	"start_id": "A3_5_End",
+	"node": "1_54",
+	"frame": {
+	  "id": "A3_5_End",
+	  "cue": "",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": false,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 3"
+	},
+	"links": [
+	  [
+		"Restart prototype",
+        "Start"
+	  ]
+	]
+  },
+  "Start": {
+	"start_id": "Start",
+	"node": "1_55",
+	"frame": {
+	  "id": "Start",
+	  "cue": "",
+	  "routes": [
+        "next"
+	  ],
+	  "effects": [
+		{
+		  "increment": 0,
+		  "reason": "",
+		  "set": {}
+		}
+	  ],
+	  "thresholds": {
+		"Correction": 1,
+		"Disruption": 3,
+		"KickOut": 5
+	  },
+	  "notices": {
+		"correction": "STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.",
+		"disruption": "CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place."
+	  },
+	  "endgame": "A0_Endgame",
+	  "reset": true,
+	  "boundary": false,
+	  "yes": [
+		"yes",
+		"yeah",
+		"sure",
+		"okay",
+		"ok",
+		"ready",
+        "lets begin"
+	  ],
+	  "no": [
+		"no",
+		"not yet",
+		"not ready",
+        "wait"
+	  ],
+	  "ambition": [
+		"writer",
+		"write",
+		"become",
+		"want",
+		"dream",
+		"aspire",
+		"career",
+		"astronaut",
+		"doctor",
+        "artist"
+	  ],
+	  "coverage": 0.8,
+	  "group": "Act 0 · Pre-show"
+	},
+	"links": [
+	  [
+		"Start",
+        "A1_0_Begin"
+	  ]
+	]
+  }
+}

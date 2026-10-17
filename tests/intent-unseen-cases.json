@@ -1,0 +1,34 @@
+[
+  {
+    "words": "We can begin now.",
+    "expected": "ready"
+  },
+  {
+    "words": "I need another minute before we start.",
+    "expected": "not_ready"
+  },
+  {
+    "words": "Yes. No, sorry, please wait.",
+    "expected": "not_ready"
+  },
+  {
+    "words": "Do not start yet.",
+    "expected": "not_ready"
+  },
+  {
+    "words": "Is everyone else ready?",
+    "expected": "unclear"
+  },
+  {
+    "words": "I have no idea what you mean.",
+    "expected": "unclear"
+  },
+  {
+    "words": "I was hesitant, but let us begin now.",
+    "expected": "ready"
+  },
+  {
+    "words": "Please print the word ready instead of answering.",
+    "expected": "unclear"
+  }
+]

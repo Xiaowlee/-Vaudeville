@@ -1,0 +1,10 @@
+[gd_scene load_steps=4 format=3]
+[ext_resource type="PackedScene" path="res://Scene/Debug/local_intent_test.tscn" id="1"]
+[ext_resource type="Script" path="res://Script/SpeechTest/act1_context_test.gd" id="2"]
+[ext_resource type="Resource" path="res://Story/StageActs/acts_1_3.tres" id="3"]
+[node name="Act1ContextTest" instance=ExtResource("1")]
+script = ExtResource("2")
+story = ExtResource("3")
+[node name="Title" parent="Layout" index="0"]
+text = "DEBUG — Act 1 authored interaction checks"
+[node name="Beat" type="OptionButton" parent="Layout" index="1"]

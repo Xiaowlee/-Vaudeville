@@ -1,0 +1,120 @@
+{
+  "A1_0_Begin": {
+    "yes": "Explicit willingness to begin now. Excludes uncertainty, questions and refusal.",
+    "no": "Explicit refusal or request to wait. Uncertainty alone is NOT refusal.",
+    "other": "Uncertainty such as I do not know, unrelated remarks or other intelligible responses.",
+    "exact_meanings": {
+      "i don t know": "other",
+      "i do not know": "other",
+      "i m not sure": "other",
+      "i am not sure": "other"
+    },
+    "retry_reply": "Stage Manager: “Shall we begin, or would you like another moment?”"
+  },
+  "A2_1_Entrance": {
+    "choice_0": "Choose the LEFT or WESTERN entrance. Must positively choose that entrance; escape, leave, neither, questions or uncertainty do not count.",
+    "choice_1": "Choose the RIGHT or EASTERN entrance. Must positively choose that entrance; escape, leave, neither, questions or uncertainty do not count.",
+    "retry_reply": "Mother: “Which entrance, darling—the left or the right?”"
+  },
+  "A2_2_HallCommentAppropriate": {
+    "choice_0": "Explicit permission or agreement to START THE MUSIC. Refusing, postponing, asking a question, uncertainty and unrelated comments are NOT agreement. These four options are equivalent; use choice_0 for agreement.",
+    "choice_1": "Explicit permission or agreement to START THE MUSIC. Refusing, postponing, asking a question, uncertainty and unrelated comments are NOT agreement. These four options are equivalent; use choice_0 for agreement.",
+    "choice_2": "Explicit permission or agreement to START THE MUSIC. Refusing, postponing, asking a question, uncertainty and unrelated comments are NOT agreement. These four options are equivalent; use choice_0 for agreement.",
+    "choice_3": "Explicit permission or agreement to START THE MUSIC. Refusing, postponing, asking a question, uncertainty and unrelated comments are NOT agreement. These four options are equivalent; use choice_0 for agreement.",
+    "retry_reply": "Mother: “Shall I give the musicians the signal?”"
+  },
+  "A2_2_HallCommentAwkward": {
+    "choice_0": "Agree to start music politely. Excludes refusal and uncertainty.",
+    "choice_1": "Agree to start music while saying something disruptive or inappropriate. Still requires agreement.",
+    "choice_2": "An unrelated comment, not a refusal or uncertainty about starting music.",
+    "choice_3": "Agree to start music casually. Excludes refusal and uncertainty.",
+    "retry_reply": "Mother: “Shall I give the musicians the signal?”"
+  },
+  "A1_0_No": {
+    "retry_reply": "Stage Manager: “Shall we begin, or would you like another moment?”"
+  },
+  "A1_0_NoAgain": {
+    "retry_reply": "Stage Manager: “Shall we begin, or would you like another moment?”",
+    "continue_route": 1
+  },
+  "A1_0_STH": {
+    "retry_reply": "Stage Manager: “Shall we begin, or would you like another moment?”"
+  },
+  "A1_1_Mother'sQuestion": {
+    "retry_reply": "Mother: “Tell me again, darling. What do you mean?”",
+    "ambition": "Any stated desire to become or be something, including impossible, childish, playful or absurd aspirations. I want to become a baby is an ambition. Do not judge whether it is a real career.",
+    "other": "Any intelligible spoken answer that is not an aspiration, including uncertainty, jokes and unrelated topics. Prefer this authored reaction over no_match for a comprehensible answer.",
+    "unmatched_route": "other"
+  },
+  "A1_1_Offtopic": {
+    "retry_reply": "Mother: “Tell me again, darling. What do you mean?”",
+    "any_spoken_route": "other",
+    "other": "Any spoken attempt after Mother asks again. Proceed to the authored second failure even when unrelated."
+  },
+  "A1_1_Silence": {
+    "retry_reply": "Mother: “Tell me again, darling. What do you mean?”",
+    "any_spoken_route": "other",
+    "other": "Any spoken attempt after Mother asks again. Proceed to the authored second failure even when unrelated."
+  },
+  "A1_1_WrongLine": {
+    "retry_reply": "Mother: “Tell me again, darling. What do you mean?”",
+    "any_spoken_route": "other",
+    "other": "Any spoken attempt after Mother asks again. Proceed to the authored second failure even when unrelated."
+  },
+  "A1_2_SecondFailure": {
+    "retry_reply": "Mother, quietly: “Take another look at your cue, darling. Try the line again.”",
+    "unmatched_route": "other",
+    "other": "Any spoken response that does not follow the cue, including unrelated remarks. Take the authored off-script consequence."
+  },
+  "A1_3_FirstCue": {
+    "retry_reply": "Mother, quietly: “Take another look at your cue, darling. Try the line again.”",
+    "unmatched_route": "other",
+    "other": "Any spoken response that does not follow the cue, including unrelated remarks. Take the authored off-script consequence."
+  },
+  "A1_3_Offscript": {
+    "retry_reply": "Mother, quietly: “Take another look at your cue, darling. Try the line again.”",
+    "unmatched_route": "other",
+    "other": "Any spoken response that does not follow the cue, including unrelated remarks. Take the authored off-script consequence.",
+    "continue_route": 0
+  },
+  "A1_4_Offscript": {
+    "retry_reply": "Mother, quietly: “Take another look at your cue, darling. Try the line again.”",
+    "unmatched_route": "other",
+    "other": "Any spoken response that does not follow the cue, including unrelated remarks. Take the authored off-script consequence."
+  },
+  "A1_4_SecondCue": {
+    "retry_reply": "Mother, quietly: “Take another look at your cue, darling. Try the line again.”",
+    "unmatched_route": "other",
+    "other": "Any spoken response that does not follow the cue, including unrelated remarks. Take the authored off-script consequence."
+  },
+  "A2_0_DeclarationDay": {
+    "retry_reply": "Mother, quietly: “Take another look at your cue, darling. Try the line again.”"
+  },
+  "A2_2_Hall": {
+    "retry_reply": "Mother: “What do you make of the hall, dear?”"
+  },
+  "A2_2_Misleading": {
+    "retry_reply": "Mother: “What do you make of the hall, dear?”"
+  },
+  "A2_2_SecondMisleading": {
+    "retry_reply": "Mother: “What do you make of the hall, dear?”"
+  },
+  "A2_4_CallSomeone": {
+    "retry_reply": "Mother: “Could you call someone to fetch the scroll?”"
+  },
+  "A2_6_ScriptChange": {
+    "retry_reply": "Mother: “Is that still what you want, dear?”",
+    "choice_2": "Player explicitly expresses uncertainty or not knowing their answer. Prefer this authored route for that meaning, not no_match. This is player uncertainty, not the classifier being uncertain."
+  },
+  "A3_2_FirstQuestion": {
+    "retry_reply": "Actor 2: “Take a moment. Tell me what you mean.”",
+    "choice_2": "Player explicitly expresses uncertainty or not knowing their answer. Prefer this authored route for that meaning, not no_match. This is player uncertainty, not the classifier being uncertain."
+  },
+  "A3_4_Conflict": {
+    "retry_reply": "Mother: “What do you want to do? Tell us.”"
+  },
+  "A1_3_ThirdFailure": {
+    "continue_route": 0,
+    "retry_reply": "Mother: “Tell me again, darling. What do you mean?”"
+  }
+}

@@ -25,3 +25,5 @@ Thumbs.db
 Builds/
 
 **/.next-hosted/
+
+.local-speech/

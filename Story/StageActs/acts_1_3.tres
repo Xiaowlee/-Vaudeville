@@ -493,7 +493,7 @@ resource_name = "A1.5"
 script = ExtResource("6_vrawv")
 dialogue = SubResource("Resource_o15h2")
 input_mode = 1
-expected_line = "Then I'll make the stories worth the pain."
+expected_line = "Don't underestimate me mother."
 accepted_phrases = PackedStringArray()
 cue_card_text = "I'll be fine.
 

@@ -23,7 +23,7 @@ script = ExtResource("1_m1ph0")
 prototype_1_scene = "uid://dydu8om56n80a"
 prototype_2_scene = "res://Scene/2.2_c_increased_agency.tscn"
 previous_scene = "res://Scene/00_previous_prototypes_menu.tscn"
-stage_scene = "res://Scene/StageActs/2.3_stage_acts_1_3.tscn"
+stage_scene = "res://Scene/StageActs/stage_graph_game.tscn"
 
 [node name="Panel" type="Panel" parent="." unique_id=1179351320]
 layout_mode = 1

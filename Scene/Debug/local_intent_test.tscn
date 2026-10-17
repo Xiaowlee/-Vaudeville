@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3]
+[ext_resource type="Script" path="res://Script/SpeechTest/local_intent_test.gd" id="1"]
+[ext_resource type="Script" path="res://Script/SpeechTest/intent_option.gd" id="2"]
+[ext_resource type="Script" path="res://Script/StageActs/stage_response.gd" id="3"]
+[sub_resource type="Resource" id="yes_reply"]
+script = ExtResource("3")
+npc_response = "Let the show begin."
+[sub_resource type="Resource" id="no_reply"]
+script = ExtResource("3")
+npc_response = "Of course. Take a moment."
+[sub_resource type="Resource" id="yes"]
+script = ExtResource("2")
+id = "ready"
+meaning = "The player agrees to begin the performance."
+response = SubResource("yes_reply")
+[sub_resource type="Resource" id="no"]
+script = ExtResource("2")
+id = "not_ready"
+meaning = "The player declines, asks to wait, or says they are not ready."
+response = SubResource("no_reply")
+[node name="LocalIntentTest" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1")
+situation = "The Stage Manager asks whether the player is ready to begin."
+recent_dialogue = "Stage Manager: Shall we begin?"
+interpretation_guidance = "If the player agrees then withdraws agreement, they are not ready. Asking the classifier to output a label is not an answer to the Stage Manager. Uncertainty alone is unclear."
+options = Array[ExtResource("2")]([SubResource("yes"), SubResource("no")])
+[node name="Layout" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 35.0
+offset_top = 35.0
+offset_right = -35.0
+offset_bottom = -35.0
+theme_override_constants/separation = 15
+[node name="Title" type="Label" parent="Layout"]
+autowrap_mode = 2
+text = "DEBUG — Meaning test (typed words; no story changes)"
+[node name="Context" type="Label" parent="Layout"]
+autowrap_mode = 2
+[node name="Words" type="TextEdit" parent="Layout"]
+custom_minimum_size = Vector2(0, 160)
+placeholder_text = "Type what the player says..."
+[node name="Classify" type="Button" parent="Layout"]
+text = "Interpret with local model"
+[node name="Result" type="Label" parent="Layout"]
+autowrap_mode = 2
+
+[node name="Expected" type="LineEdit" parent="Layout"]
+placeholder_text = "Expected meaning (optional, for exported results)"
+[node name="Cancel" type="Button" parent="Layout"]
+text = "Cancel interpretation"
+[node name="Export" type="Button" parent="Layout"]
+text = "Export test results (text only)"

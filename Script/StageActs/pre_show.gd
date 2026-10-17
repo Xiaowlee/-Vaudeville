@@ -188,6 +188,10 @@ func _process(delta: float) -> void:
 				state = "MIC_ERROR"
 				ui.set_turn("ERROR")
 		"LISTENING":
+			# A delayed browser transcript is not player silence.
+			if speech.awaiting_browser_result():
+				elapsed = 0
+				return
 			if speech.recognition_backend == 3 and speech.listening and not speech.worker_ready:
 				state = "STARTING"
 				elapsed = 0

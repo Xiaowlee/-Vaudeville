@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Folio 2 Test 2"
-run/main_scene="res://Scene/00_main_menu.tscn"
+run/main_scene="uid://c4ufa2d402kxg"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 run/main_scene.mobile_display="res://Scene/StageActs/Mobile.tscn"
@@ -37,7 +37,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/godot_ai/plugin.cfg", "res://addons/mobile_display_export/plugin.cfg", "res://addons/android_speech/plugin.cfg")
+enabled=PackedStringArray("res://addons/dialogue_nodes/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg", "res://addons/godot_ai/plugin.cfg", "res://addons/mobile_display_export/plugin.cfg", "res://addons/android_speech/plugin.cfg")
 
 [internationalization]
 

@@ -7,16 +7,24 @@ func _ready() -> void:
  $Debug/Panel/Buttons/Connect.pressed.connect(connect_session)
  $Debug/Panel/Buttons/Browser.pressed.connect(open_browser)
  $Debug/Panel/Buttons/Play.pressed.connect(start_game)
+ $Debug/Panel/Buttons/CopyLink.pressed.connect(copy_link)
  PhoneSession.changed.connect(pair_changed)
+ pair_changed()
 func connect_session() -> void:
  PhoneSession.ensure_session()
 func pair_changed() -> void:
  $Debug/Panel/Buttons/Status.text = PhoneSession.message
  var ready: bool = not PhoneSession.speech_url.is_empty() and not PhoneSession.game_relay.is_empty()
  $Debug/Panel/Buttons/Browser.disabled = not ready
+ $Debug/Panel/Buttons/CopyLink.disabled = not ready
+ $Debug/Panel/Buttons/SessionLink.text = PhoneSession.speech_url if ready else ""
  $Debug/Panel/Buttons/Play.disabled = not ready or is_instance_valid(game)
  if not PhoneSession.busy and not PhoneSession.game_relay.is_empty() and not ready:
   $Debug/Panel/Buttons/Status.text = "Relay needs the speech update. Deploy website + relay, then restart this test."
+func copy_link() -> void:
+ if PhoneSession.speech_url.is_empty(): return
+ DisplayServer.clipboard_set(PhoneSession.speech_url)
+ $Debug/Panel/Buttons/Status.text = "Link copied. Paste into Chrome's address bar. Close other microphone tabs first."
 func open_browser() -> void:
  if PhoneSession.speech_url.is_empty(): return
  OS.shell_open(PhoneSession.speech_url)

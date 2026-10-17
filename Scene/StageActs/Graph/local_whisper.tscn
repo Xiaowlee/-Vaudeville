@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="Script" path="res://Script/StageActs/Graph/local_whisper.gd" id="1"]
+[node name="LocalWhisperTest" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1")
+[node name="Layout" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 35.0
+offset_top = 35.0
+offset_right = -35.0
+offset_bottom = -35.0
+theme_override_constants/separation = 15
+[node name="Title" type="Label" parent="Layout"]
+autowrap_mode = 2
+layout_mode = 2
+text = "DEBUG — Local Whisper microphone test"
+[node name="Devices" type="OptionButton" parent="Layout"]
+layout_mode = 2
+
+[node name="Start" type="Button" parent="Layout"]
+layout_mode = 2
+text = "Start recording"
+[node name="Finish" type="Button" parent="Layout"]
+layout_mode = 2
+text = "Finish and transcribe"
+[node name="Fixture" type="Button" parent="Layout"]
+layout_mode = 2
+text = "Check engine with included sample recording"
+[node name="Status" type="Label" parent="Layout"]
+layout_mode = 2
+autowrap_mode = 2
+[node name="Transcript" type="TextEdit" parent="Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+editable = false
+wrap_mode = 1
+

@@ -1,0 +1,2192 @@
+[gd_resource type="Resource" script_class="DialogueData" format=3 uid="uid://ck35vy0fr3hv2"]
+
+[ext_resource type="Script" uid="uid://eit47g61t72a" path="res://addons/dialogue_nodes/objects/DialogueData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+starts = {
+"A0_Endgame": &"0_2",
+"A1_0_BackTo Menu": &"0_3",
+"A1_0_Begin": &"0_4",
+"A1_0_Forced start": &"0_5",
+"A1_0_No": &"0_6",
+"A1_0_NoAgain": &"0_7",
+"A1_0_STH": &"0_8",
+"A1_1_0 PreshowAnnoyed": &"0_9",
+"A1_1_0 PreshowHappy": &"0_10",
+"A1_1_Mother'sQuestion": &"0_11",
+"A1_1_Offtopic": &"0_12",
+"A1_1_Once upon a time": &"0_13",
+"A1_1_Silence": &"0_14",
+"A1_1_WrongLine": &"0_15",
+"A1_2_SecondFailure": &"0_16",
+"A1_3_FirstCue": &"0_17",
+"A1_3_Offscript": &"0_18",
+"A1_3_ThirdFailure": &"0_19",
+"A1_4_Offscript": &"0_20",
+"A1_4_SecondCue": &"0_21",
+"A1_4_SecondOffscript": &"0_22",
+"A1_5_EndAct1": &"0_23",
+"A2_0_DeclarationDay": &"0_24",
+"A2_1_Entrance": &"0_25",
+"A2_1_Left": &"0_26",
+"A2_1_Right": &"0_27",
+"A2_2_AgreeAwkward": &"0_28",
+"A2_2_Hall": &"0_29",
+"A2_2_HallCommentAppropriate": &"0_30",
+"A2_2_HallCommentAwkward": &"0_31",
+"A2_2_Misleading": &"0_32",
+"A2_2_SecondMisleading": &"0_33",
+"A2_3_Agree": &"0_34",
+"A2_4_CallSomeone": &"0_35",
+"A2_5_Called": &"0_36",
+"A2_5_InappropriateCall": &"0_37",
+"A2_6_ScriptChange": &"0_38",
+"A2_7_Agree": &"0_39",
+"A2_7_ChangeYourMind": &"0_40",
+"A2_7_Decline": &"0_41",
+"A2_7_NotSure": &"0_42",
+"A3_0_Ceremony": &"0_43",
+"A3_1_Actor2": &"0_44",
+"A3_2_FirstQuestion": &"0_45",
+"A3_2_No": &"0_46",
+"A3_2_Unclear": &"0_47",
+"A3_2_Yes": &"0_48",
+"A3_3_MotherInterrupts": &"0_49",
+"A3_4_Conflict": &"0_50",
+"A3_4_EngageActor2": &"0_51",
+"A3_4_FollowPlay": &"0_52",
+"A3_4_Unexpected": &"0_53",
+"A3_5_End": &"0_54",
+"Start": &"0_55",
+"\\ A1_4_Offscript": &"0_1"
+}
+nodes = {
+&"0_1": {
+"link": &"3_1",
+"offset": Vector2(1250, 37000),
+"size": Vector2(260, 110),
+"start_id": "\\ A1_4_Offscript"
+},
+&"0_10": {
+"link": &"3_10",
+"offset": Vector2(10000, 1700),
+"size": Vector2(259.99976, 110),
+"start_id": "A1_1_0 PreshowHappy"
+},
+&"0_11": {
+"link": &"3_11",
+"offset": Vector2(1500, 10020),
+"size": Vector2(259.99988, 110),
+"start_id": "A1_1_Mother'sQuestion"
+},
+&"0_12": {
+"link": &"3_12",
+"offset": Vector2(4520, 9360),
+"size": Vector2(259.99994, 110),
+"start_id": "A1_1_Offtopic"
+},
+&"0_13": {
+"link": &"3_13",
+"offset": Vector2(0, 10100),
+"size": Vector2(260, 110),
+"start_id": "A1_1_Once upon a time"
+},
+&"0_14": {
+"link": &"3_14",
+"offset": Vector2(3320, 11240),
+"size": Vector2(260.00043, 110),
+"start_id": "A1_1_Silence"
+},
+&"0_15": {
+"link": &"3_15",
+"offset": Vector2(2860, 9260),
+"size": Vector2(259.99976, 110),
+"start_id": "A1_1_WrongLine"
+},
+&"0_16": {
+"link": &"3_16",
+"offset": Vector2(6020, 10760),
+"size": Vector2(260.00073, 110),
+"start_id": "A1_2_SecondFailure"
+},
+&"0_17": {
+"link": &"3_17",
+"offset": Vector2(9560, 10740),
+"size": Vector2(260, 110),
+"start_id": "A1_3_FirstCue"
+},
+&"0_18": {
+"link": &"3_18",
+"offset": Vector2(7340, 12020),
+"size": Vector2(259.99805, 110),
+"start_id": "A1_3_Offscript"
+},
+&"0_19": {
+"link": &"3_19",
+"offset": Vector2(8600, 12020),
+"size": Vector2(259.9983, 110),
+"start_id": "A1_3_ThirdFailure"
+},
+&"0_2": {
+"link": &"3_2",
+"offset": Vector2(0, 37850),
+"size": Vector2(260, 109.99512),
+"start_id": "A0_Endgame"
+},
+&"0_20": {
+"link": &"3_20",
+"offset": Vector2(10580, 13280),
+"size": Vector2(260.00098, 110),
+"start_id": "A1_4_Offscript"
+},
+&"0_21": {
+"link": &"3_21",
+"offset": Vector2(12540, 11400),
+"size": Vector2(260, 110),
+"start_id": "A1_4_SecondCue"
+},
+&"0_22": {
+"link": &"3_22",
+"offset": Vector2(11840, 13280),
+"size": Vector2(260, 110),
+"start_id": "A1_4_SecondOffscript"
+},
+&"0_23": {
+"link": &"3_23",
+"offset": Vector2(15000, 11800),
+"size": Vector2(260.00098, 110.00195),
+"start_id": "A1_5_EndAct1"
+},
+&"0_24": {
+"link": &"3_24",
+"offset": Vector2(0, 22750),
+"size": Vector2(260, 110),
+"start_id": "A2_0_DeclarationDay"
+},
+&"0_25": {
+"link": &"3_25",
+"offset": Vector2(1250, 22750),
+"size": Vector2(260, 110),
+"start_id": "A2_1_Entrance"
+},
+&"0_26": {
+"link": &"3_26",
+"offset": Vector2(2500, 19350),
+"size": Vector2(259.99976, 110),
+"start_id": "A2_1_Left"
+},
+&"0_27": {
+"link": &"3_27",
+"offset": Vector2(2500, 24450),
+"size": Vector2(259.99976, 110),
+"start_id": "A2_1_Right"
+},
+&"0_28": {
+"link": &"3_28",
+"offset": Vector2(8750, 23600),
+"size": Vector2(259.9983, 110.00391),
+"start_id": "A2_2_AgreeAwkward"
+},
+&"0_29": {
+"link": &"3_29",
+"offset": Vector2(3750, 20200),
+"size": Vector2(260.00018, 110.00391),
+"start_id": "A2_2_Hall"
+},
+&"0_3": {
+"link": &"3_3",
+"offset": Vector2(6250, 0),
+"size": Vector2(260.00024, 110),
+"start_id": "A1_0_BackTo Menu"
+},
+&"0_30": {
+"link": &"3_30",
+"offset": Vector2(7360, 18540),
+"size": Vector2(259.99878, 110),
+"start_id": "A2_2_HallCommentAppropriate"
+},
+&"0_31": {
+"link": &"3_31",
+"offset": Vector2(7500, 21900),
+"size": Vector2(259.99805, 110),
+"start_id": "A2_2_HallCommentAwkward"
+},
+&"0_32": {
+"link": &"3_32",
+"offset": Vector2(5000, 25300),
+"size": Vector2(259.99994, 110.00049),
+"start_id": "A2_2_Misleading"
+},
+&"0_33": {
+"link": &"3_33",
+"offset": Vector2(6250, 27850),
+"size": Vector2(260.00024, 110.00537),
+"start_id": "A2_2_SecondMisleading"
+},
+&"0_34": {
+"link": &"3_34",
+"offset": Vector2(10000, 18500),
+"size": Vector2(259.99976, 110.00195),
+"start_id": "A2_3_Agree"
+},
+&"0_35": {
+"link": &"3_35",
+"offset": Vector2(11250, 21050),
+"size": Vector2(260.00098, 110),
+"start_id": "A2_4_CallSomeone"
+},
+&"0_36": {
+"link": &"3_36",
+"offset": Vector2(13750, 21050),
+"size": Vector2(259.99976, 110),
+"start_id": "A2_5_Called"
+},
+&"0_37": {
+"link": &"3_37",
+"offset": Vector2(12500, 26150),
+"size": Vector2(260, 110.00049),
+"start_id": "A2_5_InappropriateCall"
+},
+&"0_38": {
+"link": &"3_38",
+"offset": Vector2(15000, 21050),
+"size": Vector2(260.00098, 110),
+"start_id": "A2_6_ScriptChange"
+},
+&"0_39": {
+"link": &"3_39",
+"offset": Vector2(16250, 27000),
+"size": Vector2(260, 109.99951),
+"start_id": "A2_7_Agree"
+},
+&"0_4": {
+"link": &"3_4",
+"offset": Vector2(1250, 2550),
+"size": Vector2(260, 110),
+"start_id": "A1_0_Begin"
+},
+&"0_40": {
+"link": &"3_40",
+"offset": Vector2(17500, 21900),
+"size": Vector2(259.9944, 110),
+"start_id": "A2_7_ChangeYourMind"
+},
+&"0_41": {
+"link": &"3_41",
+"offset": Vector2(17500, 17650),
+"size": Vector2(259.9944, 110),
+"start_id": "A2_7_Decline"
+},
+&"0_42": {
+"link": &"3_42",
+"offset": Vector2(17500, 24450),
+"size": Vector2(259.9944, 110),
+"start_id": "A2_7_NotSure"
+},
+&"0_43": {
+"link": &"3_43",
+"offset": Vector2(0, 32850),
+"size": Vector2(260, 110),
+"start_id": "A3_0_Ceremony"
+},
+&"0_44": {
+"link": &"3_44",
+"offset": Vector2(1250, 32850),
+"size": Vector2(260, 110),
+"start_id": "A3_1_Actor2"
+},
+&"0_45": {
+"link": &"3_45",
+"offset": Vector2(2500, 32000),
+"size": Vector2(259.99976, 110),
+"start_id": "A3_2_FirstQuestion"
+},
+&"0_46": {
+"link": &"3_46",
+"offset": Vector2(3750, 32850),
+"size": Vector2(260.00018, 110),
+"start_id": "A3_2_No"
+},
+&"0_47": {
+"link": &"3_47",
+"offset": Vector2(3750, 34550),
+"size": Vector2(260.00018, 110),
+"start_id": "A3_2_Unclear"
+},
+&"0_48": {
+"link": &"3_48",
+"offset": Vector2(3750, 31150),
+"size": Vector2(260.00018, 110),
+"start_id": "A3_2_Yes"
+},
+&"0_49": {
+"link": &"3_49",
+"offset": Vector2(5000, 32000),
+"size": Vector2(259.99994, 110),
+"start_id": "A3_3_MotherInterrupts"
+},
+&"0_5": {
+"link": &"3_5",
+"offset": Vector2(8750, 4250),
+"size": Vector2(259.9983, 110),
+"start_id": "A1_0_Forced start"
+},
+&"0_50": {
+"link": &"3_50",
+"offset": Vector2(6250, 32000),
+"size": Vector2(260.00024, 110),
+"start_id": "A3_4_Conflict"
+},
+&"0_51": {
+"link": &"3_51",
+"offset": Vector2(7500, 32000),
+"size": Vector2(259.99805, 110),
+"start_id": "A3_4_EngageActor2"
+},
+&"0_52": {
+"link": &"3_52",
+"offset": Vector2(7500, 30300),
+"size": Vector2(259.99805, 110),
+"start_id": "A3_4_FollowPlay"
+},
+&"0_53": {
+"link": &"3_53",
+"offset": Vector2(7500, 33700),
+"size": Vector2(259.99805, 109.99951),
+"start_id": "A3_4_Unexpected"
+},
+&"0_54": {
+"link": &"3_54",
+"offset": Vector2(8750, 32000),
+"size": Vector2(259.9983, 110),
+"start_id": "A3_5_End"
+},
+&"0_55": {
+"link": &"3_55",
+"offset": Vector2(-180, 2580),
+"size": Vector2(260, 110),
+"start_id": "Start"
+},
+&"0_6": {
+"link": &"3_6",
+"offset": Vector2(2500, 5950),
+"size": Vector2(259.99976, 110),
+"start_id": "A1_0_No"
+},
+&"0_7": {
+"link": &"3_7",
+"offset": Vector2(5000, 5100),
+"size": Vector2(259.99994, 110),
+"start_id": "A1_0_NoAgain"
+},
+&"0_8": {
+"link": &"3_8",
+"offset": Vector2(3750, 850),
+"size": Vector2(260.00018, 110),
+"start_id": "A1_0_STH"
+},
+&"0_9": {
+"link": &"3_9",
+"offset": Vector2(7500, 3400),
+"size": Vector2(259.99805, 110),
+"start_id": "A1_1_0 PreshowAnnoyed"
+},
+&"1_1": {
+"dialogue": "A sudden pause in your vision, the actor that you are in control trembles
+
+CUE / PHONE: CUE CARD: — Don't underestimate me mother.
+
+You heard a voicce coming out from your phone.
+
+THE MAIN ACTOR:
+\"Don't underestimate me mother..\"",
+"offset": Vector2(1900, 37000),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_23",
+"text": "Watch the show."
+}
+},
+"size": Vector2(480.00012, 600),
+"speaker": ""
+},
+&"1_10": {
+"dialogue": "STAGE MANAGER:  
+\"My pleasure.\"
+
+The man quickly get off the stage.",
+"offset": Vector2(10650, 1700),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_13",
+"text": "Begin the show"
+}
+},
+"size": Vector2(480.00024, 600),
+"speaker": ""
+},
+&"1_11": {
+"dialogue": "STAGE: Two characters enter the stage. The older woman confidently walk. 
+
+The back of a second character can be seen, slowly walk from behind the stage up.
+
+The two characters start in their position
+ACTOR 1:  
+\"My dear, you're almost eighteen.\"
+
+\"Your birthday is coming in 1 month. you'll stand before everyone and declare the path you roles.\"
+
+She smiles.
+
+\"Have you decided what you want to become?\"
+
+Then she stops.
+
+She looks directly at you.
+
+She is waiting for your line.
+
+[what would you say]",
+"offset": Vector2(2160, 10020),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_15",
+"text": "Mention her dream."
+},
+1: {
+"condition": Array[Dictionary]([]),
+"link": &"3_12",
+"text": "Say something off-topic."
+},
+2: {
+"condition": Array[Dictionary]([]),
+"link": &"3_14",
+"text": "Remain silent."
+}
+},
+"size": Vector2(479.99945, 600),
+"speaker": ""
+},
+&"1_12": {
+"dialogue": "You attempt an unrelated response.
+
+Mother's smile remains frozen for a moment.
+
+She quietly signal you as you are trying to make out her words.
+
+ACTOR 1::  
+\"...Hey. I know you love joking but this isn't funny. We are in front of the crowd\"
+
+She lowers her voice.
+
+\"Say it again.\"",
+"offset": Vector2(5160, 9360),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_16",
+"text": "Try another response."
+},
+1: {
+"condition": Array[Dictionary]([]),
+"link": &"3_16",
+"text": "Say nothing."
+}
+},
+"size": Vector2(480.0005, 600),
+"speaker": ""
+},
+&"1_13": {
+"dialogue": "SOUND: tranditional music heard in theater kicks in.
+
+The voice of the grumpy stagae manager can be heard again from the left side of the stage.
+
+
+STAGE MANAGER: \"Once upon a time, there is a lovely family in the town.
+There, they just bore a new little princess.
+
+She grows up with brilliant beauty, with a majestic voice, blonde hair, and a marvelous, gentle personality.
+A month before their daughters turn eighteen, her mother was having tea in the garden, looking at her.\"",
+"offset": Vector2(650, 10100),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_11",
+"text": "Next Scene."
+}
+},
+"size": Vector2(480, 600),
+"speaker": ""
+},
+&"1_14": {
+"dialogue": "The silence lasts too long.
+
+Mother glances toward the side of the stage.
+
+Then back at you.
+
+MOTHER:  
+\"Hey\"
+
+\"Your linesss. The scriptttttt!!!\"",
+"offset": Vector2(3980, 11240),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_16",
+"text": "Try to say something."
+}
+},
+"size": Vector2(480.00055, 600),
+"speaker": ""
+},
+&"1_15": {
+"dialogue": "You attempt a response.
+
+Mother's smile remains frozen for a moment.
+
+She quietly signal you as you are trying to make out her words.
+
+MOTHER:  
+\"...pss hey. That isn't suppose to be your line.\"
+
+She lowers her voice.
+
+\"Say it again.\"",
+"offset": Vector2(3500, 9260),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_16",
+"text": "Try another response."
+},
+1: {
+"condition": Array[Dictionary]([]),
+"link": &"3_16",
+"text": "Say nothing."
+}
+},
+"size": Vector2(480.00067, 600),
+"speaker": ""
+},
+&"1_16": {
+"dialogue": "You try again.
+
+Nothing you say feels right.
+
+The actor stares at you.
+
+Her expression changes.
+
+For just a moment, she stops acting.
+
+ACTOR 1, quietly:  
+\"... You actually forgot your script. Guess we have to turn to plan B.\"
+
+Her hands giving signals to the crew.
+
+Something moves beyond the edge of the stage.
+
+A card rises into view on your left.
+
+
+
+
+CUE / PHONE: CUE CARD: — I WANT TO BECOME A WRITER, JUST LIKE YOU.
+
+ACTOR 1:  
+\"Look on your side. See anything?\"",
+"offset": Vector2(6680, 10760),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_17",
+"text": "Read the cue card aloud."
+},
+1: {
+"condition": Array[Dictionary]([]),
+"link": &"3_18",
+"text": "Continue saying something else."
+}
+},
+"size": Vector2(479.99756, 600),
+"speaker": ""
+},
+&"1_17": {
+"dialogue": "YOU:  
+You notice a white board with hand written sentence that says:
+\"I want to become a writer, just like you.\"
+
+As you read your lines out while trying to perform, your acting mate continues.
+
+MOTHER:  
+\"A writer?\"
+
+\"And what sort of writer will you be?\"
+
+CUE / PHONE: CUE CARD: — I WANT TO CREATE STORIES PEOPLE CAN GATHER AROUND AND REMEMBER.",
+"offset": Vector2(10200, 10740),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_21",
+"text": "Read the next line."
+},
+1: {
+"condition": Array[Dictionary]([]),
+"link": &"3_20",
+"text": "Say something else."
+}
+},
+"size": Vector2(480.00024, 600),
+"speaker": ""
+},
+&"1_18": {
+"dialogue": "A sudden pause in your vision, the actor that you are in control trembles
+
+CUE / PHONE: CUE CARD: — I WANT TO BECOME A WRITER, JUST LIKE YOU.
+
+You heard a voicce coming out from your phone.
+
+THE MAIN ACTOR:
+\"I WANT TO BECOME A WRITER, JUST LIKE YOU.\"",
+"offset": Vector2(8000, 12020),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_17",
+"text": "Watch the show"
+},
+1: {
+"condition": Array[Dictionary]([]),
+"link": &"3_19",
+"text": "Say something else."
+}
+},
+"size": Vector2(480.00122, 600),
+"speaker": ""
+},
+&"1_19": {
+"dialogue": "A sudden pause in your vision, the actor that you are in control trembles
+
+CUE / PHONE: CUE CARD: — I WANT TO BECOME A WRITER, JUST LIKE YOU.
+
+You heard a voicce coming out from your phone.
+
+THE MAIN ACTOR:
+\"I WANT TO BECOME A WRITER, JUST LIKE YOU.\"",
+"offset": Vector2(9240, 12020),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_17",
+"text": "Watch the show"
+},
+1: {
+"condition": Array[Dictionary]([]),
+"link": &"3_16",
+"text": "Say nothing."
+}
+},
+"size": Vector2(479.99927, 600),
+"speaker": ""
+},
+&"1_2": {
+"dialogue": "You failed to follow the order.
+You have killed the MC.",
+"offset": Vector2(650, 37850),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": "END",
+"text": ""
+}
+},
+"size": Vector2(300, 288.00098),
+"speaker": ""
+},
+&"1_20": {
+"dialogue": "You say something unexpected again... as expected of you.
+
+STAGE: slight distorting effect, the main actor shivers.
+
+People are waiting for your response again.
+
+CUE / PHONE: CUE CARD: — I WANT TO CREATE STORIES PEOPLE CAN GATHER AROUND AND REMEMBER.",
+"offset": Vector2(11240, 13280),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_21",
+"text": "Read the next line."
+},
+1: {
+"condition": Array[Dictionary]([]),
+"link": &"3_22",
+"text": "Say something else."
+}
+},
+"size": Vector2(479.99902, 599.9961),
+"speaker": ""
+},
+&"1_21": {
+"dialogue": "YOU:  
+You read your lines out again
+\"I want to create stories people can gather around and remember.\"
+
+MOTHER:  
+\"A lovely ambition.\"
+
+\"That's lovely, dear, but I hope you won't get overwhelmed by the sheer pain in your fingers and getting calluses, writing so much with you.\"
+
+CUE / PHONE: CUE CARD: — Don't underestimate me mother.",
+"offset": Vector2(13200, 11400),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_23",
+"text": "Read the line."
+},
+1: {
+"condition": Array[Dictionary]([]),
+"link": &"3_20",
+"text": "Say something else again."
+}
+},
+"size": Vector2(480.00024, 600),
+"speaker": ""
+},
+&"1_22": {
+"dialogue": "A sudden pause in your vision, the actor that you are in control trembles
+
+CUE / PHONE: CUE CARD: — I WANT TO CREATE STORIES PEOPLE CAN GATHER AROUND AND REMEMBER.
+
+You heard a voicce coming out from your phone.
+
+THE MAIN ACTOR:
+\" I WANT TO CREATE STORIES PEOPLE CAN GATHER AROUND AND REMEMBER.\"",
+"offset": Vector2(12480, 13280),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_21",
+"text": "Watch the show."
+}
+},
+"size": Vector2(480.00098, 599.9961),
+"speaker": ""
+},
+&"1_23": {
+"dialogue": "YOU:  
+\"I'll be fine.\"
+
+\"By the time, I will make more happy people reading my books than caring about the little bumps, pain in my finger.\"
+
+Mother smiles.
+
+MOTHER:  
+
+\"Great. Now go on.
+
+We should have a lot of work to do before your birthday comes.
+
+Me and father are gonna organize a big party.
+
+We're gonna invite people all around the kingdom to visit, to attend your own birthday.\"
+
+Preparations begin throughout the kingdom.
+The princess's eighteenth birthday is approaching.
+In this world, reaching eighteen is not only a birthday.
+It is also the moment when a young person stands before the people around them and announces the social position, vocation, or path they intend to follow as an adult.
+
+STAGE:
+Lights fade.
+Curtains fall (what narrative transition could be here) is it that the player get pushed back to the main menu?)
+
+The bluish hue of  the curtain slightly takes on the tin of yellow, it push the player back to the main menu.",
+"offset": Vector2(15650, 11800),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_24",
+"text": "Continue the game"
+},
+1: {
+"condition": Array[Dictionary]([]),
+"link": &"3_55",
+"text": "Quit the game"
+}
+},
+"size": Vector2(479.99805, 600),
+"speaker": ""
+},
+&"1_24": {
+"dialogue": "Before you can start the game, on the second screen, you see a spark of light cast on a thin long lines. It runs through quickly before disappear. It happens almost immediate. 
+
+And then the Stage manager standing from the other side (on your computer), elegantly walk out, still with his despise look on you.
+
+
+
+**Listen. Find the cue. Speak.**
+
+NARRATOR
+\"One month passes.
+The day of the celebration finally arrives.
+People from around the kingdom gather for the princess's birthday and declaration.\"
+
+STAGE:
+The curtain once again unveil
+The stage changes from the family home into the preparation for the princess's eighteenth birthday.
+
+
+The hall is crowded.
+Musicians prepare.
+Servants and performers move around the stage.
+The princess is preparing to appear before everyone.
+
+Both of the actors, including the one you are controlling, walks out.
+
+Actor 1 approaches you from the side, gently nudge the MC elbow.
+
+MOTHER:  
+
+\"Look at that, child.
+Today is the day.
+I can not believe it.
+You're gonna be a true adult.\"
+
+
+The MC girl, ironically look confused, she keeps staring at the actor. But not for long becase the cue has again appear on the other side.
+
+
+CUE / PHONE: CUE CARD: — NEITHER DO I. IT GET A LITTLE NERVOUS.",
+"offset": Vector2(650, 22750),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_25",
+"text": "Read the cue."
+}
+},
+"size": Vector2(480, 600.001),
+"speaker": ""
+},
+&"1_25": {
+"dialogue": "ACTOR 1:
+\" What, I am sure you can do great things. You are the Millers.
+You are destined to be a great figyre since you were born.\"
+
+She looks toward the crowded entrance.
+
+\"But don't you think it's getting difficult to move through there.\"
+
+ACTOR 1:  
+\"How about we take a detour from the main gate. Which entrance should we use?\"
+
+As you tried to look on your phone, expect a line, something else happen. 
+The staff hands out a very sketchy unfinished writing, the ink droplet can be seen on the while board.
+
+The cue card does not contain a sentence this time.
+
+CUE / PHONE: CUE CARD: — LEFT / RIGHT
+
+The Actor and the adience is waiting for you",
+"offset": Vector2(1900, 22750),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_26",
+"text": "Left."
+},
+1: {
+"condition": Array[Dictionary]([]),
+"link": &"3_27",
+"text": "Right."
+}
+},
+"size": Vector2(480.00012, 600.001),
+"speaker": ""
+},
+&"1_26": {
+"dialogue": "YOU:  
+\"Why don't we take the one on the left.\"
+
+ACTOR 1:  
+\"The western stairs, then. Here we go\"
+
+\"We should avoid most of the guests that way.\"
+
+The other actor approaches the MC, as she guides her to the side entrance.",
+"offset": Vector2(3150, 19350),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_29",
+"text": "Continue."
+}
+},
+"size": Vector2(480.00067, 600),
+"speaker": ""
+},
+&"1_27": {
+"dialogue": "YOU:  
+\"How about the one on the right, mother?.\"
+
+MOTHER:  
+\"Through the eastern entrance, then.\"
+
+\"It'll be busier, but we'll manage.\"
+
+The other actor approaches the MC, as she guides her to the side entrance.",
+"offset": Vector2(3150, 24450),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_29",
+"text": "Continue."
+}
+},
+"size": Vector2(480.00067, 599.99805),
+"speaker": ""
+},
+&"1_28": {
+"dialogue": "Your answer once again confuse both the Actor, the stage manager, you can hear both of them petrified.
+
+ACTOR:
+\"Very bold, aren't you?\"
+
+\"[psss hey, you are giving me a hard time here, just follow the script, I mean the cue if you don't remember it\".
+
+
+\"Fine. I'll give them the signal.\"
+
+Music begins somewhere beyond the stage.",
+"offset": Vector2(9400, 23600),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_35",
+"text": "Continue preparing."
+}
+},
+"size": Vector2(479.99927, 600.0034),
+"speaker": ""
+},
+&"1_29": {
+"dialogue": "Open the door as they marching in.
+
+Mother adjusts part of the MC's messy costume before she turns again to the audience.
+
+ACTOR 1:  
+\"Oo deer, I realise. It seems people have already filled the hall right.\"
+
+The cue has quickly pops on on the other side, drawing your attention
+
+CUE / PHONE: CUE CARD: — COMMENT ON THE HALL",
+"offset": Vector2(4400, 20200),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_30",
+"text": "Say something about the hall"
+},
+1: {
+"condition": Array[Dictionary]([]),
+"link": &"3_31",
+"text": "Say something about the hall but out of context, weird comment"
+},
+2: {
+"condition": Array[Dictionary]([]),
+"link": &"3_32",
+"text": "Say something else unrelated."
+}
+},
+"size": Vector2(479.99994, 600.0039),
+"speaker": ""
+},
+&"1_3": {
+"dialogue": "STAGE MANAGER: \"If your keep being unseries, I am afraid I have no other choice than seeing you off?\"
+
+
+The man flicks his finger, and you are automatically being sent back to the menu page",
+"offset": Vector2(6900, 0),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_55",
+"text": "Back to Menu"
+}
+},
+"size": Vector2(479.99902, 600),
+"speaker": ""
+},
+&"1_30": {
+"dialogue": "The actor looks at you, she lets out a small smile ,
+
+ACTOR:
+\"Well, that is... a very mature comment I would say.\"
+
+
+
+\" The musicians must have been ready. .Shall I tell them to begin my girl?\"
+
+CUE / PHONE: CUE CARD: — AGREE
+
+The card tells you what your response should mean, not what you must say.",
+"offset": Vector2(8020, 18540),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_34",
+"text": "Yes."
+},
+1: {
+"condition": Array[Dictionary]([]),
+"link": &"3_34",
+"text": "Go ahead."
+},
+2: {
+"condition": Array[Dictionary]([]),
+"link": &"3_34",
+"text": "Let them begin."
+},
+3: {
+"condition": Array[Dictionary]([]),
+"link": &"3_34",
+"text": "Sure, why not?"
+}
+},
+"size": Vector2(480.00024, 600),
+"speaker": ""
+},
+&"1_31": {
+"dialogue": "The actor looks at you with a very confused look. It took her a while before she can speak again.
+
+
+
+ACTOR:
+\"Er.... Yeah, sure darl?
+
+But please keep your manners.\"
+
+She then turns towards the large hall.
+
+\" The musicians must have been ready. .Shall I tell them to begin my girl?\"
+
+CUE / PHONE: CUE CARD: — AGREE
+
+The card tells you what your response should mean, not what you must say.",
+"offset": Vector2(8150, 21900),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_34",
+"text": "Yes."
+},
+1: {
+"condition": Array[Dictionary]([]),
+"link": &"3_28",
+"text": "Agree in a way that breaks the scene."
+},
+2: {
+"condition": Array[Dictionary]([]),
+"link": &"3_34",
+"text": "Say something unrelated."
+},
+3: {
+"condition": Array[Dictionary]([]),
+"link": &"3_34",
+"text": "Sure, why not?"
+}
+},
+"size": Vector2(480.00122, 599.99805),
+"speaker": ""
+},
+&"1_32": {
+"dialogue": "The actor seems annoying, as she twitches her body,
+
+From the other side, you hear a slight small \"ehem\" sound of a old grumpy man (the stage manager), nuging you to fix your manner.
+
+The stage are waitng for you to make your move.",
+"offset": Vector2(5650, 25300),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_30",
+"text": "Say something about the hall"
+},
+1: {
+"condition": Array[Dictionary]([]),
+"link": &"3_31",
+"text": "Say something about the hall but out of context, weird comment"
+},
+2: {
+"condition": Array[Dictionary]([]),
+"link": &"3_33",
+"text": "Say something else unrelated."
+}
+},
+"size": Vector2(479.99927, 600.0005),
+"speaker": ""
+},
+&"1_33": {
+"dialogue": "The actor seems annoying, as she twitches her body,
+
+From the other side, you hear a slight small \"ehem\" sound of a old grumpy man (the stage manager), nuging you to fix your manner.
+
+This time, the atmosphere has turn weirder. Once again, you can see the images of the long ligh stripes again on the top of the MC's head. 
+
+The MC trembles",
+"offset": Vector2(6900, 27850),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_30",
+"text": "Say something about the hall"
+},
+1: {
+"condition": Array[Dictionary]([]),
+"link": &"3_31",
+"text": "Say something about the hall but out of context, weird comment"
+},
+2: {
+"condition": Array[Dictionary]([]),
+"link": &"3_2",
+"text": "Say something else unrelated."
+}
+},
+"size": Vector2(479.99902, 599.9995),
+"speaker": ""
+},
+&"1_34": {
+"dialogue": "Mother accepts the response without hesitation.
+
+ACTOR 1:  
+\"I'll give them the signal.\"
+
+Music begins somewhere beyond the stage.",
+"offset": Vector2(10650, 18500),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_35",
+"text": "Continue preparing."
+}
+},
+"size": Vector2(480.00024, 600.00195),
+"speaker": ""
+},
+&"1_35": {
+"dialogue": "Mother looks around.
+
+ACTOR 1:  
+\"Say...
+The declaration scroll is still backstage.\"
+
+\"We need someone to fetch it. Can you help me call the Chief  to grab it?\"
+
+CUE / PHONE: CUE CARD: — CALL CHIEF
+
+The cue does not tell you who.",
+"offset": Vector2(11900, 21050),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_36",
+"text": "James! Could you bring the scroll?"
+},
+1: {
+"condition": Array[Dictionary]([]),
+"link": &"3_36",
+"text": "Call out a name of your own."
+},
+2: {
+"condition": Array[Dictionary]([]),
+"link": &"3_36",
+"text": "CALL CHIEF"
+},
+3: {
+"condition": Array[Dictionary]([]),
+"link": &"3_37",
+"text": "Say something else."
+}
+},
+"size": Vector2(479.99902, 600),
+"speaker": ""
+},
+&"1_36": {
+"dialogue": "Someone backstage acknowledges you.
+
+They start to run towards the MC place.
+
+The performance continues.",
+"offset": Vector2(14400, 21050),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_38",
+"text": "Continue."
+}
+},
+"size": Vector2(480, 600),
+"speaker": ""
+},
+&"1_37": {
+"dialogue": "The Stage manager from the side of the stage is extremely befused by your tendency to go off script.
+
+You again see the light string hanging from atop the MC head.
+
+MC:
+
+\"Pero, come\".",
+"offset": Vector2(13150, 26150),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_38",
+"text": "Continue."
+}
+},
+"size": Vector2(480.00122, 600.0005),
+"speaker": ""
+},
+&"1_38": {
+"dialogue": "Mother straightens your dress, while waiting for the man to rush to their place. 
+The light of the stage focus on them as everything else start to fall into the dark. 
+
+ACTOR 1:  
+\"Right. Now. Before you make the declaration
+
+I just want to make some confirmation.\"
+
+She swiftly leave her breadth out, take a slow moment before she continue
+
+\"You'll tell everyone that you're entering the writing profession, won't you?\"
+
+She looks at you attentively.
+
+All the eyes of the audience is casting upon YOU. (including the MC)/
+
+You wait for the cue.
+
+Nothing.
+
+Mother looks at you expectantly, eyes landing on you waiting for your next move.
+
+Then, late, the card changes.
+
+CUE / PHONE: SCRIPT UPDATE — AGREE",
+"offset": Vector2(15650, 21050),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_41",
+"text": "No."
+},
+1: {
+"condition": Array[Dictionary]([]),
+"link": &"3_39",
+"text": "Yes."
+},
+2: {
+"condition": Array[Dictionary]([]),
+"link": &"3_42",
+"text": "I'm not sure anymore."
+},
+3: {
+"condition": Array[Dictionary]([]),
+"link": &"3_40",
+"text": "I've changed my mind."
+}
+},
+"size": Vector2(479.99805, 600),
+"speaker": ""
+},
+&"1_39": {
+"dialogue": "Mother pauses.
+
+For the first time, the response does not seem to fit what she expected.
+
+ACTOR 1:  
+\"No?\"
+
+She studies you.
+
+Then her stage smile returns.
+
+\"...Very well.\"
+
+\"There's still time before the declaration.\"
+
+Music swells from the hall.",
+"offset": Vector2(16900, 27000),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_43",
+"text": "Enter the ceremony."
+}
+},
+"size": Vector2(480.00195, 600.00146),
+"speaker": ""
+},
+&"1_4": {
+"dialogue": "\"Bang\"
+The sound of stage light draws out a circle zone on the weirdly glittering blueish curtain
+
+The sound of acclaimed gentle man  claps reached across the theater hall. 
+He walks out of the stage, eyes glancing down at the audience, his face half lit.
+
+He stand in the light zone, his height too tall so, with the lower part of his face bathed in light.
+He harrumphed. 
+Stage Manager speaks before the performance begins.
+
+STAGE MANAGER: \"SILENCESSSs, everyone.\"
+In a gentle yet coarse voice, as if he is trying to hide something.
+
+
+STAGE MANAGER: \"We are now hopping upon a wonderful fairy-tale story that I'm sure you've never heard before.\"
+Without further ado...
+Let the show begin.\"
+
+The man still keep his gaze downward, waiting for your response",
+"offset": Vector2(1900, 2550),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_10",
+"text": "Yes."
+},
+1: {
+"condition": Array[Dictionary]([]),
+"link": &"3_6",
+"text": "No."
+},
+2: {
+"condition": Array[Dictionary]([]),
+"link": &"3_8",
+"text": "Something else unrelated"
+}
+},
+"size": Vector2(480.00012, 600),
+"speaker": ""
+},
+&"1_40": {
+"dialogue": "Mother pauses.
+
+For the first time, the response does not seem to fit what she expected.
+
+ACTOR 1:  
+\"What?\"
+
+\"[Hey, why you go off the script again this time]\"
+
+She stands there, dumbfounded as you keep messing up.
+
+\"...Very well.\"
+
+\"There's still time before the declaration.\"
+
+Music swells from the hall.",
+"offset": Vector2(18150, 21900),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_43",
+"text": "Enter the ceremony."
+}
+},
+"size": Vector2(479.9983, 599.99805),
+"speaker": ""
+},
+&"1_41": {
+"dialogue": "Mother pauses.
+
+For the first time, the response does not seem to fit what she expected.
+
+ACTOR 1:  
+\"No?\"
+
+
+\"[Hey, why you go off the script again this time]\"
+
+She stands there, dumbfounded as you keep messing up.
+
+
+\" But... ehm...Very well.\"
+
+\"There's still time before the declaration.\"
+
+Music swells from the hall.",
+"offset": Vector2(18150, 17650),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_43",
+"text": "Enter the ceremony."
+}
+},
+"size": Vector2(479.9983, 599.9961),
+"speaker": ""
+},
+&"1_42": {
+"dialogue": "Mother pauses.
+
+For the first time, the response does not seem to fit what she expected.
+
+ACTOR 1:  
+\"No?\"
+
+\"[Hey, why you go off the script again this time]\"
+
+She stands there, dumbfounded as you keep messing up.
+
+\"...Fine then..\"
+
+\"You still have sometime before the Chief arrives\"
+
+Music swells from the hall.",
+"offset": Vector2(18150, 24450),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_43",
+"text": "Enter the ceremony."
+}
+},
+"size": Vector2(479.9983, 599.99805),
+"speaker": ""
+},
+&"1_43": {
+"dialogue": "After the 2 actor ends there lines, there is something causing chaos among the audience. 
+
+An arouse of noise. It heats up the stage below.
+
+The 2 actors observe the confusion below. The light tosed on them earlier leaves intact, as if being trapped inside the circle.
+
+Just as everything can go more unexpected, a mysterious man marchs onto the stage confidently, wearing formal atire that of a village chief.
+
+Yet, the actor's face gets stiff up, she back down a few steps.",
+"offset": Vector2(650, 32850),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_44",
+"text": "Continues."
+}
+},
+"size": Vector2(480, 599.9966),
+"speaker": ""
+},
+&"1_44": {
+"dialogue": "He does not look at her.
+
+He looks directly at you.
+
+ACTOR 2:  
+\"A princess.\"
+
+\"A writer.\"
+
+\"Her daughter.\"
+
+A pause.
+
+\"Is that who you are?\"
+
+Your phone vibrates.
+
+You notice the stage manager himself now holds the cue board himself, writing the lines in red ink, capitalised the letter in an exaggerated tone.
+
+
+CUE / PHONE: STAGE MANAGER / IFB: — DO NOT ENGAGE. — CONTINUE THE PLAY.
+
+Before you can react, Actor 2 continues.",
+"offset": Vector2(1900, 32850),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_45",
+"text": "Listen."
+}
+},
+"size": Vector2(480.00012, 599.9966),
+"speaker": ""
+},
+&"1_45": {
+"dialogue": "ACTOR 2:  
+\"You say you're going to become a writer.\"
+
+\"Did you choose that yourself?\"",
+"offset": Vector2(3150, 32000),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_48",
+"text": "Yes."
+},
+1: {
+"condition": Array[Dictionary]([]),
+"link": &"3_46",
+"text": "No."
+},
+2: {
+"condition": Array[Dictionary]([]),
+"link": &"3_47",
+"text": "I don't know."
+},
+3: {
+"condition": Array[Dictionary]([]),
+"link": &"3_47",
+"text": "Say something else."
+}
+},
+"size": Vector2(480.00067, 600.0005),
+"speaker": ""
+},
+&"1_46": {
+"dialogue": "YOU:  
+\"No.\"
+
+Actor 2 almost smiles.
+
+ACTOR 2:  
+\"Then why are you about to declare it?\"",
+"offset": Vector2(4400, 32850),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_49",
+"text": "Continue."
+}
+},
+"size": Vector2(479.99994, 599.9966),
+"speaker": ""
+},
+&"1_47": {
+"dialogue": "Your response does not quite answer him.
+
+Actor 2 does not look annoyed.
+
+ACTOR 2:  
+\"You don't have to answer quickly.\"
+
+\"Maybe that's the first honest thing you've done tonight.\"",
+"offset": Vector2(4400, 34550),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_49",
+"text": "Continue."
+}
+},
+"size": Vector2(479.99994, 599.9961),
+"speaker": ""
+},
+&"1_48": {
+"dialogue": "YOU:  
+\"Yes.\"
+
+Actor 2 tilts his head.
+
+ACTOR 2:  
+\"Then say it without reading it.\"",
+"offset": Vector2(4400, 31150),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_49",
+"text": "Continue."
+}
+},
+"size": Vector2(479.99994, 600),
+"speaker": ""
+},
+&"1_49": {
+"dialogue": "The Stage manager makes a morse code light signal, pointing towards Actor 1. 
+
+It takes her 3 seconds, before stepping between you and the guy. pushing him to the side.
+
+The music in the hall speeds up.
+
+MOTHER:  
+\"Enough.\"
+
+\"Her decision has been made.\"
+
+\"We are here to celebrate my daughter's eighteenth birthday and declaration.\"
+
+Actor 2 looks past her.
+
+ACTOR 2:  
+\"Then let her tell us herself.\"
+
+Your phone vibrates again.
+
+CUE / PHONE: STAGE MANAGER / IFB: — KEEP THE PLAY MOVING.",
+"offset": Vector2(5650, 32000),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_50",
+"text": "Continue."
+}
+},
+"size": Vector2(479.99927, 600.0005),
+"speaker": ""
+},
+&"1_5": {
+"dialogue": "STAGE MANAGER:  
+\"Whatever. Staff, Roll the curtains\" with a loud sigh.",
+"offset": Vector2(9400, 4250),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_13",
+"text": "Begin the show"
+}
+},
+"size": Vector2(479.99927, 600),
+"speaker": ""
+},
+&"1_50": {
+"dialogue": "Actor 2 steps closer, marching towards the MC, ignoring actor 1 who is trying to keep the performance alive.
+
+ACTOR 2:  
+\"Why writing?\" he raise the stake, abruptly cutting the mother's line
+
+\"Because you love it?\"
+
+\"Or because someone handed you the answer?\"
+
+Actor turns around and  reaches toward you.
+
+ACTOR 1:  
+\"Darling.\"
+
+\"Ignore him.\"
+
+\"The guests are waiting.\"
+
+For the first time, there is no single obvious instruction.",
+"offset": Vector2(6900, 32000),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_52",
+"text": "Follow Mother and continue the ceremony."
+},
+1: {
+"condition": Array[Dictionary]([]),
+"link": &"3_51",
+"text": "Respond to Actor 2."
+},
+2: {
+"condition": Array[Dictionary]([]),
+"link": &"3_53",
+"text": "Say something neither of them expected."
+}
+},
+"size": Vector2(479.99902, 600.0005),
+"speaker": ""
+},
+&"1_51": {
+"dialogue": "You turn toward Actor 2 instead.
+
+Mother freezes.
+
+For a moment, nobody backstage seems to know what to do.
+
+Actor 2 lowers his voice.
+
+ACTOR 2:  
+\"Good.\"
+
+\" You heard that Karl. You can't help hiding it forever.\" Yelled, But he does not look at the audience, at MC, at actor 1. Rather, he turns himself at a pointblank space on the screen.",
+"offset": Vector2(8150, 32000),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_54",
+"text": "Continue."
+}
+},
+"size": Vector2(480.00122, 600.0005),
+"speaker": ""
+},
+&"1_52": {
+"dialogue": "You turn back toward Mother.
+
+Actor 2 watches you retreat into the performance.
+
+ACTOR 2:  
+\"...All right.\"
+
+\"But the script won't answer everything.
+
+The one who keep pulling the string...\"",
+"offset": Vector2(8150, 30300),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_54",
+"text": "Continue."
+}
+},
+"size": Vector2(480.00122, 600),
+"speaker": ""
+},
+&"1_53": {
+"dialogue": "You say something that neither actor expected.
+
+Actor 1 looks backstage,
+
+Actor 2 studies you.
+
+Then, rather than stopping the performance, both of them continue improvising around you.
+
+The play survives.
+
+Barely.",
+"offset": Vector2(8150, 33700),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_54",
+"text": "Continue."
+}
+},
+"size": Vector2(480.00122, 599.9995),
+"speaker": ""
+},
+&"1_54": {
+"dialogue": "Actor 2 begins to move away.
+
+Before disappearing into the confusion of the stage, he turns back.
+
+ACTOR 2:  
+\"Then ask yourself something.\"
+
+\"Do you remember yesterday?\"
+
+The stage lights flicker.
+
+Mother calls your character's name.
+
+Backstage desperately tries to restore the performance.
+
+The curtain begins to move.
+
+---
+
+**END OF ACTS 1–3 PROTOTYPE**",
+"offset": Vector2(9400, 32000),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_55",
+"text": "Restart prototype"
+}
+},
+"size": Vector2(479.99927, 600.0005),
+"speaker": ""
+},
+&"1_55": {
+"dialogue": "STAGE: In a grand theatre inspired by the 1930s.
+
+The audience hall is filled with noise from the audience spreading all acrossed the packed the theater",
+"offset": Vector2(480, 2580),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_4",
+"text": "Start"
+}
+},
+"size": Vector2(480, 600),
+"speaker": ""
+},
+&"1_6": {
+"dialogue": "He take a moment glancing, before make a grumpy voice at you...
+STAGE MANAGER:
+\"...Excusez moi What the mother?\"
+
+He quickly fix his posture before calmly asking again
+
+STAGE MANAGER: \"Fine. We can wait.\"
+
+A pause.
+
+STAGE MANAGER: \"But the show is waiting for you. Ready anytime....
+NOW?....\"",
+"offset": Vector2(3150, 5950),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_9",
+"text": "Yes."
+},
+1: {
+"condition": Array[Dictionary]([]),
+"link": &"3_7",
+"text": "Not yet."
+},
+2: {
+"condition": Array[Dictionary]([]),
+"link": &"3_8",
+"text": "Say Something else unrelated"
+}
+},
+"size": Vector2(480.00067, 600),
+"speaker": ""
+},
+&"1_7": {
+"dialogue": "The manager waits awkwardly.
+
+STAGE: The man keep making a disappointed face
+SOUND: the ambience is now mixed with off beat melodies.
+STAGE MANAGER:  
+\"I.... We really do need to begin the show Now. Drop the act now.\"",
+"offset": Vector2(5650, 5100),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_9",
+"text": "Yes"
+},
+1: {
+"condition": Array[Dictionary]([]),
+"link": &"3_5",
+"text": "Continue say something else"
+}
+},
+"size": Vector2(479.99927, 600),
+"speaker": ""
+},
+&"1_8": {
+"dialogue": "STAGE: The man lookes at you with an annoyed look.
+He make a baffled noise.
+
+
+SOUND: The ambience music stops for 3 seconds, before start playing again
+
+STAGE MANAGER: \"Let's be serious here. This is not a joke, we should get going in any time now.
+I'm asking you again. 
+Shall we kicks off the show?\"",
+"offset": Vector2(4400, 850),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_7",
+"text": "No."
+},
+1: {
+"condition": Array[Dictionary]([]),
+"link": &"3_10",
+"text": "Yes."
+},
+2: {
+"condition": Array[Dictionary]([]),
+"link": &"3_3",
+"text": "Continue saying something else."
+}
+},
+"size": Vector2(479.99994, 600),
+"speaker": ""
+},
+&"1_9": {
+"dialogue": "STAGE MANAGER:  
+\"Good. Please don't do that again and be serious\" with a loud sigh.
+
+The man quickly get off the stage, His eys still gazed downward to you.",
+"offset": Vector2(8150, 3400),
+"options": {
+0: {
+"condition": Array[Dictionary]([]),
+"link": &"3_13",
+"text": "Begin the show"
+}
+},
+"size": Vector2(480.00122, 600),
+"speaker": ""
+},
+&"3_1": {
+"link": &"1_1",
+"offset": Vector2(1550, 37000),
+"signalValue": "frame:{\"id\": \"\\\\ A1_4_Offscript\", \"cue\": \"CUE CARD: — Don't underestimate me mother.\", \"routes\": [\"watch\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 1\"}"
+},
+&"3_10": {
+"link": &"1_10",
+"offset": Vector2(10300, 1700),
+"signalValue": "frame:{\"id\": \"A1_1_0 PreshowHappy\", \"cue\": \"\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 0 · Pre-show\"}"
+},
+&"3_11": {
+"link": &"1_11",
+"offset": Vector2(1800, 10020),
+"signalValue": "frame:{\"id\": \"A1_1_Mother'sQuestion\", \"cue\": \"\", \"routes\": [\"ambition\", \"other\", \"silence\"], \"effects\": [{\"increment\": 1, \"reason\": \"Answered without the scripted line.\", \"set\": {\"offScriptLastReason\": \"Answered without the scripted line.\"}}, {\"increment\": 1, \"reason\": \"Answered off-topic.\", \"set\": {\"offScriptLastReason\": \"Answered off-topic.\"}}, {\"increment\": 1, \"reason\": \"Refused to answer the scripted question.\", \"set\": {\"offScriptLastReason\": \"Refused to answer the scripted question.\"}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 1\"}"
+},
+&"3_12": {
+"link": &"1_12",
+"offset": Vector2(4820, 9360),
+"signalValue": "frame:{\"id\": \"A1_1_Offtopic\", \"cue\": \"\", \"routes\": [\"other\", \"silence\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 1, \"reason\": \"Withheld the line again.\", \"set\": {\"offScriptLastReason\": \"Withheld the line again.\"}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 1\"}"
+},
+&"3_13": {
+"link": &"1_13",
+"offset": Vector2(300, 10100),
+"signalValue": "frame:{\"id\": \"A1_1_Once upon a time\", \"cue\": \"\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 1\"}"
+},
+&"3_14": {
+"link": &"1_14",
+"offset": Vector2(3620, 11240),
+"signalValue": "frame:{\"id\": \"A1_1_Silence\", \"cue\": \"\", \"routes\": [\"other\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 1\"}"
+},
+&"3_15": {
+"link": &"1_15",
+"offset": Vector2(3160, 9260),
+"signalValue": "frame:{\"id\": \"A1_1_WrongLine\", \"cue\": \"\", \"routes\": [\"other\", \"silence\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 1, \"reason\": \"Withheld the line again.\", \"set\": {\"offScriptLastReason\": \"Withheld the line again.\"}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 1\"}"
+},
+&"3_16": {
+"link": &"1_16",
+"offset": Vector2(6320, 10760),
+"signalValue": "frame:{\"id\": \"A1_2_SecondFailure\", \"cue\": \"CUE CARD: — I WANT TO BECOME A WRITER, JUST LIKE YOU.\", \"routes\": [\"cue\", \"other\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 1, \"reason\": \"Ignored the first exact cue.\", \"set\": {\"offScriptLastReason\": \"Ignored the first exact cue.\"}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 1\"}"
+},
+&"3_17": {
+"link": &"1_17",
+"offset": Vector2(9860, 10740),
+"signalValue": "frame:{\"id\": \"A1_3_FirstCue\", \"cue\": \"CUE CARD: — I WANT TO CREATE STORIES PEOPLE CAN GATHER AROUND AND REMEMBER.\", \"routes\": [\"cue\", \"other\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 1\"}"
+},
+&"3_18": {
+"link": &"1_18",
+"offset": Vector2(7640, 12020),
+"signalValue": "frame:{\"id\": \"A1_3_Offscript\", \"cue\": \"CUE CARD: — I WANT TO BECOME A WRITER, JUST LIKE YOU.\", \"routes\": [\"watch\", \"other\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 1, \"reason\": \"Ignored the repeated first cue.\", \"set\": {\"offScriptLastReason\": \"Ignored the repeated first cue.\"}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 1\"}"
+},
+&"3_19": {
+"link": &"1_19",
+"offset": Vector2(8900, 12020),
+"signalValue": "frame:{\"id\": \"A1_3_ThirdFailure\", \"cue\": \"CUE CARD: — I WANT TO BECOME A WRITER, JUST LIKE YOU.\", \"routes\": [\"watch\", \"silence\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 1, \"reason\": \"Withheld the line again.\", \"set\": {\"offScriptLastReason\": \"Withheld the line again.\"}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 1\"}"
+},
+&"3_2": {
+"link": &"1_2",
+"offset": Vector2(300, 37850),
+"signalValue": "frame:{\"id\": \"A0_Endgame\", \"cue\": \"\", \"routes\": [], \"effects\": [], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Endgame\"}"
+},
+&"3_20": {
+"link": &"1_20",
+"offset": Vector2(10880, 13280),
+"signalValue": "frame:{\"id\": \"A1_4_Offscript\", \"cue\": \"CUE CARD: — I WANT TO CREATE STORIES PEOPLE CAN GATHER AROUND AND REMEMBER.\", \"routes\": [\"cue\", \"other\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 1, \"reason\": \"Ignored the second cue.\", \"set\": {\"offScriptLastReason\": \"Ignored the second cue.\"}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 1\"}"
+},
+&"3_21": {
+"link": &"1_21",
+"offset": Vector2(12840, 11400),
+"signalValue": "frame:{\"id\": \"A1_4_SecondCue\", \"cue\": \"CUE CARD: — Don't underestimate me mother.\", \"routes\": [\"cue\", \"other\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 1, \"reason\": \"Rejected the final Act 1 cue.\", \"set\": {\"offScriptLastReason\": \"Rejected the final Act 1 cue.\"}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 1\"}"
+},
+&"3_22": {
+"link": &"1_22",
+"offset": Vector2(12140, 13280),
+"signalValue": "frame:{\"id\": \"A1_4_SecondOffscript\", \"cue\": \"CUE CARD: — I WANT TO CREATE STORIES PEOPLE CAN GATHER AROUND AND REMEMBER.\", \"routes\": [\"watch\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 1\"}"
+},
+&"3_23": {
+"link": &"1_23",
+"offset": Vector2(15300, 11800),
+"signalValue": "frame:{\"id\": \"A1_5_EndAct1\", \"cue\": \"\", \"routes\": [\"next\", \"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 1\"}"
+},
+&"3_24": {
+"link": &"1_24",
+"offset": Vector2(300, 22750),
+"signalValue": "frame:{\"id\": \"A2_0_DeclarationDay\", \"cue\": \"CUE CARD: — NEITHER DO I. IT GET A LITTLE NERVOUS.\", \"routes\": [\"choice_0\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 2\"}"
+},
+&"3_25": {
+"link": &"1_25",
+"offset": Vector2(1550, 22750),
+"signalValue": "frame:{\"id\": \"A2_1_Entrance\", \"cue\": \"CUE CARD: — LEFT / RIGHT\", \"routes\": [\"choice_0\", \"choice_1\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {\"entrance\": \"left\"}}, {\"increment\": 0, \"reason\": \"\", \"set\": {\"entrance\": \"right\"}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 2\"}"
+},
+&"3_26": {
+"link": &"1_26",
+"offset": Vector2(2800, 19350),
+"signalValue": "frame:{\"id\": \"A2_1_Left\", \"cue\": \"\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 2\"}"
+},
+&"3_27": {
+"link": &"1_27",
+"offset": Vector2(2800, 24450),
+"signalValue": "frame:{\"id\": \"A2_1_Right\", \"cue\": \"\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 2\"}"
+},
+&"3_28": {
+"link": &"1_28",
+"offset": Vector2(9050, 23600),
+"signalValue": "frame:{\"id\": \"A2_2_AgreeAwkward\", \"cue\": \"\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 2\"}"
+},
+&"3_29": {
+"link": &"1_29",
+"offset": Vector2(4050, 20200),
+"signalValue": "frame:{\"id\": \"A2_2_Hall\", \"cue\": \"CUE CARD: — COMMENT ON THE HALL\", \"routes\": [\"choice_0\", \"choice_1\", \"choice_2\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 1, \"reason\": \"Ignored the hall prompt.\", \"set\": {\"offScriptLastReason\": \"Ignored the hall prompt.\"}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 2\"}"
+},
+&"3_3": {
+"link": &"1_3",
+"offset": Vector2(6550, 0),
+"signalValue": "frame:{\"id\": \"A1_0_BackTo Menu\", \"cue\": \"\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 0 · Pre-show\"}"
+},
+&"3_30": {
+"link": &"1_30",
+"offset": Vector2(7660, 18540),
+"signalValue": "frame:{\"id\": \"A2_2_HallCommentAppropriate\", \"cue\": \"CUE CARD: — AGREE\", \"routes\": [\"choice_0\", \"choice_1\", \"choice_2\", \"choice_3\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 2\"}"
+},
+&"3_31": {
+"link": &"1_31",
+"offset": Vector2(7800, 21900),
+"signalValue": "frame:{\"id\": \"A2_2_HallCommentAwkward\", \"cue\": \"CUE CARD: — AGREE\", \"routes\": [\"choice_0\", \"choice_1\", \"choice_2\", \"choice_3\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 1, \"reason\": \"Agreed in a way that broke the scene.\", \"set\": {\"offScriptLastReason\": \"Agreed in a way that broke the scene.\"}}, {\"increment\": 1, \"reason\": \"Ignored the request to begin the music.\", \"set\": {\"offScriptLastReason\": \"Ignored the request to begin the music.\"}}, {\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 2\"}"
+},
+&"3_32": {
+"link": &"1_32",
+"offset": Vector2(5300, 25300),
+"signalValue": "frame:{\"id\": \"A2_2_Misleading\", \"cue\": \"\", \"routes\": [\"choice_0\", \"choice_1\", \"choice_2\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 1, \"reason\": \"Ignored the repeated hall prompt.\", \"set\": {\"offScriptLastReason\": \"Ignored the repeated hall prompt.\"}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 2\"}"
+},
+&"3_33": {
+"link": &"1_33",
+"offset": Vector2(6550, 27850),
+"signalValue": "frame:{\"id\": \"A2_2_SecondMisleading\", \"cue\": \"\", \"routes\": [\"choice_0\", \"choice_1\", \"choice_2\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 1, \"reason\": \"Ignored the hall prompt for a third time.\", \"set\": {\"offScriptLastReason\": \"Ignored the hall prompt for a third time.\"}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 2\"}"
+},
+&"3_34": {
+"link": &"1_34",
+"offset": Vector2(10300, 18500),
+"signalValue": "frame:{\"id\": \"A2_3_Agree\", \"cue\": \"\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 2\"}"
+},
+&"3_35": {
+"link": &"1_35",
+"offset": Vector2(11550, 21050),
+"signalValue": "frame:{\"id\": \"A2_4_CallSomeone\", \"cue\": \"CUE CARD: — CALL CHIEF\", \"routes\": [\"choice_0\", \"choice_1\", \"choice_2\", \"choice_3\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 1, \"reason\": \"Ignored the instruction to call the Chief.\", \"set\": {\"offScriptLastReason\": \"Ignored the instruction to call the Chief.\"}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 2\"}"
+},
+&"3_36": {
+"link": &"1_36",
+"offset": Vector2(14050, 21050),
+"signalValue": "frame:{\"id\": \"A2_5_Called\", \"cue\": \"\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 2\"}"
+},
+&"3_37": {
+"link": &"1_37",
+"offset": Vector2(12800, 26150),
+"signalValue": "frame:{\"id\": \"A2_5_InappropriateCall\", \"cue\": \"\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 2\"}"
+},
+&"3_38": {
+"link": &"1_38",
+"offset": Vector2(15300, 21050),
+"signalValue": "frame:{\"id\": \"A2_6_ScriptChange\", \"cue\": \"SCRIPT UPDATE — AGREE\", \"routes\": [\"choice_0\", \"choice_1\", \"choice_2\", \"choice_3\"], \"effects\": [{\"increment\": 1, \"reason\": \"Contradicted the updated AGREE cue.\", \"set\": {\"declarationAnswer\": \"no\", \"offScriptLastReason\": \"Contradicted the updated AGREE cue.\"}}, {\"increment\": 0, \"reason\": \"\", \"set\": {\"declarationAnswer\": \"yes\"}}, {\"increment\": 1, \"reason\": \"Refused to confirm the updated cue.\", \"set\": {\"declarationAnswer\": \"unclear\", \"offScriptLastReason\": \"Refused to confirm the updated cue.\"}}, {\"increment\": 1, \"reason\": \"Rejected the Stage Manager's rewritten choice.\", \"set\": {\"declarationAnswer\": \"changed\", \"offScriptLastReason\": \"Rejected the Stage Manager's rewritten choice.\"}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 2\"}"
+},
+&"3_39": {
+"link": &"1_39",
+"offset": Vector2(16550, 27000),
+"signalValue": "frame:{\"id\": \"A2_7_Agree\", \"cue\": \"\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 2\"}"
+},
+&"3_4": {
+"link": &"1_4",
+"offset": Vector2(1550, 2550),
+"signalValue": "frame:{\"id\": \"A1_0_Begin\", \"cue\": \"\", \"routes\": [\"yes\", \"no\", \"other\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 1, \"reason\": \"Ignored the Stage Manager's opening prompt.\", \"set\": {\"offScriptLastReason\": \"Ignored the Stage Manager's opening prompt.\"}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 0 · Pre-show\"}"
+},
+&"3_40": {
+"link": &"1_40",
+"offset": Vector2(17800, 21900),
+"signalValue": "frame:{\"id\": \"A2_7_ChangeYourMind\", \"cue\": \"\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 2\"}"
+},
+&"3_41": {
+"link": &"1_41",
+"offset": Vector2(17800, 17650),
+"signalValue": "frame:{\"id\": \"A2_7_Decline\", \"cue\": \"\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 2\"}"
+},
+&"3_42": {
+"link": &"1_42",
+"offset": Vector2(17800, 24450),
+"signalValue": "frame:{\"id\": \"A2_7_NotSure\", \"cue\": \"\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 2\"}"
+},
+&"3_43": {
+"link": &"1_43",
+"offset": Vector2(300, 32850),
+"signalValue": "frame:{\"id\": \"A3_0_Ceremony\", \"cue\": \"\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 3\"}"
+},
+&"3_44": {
+"link": &"1_44",
+"offset": Vector2(1550, 32850),
+"signalValue": "frame:{\"id\": \"A3_1_Actor2\", \"cue\": \"STAGE MANAGER / IFB: — DO NOT ENGAGE. — CONTINUE THE PLAY.\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 3\"}"
+},
+&"3_45": {
+"link": &"1_45",
+"offset": Vector2(2800, 32000),
+"signalValue": "frame:{\"id\": \"A3_2_FirstQuestion\", \"cue\": \"\", \"routes\": [\"choice_0\", \"choice_1\", \"choice_2\", \"choice_3\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {\"actor2Answer\": \"yes\"}}, {\"increment\": 0, \"reason\": \"\", \"set\": {\"actor2Answer\": \"no\"}}, {\"increment\": 0, \"reason\": \"\", \"set\": {\"actor2Answer\": \"unclear\"}}, {\"increment\": 0, \"reason\": \"\", \"set\": {\"actor2Answer\": \"unclear\"}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 3\"}"
+},
+&"3_46": {
+"link": &"1_46",
+"offset": Vector2(4050, 32850),
+"signalValue": "frame:{\"id\": \"A3_2_No\", \"cue\": \"\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 3\"}"
+},
+&"3_47": {
+"link": &"1_47",
+"offset": Vector2(4050, 34550),
+"signalValue": "frame:{\"id\": \"A3_2_Unclear\", \"cue\": \"\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 3\"}"
+},
+&"3_48": {
+"link": &"1_48",
+"offset": Vector2(4050, 31150),
+"signalValue": "frame:{\"id\": \"A3_2_Yes\", \"cue\": \"\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 3\"}"
+},
+&"3_49": {
+"link": &"1_49",
+"offset": Vector2(5300, 32000),
+"signalValue": "frame:{\"id\": \"A3_3_MotherInterrupts\", \"cue\": \"STAGE MANAGER / IFB: — KEEP THE PLAY MOVING.\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 3\"}"
+},
+&"3_5": {
+"link": &"1_5",
+"offset": Vector2(9050, 4250),
+"signalValue": "frame:{\"id\": \"A1_0_Forced start\", \"cue\": \"\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 0 · Pre-show\"}"
+},
+&"3_50": {
+"link": &"1_50",
+"offset": Vector2(6550, 32000),
+"signalValue": "frame:{\"id\": \"A3_4_Conflict\", \"cue\": \"\", \"routes\": [\"choice_0\", \"choice_1\", \"choice_2\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {\"finalResponse\": \"follow_play\"}}, {\"increment\": 1, \"reason\": \"Chose Actor 2 over the Stage Manager's play.\", \"set\": {\"finalResponse\": \"engage_actor2\", \"offScriptLastReason\": \"Chose Actor 2 over the Stage Manager's play.\"}}, {\"increment\": 1, \"reason\": \"Rejected both offered roles.\", \"set\": {\"finalResponse\": \"unclear\", \"offScriptLastReason\": \"Rejected both offered roles.\"}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 3\"}"
+},
+&"3_51": {
+"link": &"1_51",
+"offset": Vector2(7800, 32000),
+"signalValue": "frame:{\"id\": \"A3_4_EngageActor2\", \"cue\": \"\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 3\"}"
+},
+&"3_52": {
+"link": &"1_52",
+"offset": Vector2(7800, 30300),
+"signalValue": "frame:{\"id\": \"A3_4_FollowPlay\", \"cue\": \"\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 3\"}"
+},
+&"3_53": {
+"link": &"1_53",
+"offset": Vector2(7800, 33700),
+"signalValue": "frame:{\"id\": \"A3_4_Unexpected\", \"cue\": \"\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 3\"}"
+},
+&"3_54": {
+"link": &"1_54",
+"offset": Vector2(9050, 32000),
+"signalValue": "frame:{\"id\": \"A3_5_End\", \"cue\": \"\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 3\"}"
+},
+&"3_55": {
+"link": &"1_55",
+"offset": Vector2(120, 2580),
+"signalValue": "frame:{\"id\": \"Start\", \"cue\": \"\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": true, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 0 · Pre-show\"}"
+},
+&"3_6": {
+"link": &"1_6",
+"offset": Vector2(2800, 5950),
+"signalValue": "frame:{\"id\": \"A1_0_No\", \"cue\": \"\", \"routes\": [\"yes\", \"no\", \"other\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 0 · Pre-show\"}"
+},
+&"3_7": {
+"link": &"1_7",
+"offset": Vector2(5300, 5100),
+"signalValue": "frame:{\"id\": \"A1_0_NoAgain\", \"cue\": \"\", \"routes\": [\"yes\", \"other\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 0 · Pre-show\"}"
+},
+&"3_8": {
+"link": &"1_8",
+"offset": Vector2(4050, 850),
+"signalValue": "frame:{\"id\": \"A1_0_STH\", \"cue\": \"\", \"routes\": [\"no\", \"yes\", \"other\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 0, \"reason\": \"\", \"set\": {}}, {\"increment\": 1, \"reason\": \"Repeated an unrelated opening response.\", \"set\": {\"offScriptLastReason\": \"Repeated an unrelated opening response.\"}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 0 · Pre-show\"}"
+},
+&"3_9": {
+"link": &"1_9",
+"offset": Vector2(7800, 3400),
+"signalValue": "frame:{\"id\": \"A1_1_0 PreshowAnnoyed\", \"cue\": \"\", \"routes\": [\"next\"], \"effects\": [{\"increment\": 0, \"reason\": \"\", \"set\": {}}], \"thresholds\": {\"Correction\": 1, \"Disruption\": 3, \"KickOut\": 5}, \"notices\": {\"correction\": \"STAGE MANAGER — CORRECTION A sharp cue flashes across your phone: “Stay with the script.” The audience hesitates, then the performance continues.\", \"disruption\": \"CONTROL DISRUPTION The image tears into strips. For a moment, the MC moves before you tell her to. The Stage Manager forces the scene back into place.\"}, \"endgame\": \"A0_Endgame\", \"reset\": false, \"boundary\": false, \"yes\": [\"yes\", \"yeah\", \"sure\", \"okay\", \"ok\", \"ready\", \"lets begin\"], \"no\": [\"no\", \"not yet\", \"not ready\", \"wait\"], \"ambition\": [\"writer\", \"write\", \"become\", \"want\", \"dream\", \"aspire\", \"career\", \"astronaut\", \"doctor\", \"artist\"], \"coverage\": 0.8, \"group\": \"Act 0 · Pre-show\"}"
+}
+}

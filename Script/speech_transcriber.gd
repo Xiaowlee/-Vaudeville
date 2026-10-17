@@ -25,6 +25,11 @@ signal raw_recognition(event: Dictionary)
 @export var experimental_phrase_bias := false
 @export var experimental_phrases: PackedStringArray = []
 @export_range(0, 5, 0.5) var experimental_boost := 4.0
+## Maximum grace after browser detects speech, before silence timers resume.
+@export_range(1, 60, 1) var browser_result_wait_seconds := 20.0
+var browser_result_wait := 0.0
+func awaiting_browser_result() -> bool:
+	return recognition_backend == 3 and listening and browser_result_wait > 0.0
 var relay_turn := ""
 var relay_bridge: Node
 func waiting_for_browser_microphone() -> bool:
@@ -35,10 +40,15 @@ func _relay_event(event: Dictionary) -> void:
 	match event.get("type", ""):
 		"speech_result":
 			if event.get("is_final", false):
+				browser_result_wait = 0.0
 				final_transcript_received.emit(str(event.get("transcript", "")))
 				transcript_received.emit(str(event.get("transcript", "")))
-			else: partial_transcript_received.emit(str(event.get("transcript", "")))
+			else:
+				if browser_result_wait <= 0.0: browser_result_wait = browser_result_wait_seconds
+				partial_transcript_received.emit(str(event.get("transcript", "")))
 		"speech_status":
+			if event.get("status") == "Speech detected — recognizing words" and browser_result_wait <= 0.0:
+				browser_result_wait = browser_result_wait_seconds
 			if event.get("status") == "listening":
 				worker_ready = true
 				status_changed.emit("Mic listening")
@@ -204,7 +214,9 @@ func _process(delta: float) -> void:
 					return
 		if listening and not worker_ready and startup_time > 15.0: _android_failure("Android speech did not start. Check Microphone settings and retry.")
 		return
-	if recognition_backend == 3: return
+	if recognition_backend == 3:
+		browser_result_wait = maxf(0.0, browser_result_wait - delta)
+		return
 	if using_browser:
 		for event in BROWSER.events():
 			if not listening: return
@@ -262,6 +274,7 @@ func _process(delta: float) -> void:
 		_fail(worker_error.strip_edges() if not worker_error.is_empty() else "Speech worker exited without a diagnostic")
 
 func stop_listening() -> void:
+	browser_result_wait = 0.0
 	android_turn += 1
 	if using_android and is_instance_valid(android_plugin): android_plugin.stop()
 	using_android = false

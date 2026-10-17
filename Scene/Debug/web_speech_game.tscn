@@ -33,7 +33,17 @@ text = "1. Connect session"
 [node name="Browser" type="Button" parent="Debug/Panel/Buttons" unique_id=1961279654]
 layout_mode = 2
 disabled = true
-text = "2. Open browser microphone"
+text = "Open in default browser"
+
+[node name="SessionLink" type="LineEdit" parent="Debug/Panel/Buttons"]
+layout_mode = 2
+editable = false
+placeholder_text = "Connect session to get your microphone link"
+
+[node name="CopyLink" type="Button" parent="Debug/Panel/Buttons"]
+layout_mode = 2
+disabled = true
+text = "2. Copy link — paste in your preferred browser"
 
 [node name="Play" type="Button" parent="Debug/Panel/Buttons" unique_id=1102816201]
 layout_mode = 2
