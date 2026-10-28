@@ -1,8 +1,9 @@
 extends Control
 signal transcript_ready(words: String)
+signal technical_failure(detail: String)
 ## Isolated desktop experiment. Never changes the active story/backend.
-@export_file("*.exe") var engine_path := "D:/RMIT/Master/Studio 1/Folio 2/folio-2-test-2/.local-speech/engine/Release/whisper-cli.exe"
-@export_file("*.bin") var model_path := "D:/RMIT/Master/Studio 1/Folio 2/folio-2-test-2/.local-speech/ggml-base.en.bin"
+@export_file("*.exe") var engine_path := "res://.local-speech/engine/Release/whisper-cli.exe"
+@export_file("*.bin") var model_path := "res://.local-speech/ggml-base.en.bin"
 @export_range(5, 120) var maximum_recording_seconds := 30.0
 @export_range(10, 300) var transcription_timeout_seconds := 90.0
 var recorder: AudioEffectRecord
@@ -18,14 +19,17 @@ var previous_device := ""
 @onready var transcript: TextEdit = $Layout/Transcript
 
 func _ready() -> void:
+	preload("res://Script/microphone_settings.gd").apply_saved()
 	previous_device = AudioServer.input_device
+	engine_path = portable_path(engine_path)
+	model_path = portable_path(model_path)
 	for device in AudioServer.get_input_device_list():
 		$Layout/Devices.add_item(device)
 		if device == previous_device: $Layout/Devices.select($Layout/Devices.item_count - 1)
 	$Layout/Devices.item_selected.connect(func(index: int): AudioServer.input_device = $Layout/Devices.get_item_text(index))
 	$Layout/Start.pressed.connect(start_recording)
 	$Layout/Finish.pressed.connect(finish_recording)
-	$Layout/Fixture.pressed.connect(func(): transcribe(ProjectSettings.globalize_path("D:/RMIT/Master/Studio 1/Folio 2/folio-2-test-2/.local-speech/jfk.wav")))
+	$Layout/Fixture.pressed.connect(func(): transcribe(ProjectSettings.globalize_path("res://.local-speech/jfk.wav")))
 	AudioServer.add_bus()
 	var index := AudioServer.bus_count - 1
 	AudioServer.set_bus_name(index, bus_name)
@@ -50,6 +54,7 @@ func start_recording() -> void:
 	if recording or pid > 0: return
 	if not FileAccess.file_exists(engine_path) or not FileAccess.file_exists(model_path):
 		status.text = "Engine or model missing. Check this scene's Inspector paths."
+		technical_failure.emit(status.text)
 		return
 	recording = true
 	started = Time.get_ticks_msec()
@@ -66,12 +71,14 @@ func finish_recording() -> void:
 	var audio := recorder.get_recording()
 	if audio == null or audio.data.is_empty():
 		status.text = "No audio captured. Check Windows microphone permission and selected device."
+		technical_failure.emit(status.text)
 		set_controls(false)
 		return
 	# whisper.cpp resamples supported WAV sample rates internally.
-	wav_path = ProjectSettings.globalize_path("res://temp/whisper_attempt_%s.wav" % Time.get_ticks_usec())
+	wav_path = ProjectSettings.globalize_path("user://whisper_attempt_%s.wav" % Time.get_ticks_usec())
 	if audio.save_to_wav(wav_path) != OK:
 		status.text = "Could not save temporary recording."
+		technical_failure.emit(status.text)
 		set_controls(false)
 		return
 	transcribe(wav_path)
@@ -81,9 +88,10 @@ func transcribe(path: String) -> void:
 	transcript.text = ""
 	if not FileAccess.file_exists(path):
 		status.text = "Recording file missing. No transcription started."
+		technical_failure.emit(status.text)
 		cleanup()
 		return
-	output_path = ProjectSettings.globalize_path("res://temp/whisper_result_%s" % Time.get_ticks_usec())
+	output_path = ProjectSettings.globalize_path("user://whisper_result_%s" % Time.get_ticks_usec())
 	pid = OS.create_process(ProjectSettings.globalize_path(engine_path), PackedStringArray([
 		"-m", ProjectSettings.globalize_path(model_path), "-f", path,
 		"-l", "en", "-otxt", "-of", output_path, "-np", "-nt", "-ng"
@@ -93,6 +101,7 @@ func transcribe(path: String) -> void:
 	set_controls(true)
 	if pid <= 0:
 		status.text = "Could not start Whisper. Check engine path in Inspector."
+		technical_failure.emit(status.text)
 		cleanup()
 
 func _process(_delta: float) -> void:
@@ -107,13 +116,15 @@ func _process(_delta: float) -> void:
 				status.text = "Result in %.2f seconds after Finish. Compare the words below with what you said." % seconds
 			else:
 				status.text = "Whisper ended without a result. Check Godot Output and model/engine paths."
+				technical_failure.emit(status.text)
 			pid = -1
 			cleanup()
-			transcript_ready.emit(transcript.text)
+			if status.text.begins_with("Result"):transcript_ready.emit(transcript.text)
 		elif seconds > transcription_timeout_seconds:
 			OS.kill(pid)
 			pid = -1
 			status.text = "Transcription timed out. Try a shorter recording."
+			technical_failure.emit(status.text)
 			cleanup()
 
 func cleanup() -> void:
@@ -133,3 +144,16 @@ func _exit_tree() -> void:
 		if not path.is_empty() and FileAccess.file_exists(path): DirAccess.remove_absolute(path)
 
 
+
+func portable_path(path: String) -> String:
+	if FileAccess.file_exists(path):return ProjectSettings.globalize_path(path)
+	var relative=path.replace("res://", "")
+	if ".local-speech/" in relative:relative=".local-speech/"+relative.get_slice(".local-speech/",1)
+	return OS.get_executable_path().get_base_dir().path_join(relative)
+func cancel_recording() -> void:
+	if pid>0:OS.kill(pid)
+	pid=-1
+	recording=false
+	recorder.set_recording_active(false)
+	microphone.stop()
+	cleanup()

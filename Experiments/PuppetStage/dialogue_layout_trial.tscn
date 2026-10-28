@@ -1,0 +1,155 @@
+[gd_scene format=3 uid="uid://cp6wpaljf8da2"]
+
+[ext_resource type="FontFile" uid="uid://di3h2p4jyrmkt" path="res://Font/JacquesFrancois-Regular.ttf" id="Font"]
+[ext_resource type="PackedScene" uid="uid://dwgnu3budtupb" path="res://Experiments/PuppetStage/puppet_stage_test.tscn" id="Stage"]
+[ext_resource type="Script" uid="uid://dr7u5v7isonfx" path="res://Experiments/PuppetStage/dialogue_layout_trial.gd" id="Trial"]
+
+[sub_resource type="Theme" id="Theme"]
+default_font = ExtResource("Font")
+
+[node name="DialogueLayoutTrial" unique_id=890497014 instance=ExtResource("Stage")]
+backdrop_color = Color(0.12863007, 0.1274097, 0.3848819, 1)
+
+[node name="Art" parent="World/RearBackdrop" parent_id_path=PackedInt32Array(778004014) index="0" unique_id=652084003]
+self_modulate = Color(1, 1, 1, 1)
+
+[node name="Art" parent="World/Floor" parent_id_path=PackedInt32Array(1561657575) index="0" unique_id=1808831913]
+self_modulate = Color(1, 1, 1, 1)
+position = Vector2(-7.6293945e-06, -16.000004)
+scale = Vector2(0.33888885, 0.33888888)
+
+[node name="Art" parent="World/RearWings" parent_id_path=PackedInt32Array(1954111339) index="0" unique_id=566981312]
+self_modulate = Color(1, 1, 1, 1)
+position = Vector2(3.8146973e-06, 15.999992)
+scale = Vector2(0.3576389, 0.35763893)
+
+[node name="Art" parent="World/MiddleCurtains" parent_id_path=PackedInt32Array(1610431168) index="0" unique_id=976003920]
+self_modulate = Color(1, 1, 1, 1)
+position = Vector2(-2.2888184e-05, 7.9999905)
+scale = Vector2(0.34768516, 0.34768516)
+
+[node name="Art" parent="World/FrontWings" parent_id_path=PackedInt32Array(912126685) index="0" unique_id=248725894]
+self_modulate = Color(1, 1, 1, 1)
+position = Vector2(-7.6293945e-06, 7.999998)
+scale = Vector2(0.34761286, 0.34761283)
+
+[node name="Lighting" parent="World" parent_id_path=PackedInt32Array(280916919) index="6" unique_id=1551517233]
+visible = false
+lighting_mode = 0
+preview_hold_seconds = 3.0
+focus_character = 1
+
+[node name="Player" parent="World/Performers" parent_id_path=PackedInt32Array(1820253125) index="0" unique_id=1664180426]
+modulate = Color(1, 1, 1, 1)
+motion_fps = 2.0
+talking = false
+
+[node name="StageManager" parent="World/Performers" parent_id_path=PackedInt32Array(1820253125) index="1" unique_id=1312345879]
+visible = false
+motion_fps = 8.0
+talking = false
+
+[node name="Actor1" parent="World/Performers" parent_id_path=PackedInt32Array(1820253125) index="2" unique_id=1962565981]
+modulate = Color(1, 1, 1, 1)
+talking = false
+
+[node name="Art" parent="World/NearCurtains" parent_id_path=PackedInt32Array(660012026) index="0" unique_id=789202379]
+self_modulate = Color(1, 1, 1, 1)
+position = Vector2(-2.861023e-05, -1.4305115e-06)
+scale = Vector2(0.34959495, 0.34959492)
+
+[node name="Art" parent="World/TopTrim" parent_id_path=PackedInt32Array(1035211757) index="0" unique_id=1110823542]
+self_modulate = Color(1, 1, 1, 1)
+
+[node name="Art" parent="World/Audience" parent_id_path=PackedInt32Array(1272616982) index="0" unique_id=1021828419]
+self_modulate = Color(1, 1, 1, 1)
+
+[node name="Art" parent="World/Frame" parent_id_path=PackedInt32Array(243997666) index="0" unique_id=147553572]
+self_modulate = Color(1, 1, 1, 1)
+
+[node name="Controls" parent="." index="1" unique_id=773574177]
+visible = false
+
+[node name="DialogueTrial" type="CanvasLayer" parent="." index="3" unique_id=475118217]
+layer = 2
+script = ExtResource("Trial")
+layout_style = 1
+smart_placement = false
+text_size = 22
+text_color = Color(0.98305744, 0.89366907, 0.99036914, 1)
+panel_color = Color(0.087842874, 0.07449251, 0.21264997, 0.8784314)
+
+[node name="Layout" type="Control" parent="DialogueTrial" index="0" unique_id=507139167]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme")
+
+[node name="Text" type="Control" parent="DialogueTrial/Layout" index="0" unique_id=974233849]
+layout_mode = 0
+offset_left = 60.8
+offset_top = 472.8
+offset_right = 412.8
+offset_bottom = 643.2
+mouse_filter = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Name" type="Label" parent="DialogueTrial/Layout/Text" index="0" unique_id=811189944]
+layout_mode = 0
+theme_override_colors/font_color = Color(0.98305744, 0.89366907, 0.99036914, 1)
+theme_override_font_sizes/font_size = 30
+autowrap_mode = 3
+text = "Narrator"
+horizontal_alignment = 1
+
+[node name="Words" type="Label" parent="DialogueTrial/Layout/Text" index="1" unique_id=254880900]
+custom_minimum_size = Vector2(0, 98)
+layout_mode = 0
+size_flags_vertical = 0
+autowrap_mode = 3
+theme_override_colors/font_color = Color(0.98305744, 0.89366907, 0.99036914, 1)
+theme_override_font_sizes/font_size = 22
+text = "The voice of the grumpy stage manager can be heard again from the left side of the stage."
+
+[node name="Toolbar" type="HBoxContainer" parent="DialogueTrial/Layout" index="1" unique_id=1841121722]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 678.0
+offset_right = 639.0
+offset_bottom = 708.0
+theme_override_constants/separation = 12
+
+[node name="Style" type="OptionButton" parent="DialogueTrial/Layout/Toolbar" index="0" unique_id=2087654704]
+layout_mode = 2
+selected = 0
+item_count = 2
+popup/item_0/text = "Beside character"
+popup/item_0/id = 0
+popup/item_1/text = "Lower panel"
+popup/item_1/id = 1
+
+[node name="Previous" type="Button" parent="DialogueTrial/Layout/Toolbar" index="1" unique_id=800486121]
+layout_mode = 2
+disabled = true
+text = "Previous"
+
+[node name="Next" type="Button" parent="DialogueTrial/Layout/Toolbar" index="2" unique_id=609404244]
+layout_mode = 2
+text = "Next line"
+
+[node name="Restart" type="Button" parent="DialogueTrial/Layout/Toolbar" index="3" unique_id=743693122]
+layout_mode = 2
+text = "Restart excerpt"
+
+[node name="Pose" type="Button" parent="DialogueTrial/Layout/Toolbar" index="4" unique_id=1885230573]
+layout_mode = 2
+text = "Flip poses"
+
+[node name="Count" type="Label" parent="DialogueTrial/Layout/Toolbar" index="5" unique_id=9184341]
+layout_mode = 2
+text = "1 / 22"

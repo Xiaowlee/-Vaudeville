@@ -1,0 +1,35 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://Script/microphone_settings.gd" id="1"]
+[node name="DesktopMicrophoneSettings" type="Window"]
+title = "Settings — microphone"
+size = Vector2i(700, 420)
+visible = false
+exclusive = true
+script = ExtResource("1")
+[node name="Margin" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = -24.0
+[node name="Content" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+[node name="Title" type="Label" parent="Margin/Content"]
+text = "Choose your microphone"
+[node name="Devices" type="OptionButton" parent="Margin/Content"]
+[node name="Refresh" type="Button" parent="Margin/Content"]
+text = "Refresh microphones"
+[node name="Test" type="CheckButton" parent="Margin/Content"]
+text = "Test microphone input"
+[node name="Level" type="ProgressBar" parent="Margin/Content"]
+show_percentage = false
+[node name="Status" type="Label" parent="Margin/Content"]
+autowrap_mode = 2
+[node name="Help" type="Label" parent="Margin/Content"]
+text = "No input? Check your system microphone permissions and mute switch.
+Playtest bypass: Ctrl+Enter (or Shift+Enter) skips to the first story route."
+autowrap_mode = 2
+[node name="Close" type="Button" parent="Margin/Content"]
+text = "Done"

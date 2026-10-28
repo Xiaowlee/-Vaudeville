@@ -1,43 +1,78 @@
-[gd_scene load_steps=4 format=3]
-[ext_resource type="Script" path="res://Script/SpeechTest/context_preshow_test.gd" id="1"]
-[ext_resource type="PackedScene" path="res://Scene/Debug/local_whisper_test.tscn" id="2"]
+[gd_scene format=3 uid="uid://84awtf6qkdi0"]
+
+[ext_resource type="Script" uid="uid://b83togig50n7v" path="res://Script/SpeechTest/context_preshow_test.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://dry0hcmlti23x" path="res://Scene/Debug/local_whisper_test.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://Scene/Debug/local_intent_test.tscn" id="3"]
-[node name="ContextPreshowTest" type="Control"]
+
+[node name="ContextPreshowTest" type="Control" unique_id=1726808026]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1")
-[node name="Whisper" parent="." instance=ExtResource("2")]
+
+[node name="Whisper" parent="." unique_id=1586221846 instance=ExtResource("2")]
 visible = false
-[node name="Meaning" parent="." instance=ExtResource("3")]
+layout_mode = 1
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Meaning" parent="." unique_id=971232576 instance=ExtResource("3")]
 visible = false
-[node name="Debug" type="CanvasLayer" parent="."]
+layout_mode = 1
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Debug" type="CanvasLayer" parent="." unique_id=1482770179]
 layer = 100
-[node name="Panel" type="PanelContainer" parent="Debug"]
+
+[node name="Panel" type="PanelContainer" parent="Debug" unique_id=1109858928]
 offset_left = 12.0
 offset_top = 12.0
 offset_right = 440.0
-[node name="Controls" type="VBoxContainer" parent="Debug/Panel"]
-[node name="Title" type="Label" parent="Debug/Panel/Controls"]
+
+[node name="Controls" type="VBoxContainer" parent="Debug/Panel" unique_id=1599836922]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Debug/Panel/Controls" unique_id=775100386]
+layout_mode = 2
 text = "DEBUG — Context pre-show (F2 hides panel)"
-[node name="Words" type="LineEdit" parent="Debug/Panel/Controls"]
+
+[node name="Words" type="LineEdit" parent="Debug/Panel/Controls" unique_id=331416880]
+layout_mode = 2
 placeholder_text = "Type an answer or use Record"
-[node name="Typed" type="Button" parent="Debug/Panel/Controls"]
+
+[node name="Typed" type="Button" parent="Debug/Panel/Controls" unique_id=446781695]
+layout_mode = 2
 text = "Interpret typed answer"
-[node name="Record" type="Button" parent="Debug/Panel/Controls"]
+
+[node name="Record" type="Button" parent="Debug/Panel/Controls" unique_id=397205843]
+layout_mode = 2
 text = "Record answer"
-[node name="Finish" type="Button" parent="Debug/Panel/Controls"]
+
+[node name="Finish" type="Button" parent="Debug/Panel/Controls" unique_id=1657122780]
+layout_mode = 2
 text = "Finish and interpret"
-[node name="Apply" type="Button" parent="Debug/Panel/Controls"]
+
+[node name="Apply" type="Button" parent="Debug/Panel/Controls" unique_id=687080448]
+layout_mode = 2
 text = "Apply proposed meaning"
-[node name="Retry" type="Button" parent="Debug/Panel/Controls"]
+
+[node name="Retry" type="Button" parent="Debug/Panel/Controls" unique_id=1339184290]
+layout_mode = 2
 text = "Discard / retry"
-[node name="Status" type="Label" parent="Debug/Panel/Controls"]
+
+[node name="Status" type="Label" parent="Debug/Panel/Controls" unique_id=1329805724]
 custom_minimum_size = Vector2(410, 0)
+layout_mode = 2
 autowrap_mode = 2
 
-[node name="CancelAI" type="Button" parent="Debug/Panel/Controls"]
+[node name="CancelAI" type="Button" parent="Debug/Panel/Controls" unique_id=2105248136]
+layout_mode = 2
 text = "Cancel interpretation"
-[node name="Export" type="Button" parent="Debug/Panel/Controls"]
+
+[node name="Export" type="Button" parent="Debug/Panel/Controls" unique_id=1980671888]
+layout_mode = 2
 text = "Export test results (text only)"

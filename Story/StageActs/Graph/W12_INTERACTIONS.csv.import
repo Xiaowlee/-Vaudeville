@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://b3blg3jufwo0d"
+
+[deps]
+
+files=["res://Story/StageActs/Graph/W12_INTERACTIONS.Player task.translation", "res://Story/StageActs/Graph/W12_INTERACTIONS.Input mode.translation", "res://Story/StageActs/Graph/W12_INTERACTIONS.Allowed authored intents.translation", "res://Story/StageActs/Graph/W12_INTERACTIONS.Route destinations.translation", "res://Story/StageActs/Graph/W12_INTERACTIONS.Offscript override.translation", "res://Story/StageActs/Graph/W12_INTERACTIONS.Silence override.translation", "res://Story/StageActs/Graph/W12_INTERACTIONS.Unclear override.translation", "res://Story/StageActs/Graph/W12_INTERACTIONS.Question override.translation", "res://Story/StageActs/Graph/W12_INTERACTIONS.Global fallbacks.translation", "res://Story/StageActs/Graph/W12_INTERACTIONS.Production cues.translation", "res://Story/StageActs/Graph/W12_INTERACTIONS.Missing logic / decisions.translation"]
+
+source_file="res://Story/StageActs/Graph/W12_INTERACTIONS.csv"
+dest_files=["res://Story/StageActs/Graph/W12_INTERACTIONS.Player task.translation", "res://Story/StageActs/Graph/W12_INTERACTIONS.Input mode.translation", "res://Story/StageActs/Graph/W12_INTERACTIONS.Allowed authored intents.translation", "res://Story/StageActs/Graph/W12_INTERACTIONS.Route destinations.translation", "res://Story/StageActs/Graph/W12_INTERACTIONS.Offscript override.translation", "res://Story/StageActs/Graph/W12_INTERACTIONS.Silence override.translation", "res://Story/StageActs/Graph/W12_INTERACTIONS.Unclear override.translation", "res://Story/StageActs/Graph/W12_INTERACTIONS.Question override.translation", "res://Story/StageActs/Graph/W12_INTERACTIONS.Global fallbacks.translation", "res://Story/StageActs/Graph/W12_INTERACTIONS.Production cues.translation", "res://Story/StageActs/Graph/W12_INTERACTIONS.Missing logic / decisions.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

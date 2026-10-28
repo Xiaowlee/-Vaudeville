@@ -84,8 +84,17 @@ func hide_cue() -> void:
 	get_node(cue_path).hide()
 	cue_hidden.emit()
 func panel(path: NodePath, value: String, shown: bool) -> void:
-	var node := get_node(path)
-	node.get_node("Margin/Text").text = value
+	# An empty Inspector path disables an optional panel.
+	if path.is_empty(): return
+	var node := get_node_or_null(path)
+	if node == null:
+		if shown: push_warning("Stage UI panel is not assigned: " + str(path))
+		return
+	var label := node.get_node_or_null("Margin/Text")
+	if label == null:
+		if shown: push_warning("Stage UI panel has no Margin/Text: " + str(path))
+		return
+	label.text = value
 	node.visible = shown
 func show_beat(beat: StageBeat) -> void:
 	cue_sound_played = false

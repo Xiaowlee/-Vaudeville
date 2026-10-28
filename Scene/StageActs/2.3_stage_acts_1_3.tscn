@@ -2,14 +2,14 @@
 
 [ext_resource type="AudioStream" uid="uid://cw5v313lst3g5" path="res://Sound/jarasnat-curtain-version-1-337564.mp3" id="17_hcyf1"]
 [ext_resource type="PackedScene" uid="uid://80ygtruwb4rj" path="res://Scene/StageActs/2.3_component_actor.tscn" id="Actor"]
-[ext_resource type="Resource" path="res://Story/StageActs/actor_2.tres" id="actor_2"]
+[ext_resource type="Resource" uid="uid://5txhoia8ymd7" path="res://Story/StageActs/actor_2.tres" id="actor_2"]
 [ext_resource type="PackedScene" uid="uid://bfa6133lesemv" path="res://Scene/00_shared_chapter_audio.tscn" id="Audio"]
-[ext_resource type="Texture2D" uid="uid://4gp3u853nr2y" path="res://Visual Asset/Folio 2 curtain.jpg" id="CurtainClosed"]
-[ext_resource type="Texture2D" uid="uid://bm5kbuvo8slne" path="res://Visual Asset/Folio 2 curtain open.png" id="CurtainOpen"]
+[ext_resource type="Texture2D" uid="uid://4gp3u853nr2y" path="res://Visual Asset/2.3/Folio 2 curtain.jpg" id="CurtainClosed"]
+[ext_resource type="Texture2D" uid="uid://bm5kbuvo8slne" path="res://Visual Asset/2.3/Folio 2 curtain open.png" id="CurtainOpen"]
 [ext_resource type="PackedScene" path="res://Scene/StageActs/2.3_component_debug.tscn" id="Debug"]
 [ext_resource type="Script" uid="uid://bf2p8qxlghrv" path="res://Script/StageActs/stage_flow.gd" id="Flow"]
 [ext_resource type="Script" uid="uid://b05nje18w8j0d" path="res://Script/StageActs/stage_ifb.gd" id="IFB"]
-[ext_resource type="Resource" path="res://Story/StageActs/mother.tres" id="mother"]
+[ext_resource type="Resource" uid="uid://llc6jlodavsr" path="res://Story/StageActs/mother.tres" id="mother"]
 [ext_resource type="PackedScene" path="res://Scene/00_shared_phone_cue_bridge.tscn" id="Phone"]
 [ext_resource type="Resource" path="res://Story/StageActs/player.tres" id="player"]
 [ext_resource type="Script" uid="uid://bfxawdqtn5r2y" path="res://Script/StageActs/pre_show.gd" id="PreShow"]
@@ -118,7 +118,6 @@ enabled = true
 
 [node name="IFB" type="Node" parent="." unique_id=2017966867]
 script = ExtResource("IFB")
-mirror_locally = false
 local_fallback = false
 
 [node name="GameController" type="Node" parent="." unique_id=100967748]

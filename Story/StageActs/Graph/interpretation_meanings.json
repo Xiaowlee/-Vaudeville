@@ -12,9 +12,11 @@
     "retry_reply": "Stage Manager: “Shall we begin, or would you like another moment?”"
   },
   "A2_1_Entrance": {
-    "choice_0": "Choose the LEFT or WESTERN entrance. Must positively choose that entrance; escape, leave, neither, questions or uncertainty do not count.",
-    "choice_1": "Choose the RIGHT or EASTERN entrance. Must positively choose that entrance; escape, leave, neither, questions or uncertainty do not count.",
-    "retry_reply": "Mother: “Which entrance, darling—the left or the right?”"
+    "choice_0": "Explicitly choose LEFT or WEST. Never infer left from leave, neither, escape, refusal, uncertainty or right.",
+    "choice_1": "Explicitly choose RIGHT or EAST. Never infer right from neither, escape, refusal or uncertainty.",
+    "retry_reply": "Mother: “Which entrance, darling—the left or the right?”",
+    "choice_2": "An intelligible alternative to choosing either entrance, including explicitly rejecting both entrances or wanting to leave. A help request or question uses its own category, not this route.",
+    "reject_both_route": "choice_2"
   },
   "A2_2_HallCommentAppropriate": {
     "choice_0": "Explicit permission or agreement to START THE MUSIC. Refusing, postponing, asking a question, uncertainty and unrelated comments are NOT agreement. These four options are equivalent; use choice_0 for agreement.",
@@ -39,12 +41,6 @@
   },
   "A1_0_STH": {
     "retry_reply": "Stage Manager: “Shall we begin, or would you like another moment?”"
-  },
-  "A1_1_Mother'sQuestion": {
-    "retry_reply": "Mother: “Tell me again, darling. What do you mean?”",
-    "ambition": "Any stated desire to become or be something, including impossible, childish, playful or absurd aspirations. I want to become a baby is an ambition. Do not judge whether it is a real career.",
-    "other": "Any intelligible spoken answer that is not an aspiration, including uncertainty, jokes and unrelated topics. Prefer this authored reaction over no_match for a comprehensible answer.",
-    "unmatched_route": "other"
   },
   "A1_1_Offtopic": {
     "retry_reply": "Mother: “Tell me again, darling. What do you mean?”",
@@ -116,5 +112,23 @@
   "A1_3_ThirdFailure": {
     "continue_route": 0,
     "retry_reply": "Mother: “Tell me again, darling. What do you mean?”"
+  },
+  "A1_1_ACTOR 1'sQuestion": {
+    "retry_reply": "Mother: “Tell me again, darling. What do you mean?”",
+    "ambition": "Any stated desire to become or be something, including impossible, childish, playful or absurd aspirations. I want to become a baby is an ambition. Do not judge whether it is a real career.",
+    "other": "Any intelligible spoken answer that is not an aspiration, including uncertainty, jokes and unrelated topics. Prefer this authored reaction over no_match for a comprehensible answer.",
+    "unmatched_route": "other"
+  },
+  "A2_1_Offscript": {
+    "choice_0": "Explicitly choose LEFT or WEST. Never infer left from leave, neither, escape, refusal, uncertainty or right.",
+    "choice_1": "Explicitly choose RIGHT or EAST. Never infer right from neither, escape, refusal or uncertainty.",
+    "choice_2": "An intelligible alternative to choosing either entrance, including explicitly rejecting both entrances or wanting to leave. A help request or question uses its own category, not this route.",
+    "reject_both_route": "choice_2"
+  },
+  "A2_1_OffscriptAgain": {
+    "choice_0": "Explicitly choose LEFT or WEST. Never infer left from leave, neither, escape, refusal, uncertainty or right.",
+    "choice_1": "Explicitly choose RIGHT or EAST. Never infer right from neither, escape, refusal or uncertainty.",
+    "choice_2": "An intelligible alternative to choosing either entrance, including explicitly rejecting both entrances or wanting to leave. A help request or question uses its own category, not this route.",
+    "reject_both_route": "choice_2"
   }
 }

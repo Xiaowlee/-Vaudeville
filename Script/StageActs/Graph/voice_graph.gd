@@ -7,7 +7,22 @@ extends "res://Script/StageActs/Graph/voice_graph_base.gd"
 var ai_request: HTTPRequest
 @export_file("*.json") var ai_meanings_file := "res://Story/StageActs/Graph/interpretation_meanings.json"
 @export_multiline var unmatched_feedback := "That answer does not select an available response. Please try again, or use Testing controls."
+signal cue_requested
+var turn_silences := 0
+signal response_resolved(category: String, intent: String, consequence: int)
+const ResponsePolicy = preload("res://Script/StageActs/Graph/response_policy.gd")
+var responses = ResponsePolicy.new()
+var raw_transcript := ""
+var interpreted_intent := ""
+var silence_elapsed := 0.0
+var accepting_speech := true
+var response_debug: CanvasLayer
+var response_debug_label: Label
+var debug_category: OptionButton
+var debug_intent: OptionButton
 var forced_route := -1
+var last_response_debug: Dictionary = {}
+var response_origin := "Rules"
 var fallback_reply := ""
 var interpretation_trace := ""
 var ai_question := ""
@@ -22,6 +37,8 @@ var story_state: Dictionary = {}
 var off_script_count := 0
 var off_script_reason := ""
 func _ready():
+    _recover_legacy_story()
+    responses.definitions=JSON.parse_string(FileAccess.get_file_as_string("res://Story/StageActs/Graph/response_policy.json"))
     ai_request=HTTPRequest.new()
     ai_request.timeout=ai_timeout_seconds
     add_child(ai_request)
@@ -29,6 +46,8 @@ func _ready():
     if ai_enabled and FileAccess.file_exists(ai_service_launcher):
         OS.create_process("powershell.exe",PackedStringArray(["-NoProfile","-ExecutionPolicy","Bypass","-File",ai_service_launcher]),false)
     super._ready()
+    _build_response_debug()
+    mic.technical_failure.connect(func(_detail): handle_response("TECHNICAL_FAILURE"))
     $Layout/RouteTest/Apply.pressed.connect(_manual_route)
     for key in story.starts.keys():
         var start_node=story.nodes.get(story.starts[key],{})
@@ -55,6 +74,8 @@ func _jump_section():
     var index=$Layout/Jump/Section.selected
     if index<0:return
     var section=str($Layout/Jump/Section.get_item_metadata(index))
+    responses.reset()
+    _cancel_ai()
     story_variables.clear()
     off_script_count=0
     off_script_reason=""
@@ -67,26 +88,14 @@ func _choose(index: int, meaning: String, apply_punishment: bool = true):
     if not waiting or index<0 or index>=routes.size():return
     _cancel_ai()
     var chosen=routes[index]
-    var notice=""
+    var notice="" # Consequences now belong exclusively to handle_response.
+    # Legacy per-link increments are deliberately not applied.
     var effects=frame.get("effects",[])
     if index<effects.size():
         for key in effects[index].get("assignments",{}):
             story_state[key]=effects[index].assignments[key]
     if index<effects.size():
         story_variables.merge(effects[index].get("set",{}),true)
-    if apply_punishment and index<effects.size() and int(effects[index].get("increment",0))>0:
-        var previous_count=off_script_count
-        off_script_count+=int(effects[index].increment)
-        off_script_reason=effects[index].get("reason","")
-        var limits=frame.get("thresholds",{})
-        if off_script_count>=int(limits.get("KickOut",5)):
-            parser.start(frame.get("endgame",""))
-            $Layout/Result.text="Game response: Off-script limit reached — performance ended."
-            return
-        var category="disruption" if off_script_count>=int(limits.get("Disruption",3)) else "correction"
-        var threshold=int(limits.get("Disruption",3)) if category=="disruption" else int(limits.get("Correction",1))
-        if previous_count<threshold and off_script_count>=threshold:
-            notice=frame.get("notices",{}).get(category,"")
     super._choose(index,meaning)
     if not notice.is_empty():$Layout/Dialogue.text=notice+"\n\n"+$Layout/Dialogue.text
     interpretation_trace=meaning+" → "+chosen
@@ -101,7 +110,10 @@ func _signal(value: String):
     if not value.begins_with("frame:"):return
     _cancel_ai()
     frame=JSON.parse_string(value.trim_prefix("frame:"))
+    silence_elapsed=0
+    turn_silences=0
     if frame.get("reset",false):
+        responses.reset()
         story_variables.clear()
         story_state.clear()
         ai_history.clear()
@@ -124,6 +136,10 @@ func _dialogue(speaker,words: String,options: Array[String]):
     if ai_history.size()>6:ai_history.pop_front()
     $Layout/Dialogue.text=words
     $Layout/Dialogue.scroll_to_line(0)
+    if debug_intent!=null:
+        debug_intent.clear()
+        debug_intent.add_item("Use fallback")
+        for kind in route_kinds:debug_intent.add_item(kind)
     $Layout/RouteTest/Choice.clear()
     for option in options:$Layout/RouteTest/Choice.add_item(option)
     waiting=mode!="continue" and not route_kinds.is_empty()
@@ -171,13 +187,17 @@ func classify(words: String) -> String:
             if word in spoken:return "ambition"
     return "other" if "other" in route_kinds else "unclear"
 func submit_words(words: String):
-    if not waiting or not parser.is_running():
-        $Layout/Result.text="Game response: This section is not waiting for speech. Use Continue."
+    if not waiting or not accepting_speech or not parser.is_running():
+        handle_response("OUT_OF_TURN")
         return
+    response_origin="Rules"
+    raw_transcript=words
+    silence_elapsed=0
+    turn_silences=0
     $Layout/Heard.text="Heard: "+words
     if words.strip_edges().is_empty():
         $Layout/Heard.text="Heard: No words recognised"
-        _narrative_retry(false)
+        handle_response("UNCLEAR")
         return
     if ai_busy:return
     if ai_enabled:
@@ -188,10 +208,17 @@ func submit_words(words: String):
     if index<0:
         _narrative_retry(false)
         return
-    _choose(index,"Accepted ("+last_meaning+")")
+    handle_response("SCRIPTED_RESPONSE" if last_meaning=="cue" else "VALID_INTENT",last_meaning)
 func _continue_disabled(busy: bool) -> bool:
     return busy or not parser.is_running() or (waiting and not "watch" in route_kinds)
 func _process(_delta):
+    if response_debug_label!=null:
+        response_debug_label.text="Node: %s\nHeard: %s\nMeaning: %s / %s\nOff-script total: %d · streak: %d\nSilence: %d · unclear: %d · technical failures: %d · help: %d · questions: %d" % [frame.get("id",""),raw_transcript,responses.last_response_type,interpreted_intent,responses.offscript_total,responses.offscript_streak,responses.silence_count,responses.unclear_count,responses.technical_failure_count,responses.help_count,responses.question_count]
+    if waiting and accepting_speech and not ai_busy and not mic.recording and mic.pid<=0:
+        silence_elapsed+=_delta
+        if silence_elapsed>=float(responses.definitions.get("silence_seconds",15)):
+            silence_elapsed=0
+            handle_response("SILENCE")
     var busy=mic.recording or mic.pid>0 or ai_busy
     $Layout/Silence.visible=false
     $Layout/Continue.disabled=_continue_disabled(busy)
@@ -229,14 +256,14 @@ func _interpret(words: String):
     ai_question=str(frame.get("id",""))
     var definitions=JSON.parse_string(FileAccess.get_file_as_string(ai_meanings_file))
     var meanings: Dictionary=definitions.get(ai_question,{}) if definitions is Dictionary else {}
-    var attempted_route=str(meanings.get("any_spoken_route",""))
-    if not tokens(words).is_empty() and attempted_route in route_kinds:
-        _choose(route_kinds.find(attempted_route),"Authored spoken attempt",false)
+    var help_words=" ".join(tokens(words))
+    if help_words in ["help","repeat","say that again","what do i say","i don t understand","i do not understand","what should i do","what should i say","what am i supposed to do","can you repeat that","could you repeat that","what are you talking about"]:
+        handle_response("HELP_OR_REPEAT")
         return
     var exact: Dictionary=meanings.get("exact_meanings",{})
     var normal=" ".join(tokens(words))
     if exact.has(normal) and exact[normal] in route_kinds:
-        _choose(route_kinds.find(exact[normal]),"Answer to "+ai_question+" — authored meaning: "+str(exact[normal]))
+        handle_response("VALID_INTENT",str(exact[normal]))
         return
     # Protect unambiguous yes/no answers before invoking the model.
     var short_answer=normal
@@ -254,7 +281,7 @@ func _interpret(words: String):
                     break
         if direct>=0:
             last_meaning=route_kinds[direct]
-            _choose(direct,"Explicit "+wanted)
+            handle_response("SELECTION",str(route_kinds[direct]))
         else:
             _narrative_retry(false)
         return
@@ -262,51 +289,201 @@ func _interpret(words: String):
     for i in mini(routes.size(),route_kinds.size()):
         var kind=route_kinds[i]
         if kind in ["silence","watch","next"]:continue
+        if frame.has("allowed_authored_intents") and not frame.allowed_authored_intents.has(kind):continue
         if not kind in ai_allowed:ai_allowed.append(kind)
         options.append({"intent":kind,"authored_response":routes[i],"meaning":meanings.get(kind,routes[i])})
-    if options.is_empty():
-        $Layout/Result.text="Game response: This moment uses the on-screen choices."
-        return
-    var context={"section":frame.get("id",""),"dialogue":$Layout/Dialogue.text,"cue":cue,"history":ai_history.slice(maxi(0,ai_history.size()-3)),"story_variables":story_variables,"authored_choices":story_state,"off_script_count":off_script_count,"last_off_script_reason":off_script_reason,"allowed_responses":options}
+    var context={"section":frame.get("id",""),"dialogue":$Layout/Dialogue.text,"cue":cue,"history":ai_history.slice(maxi(0,ai_history.size()-3)),"story_variables":story_variables,"authored_choices":story_state,"off_script_count":off_script_count,"last_off_script_reason":off_script_reason,"allowed_authored_intents":options,"context":frame.get("context",""),"player_task":frame.get("player_task",""),"allowed_system_categories":["UNCLEAR","QUESTION","HELP_OR_REPEAT","OFFSCRIPT"]}
     var rules=FileAccess.get_file_as_string(ai_rules_file)
-    var payload={"model":ai_model,"stream":false,"think":false,"keep_alive":"10m","messages":[{"role":"system","content":rules+"\nScene context: "+JSON.stringify(context)},{"role":"user","content":JSON.stringify(words)}],"format":{"type":"object","properties":{"intent":{"type":"string","enum":ai_allowed}},"required":["intent"],"additionalProperties":false},"options":{"temperature":0,"num_ctx":4096,"num_predict":80}}
+    var payload={"model":ai_model,"stream":false,"think":false,"keep_alive":"10m","messages":[{"role":"system","content":rules+"\nScene context: "+JSON.stringify(context)},{"role":"user","content":JSON.stringify(words)}],"format":{"type":"object","properties":{"intent":{"type":"string","enum":ai_allowed},"category":{"type":"string","enum":ResponsePolicy.TYPES},"deliberate":{"type":"boolean"}},"required":["intent","category","deliberate"],"additionalProperties":false},"options":{"temperature":0,"num_ctx":4096,"num_predict":160}}
     ai_turn=turn
     var error=ai_request.request("http://127.0.0.1:11435/api/chat",["Content-Type: application/json"],HTTPClient.METHOD_POST,JSON.stringify(payload))
     ai_busy=error==OK
     ai_history.append({"player":words})
     $Layout/Result.text="Game response: Interpreting with local "+ai_model+"…" if ai_busy else "Game response: Local AI unavailable. Retry or use Testing controls."
-    if not ai_busy:_narrative_retry(false)
+    if not ai_busy:handle_response("TECHNICAL_FAILURE")
 func _ai_completed(result: int, code: int, _headers: PackedStringArray, bytes: PackedByteArray):
     if not ai_busy or ai_turn!=turn:return
     ai_busy=false
     if result!=HTTPRequest.RESULT_SUCCESS or code!=200:
-        _narrative_retry(false)
+        handle_response("TECHNICAL_FAILURE")
         return
     var envelope=JSON.parse_string(bytes.get_string_from_utf8())
     var answer=null
     if envelope is Dictionary and envelope.get("message") is Dictionary and envelope.get("done_reason","")!="length":
         answer=JSON.parse_string(str(envelope.message.get("content","")))
-    if not answer is Dictionary or not answer.get("intent") is String or not answer.intent in ai_allowed:
-        _narrative_retry(false)
+    if not answer is Dictionary or not answer.get("intent") in ai_allowed or not answer.get("category") in ResponsePolicy.TYPES or not answer.get("deliberate") is bool:
+        handle_response("TECHNICAL_FAILURE")
         return
+    response_origin="AI · "+ai_model
     last_meaning=answer.intent
-    if last_meaning in ["unclear","no_match"]:
-        _narrative_retry(true)
-        return
-    var index=route_kinds.find(last_meaning)
-    if index<0:return
-    _choose(index,"Answer to "+ai_question+" — AI selected "+str(routes[index]))
+    var category=str(answer.category)
+    # A model cannot declare a hardware failure, actual silence, or turn timing.
+    if category in ["SILENCE","TECHNICAL_FAILURE","OUT_OF_TURN"]:category="UNCLEAR"
+    handle_response(category,last_meaning,answer.deliberate)
 func _exit_tree():
     _cancel_ai()
 
 
-func _narrative_retry(allow_authored_route: bool):
-    var definitions=JSON.parse_string(FileAccess.get_file_as_string(ai_meanings_file))
-    var policy: Dictionary=definitions.get(str(frame.get("id","")),{}) if definitions is Dictionary else {}
-    var route=str(policy.get("unmatched_route",""))
-    if allow_authored_route and not route.is_empty() and route in route_kinds:
-        _choose(route_kinds.find(route),"Authored fallback",false)
+func _narrative_retry(_allow_authored_route: bool):
+    handle_response("UNCLEAR")
+
+func handle_response(category: String, intent: String = "", deliberate: bool = false):
+    last_response_debug={"source":("System" if category in ["SILENCE","TECHNICAL_FAILURE","OUT_OF_TURN"] else response_origin),"node":str(frame.get("id","")),"proposed":category+" / "+intent,"result":"","outcome":"","fallback":""}
+    if not category in ResponsePolicy.TYPES:category="UNCLEAR"
+    if not waiting or not accepting_speech:category="OUT_OF_TURN"
+    if category=="OFFSCRIPT" and not deliberate:category="UNCLEAR"
+    var accepted=["SCRIPTED_RESPONSE","VALID_INTENT","SELECTION","COMMAND","CONTEXTUAL_COMMENT"]
+    if category in accepted and frame.has("allowed_authored_intents"):
+        if not frame.allowed_authored_intents.has(intent) or not _supports_bounded_intent(intent,raw_transcript):
+            category="UNCLEAR"
+            intent=""
+    interpreted_intent=intent
+    last_response_debug.result=category+(" / "+intent if not intent.is_empty() else "")
+    var consequence=responses.record(category,deliberate)
+    off_script_count=responses.offscript_total
+    silence_elapsed=0
+    var policy=responses.resolve(str(frame.get("id","")),str(frame.get("group","")),category)
+    # Imported authored fallback links are node-specific, above act/global defaults.
+    if frame.get("response_overrides",{}).has(category):policy=frame.response_overrides[category].duplicate(true)
+    var fallback_source="Global"
+    if responses.definitions.get("acts",{}).get(str(frame.get("group","")),{}).has(category):fallback_source="Act"
+    if responses.definitions.get("nodes",{}).get(str(frame.get("id","")),{}).has(category):fallback_source="Node"
+    if frame.get("response_overrides",{}).has(category):fallback_source="Story graph"
+    last_response_debug.fallback=fallback_source
+    response_resolved.emit(category,intent,consequence)
+    if consequence==5:
+        _cancel_ai()
+        var ending=str(frame.get("endgame",""))
+        last_response_debug.outcome="Consequence → "+ending
+        if story.starts.has(ending):parser.start(ending)
         return
-    interpretation_trace=""
-    fallback_reply=str(policy.get("retry_reply",unmatched_feedback))
+    if policy.get("action","")=="ignore":
+        last_response_debug.outcome="Ignored outside player turn"
+        return
+    # Never use technical/model uncertainty as evidence for a narrative route.
+    var route=str(policy.get("route",intent))
+    if category in ["TECHNICAL_FAILURE","UNCLEAR"]:route=""
+    if category=="OUT_OF_TURN":
+        route=str(policy.get("route","")) if policy.get("action","")=="interrupt" else ""
+    if category in ["SILENCE","HELP_OR_REPEAT","QUESTION","OFFSCRIPT"]:route=str(policy.get("route",""))
+    if route in route_kinds and not route in ["unclear","no_match"]:
+        if category=="OUT_OF_TURN":waiting=true # Explicit node-authored interruption only.
+        var route_label=str(routes[route_kinds.find(route)])
+        _choose(route_kinds.find(route),category+" / "+route,false)
+        last_response_debug.outcome="Route: "+route_label+" → "+str(frame.get("id",""))
+        last_response_debug.fallback=""
+        return
+    if not policy.has("reply"):
+        policy=responses.resolve("",str(frame.get("group","")),category)
+        fallback_source="Act" if responses.definitions.get("acts",{}).get(str(frame.get("group","")),{}).has(category) else "Global"
+        last_response_debug.fallback=fallback_source
+    last_response_debug.outcome="Stay here · "+fallback_source+" fallback"
+    fallback_reply=str(policy.get("reply",""))
+    if category=="SILENCE":
+        turn_silences+=1
+        if turn_silences==1:
+            fallback_reply=""
+            last_response_debug.outcome="Stay here · waiting quietly"
+            return
+        if turn_silences>=3:
+            fallback_reply=str(policy.get("stronger_reply",fallback_reply))
+            cue_requested.emit()
+    if policy.get("action","")=="cue":cue_requested.emit()
+    interpretation_trace=category+" / "+intent
     $Layout/Result.text=fallback_reply
+
+func _supports_bounded_intent(intent: String, words: String) -> bool:
+    var evidence: Dictionary=frame.get("bounded_evidence",{})
+    if not evidence.has(intent):return true
+    var spoken=tokens(words)
+    var normal=" ".join(spoken)
+    # Reject ambiguous alternatives, negation and questions; never guess a direction.
+    if "?" in words:return false
+    for phrase in ["don t","do not","not","neither","maybe","unsure","know","hate"]:
+        if (" "+phrase+" ") in (" "+normal+" "):return false
+    var supports=false
+    for option in evidence:
+        for word in evidence[option]:
+            if word in spoken:
+                if option!=intent:return false
+                supports=true
+    return supports
+
+func _build_response_debug():
+    response_debug=CanvasLayer.new()
+    response_debug.layer=120
+    add_child(response_debug)
+    response_debug.hide()
+    var panel=PanelContainer.new()
+    panel.position=Vector2(20,20)
+    panel.custom_minimum_size=Vector2(650,0)
+    response_debug.add_child(panel)
+    var box=VBoxContainer.new()
+    panel.add_child(box)
+    var title=Label.new()
+    title.text="Response testing · F3 to close · synthetic input"
+    box.add_child(title)
+    response_debug_label=Label.new()
+    box.add_child(response_debug_label)
+    debug_category=OptionButton.new()
+    for category in ResponsePolicy.TYPES:debug_category.add_item(category)
+    box.add_child(debug_category)
+    debug_intent=OptionButton.new()
+    box.add_child(debug_intent)
+    var trigger=Button.new()
+    trigger.text="Test selected response type"
+    trigger.pressed.connect(func():
+        if mic.recording or mic.pid>0:return
+        _cancel_ai()
+        var intent=debug_intent.get_item_text(debug_intent.selected) if debug_intent.selected>0 else ""
+        response_origin="Manual test"
+        raw_transcript="[Manual category test]"
+        handle_response(debug_category.get_item_text(debug_category.selected),intent,debug_category.get_item_text(debug_category.selected)=="OFFSCRIPT"))
+    box.add_child(trigger)
+func _input(event):
+    if event is InputEventKey and event.pressed and not event.echo and event.keycode==KEY_F3:
+        response_debug.visible=not response_debug.visible
+        debug_intent.clear()
+        debug_intent.add_item("Use fallback")
+        for kind in route_kinds:debug_intent.add_item(kind)
+        get_viewport().set_input_as_handled()
+
+func _recover_legacy_story():
+    # An open editor can save a cached pre-semantic graph over the newer import.
+    # Recover the existing DialogueData contract from the last explicit Twine import.
+    if story==null or not story.resource_path.ends_with("acts_0_3_cleaned.tres"):return
+    var stale=false
+    for node in story.nodes.values():
+        var signal_value=str(node.get("signalValue",""))
+        if not signal_value.begins_with("frame:"):continue
+        var data=JSON.parse_string(signal_value.trim_prefix("frame:"))
+        if data is Dictionary and not data.has("events"):stale=true;break
+    if not stale:return
+    var manifest=JSON.parse_string(FileAccess.get_file_as_string("res://Story/StageActs/Graph/acts_0_3_manifest.json"))
+    if not manifest is Dictionary or manifest.is_empty():
+        push_error("Story display data is missing. Reimport the current Twine working copy.")
+        return
+    var recovered=DialogueData.new()
+    var ids={}
+    var index=0
+    for name in manifest:
+        ids[name]=str(index)
+        index+=1
+    for name in manifest:
+        var entry=manifest[name]
+        if not entry is Dictionary or not entry.get("frame",{}).has("events"):return
+        var suffix=ids[name]
+        recovered.starts[name]="0_"+suffix
+        recovered.nodes["0_"+suffix]={"start_id":name,"link":"3_"+suffix}
+        recovered.nodes["3_"+suffix]={"signalValue":"frame:"+JSON.stringify(entry.frame),"link":"1_"+suffix}
+        var text=PackedStringArray()
+        for event in entry.frame.events:
+            if event.get("kind","") in ["dialogue","narration"]:text.append(str(event.get("text","")))
+        var options={}
+        for i in entry.links.size():
+            var target=str(entry.links[i][1])
+            if not ids.has(target):return
+            options[i]={"text":str(entry.links[i][0]),"link":"3_"+ids[target],"condition":[]}
+        recovered.nodes["1_"+suffix]={"speaker":"","dialogue":"\n\n".join(text),"options":options}
+    story=recovered
+    push_warning("Recovered outdated story display data from the last Twine import. Reload the story graph in the editor before saving it.")

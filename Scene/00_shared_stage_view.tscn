@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bin8u2w5lnn8a"]
 
-[ext_resource type="Texture2D" uid="uid://huv03blbvr2q" path="res://Visual Asset/Folio 2 audience.png" id="1_li7on"]
-[ext_resource type="Texture2D" uid="uid://di4001i0hhwbj" path="res://Visual Asset/Folio 2 stage.png" id="2_56wau"]
+[ext_resource type="Texture2D" uid="uid://huv03blbvr2q" path="res://Visual Asset/2.3/Folio 2 audience.png" id="1_li7on"]
+[ext_resource type="Texture2D" uid="uid://di4001i0hhwbj" path="res://Visual Asset/2.3/Folio 2 stage.png" id="2_56wau"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5j0sh"]
 texture = ExtResource("1_li7on")
@@ -50,3 +50,5 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_8ergx")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=886238377]

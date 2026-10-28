@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://80ygtruwb4rj"]
 
-[ext_resource type="Texture2D" uid="uid://d12v3b2r8icll" path="res://Visual Asset/Folio 2 character.png" id="2_tbksl"]
-[ext_resource type="Texture2D" uid="uid://cymc3qh6i1j7o" path="res://Visual Asset/Folio 2 MC.png" id="3_xwbd8"]
+[ext_resource type="Texture2D" uid="uid://d12v3b2r8icll" path="res://Visual Asset/2.3/Folio 2 character.png" id="2_tbksl"]
+[ext_resource type="Texture2D" uid="uid://cymc3qh6i1j7o" path="res://Visual Asset/2.3/Folio 2 MC.png" id="3_xwbd8"]
 [ext_resource type="Script" uid="uid://lbdusies4sa" path="res://Script/StageActs/stage_actor.gd" id="Script"]
+
 
 [node name="Actor" type="Control" unique_id=607315541]
 layout_mode = 3

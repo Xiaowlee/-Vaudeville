@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://d0q7cggvoli3h"]
 
-[ext_resource type="Texture2D" uid="uid://y88ktfr2vcyu" path="res://Visual Asset/Dialogue box.png" id="3_w575i"]
+[ext_resource type="Texture2D" uid="uid://y88ktfr2vcyu" path="res://Visual Asset/2.3/Dialogue box.png" id="3_w575i"]
 [ext_resource type="AudioStream" uid="uid://ck0c1pfp6m42e" path="res://Sound/soft_air_placeholder.wav" id="Ambient"]
 [ext_resource type="Script" uid="uid://bs0ql1gi00440" path="res://Script/prototype_screen.gd" id="Controller"]
 [ext_resource type="Theme" uid="uid://p3m2d0y1qrtb" path="res://UI/prototype_theme.tres" id="Theme"]

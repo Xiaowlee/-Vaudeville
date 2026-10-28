@@ -1,23 +1,15 @@
-# Main-game story
-Run the project normally and choose the main gameplay option. It opens Scene/StageActs/stage_graph_game.tscn.
+# Editing the current story
 
-## Where to edit
-Open acts_0_3_cleaned.tres in this folder with Dialogue Nodes. This is the active main-game graph, including pre-show and Acts 1–3. Its Find passage or words toolbar searches passages. Restart the editor after enabling the copied Dialogue Nodes plugin if needed.
-Do not edit the separate Week 11 trial expecting the main game to update.
-Twine remains a separate writing source. No automatic import runs; coordinate an explicit import after story revisions so graph edits are not lost.
+Edit the cleaned `2.4 StoryLine_Preproduct_W12_working.twee` beside the original in Week 11. The original was not changed.
 
-## Play
-Read/hear the NPC, then press X or the existing Speak button. Speak, then press X again to finish. Whisper transcribes; local Qwen selects an authored route. NPC text and curtains lock speaking. Space skips the displayed passage. Automatic story passages continue when finished. The existing Menu button leaves the game.
-Prompts and IFB use the phone companion. For a desktop-only test, select StageUI and enable Desktop Cue Card. Restore it off for phone testing.
-Transcripts are hidden by default; GameController > Show Player Transcript enables them for testing. AI route diagnostics are not shown to players.
+Use explicit headings. NARRATOR clears the speaker; ACTOR 1 / ACTOR 2 / MC / STAGE MANAGER name scripted speech. STAGE and SOUND are hidden production events. CUE / PHONE goes to the phone. CONTEXT and PLAYER TASK inform the interpreter; AUTHOR NOTE stays hidden. PLAYER RESPONSE contains normal Twine links such as `[[Left->A2_1_Left]]`, so Twine draws arrows.
 
-## Connect an action or sound
-Select GameController > Presentation. Add a passage ID as the key and a StageBeat resource as the value. Use its Actor Actions, Audio, NPC Voice, speaker and timing settings. The graph still owns words and destinations; this resource supplies presentation.
-The curtain opening section IDs and speed, pre-show audience sound/delay/voice, and response delay are also on GameController.
-Preserved defaults include the existing audience and Stage Manager sound assets. Specific line-by-line voice assignments need matching to the revised story. Written STAGE/SOUND notes remain notes until mapped.
+A field lasts until the next heading. Put NARRATOR before returning from a stage/sound note to visible prose. Put the actor heading before speech. Do not place production instructions inside quoted speech.
 
-## Current limits
-Windows local prototype: installed portable Whisper/Qwen files live in .local-speech. Exporting a game does not automatically distribute those engines/models. Web/Android packaging and installer setup are separate work.
-Fallback text is in interpretation_meanings.json. It stays voice-only. Missing story branches still need writing; no click-choice workaround is used.
-The old stage scene remains because earlier debug tools reference it. Main menu uses the new integrated scene. Trial files and Twine drafts were not modified.
-Verification: all 96 graph routes; fallback and refusal checks; 14 real-Qwen cases; Whisper JFK audio fixture; rendered stage screenshot. Live microphone and paired-phone playtests still required.
+Run `python tools/sync_w12_story.py --overwrite` from the main project to import the working copy. It backs up the previous graph on D, then updates content/routes and preserves matching passage positions. `--clean-source` explicitly recreates the working copy from the original: do not use it after writing new material in the working copy unless that replacement is intended.
+
+The existing Godot GameController Presentation dictionary maps passage IDs to StageBeat/production_cue resources. Optional phase_cues hold arrays of those resources under ON ENTER, ON LISTEN, ON ACCEPT, ON UNCLEAR, ON SILENCE, ON QUESTION or ON OFFSCRIPT. Unbound production prose is logged as a placeholder; it does not magically create effects.
+
+Fallback wording/counters remain in response_policy.json. Authored silence/offscript links are imported as node overrides. See W12_INTERACTIONS.csv and W12_AUDIT.md before changing response meaning. There are three older forced-continuation exceptions awaiting author decision.
+
+Run tests/story-script.py, tests/story-script.gd and tests/story-script-ai.gd for grammar, runtime and existing local Qwen checks. The last requires the already installed local model. No website deployment is needed for these desktop main-game changes; restart the running Godot game to load the new graph.

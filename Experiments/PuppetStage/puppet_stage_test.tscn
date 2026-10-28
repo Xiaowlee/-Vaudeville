@@ -1,0 +1,405 @@
+[gd_scene format=3 uid="uid://dwgnu3budtupb"]
+
+[ext_resource type="Texture2D" uid="uid://dgwhcsywojkgv" path="res://Experiments/PuppetStage/Art/character_1.png" id="C1"]
+[ext_resource type="Texture2D" uid="uid://dgtuo6ufucepu" path="res://Experiments/PuppetStage/Art/character_2.png" id="C2"]
+[ext_resource type="Texture2D" uid="uid://buq36xcafpg53" path="res://Experiments/PuppetStage/Art/character_3.png" id="C3"]
+[ext_resource type="Texture2D" uid="uid://dfu63fdf6h8lj" path="res://Experiments/PuppetStage/Art/character_4.png" id="C4"]
+[ext_resource type="Texture2D" uid="uid://d08vhdq1h1cgc" path="res://Experiments/PuppetStage/Art/character_5.png" id="C5"]
+[ext_resource type="Texture2D" uid="uid://c2hv5v4p8bpvv" path="res://Experiments/PuppetStage/Art/character_6.png" id="C6"]
+[ext_resource type="Script" uid="uid://dx4wmc1msumpd" path="res://Experiments/PuppetStage/depth_layer.gd" id="Depth"]
+[ext_resource type="Script" uid="uid://c67biiggoghqn" path="res://Experiments/PuppetStage/editor_frame.gd" id="EditorFrame"]
+[ext_resource type="Script" uid="uid://dwewnd7cw8fh6" path="res://Experiments/PuppetStage/stage_lighting.gd" id="Lighting"]
+[ext_resource type="Shader" uid="uid://bsccaponh7sjs" path="res://Experiments/PuppetStage/stage_lighting.gdshader" id="LightShader"]
+[ext_resource type="Script" uid="uid://bxuisjwuhcs23" path="res://Experiments/PuppetStage/stage_test.gd" id="Main"]
+[ext_resource type="Script" uid="uid://bhise1g4u8f4w" path="res://Experiments/PuppetStage/puppet.gd" id="Puppet"]
+[ext_resource type="Texture2D" uid="uid://b4k308108iete" path="res://Experiments/PuppetStage/Art/stage_1.png" id="S1"]
+[ext_resource type="Texture2D" uid="uid://dpxijil5jge7x" path="res://Experiments/PuppetStage/Art/stage_2.png" id="S2"]
+[ext_resource type="Texture2D" uid="uid://bj0bbbaa2kdmd" path="res://Experiments/PuppetStage/Art/stage_3.png" id="S3"]
+[ext_resource type="Texture2D" uid="uid://crewud26ywp3f" path="res://Experiments/PuppetStage/Art/stage_4.png" id="S4"]
+[ext_resource type="Texture2D" uid="uid://cx64gw23uim0x" path="res://Experiments/PuppetStage/Art/stage_5.png" id="S5"]
+[ext_resource type="Texture2D" uid="uid://cnwsqwjat7tqa" path="res://Experiments/PuppetStage/Art/stage_6.png" id="S6"]
+[ext_resource type="Texture2D" uid="uid://djiupgdnaok2u" path="res://Experiments/PuppetStage/Art/stage_7.png" id="S7"]
+[ext_resource type="Texture2D" uid="uid://csh8pw13eypuy" path="res://Experiments/PuppetStage/Art/stage_8.png" id="S8"]
+[ext_resource type="Texture2D" uid="uid://cm1gge8vr4yw5" path="res://Experiments/PuppetStage/Art/stage_9.png" id="S9"]
+[ext_resource type="Texture2D" uid="uid://bi26uu737wxkk" path="res://Experiments/PuppetStage/Art/TestSheet.png" id="Sheet"]
+
+[sub_resource type="ShaderMaterial" id="LightMaterial"]
+shader = ExtResource("LightShader")
+shader_parameter/feet = Vector2(0, 220)
+shader_parameter/top_y = -360.0
+shader_parameter/beam_width = 370.0
+shader_parameter/pool_size = Vector2(340, 90)
+shader_parameter/softness = 0.16
+shader_parameter/top_softness = 0.01
+shader_parameter/light_color = Color(0.9700188, 0.75806683, 0.9494752, 1)
+shader_parameter/beam_opacity = 0.34
+shader_parameter/pool_opacity = 0.61
+shader_parameter/shadow_opacity = 0.0
+
+[sub_resource type="AtlasTexture" id="Cell0"]
+atlas = ExtResource("Sheet")
+region = Rect2(0, 0, 1752, 1752)
+
+[sub_resource type="AtlasTexture" id="Cell1"]
+atlas = ExtResource("Sheet")
+region = Rect2(1752, 0, 1752, 1752)
+
+[sub_resource type="SpriteFrames" id="PlayerSheet"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Cell0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Cell1")
+}],
+"loop": 0,
+"name": &"poses",
+"speed": 1.0
+}]
+
+[sub_resource type="SpriteFrames" id="PlayerFiles"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("C1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("C2")
+}],
+"loop": 0,
+"name": &"poses",
+"speed": 1.0
+}]
+
+[sub_resource type="AtlasTexture" id="Cell4"]
+atlas = ExtResource("Sheet")
+region = Rect2(0, 1752, 1752, 1752)
+
+[sub_resource type="AtlasTexture" id="Cell5"]
+atlas = ExtResource("Sheet")
+region = Rect2(1752, 1752, 1752, 1752)
+
+[sub_resource type="SpriteFrames" id="StageManagerSheet"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Cell4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Cell5")
+}],
+"loop": 0,
+"name": &"poses",
+"speed": 1.0
+}]
+
+[sub_resource type="SpriteFrames" id="StageManagerFiles"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("C5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("C6")
+}],
+"loop": 0,
+"name": &"poses",
+"speed": 1.0
+}]
+
+[sub_resource type="AtlasTexture" id="Cell6"]
+atlas = ExtResource("Sheet")
+region = Rect2(3504, 1752, 1752, 1752)
+
+[sub_resource type="AtlasTexture" id="Cell7"]
+atlas = ExtResource("Sheet")
+region = Rect2(5256, 1752, 1752, 1752)
+
+[sub_resource type="SpriteFrames" id="Actor1Sheet"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Cell6")
+}, {
+"duration": 1.0,
+"texture": SubResource("Cell7")
+}],
+"loop": 0,
+"name": &"poses",
+"speed": 1.0
+}]
+
+[sub_resource type="SpriteFrames" id="Actor1Files"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("C3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("C4")
+}],
+"loop": 0,
+"name": &"poses",
+"speed": 1.0
+}]
+
+[sub_resource type="StyleBoxEmpty" id="ControlsOverlay"]
+
+[node name="PuppetStageTest" type="Node2D" unique_id=1299910571]
+script = ExtResource("Main")
+controls_height = 89.0
+
+[node name="World" type="Node2D" parent="." unique_id=280916919]
+position = Vector2(640, 360)
+
+[node name="Backdrop" type="Polygon2D" parent="World" unique_id=357602189]
+visible = false
+position = Vector2(-11.000046, 3.9999838)
+scale = Vector2(1.0899999, 1.0899999)
+color = Color(0.07383185, 0.04353904, 0.3805301, 1)
+polygon = PackedVector2Array(-700, -400, 700, -400, 707.3395, 407.33948, -700, 400)
+
+[node name="RearBackdrop" type="Node2D" parent="World" unique_id=778004014]
+script = ExtResource("Depth")
+travel = Vector2(5, 3)
+
+[node name="Art" type="Sprite2D" parent="World/RearBackdrop" unique_id=652084003]
+self_modulate = Color(0.48000002, 0.41999996, 0.72, 1)
+position = Vector2(-6.9999466, -55.999996)
+scale = Vector2(0.39947918, 0.35)
+texture = ExtResource("S9")
+
+[node name="Floor" type="Node2D" parent="World" unique_id=1561657575]
+script = ExtResource("Depth")
+travel = Vector2(17, 6)
+
+[node name="Art" type="Sprite2D" parent="World/Floor" unique_id=1808831913]
+self_modulate = Color(0.48000002, 0.41999996, 0.72, 1)
+position = Vector2(8.000008, -8.000006)
+scale = Vector2(0.3740741, 0.3740741)
+texture = ExtResource("S8")
+
+[node name="RearWings" type="Node2D" parent="World" unique_id=1954111339]
+script = ExtResource("Depth")
+travel = Vector2(12, 5)
+
+[node name="Art" type="Sprite2D" parent="World/RearWings" unique_id=566981312]
+self_modulate = Color(0.48000002, 0.41999996, 0.72, 1)
+position = Vector2(2.670288e-05, 24.00001)
+scale = Vector2(0.38194445, 0.38194445)
+texture = ExtResource("S5")
+
+[node name="MiddleCurtains" type="Node2D" parent="World" unique_id=1610431168]
+script = ExtResource("Depth")
+travel = Vector2(20, 8)
+
+[node name="Art" type="Sprite2D" parent="World/MiddleCurtains" unique_id=976003920]
+self_modulate = Color(0.48000002, 0.41999996, 0.72, 1)
+position = Vector2(-7.6293945e-06, 24)
+scale = Vector2(0.36944446, 0.36944446)
+texture = ExtResource("S4")
+
+[node name="FrontWings" type="Node2D" parent="World" unique_id=912126685]
+script = ExtResource("Depth")
+travel = Vector2(28, 10)
+
+[node name="Art" type="Sprite2D" parent="World/FrontWings" unique_id=248725894]
+self_modulate = Color(0.48000002, 0.41999996, 0.72, 1)
+position = Vector2(-1.5258789e-05, 16.000008)
+scale = Vector2(0.36744788, 0.36744785)
+texture = ExtResource("S3")
+
+[node name="Lighting" type="Node2D" parent="World" unique_id=1551517233]
+material = SubResource("LightMaterial")
+script = ExtResource("Lighting")
+transition_seconds = 0.2
+preview_hold_seconds = null
+top_softness = 0.01
+focus_character = 2
+inactive_tint = Color(0.547481, 0.48268998, 0.78501076, 1)
+light_color = Color(0.9700188, 0.75806683, 0.9494752, 1)
+beam_opacity = 0.34
+pool_opacity = 0.61
+beam_width = 370.0
+edge_softness = 0.16
+
+[node name="Performers" type="Node2D" parent="World" unique_id=1820253125]
+script = ExtResource("Depth")
+travel = Vector2(17, 6)
+
+[node name="Player" type="Node2D" parent="World/Performers" unique_id=1664180426]
+modulate = Color(0.547481, 0.48268998, 0.78501076, 1)
+position = Vector2(-290, 220)
+script = ExtResource("Puppet")
+hand_drawn_motion = true
+flip_seconds = 0.2
+talking = true
+bounce_height = 10.0
+bounce_speed = 0.5
+sheet_frames = SubResource("PlayerSheet")
+file_frames = SubResource("PlayerFiles")
+
+[node name="Swing" type="Node2D" parent="World/Performers/Player" unique_id=1387939896]
+
+[node name="Card" type="Node2D" parent="World/Performers/Player/Swing" unique_id=514526896]
+
+[node name="Art" type="AnimatedSprite2D" parent="World/Performers/Player/Swing/Card" unique_id=260067578]
+position = Vector2(0, -190)
+scale = Vector2(0.23, 0.23)
+sprite_frames = SubResource("PlayerFiles")
+animation = &"poses"
+
+[node name="StageManager" type="Node2D" parent="World/Performers" unique_id=1312345879]
+position = Vector2(0, 220)
+script = ExtResource("Puppet")
+hand_drawn_motion = true
+motion_fps = 4.0
+flip_seconds = 0.2
+talking = true
+bounce_height = 20.0
+bounce_speed = 1.0
+sheet_frames = SubResource("StageManagerSheet")
+file_frames = SubResource("StageManagerFiles")
+
+[node name="Swing" type="Node2D" parent="World/Performers/StageManager" unique_id=2044532643]
+
+[node name="Card" type="Node2D" parent="World/Performers/StageManager/Swing" unique_id=673017824]
+
+[node name="Art" type="AnimatedSprite2D" parent="World/Performers/StageManager/Swing/Card" unique_id=158997361]
+position = Vector2(0, -190)
+scale = Vector2(0.23, 0.23)
+sprite_frames = SubResource("StageManagerFiles")
+animation = &"poses"
+
+[node name="Actor1" type="Node2D" parent="World/Performers" unique_id=1962565981]
+modulate = Color(0.547481, 0.48268998, 0.78501076, 1)
+position = Vector2(290, 220)
+script = ExtResource("Puppet")
+hand_drawn_motion = true
+flip_seconds = 0.2
+talking = true
+bounce_height = 10.0
+bounce_speed = 1.0
+sheet_frames = SubResource("Actor1Sheet")
+file_frames = SubResource("Actor1Files")
+
+[node name="Swing" type="Node2D" parent="World/Performers/Actor1" unique_id=252187103]
+
+[node name="Card" type="Node2D" parent="World/Performers/Actor1/Swing" unique_id=28299201]
+
+[node name="Art" type="AnimatedSprite2D" parent="World/Performers/Actor1/Swing/Card" unique_id=1911911048]
+position = Vector2(0, -190)
+scale = Vector2(0.23, 0.23)
+sprite_frames = SubResource("Actor1Files")
+animation = &"poses"
+
+[node name="NearCurtains" type="Node2D" parent="World" unique_id=660012026]
+script = ExtResource("Depth")
+travel = Vector2(34, 12)
+
+[node name="Art" type="Sprite2D" parent="World/NearCurtains" unique_id=789202379]
+self_modulate = Color(0.48000002, 0.41999996, 0.72, 1)
+position = Vector2(0, 16.000008)
+scale = Vector2(0.36504632, 0.36504632)
+texture = ExtResource("S2")
+
+[node name="TopTrim" type="Node2D" parent="World" unique_id=1035211757]
+script = ExtResource("Depth")
+travel = Vector2(8, 3)
+
+[node name="Art" type="Sprite2D" parent="World/TopTrim" unique_id=1110823542]
+self_modulate = Color(0.48000002, 0.41999996, 0.72, 1)
+position = Vector2(-7.9999714, 104.00001)
+scale = Vector2(0.39861104, 0.39861104)
+texture = ExtResource("S7")
+
+[node name="Audience" type="Node2D" parent="World" unique_id=1272616982]
+script = ExtResource("Depth")
+travel = Vector2(45, 16)
+
+[node name="Art" type="Sprite2D" parent="World/Audience" unique_id=1021828419]
+self_modulate = Color(0.48000002, 0.41999996, 0.72, 1)
+position = Vector2(7.9999733, -32)
+scale = Vector2(0.37824082, 0.3782408)
+texture = ExtResource("S6")
+
+[node name="Frame" type="Node2D" parent="World" unique_id=243997666]
+script = ExtResource("Depth")
+travel = Vector2(0, 0)
+
+[node name="Art" type="Sprite2D" parent="World/Frame" unique_id=147553572]
+self_modulate = Color(0.48000002, 0.41999996, 0.72, 1)
+position = Vector2(2.4795532e-05, 8.000008)
+scale = Vector2(0.3351852, 0.33518517)
+texture = ExtResource("S1")
+
+[node name="Controls" type="CanvasLayer" parent="." unique_id=773574177]
+
+[node name="Panel" type="PanelContainer" parent="Controls" unique_id=1376678328]
+offset_top = 631.0
+offset_right = 1280.0
+offset_bottom = 720.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("ControlsOverlay")
+
+[node name="Rows" type="VBoxContainer" parent="Controls/Panel" unique_id=1598397963]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Buttons" type="HFlowContainer" parent="Controls/Panel/Rows" unique_id=2073280778]
+layout_mode = 2
+alignment = 1
+
+[node name="Flip" type="Button" parent="Controls/Panel/Rows/Buttons" unique_id=1897926704]
+layout_mode = 2
+text = "Flip characters / Space"
+
+[node name="Mode" type="OptionButton" parent="Controls/Panel/Rows/Buttons" unique_id=1114681177]
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "Mouse parallax"
+popup/item_0/id = 0
+popup/item_1/text = "Slow automatic"
+popup/item_1/id = 1
+popup/item_2/text = "Flat / off"
+popup/item_2/id = 2
+
+[node name="Source" type="OptionButton" parent="Controls/Panel/Rows/Buttons" unique_id=328493211]
+layout_mode = 2
+selected = 0
+item_count = 2
+popup/item_0/text = "Sprite sheet"
+popup/item_0/id = 0
+popup/item_1/text = "Individual files"
+popup/item_1/id = 1
+
+[node name="Label" type="Label" parent="Controls/Panel/Rows/Buttons" unique_id=1238513023]
+layout_mode = 2
+text = "Depth"
+
+[node name="Depth" type="HSlider" parent="Controls/Panel/Rows/Buttons" unique_id=729866724]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+max_value = 2.0
+step = 0.05
+value = 1.0
+
+[node name="Back" type="Button" parent="Controls/Panel/Rows/Buttons" unique_id=701912736]
+layout_mode = 2
+text = "Menu"
+
+[node name="Talk" type="CheckButton" parent="Controls/Panel/Rows/Buttons" unique_id=215732364]
+layout_mode = 2
+text = "Talking"
+
+[node name="Note" type="Label" parent="Controls/Panel/Rows" unique_id=1692877033]
+layout_mode = 2
+text = "Sheet: two different poses per character."
+horizontal_alignment = 1
+
+[node name="EditorFrame" type="Node2D" parent="." unique_id=1870117155]
+z_index = 100
+script = ExtResource("EditorFrame")

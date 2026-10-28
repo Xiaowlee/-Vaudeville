@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=3]
+[ext_resource type="Script" path="res://Script/StageActs/Graph/production_cue.gd" id="1"]
+[ext_resource type="AudioStream" path="res://Sound/jarasnat-curtain-version-1-337564.mp3" id="2"]
+[resource]
+script = ExtResource("1")
+actor_id = "mother"
+actor_offsets = {"player": Vector2(12, 0)}
+stage_tint = Color(0.95, 0.9, 1, 1)
+sfx_on_start = Array[AudioStream]([ExtResource("2")])
+sfx_volume_db = -30.0
+phone_message = "Follow the cue."
+state_changes = {"act1_cue_reached": true}
+unresolved = "Temporary stage/sound proof using existing curtain sound; replace with authored cue sound."

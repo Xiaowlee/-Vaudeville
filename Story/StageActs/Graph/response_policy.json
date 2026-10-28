@@ -1,0 +1,160 @@
+{
+  "thresholds": {
+    "correction": 1,
+    "disruption": 3,
+    "termination": 5
+  },
+  "silence_seconds": 15,
+  "global": {
+    "TECHNICAL_FAILURE": {
+      "action": "stay",
+      "reply": "The microphone or interpreter could not complete that attempt. Please try again."
+    },
+    "UNCLEAR": {
+      "action": "stay",
+      "reply": "Stage Manager: “One more time, please.”"
+    },
+    "SILENCE": {
+      "action": "stay",
+      "reply": "Stage Manager: “We are waiting for your line.”",
+      "stronger_reply": "Stage Manager: “Your cue is ready. Take your time, then speak.”"
+    },
+    "HELP_OR_REPEAT": {
+      "action": "cue",
+      "reply": "Stage Manager: “Let me give you the cue again.”"
+    },
+    "QUESTION": {
+      "action": "cue",
+      "reply": "Stage Manager: “We will come back to that. Your cue, please.”"
+    },
+    "CONTEXTUAL_COMMENT": {
+      "action": "cue",
+      "reply": "Stage Manager: “I hear you. Now, your cue.”"
+    },
+    "OFFSCRIPT": {
+      "action": "stay",
+      "reply": "Stage Manager: “Stay with the script.”"
+    },
+    "OUT_OF_TURN": {
+      "action": "ignore"
+    },
+    "SCRIPTED_RESPONSE": {
+      "action": "cue",
+      "reply": "Stage Manager: “Let me give you the cue again.”"
+    },
+    "VALID_INTENT": {
+      "action": "cue",
+      "reply": "Stage Manager: “Let me give you the cue again.”"
+    },
+    "COMMAND": {
+      "action": "cue",
+      "reply": "Stage Manager: “Let me give you the cue again.”"
+    },
+    "SELECTION": {
+      "action": "cue",
+      "reply": "Stage Manager: “Let me give you the cue again.”"
+    }
+  },
+  "acts": {
+    "Act 1": {
+      "UNCLEAR": {
+        "action": "cue",
+        "reply": "Actor 1: “Tell me again, darling. What do you mean?”"
+      }
+    }
+  },
+  "nodes": {
+    "A1_0_Begin": {
+      "OFFSCRIPT": {
+        "route": "other",
+        "action": "route",
+        "reply": "Stage Manager: “Stay with the script.”"
+      }
+    },
+    "A1_0_No": {
+      "OFFSCRIPT": {
+        "route": "other",
+        "action": "route",
+        "reply": "Stage Manager: “Stay with the script.”"
+      }
+    },
+    "A1_1_ACTOR 1'sQuestion": {
+      "SILENCE": {
+        "route": "silence",
+        "action": "route"
+      },
+      "OFFSCRIPT": {
+        "action": "route",
+        "route": "other",
+        "reply": "Actor 1: “That is not your line, darling.”"
+      }
+    },
+    "A1_1_Offtopic": {
+      "SILENCE": {
+        "route": "silence",
+        "action": "route"
+      }
+    },
+    "A1_1_WrongLine": {
+      "SILENCE": {
+        "route": "silence",
+        "action": "route"
+      }
+    },
+    "A1_3_ThirdFailure": {
+      "SILENCE": {
+        "route": "silence",
+        "action": "route"
+      }
+    },
+    "A2_1_OffscriptAgain": {
+      "OFFSCRIPT": {
+        "action": "route",
+        "route": "choice_2",
+        "reply": "Stage Manager: “Stay with the script.”"
+      }
+    },
+    "A2_2_Hall": {
+      "OFFSCRIPT": {
+        "route": "choice_2",
+        "action": "route",
+        "reply": "Stage Manager: “Stay with the script.”"
+      }
+    },
+    "A2_2_HallCommentAwkward": {
+      "OFFSCRIPT": {
+        "route": "choice_2",
+        "action": "route",
+        "reply": "Stage Manager: “Stay with the script.”"
+      }
+    },
+    "A2_2_Misleading": {
+      "OFFSCRIPT": {
+        "route": "choice_2",
+        "action": "route",
+        "reply": "Stage Manager: “Stay with the script.”"
+      }
+    },
+    "A2_2_SecondMisleading": {
+      "OFFSCRIPT": {
+        "route": "choice_2",
+        "action": "route",
+        "reply": "Stage Manager: “Stay with the script.”"
+      }
+    },
+    "A2_1_Entrance": {
+      "OFFSCRIPT": {
+        "action": "route",
+        "route": "choice_2",
+        "reply": "Stage Manager: “Stay with the script.”"
+      }
+    },
+    "A2_1_Offscript": {
+      "OFFSCRIPT": {
+        "action": "route",
+        "route": "choice_2",
+        "reply": "Stage Manager: “Stay with the script.”"
+      }
+    }
+  }
+}

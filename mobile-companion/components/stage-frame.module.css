@@ -1,0 +1,180 @@
+/* Structure only. Sizes, type, and colours come from stage-frame-settings.ts. */
+
+.stage {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  container-type: size;
+  background: var(--stage-background);
+  color: var(--status-color);
+  font-family: var(--reading-font-family);
+  --top-block-height: min(
+    calc(100cqw * var(--curtain-bottom) / var(--source-width)),
+    var(--top-block-max)
+  );
+  --bottom-ornament-height: min(
+    calc(100cqw * var(--bottom-visible-height) / var(--source-width)),
+    var(--bottom-ornament-max)
+  );
+  --rail-width: calc(
+    100cqh * var(--rail-clearance) / var(--rail-span) * var(--rail-width-scale)
+  );
+}
+
+.rail,
+.topAnchor,
+.bottomAnchor,
+.character {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+
+.rail {
+  top: 0;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.railLeft {
+  left: 0;
+  transform-origin: left center;
+}
+
+.railRight {
+  right: 0;
+  transform-origin: right center;
+}
+
+.topAnchor,
+.bottomAnchor {
+  left: 50%;
+  z-index: 3;
+  transform: translateX(-50%);
+}
+
+.topAnchor {
+  top: 0;
+  width: min(100%, calc(var(--top-block-max) * var(--source-width) / var(--curtain-bottom)));
+}
+
+.bottomAnchor {
+  bottom: 0;
+  width: min(100%, calc(var(--bottom-ornament-max) * var(--source-width) / var(--bottom-visible-height)));
+}
+
+.ornament,
+.curtain {
+  position: relative;
+  overflow: hidden;
+}
+
+.curtain {
+  position: absolute;
+}
+
+.art {
+  position: absolute;
+  display: block;
+  max-width: none;
+  max-height: none;
+}
+
+.character {
+  left: 50%;
+  z-index: 4;
+  transform: translateX(-50%);
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: var(--character-size);
+  height: var(--character-size);
+  bottom: calc(var(--bottom-ornament-height) + env(safe-area-inset-bottom, 0px) + var(--character-gap));
+  padding: 0.4rem;
+  border: 1.5px dashed rgba(239, 234, 255, 0.72);
+  background: rgba(26, 16, 60, 0.28);
+  color: var(--status-color);
+  font-size: clamp(0.68rem, 2.5vw, 0.85rem);
+  line-height: 1.25;
+  text-align: center;
+}
+
+.reading {
+  position: absolute;
+  z-index: 5;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  top: calc(max(var(--top-block-height), env(safe-area-inset-top, 0px)) + var(--content-margin));
+  right: calc(var(--rail-width) + env(safe-area-inset-right, 0px) + var(--content-margin));
+  bottom: calc(
+    var(--bottom-ornament-height) + env(safe-area-inset-bottom, 0px) + var(--character-gap) +
+      var(--character-size) + var(--content-margin)
+  );
+  left: calc(var(--rail-width) + env(safe-area-inset-left, 0px) + var(--content-margin));
+}
+
+.column,
+.columnStatus {
+  width: min(100%, var(--reading-max-width));
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--region-gap);
+}
+
+.columnStatus {
+  min-height: 100%;
+  justify-content: center;
+}
+
+.status {
+  margin: 0;
+  font-size: var(--reading-font-size);
+  line-height: var(--reading-line-height);
+  text-align: center;
+}
+
+.cue {
+  margin: 0;
+  border-radius: var(--card-radius);
+  padding: 0.85rem 1rem 1rem;
+}
+
+.cueLabel {
+  margin: 0 0 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.cueText {
+  margin: 0;
+  font-size: var(--reading-font-size);
+  line-height: var(--reading-line-height);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  user-select: text;
+}
+
+.prompt {
+  background: var(--prompt-background);
+  color: var(--prompt-color);
+}
+
+.prompt .cueLabel {
+  color: var(--prompt-label);
+}
+
+.ifb {
+  background: var(--ifb-background);
+  color: var(--ifb-color);
+}
+
+.ifb .cueLabel {
+  color: var(--ifb-label);
+}
