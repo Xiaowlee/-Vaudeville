@@ -6,12 +6,12 @@
 [ext_resource type="Texture2D" uid="uid://dfu63fdf6h8lj" path="res://Experiments/PuppetStage/Art/character_4.png" id="C4"]
 [ext_resource type="Texture2D" uid="uid://d08vhdq1h1cgc" path="res://Experiments/PuppetStage/Art/character_5.png" id="C5"]
 [ext_resource type="Texture2D" uid="uid://c2hv5v4p8bpvv" path="res://Experiments/PuppetStage/Art/character_6.png" id="C6"]
-[ext_resource type="Script" uid="uid://dx4wmc1msumpd" path="res://Experiments/PuppetStage/depth_layer.gd" id="Depth"]
-[ext_resource type="Script" uid="uid://c67biiggoghqn" path="res://Experiments/PuppetStage/editor_frame.gd" id="EditorFrame"]
-[ext_resource type="Script" uid="uid://dwewnd7cw8fh6" path="res://Experiments/PuppetStage/stage_lighting.gd" id="Lighting"]
-[ext_resource type="Shader" uid="uid://bsccaponh7sjs" path="res://Experiments/PuppetStage/stage_lighting.gdshader" id="LightShader"]
-[ext_resource type="Script" uid="uid://bxuisjwuhcs23" path="res://Experiments/PuppetStage/stage_test.gd" id="Main"]
-[ext_resource type="Script" uid="uid://bhise1g4u8f4w" path="res://Experiments/PuppetStage/puppet.gd" id="Puppet"]
+[ext_resource type="Script" uid="uid://dx4wmc1msumpd" path="res://Experiments/PuppetStage/Scripts/depth_layer.gd" id="Depth"]
+[ext_resource type="Script" uid="uid://c67biiggoghqn" path="res://Experiments/PuppetStage/Scripts/editor_frame.gd" id="EditorFrame"]
+[ext_resource type="Script" uid="uid://dwewnd7cw8fh6" path="res://Experiments/PuppetStage/Scripts/stage_lighting.gd" id="Lighting"]
+[ext_resource type="Shader" uid="uid://bsccaponh7sjs" path="res://Experiments/PuppetStage/Shaders/stage_lighting.gdshader" id="LightShader"]
+[ext_resource type="Script" uid="uid://bxuisjwuhcs23" path="res://Experiments/PuppetStage/Scripts/stage_test.gd" id="Main"]
+[ext_resource type="Script" uid="uid://bhise1g4u8f4w" path="res://Experiments/PuppetStage/Scripts/puppet.gd" id="Puppet"]
 [ext_resource type="Texture2D" uid="uid://b4k308108iete" path="res://Experiments/PuppetStage/Art/stage_1.png" id="S1"]
 [ext_resource type="Texture2D" uid="uid://dpxijil5jge7x" path="res://Experiments/PuppetStage/Art/stage_2.png" id="S2"]
 [ext_resource type="Texture2D" uid="uid://bj0bbbaa2kdmd" path="res://Experiments/PuppetStage/Art/stage_3.png" id="S3"]
@@ -25,15 +25,15 @@
 
 [sub_resource type="ShaderMaterial" id="LightMaterial"]
 shader = ExtResource("LightShader")
-shader_parameter/feet = Vector2(0, 220)
+shader_parameter/feet = Vector2(302.5556, -214.66998)
 shader_parameter/top_y = -360.0
 shader_parameter/beam_width = 370.0
 shader_parameter/pool_size = Vector2(340, 90)
 shader_parameter/softness = 0.16
 shader_parameter/top_softness = 0.01
 shader_parameter/light_color = Color(0.9700188, 0.75806683, 0.9494752, 1)
-shader_parameter/beam_opacity = 0.34
-shader_parameter/pool_opacity = 0.61
+shader_parameter/beam_opacity = 0.0
+shader_parameter/pool_opacity = 0.0
 shader_parameter/shadow_opacity = 0.0
 
 [sub_resource type="AtlasTexture" id="Cell0"]
@@ -211,12 +211,11 @@ scale = Vector2(0.36744788, 0.36744785)
 texture = ExtResource("S3")
 
 [node name="Lighting" type="Node2D" parent="World" unique_id=1551517233]
+process_priority = 20
 material = SubResource("LightMaterial")
 script = ExtResource("Lighting")
 transition_seconds = 0.2
-preview_hold_seconds = null
 top_softness = 0.01
-focus_character = 2
 inactive_tint = Color(0.547481, 0.48268998, 0.78501076, 1)
 light_color = Color(0.9700188, 0.75806683, 0.9494752, 1)
 beam_opacity = 0.34
@@ -237,6 +236,8 @@ flip_seconds = 0.2
 talking = true
 bounce_height = 10.0
 bounce_speed = 0.5
+lighting_anchor = null
+lighting_anchor_offset = null
 sheet_frames = SubResource("PlayerSheet")
 file_frames = SubResource("PlayerFiles")
 
@@ -251,6 +252,7 @@ sprite_frames = SubResource("PlayerFiles")
 animation = &"poses"
 
 [node name="StageManager" type="Node2D" parent="World/Performers" unique_id=1312345879]
+modulate = Color(0.547481, 0.48268998, 0.78501076, 1)
 position = Vector2(0, 220)
 script = ExtResource("Puppet")
 hand_drawn_motion = true
@@ -259,6 +261,8 @@ flip_seconds = 0.2
 talking = true
 bounce_height = 20.0
 bounce_speed = 1.0
+lighting_anchor = null
+lighting_anchor_offset = null
 sheet_frames = SubResource("StageManagerSheet")
 file_frames = SubResource("StageManagerFiles")
 
@@ -273,7 +277,6 @@ sprite_frames = SubResource("StageManagerFiles")
 animation = &"poses"
 
 [node name="Actor1" type="Node2D" parent="World/Performers" unique_id=1962565981]
-modulate = Color(0.547481, 0.48268998, 0.78501076, 1)
 position = Vector2(290, 220)
 script = ExtResource("Puppet")
 hand_drawn_motion = true
@@ -281,6 +284,8 @@ flip_seconds = 0.2
 talking = true
 bounce_height = 10.0
 bounce_speed = 1.0
+lighting_anchor = null
+lighting_anchor_offset = null
 sheet_frames = SubResource("Actor1Sheet")
 file_frames = SubResource("Actor1Files")
 
@@ -315,6 +320,7 @@ scale = Vector2(0.39861104, 0.39861104)
 texture = ExtResource("S7")
 
 [node name="Audience" type="Node2D" parent="World" unique_id=1272616982]
+z_index = 1
 script = ExtResource("Depth")
 travel = Vector2(45, 16)
 
@@ -325,6 +331,7 @@ scale = Vector2(0.37824082, 0.3782408)
 texture = ExtResource("S6")
 
 [node name="Frame" type="Node2D" parent="World" unique_id=243997666]
+z_index = 2
 script = ExtResource("Depth")
 travel = Vector2(0, 0)
 

@@ -12,7 +12,7 @@ F5: preserved Intro → Start Game → Scene 0. Drag **on** into the blank and r
 
 Voice uses Windows default recording input directly, not Godot's legacy amplitude bus or Vosk. The helper loads an en-US phrase grammar including target and distractor alternatives so opposite words can be rejected by the matcher. Partial/final/rejected results, confidence, engine and audio format print in Output. No new install. Human microphone accuracy still needs a live check. Include *.ps1 in export's non-resource filters.
 
-Run: Godot --headless --path <project> --script res://Script/scene0_interaction_test.gd
+Run: Godot --headless --path <project> --script res://tests/Legacy/scene0_interaction_test.gd
 The test uses actual mouse input events and separately injected transcripts; it does not assert live microphone recognition.
 
 ## Scene 1: Headphones
@@ -24,4 +24,4 @@ Room/AnimatedSprite2D uses the supplied standby and wear sprite sheets. Headphon
 
 Next appears after the animation. Assign next_scene when Scene 2 exists; until then it stays completed with Next disabled. Five-second auto-next is already supported and tested with a temporary destination.
 
-Run Scene 1 tests with --script res://Script/scene1_interaction_test.gd; Scene 0 regression tests remain res://Script/scene0_interaction_test.gd. The user confirms Scene 0 voice works; the working recognition implementation was preserved.
+Run Scene 1 tests with --script res://tests/Legacy/scene1_interaction_test.gd; Scene 0 regression tests remain res://tests/Legacy/scene0_interaction_test.gd. The user confirms Scene 0 voice works; the working recognition implementation was preserved.

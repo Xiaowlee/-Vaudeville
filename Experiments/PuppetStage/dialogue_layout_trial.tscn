@@ -1,11 +1,21 @@
 [gd_scene format=3 uid="uid://cp6wpaljf8da2"]
 
-[ext_resource type="FontFile" uid="uid://di3h2p4jyrmkt" path="res://Font/JacquesFrancois-Regular.ttf" id="Font"]
+[ext_resource type="Texture2D" uid="uid://b2bns87qu6tk6" path="res://Visual Asset/2.5/mask.jpg" id="3_idwps"]
+[ext_resource type="FontFile" uid="uid://cjd32xc5x3pgb" path="res://Font/LavishlyYours-Regular.ttf" id="5_4yk0k"]
+[ext_resource type="Script" uid="uid://dtclk2sij1jtb" path="res://Experiments/PuppetStage/Scripts/puppet_text_effect.gd" id="6_ifpfd"]
+[ext_resource type="Script" uid="uid://dnqu1452oy4b7" path="res://Experiments/PuppetStage/Scripts/surround_pattern.gd" id="Atmosphere"]
+[ext_resource type="Script" uid="uid://ejj83qnfiumy" path="res://Experiments/PuppetStage/Scripts/audience_motion.gd" id="AudienceMotion"]
+[ext_resource type="Script" uid="uid://bnjhepbh07n3d" path="res://Experiments/PuppetStage/Scripts/frame_cut_in.gd" id="CutIn"]
+[ext_resource type="FontFile" uid="uid://ctskr61g8oa87" path="res://Font/InstrumentSerif-Regular.ttf" id="Font"]
 [ext_resource type="PackedScene" uid="uid://dwgnu3budtupb" path="res://Experiments/PuppetStage/puppet_stage_test.tscn" id="Stage"]
-[ext_resource type="Script" uid="uid://dr7u5v7isonfx" path="res://Experiments/PuppetStage/dialogue_layout_trial.gd" id="Trial"]
+[ext_resource type="Script" uid="uid://dr7u5v7isonfx" path="res://Experiments/PuppetStage/Scripts/dialogue_layout_trial.gd" id="Trial"]
+[ext_resource type="Script" uid="uid://b7k4ftd8pdwk8" path="res://Experiments/PuppetStage/Scripts/dialogue_zone.gd" id="ZoneGuide"]
 
 [sub_resource type="Theme" id="Theme"]
 default_font = ExtResource("Font")
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_wsaf0"]
+script = ExtResource("6_ifpfd")
 
 [node name="DialogueLayoutTrial" unique_id=890497014 instance=ExtResource("Stage")]
 backdrop_color = Color(0.12863007, 0.1274097, 0.3848819, 1)
@@ -36,22 +46,34 @@ scale = Vector2(0.34761286, 0.34761283)
 [node name="Lighting" parent="World" parent_id_path=PackedInt32Array(280916919) index="6" unique_id=1551517233]
 visible = false
 lighting_mode = 0
-preview_hold_seconds = 3.0
-focus_character = 1
 
 [node name="Player" parent="World/Performers" parent_id_path=PackedInt32Array(1820253125) index="0" unique_id=1664180426]
 modulate = Color(1, 1, 1, 1)
 motion_fps = 2.0
 talking = false
+lighting_anchor = NodePath("")
+lighting_anchor_offset = Vector2(0, 0)
+
+[node name="Art" parent="World/Performers/Player/Swing/Card" parent_id_path=PackedInt32Array(514526896) index="0" unique_id=260067578]
+position = Vector2(-22, -252)
 
 [node name="StageManager" parent="World/Performers" parent_id_path=PackedInt32Array(1820253125) index="1" unique_id=1312345879]
-visible = false
+modulate = Color(1, 1, 1, 1)
 motion_fps = 8.0
 talking = false
+lighting_anchor = NodePath("")
+lighting_anchor_offset = Vector2(0, 0)
+
+[node name="Art" parent="World/Performers/StageManager/Swing/Card" parent_id_path=PackedInt32Array(673017824) index="0" unique_id=158997361]
+position = Vector2(0, -196)
 
 [node name="Actor1" parent="World/Performers" parent_id_path=PackedInt32Array(1820253125) index="2" unique_id=1962565981]
-modulate = Color(1, 1, 1, 1)
 talking = false
+lighting_anchor = NodePath("")
+lighting_anchor_offset = Vector2(0, 0)
+
+[node name="Art" parent="World/Performers/Actor1/Swing/Card" parent_id_path=PackedInt32Array(28299201) index="0" unique_id=1911911048]
+position = Vector2(22, -244)
 
 [node name="Art" parent="World/NearCurtains" parent_id_path=PackedInt32Array(660012026) index="0" unique_id=789202379]
 self_modulate = Color(1, 1, 1, 1)
@@ -61,7 +83,21 @@ scale = Vector2(0.34959495, 0.34959492)
 [node name="Art" parent="World/TopTrim" parent_id_path=PackedInt32Array(1035211757) index="0" unique_id=1110823542]
 self_modulate = Color(1, 1, 1, 1)
 
-[node name="Art" parent="World/Audience" parent_id_path=PackedInt32Array(1272616982) index="0" unique_id=1021828419]
+[node name="Atmosphere" type="Node2D" parent="World" parent_id_path=PackedInt32Array(280916919) index="12" unique_id=326952219]
+script = ExtResource("Atmosphere")
+scroll_speed = Vector2(100, 100)
+tile_size = 100.0
+outside_mask = ExtResource("3_idwps")
+opening = PackedVector2Array(0.055, 0.06, 0.945, 0.06, 0.98, 0.3, 0.965, 0.73, 0.94, 0.82, 0.85, 0.88, 0.74, 0.918, 0.62, 0.943, 0.5, 0.95, 0.38, 0.943, 0.26, 0.918, 0.15, 0.88, 0.06, 0.82, 0.035, 0.73, 0.02, 0.3, 0.035, 0.12)
+
+[node name="Audience" parent="World" parent_id_path=PackedInt32Array(280916919) index="13" unique_id=1272616982]
+script = ExtResource("AudienceMotion")
+audience_motion = true
+audience_bob_height = 2.5
+audience_bob_speed = 0.3
+preview_audience_motion = false
+
+[node name="Art" parent="World/Audience" index="0" unique_id=1021828419]
 self_modulate = Color(1, 1, 1, 1)
 
 [node name="Art" parent="World/Frame" parent_id_path=PackedInt32Array(243997666) index="0" unique_id=147553572]
@@ -73,54 +109,138 @@ visible = false
 [node name="DialogueTrial" type="CanvasLayer" parent="." index="3" unique_id=475118217]
 layer = 2
 script = ExtResource("Trial")
-layout_style = 1
-smart_placement = false
-text_size = 22
+show_third_character = true
+text_outline_color = Color(0.1795299, 0.15935865, 0.38266388, 1)
+motion_safety_margin = 0.0
+dialogue_space_reserve = 0.2
+text_size = 28
 text_color = Color(0.98305744, 0.89366907, 0.99036914, 1)
-panel_color = Color(0.087842874, 0.07449251, 0.21264997, 0.8784314)
+panel_color = Color(0.17828992, 0.15939167, 0.38399628, 0.8784314)
 
 [node name="Layout" type="Control" parent="DialogueTrial" index="0" unique_id=507139167]
 layout_mode = 3
+anchors_preset = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme")
+
+[node name="PlacementZones" type="Control" parent="DialogueTrial/Layout" index="0" unique_id=1305866213]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme = SubResource("Theme")
 
-[node name="Text" type="Control" parent="DialogueTrial/Layout" index="0" unique_id=974233849]
-layout_mode = 0
-offset_left = 60.8
-offset_top = 472.8
-offset_right = 412.8
-offset_bottom = 643.2
+[node name="Narration" type="Control" parent="DialogueTrial/Layout/PlacementZones" index="0" unique_id=1724614863]
+layout_mode = 1
+anchor_left = 0.2
+anchor_top = 0.8
+anchor_right = 0.8
+anchor_bottom = 0.94
+offset_top = -8.0
+offset_bottom = 0.2000122
 mouse_filter = 2
-theme_override_constants/separation = 10
-alignment = 1
+script = ExtResource("ZoneGuide")
+guide_label = "Narration - bottom centre"
+
+[node name="StageManager" type="Control" parent="DialogueTrial/Layout/PlacementZones" index="1" unique_id=521436953]
+layout_mode = 1
+anchor_left = 0.2
+anchor_top = 0.75
+anchor_right = 0.8
+anchor_bottom = 0.94
+mouse_filter = 2
+script = ExtResource("ZoneGuide")
+guide_label = "Stage Manager - bottom centre"
+
+[node name="BesideLeft" type="Control" parent="DialogueTrial/Layout/PlacementZones" index="2" unique_id=1974894802]
+anchors_preset = 0
+anchor_left = 0.035
+anchor_top = 0.28
+anchor_right = 0.295
+anchor_bottom = 0.68
+mouse_filter = 2
+script = ExtResource("ZoneGuide")
+guide_label = "Player dialogue - left"
+
+[node name="BesideRight" type="Control" parent="DialogueTrial/Layout/PlacementZones" index="3" unique_id=468136037]
+anchors_preset = 0
+anchor_left = 0.705
+anchor_top = 0.28
+anchor_right = 0.965
+anchor_bottom = 0.68
+mouse_filter = 2
+script = ExtResource("ZoneGuide")
+guide_label = "NPC dialogue - right"
+
+[node name="LowerLeft" type="Control" parent="DialogueTrial/Layout/PlacementZones" index="4" unique_id=378934206]
+anchors_preset = 0
+anchor_left = 0.035
+anchor_top = 0.68
+anchor_right = 0.295
+anchor_bottom = 0.94
+mouse_filter = 2
+script = ExtResource("ZoneGuide")
+guide_label = "Lower panel - left"
+
+[node name="LowerRight" type="Control" parent="DialogueTrial/Layout/PlacementZones" index="5" unique_id=1460425187]
+anchors_preset = 0
+anchor_left = 0.705
+anchor_top = 0.68
+anchor_right = 0.965
+anchor_bottom = 0.94
+mouse_filter = 2
+script = ExtResource("ZoneGuide")
+guide_label = "Lower panel - right"
+
+[node name="Text" type="Control" parent="DialogueTrial/Layout" index="3" unique_id=974233849]
+anchors_preset = 0
+offset_left = 272.0
+offset_top = 580.0
+offset_right = 1008.0
+offset_bottom = 668.0
+mouse_filter = 2
 
 [node name="Name" type="Label" parent="DialogueTrial/Layout/Text" index="0" unique_id=811189944]
+visible = false
 layout_mode = 0
+offset_right = 736.0
+offset_bottom = 58.0
 theme_override_colors/font_color = Color(0.98305744, 0.89366907, 0.99036914, 1)
-theme_override_font_sizes/font_size = 30
-autowrap_mode = 3
-text = "Narrator"
+theme_override_colors/font_outline_color = Color(0.1795299, 0.15935865, 0.38266388, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("5_4yk0k")
+theme_override_font_sizes/font_size = 36
 horizontal_alignment = 1
-
-[node name="Words" type="Label" parent="DialogueTrial/Layout/Text" index="1" unique_id=254880900]
-custom_minimum_size = Vector2(0, 98)
-layout_mode = 0
-size_flags_vertical = 0
 autowrap_mode = 3
-theme_override_colors/font_color = Color(0.98305744, 0.89366907, 0.99036914, 1)
-theme_override_font_sizes/font_size = 22
-text = "The voice of the grumpy stage manager can be heard again from the left side of the stage."
 
-[node name="Toolbar" type="HBoxContainer" parent="DialogueTrial/Layout" index="1" unique_id=1841121722]
+[node name="Words" type="RichTextLabel" parent="DialogueTrial/Layout/Text" index="1" unique_id=254880900]
+layout_mode = 0
+offset_right = 736.0
+offset_bottom = 88.0
+size_flags_vertical = 0
+theme_override_colors/default_color = Color(0.98305744, 0.89366907, 0.99036914, 1)
+theme_override_colors/font_outline_color = Color(0.1795299, 0.15935865, 0.38266388, 1)
+theme_override_constants/line_separation = 3
+theme_override_constants/outline_size = 2
+theme_override_fonts/normal_font = ExtResource("Font")
+theme_override_font_sizes/normal_font_size = 28
+bbcode_enabled = true
+text = "[center][stagepop base=0]The voice of the grumpy stage manager can be heard again from the left side of the stage.[/stagepop][/center]"
+scroll_active = false
+horizontal_alignment = 1
+custom_effects = [SubResource("RichTextEffect_wsaf0")]
+
+[node name="Toolbar" type="HBoxContainer" parent="DialogueTrial/Layout" index="4" unique_id=1841121722]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 678.0
-offset_right = 639.0
+offset_right = 780.0
 offset_bottom = 708.0
 theme_override_constants/separation = 12
 
@@ -152,4 +272,107 @@ text = "Flip poses"
 
 [node name="Count" type="Label" parent="DialogueTrial/Layout/Toolbar" index="5" unique_id=9184341]
 layout_mode = 2
-text = "1 / 22"
+text = "1 / 23"
+
+[node name="Excerpt" type="OptionButton" parent="DialogueTrial/Layout/Toolbar" index="6" unique_id=691072753]
+layout_mode = 2
+selected = 0
+item_count = 2
+popup/item_0/text = "Act 1 excerpt"
+popup/item_0/id = 0
+popup/item_1/text = "Act 3 excerpt"
+popup/item_1/id = 1
+
+[node name="FrameCutInLayer" type="CanvasLayer" parent="." index="4" unique_id=1279768638]
+
+[node name="FrameCutIn" type="Control" parent="FrameCutInLayer" index="0" unique_id=777981272]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+script = ExtResource("CutIn")
+
+[node name="RightArea" type="Control" parent="FrameCutInLayer/FrameCutIn" index="0" unique_id=1175096764]
+anchors_preset = 0
+anchor_left = 0.47
+anchor_top = 0.23
+anchor_right = 0.91
+anchor_bottom = 0.7
+mouse_filter = 2
+script = ExtResource("ZoneGuide")
+guide_label = "Cut-in RightArea"
+guide_color = Color(1, 0.3, 0.8, 0.65)
+
+[node name="LeftArea" type="Control" parent="FrameCutInLayer/FrameCutIn" index="1" unique_id=25223866]
+anchors_preset = 0
+anchor_left = 0.09
+anchor_top = 0.23
+anchor_right = 0.53
+anchor_bottom = 0.7
+mouse_filter = 2
+script = ExtResource("ZoneGuide")
+guide_label = "Cut-in LeftArea"
+guide_color = Color(1, 0.3, 0.8, 0.65)
+
+[node name="CustomArea" type="Control" parent="FrameCutInLayer/FrameCutIn" index="2" unique_id=24493126]
+anchors_preset = 0
+anchor_left = 0.29
+anchor_top = 0.17
+anchor_right = 0.71
+anchor_bottom = 0.63
+mouse_filter = 2
+script = ExtResource("ZoneGuide")
+guide_label = "Cut-in CustomArea"
+guide_color = Color(1, 0.3, 0.8, 0.65)
+
+[node name="Panel" type="Control" parent="FrameCutInLayer/FrameCutIn" index="3" unique_id=1218454594]
+visible = false
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="Backing" type="NinePatchRect" parent="FrameCutInLayer/FrameCutIn/Panel" index="0" unique_id=970168531]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+region_rect = Rect2(107, 181, 1434, 648)
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+
+[node name="Clip" type="Control" parent="FrameCutInLayer/FrameCutIn/Panel" index="1" unique_id=1058458187]
+clip_contents = true
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+mouse_filter = 2
+
+[node name="Fill" type="ColorRect" parent="FrameCutInLayer/FrameCutIn/Panel/Clip" index="0" unique_id=1254123913]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="Picture" type="TextureRect" parent="FrameCutInLayer/FrameCutIn/Panel/Clip" index="1" unique_id=1027879995]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Decoration" type="TextureRect" parent="FrameCutInLayer/FrameCutIn/Panel" index="2" unique_id=492643063]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -38.0
+offset_top = -65.0
+offset_right = 35.0
+offset_bottom = 18.0
+mouse_filter = 2
+expand_mode = 1

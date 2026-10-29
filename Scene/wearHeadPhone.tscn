@@ -1,7 +1,0 @@
-[gd_scene format=3]
-
-; Compatibility path for editor tabs opened before the approved rename.
-; The numbered scene remains the source. Keep until open edits have been saved.
-[ext_resource type="PackedScene" path="res://Scene/2.0_component_headphones_animation.tscn" id="RenamedScene"]
-
-[node name="Sprite2D" instance=ExtResource("RenamedScene")]

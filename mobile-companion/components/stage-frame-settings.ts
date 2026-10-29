@@ -2,22 +2,20 @@
  * Phone stage frame. Change the appearance here; the layout reads this file.
  *
  * The PNG copies in public/stage-frame are unchanged bytes of the originals in
- * D:/RMIT/Master/Studio 1/Folio 2/Game Asset/2.5/Phone. They still contain their
- * transparent padding. `bounds` names the visible pixels so that padding is not
- * treated as the size of the artwork. `right` and `bottom` are exclusive.
+ * D:/RMIT/Master/Studio 1/Folio 2/Game Asset/2.5/Phone. All four are the same
+ * 1080×2400 canvas. They are stacked at one size so the side rails (Comp 1,
+ * named Line in Figma) stay registered with the curtain and the ornaments.
+ * `bounds` names the visible pixels. `right` and `bottom` are exclusive.
  *
- *   phone-ui-comp-1-rails.png   Phone Ui_Layer Comp 1.png  side rails
- *   phone-ui-comp-2-curtain.png Phone Ui_Layer Comp 2.png  curtain trim
- *   phone-ui-comp-3-bottom.png  Phone Ui_Layer Comp 3.png  bottom ornament
- *   phone-ui-comp-4-top.png     Phone Ui_Layer Comp 4.png  top ornament
- *
- * Rail columns were measured at alpha above 16: left x 0–74, right x 1006–1079.
+ * Fonts are copies of Font/InstrumentSerif-Regular.ttf and Font/LavishlyYours-Regular.ttf.
+ * character-mobile.png is an unchanged copy of Game Asset/2.5/Character/mobile.png.
  */
 
 export type PixelBounds = { x: number; y: number; right: number; bottom: number };
 
 export const stageFrameSettings = {
-  background: "#1a103c",
+  background: "#0e1430",
+  textColor: "#f3e6f8",
   sourceWidth: 1080,
   sourceHeight: 2400,
   assets: {
@@ -25,6 +23,7 @@ export const stageFrameSettings = {
     curtain: "/stage-frame/phone-ui-comp-2-curtain.png",
     bottom: "/stage-frame/phone-ui-comp-3-bottom.png",
     top: "/stage-frame/phone-ui-comp-4-top.png",
+    character: "/stage-frame/character-mobile.png",
   },
   bounds: {
     rails: { x: 0, y: 223, right: 1080, bottom: 2192 },
@@ -36,28 +35,41 @@ export const stageFrameSettings = {
     left: { x: 0, width: 75 },
     right: { x: 1006, width: 74 },
   },
-  /** 1 keeps each pole's proportions while it spans the screen height. Other values stretch the stroke sideways. */
-  railWidthScale: 1,
-  /** Lowest visible curtain pixel stays within this share of the screen. Short screens shrink the header before the text. */
-  topBlockMax: "30dvh",
-  bottomOrnamentMax: "16dvh",
-  contentMargin: "0.75rem",
-  regionGap: "0.75rem",
-  readingMaxWidth: "34rem",
-  readingFontSize: "clamp(1.0625rem, 4.8vw, 1.65rem)",
-  readingLineHeight: "1.45",
-  readingFontFamily: "inherit",
-  characterSize: "min(34vw, 16dvh, 180px)",
-  characterGap: "0.5rem",
-  characterLabel: "Character illustration",
-  promptBackground: "#f7eaf4",
-  promptColor: "#1e1a29",
-  promptLabel: "#6d5a78",
-  ifbBackground: "#121429",
-  ifbColor: "#f4f2ff",
-  ifbLabel: "#c9c2ea",
-  statusColor: "#efeaff",
-  cardRadius: "1rem",
+  bodyLineHeight: "1.15",
+  /** Lavishly Yours, as a fraction of the fitted body size. */
+  headingScale: "0.9",
+  headingLineHeight: "1.05",
+  regionGap: "0.35em",
+  /**
+   * Blank paper on character-mobile.png, in that image's pixels.
+   * The top starts below the clip. right and bottom are exclusive.
+   */
+  characterSourceSize: 1752,
+  cardText: { x: 640, y: 470, right: 1680, bottom: 1420 },
+  cardTextColor: "#2a3480",
+  /** Largest body size as a fraction of the card width. Text shrinks to fit the card. */
+  cardFontScale: 0.2,
+  cardFontMin: 11,
+  /**
+   * How much of each cue is drawn on the card. The phone still receives and
+   * acknowledges the full cue; only the visible text is shortened.
+   */
+  cueDisplayLimit: {
+    maxWords: 20,
+    maxSentences: 2,
+  },
+  /**
+   * Held wobble on cue words only. Offsets stay inside ±offsetPx and ±rotationDeg.
+   * cyclePoses matches the eight held poses in stage-frame.module.css.
+   * posesPerSecond is how often a word changes pose (about 6–8).
+   */
+  cueWiggle: {
+    enabled: true,
+    offsetPx: 0.4,
+    rotationDeg: 0.2,
+    posesPerSecond: 7,
+    cyclePoses: 8,
+  },
 };
 
 export function railBounds(side: "left" | "right"): PixelBounds {

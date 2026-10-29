@@ -4,6 +4,11 @@ from story_script import parse_script, clean_working_copy, route_metadata
 p=Path(__file__).resolve().parents[1]
 import sys
 if '--overwrite' not in sys.argv: raise SystemExit('Reimport replaces graph edits. Supply --overwrite deliberately. Run tests/story-script.py first.')
+if '--source' in sys.argv or '--legacy-source' not in sys.argv:
+ from story_script import import_response_template
+ source=Path(sys.argv[sys.argv.index('--source')+1]) if '--source' in sys.argv else p.parent/'Story Script/Beneath the Lines - IMPORT THIS.html'
+ import_response_template(p,source)
+ raise SystemExit(0)
 source=p.parent/'Week 11/2.4 StoryLine_Preproduct_W12_working.twee'
 original=p.parent/'Week 11/2.4 StoryLine_Preproduct_W12.twee'
 if '--clean-source' in sys.argv:

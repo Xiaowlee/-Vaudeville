@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Folio 2 Test 2"
-run/main_scene="uid://c4ufa2d402kxg"
+run/main_scene="res://Scene/00_main_menu.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 run/main_scene.mobile_display="res://Scene/StageActs/Mobile.tscn"
@@ -23,7 +23,7 @@ driver/enable_input=true
 [autoload]
 
 PhoneSession="*res://Script/phone_session.gd"
-UIAudio="*res://Scene/00_shared_ui_audio.tscn"
+UIAudio="*res://Scene/Shared/00_shared_ui_audio.tscn"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 

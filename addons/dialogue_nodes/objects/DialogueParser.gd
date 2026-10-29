@@ -129,7 +129,9 @@ func _proceed(node_name: String) -> void:
 		_process_set,
 		_process_condition,
 		_process_nest,
-		_process_fork
+		_process_fork,
+		func(_dict): pass, # graph frame (editor only)
+		_process_signal # Stage Visual uses the standard signal path
 	]
 	
 	var id := int(node_name.split('_')[0])

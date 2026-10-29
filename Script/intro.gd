@@ -15,7 +15,7 @@ func _ready() -> void:
 			if OS.get_name()=="Android":$MicrophoneSettings.show_panel()
 			else:$DesktopMicrophoneSettings.show_panel())
 	if not stage_scene.is_empty(): PhoneSession.ensure_session()
-	for pair in [["Prototype1", prototype_1_scene], ["Prototype2", prototype_2_scene], ["PerformerA", "res://Scene/2.2_a_performer_baseline.tscn"], ["PerformerC", "res://Scene/2.2_c_increased_agency.tscn"], ["StagePrototype", stage_scene], ["Previous", previous_scene], ["Earlier", earlier_scene], ["Back", back_scene]]:
+	for pair in [["Prototype1", prototype_1_scene], ["Prototype2", prototype_2_scene], ["PerformerA", "res://Scene/Prototypes/2_2/2.2_a_performer_baseline.tscn"], ["PerformerC", "res://Scene/Prototypes/2_2/2.2_c_increased_agency.tscn"], ["StagePrototype", stage_scene], ["Previous", previous_scene], ["Earlier", earlier_scene], ["Back", back_scene]]:
 		var button = get_node_or_null("Menu/" + pair[0])
 		if button != null: button.pressed.connect(_open.bind(pair[1]))
 	$Menu/Quit.visible = not OS.has_feature("web")

@@ -103,12 +103,14 @@ func _process(delta):
         _button("Recognising…",false)
     elif not runtime.fallback_reply.is_empty() and runtime.fallback_reply!=fallback_seen:
         fallback_seen=runtime.fallback_reply
-        if runtime.responses.last_response_type=="TECHNICAL_FAILURE":
+        if runtime.responses.last_response_type=="TECHNICAL_FAILURE" and runtime.frame.get("template_version",0)!=2:
             _button("Microphone/interpreter unavailable — retry / X",true)
             return
         _show_fallback(fallback_seen)
         state="PRESENTING"
-    elif runtime.waiting and runtime.responses.last_response_type=="TECHNICAL_FAILURE" and not runtime.fallback_reply.is_empty():
+    elif runtime.waiting and runtime.responses.mic_check_pending:
+        _button("Retry microphone / X · Continue without speech / Space",true)
+    elif runtime.waiting and runtime.responses.last_response_type=="TECHNICAL_FAILURE" and not runtime.fallback_reply.is_empty() and runtime.frame.get("template_version",0)!=2:
         _button("Microphone/interpreter unavailable — retry / X",true)
     elif runtime.waiting:
         var mic_status=str(runtime.mic.status.text)
@@ -155,6 +157,8 @@ func skip_dialogue():
     if opening or state=="OPENING_DELAY":return
     if state=="PRESENTING":
         ui.skip_current_passage()
+    elif state=="READY" and runtime.responses.mic_check_pending:
+        runtime.continue_after_mic_check()
     elif state=="READY" and not runtime.waiting:
         runtime._continue()
 func _present():

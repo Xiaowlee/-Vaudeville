@@ -31,9 +31,9 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("MenuTheme")
 script = ExtResource("1_m1ph0")
-prototype_1_scene = "res://Scene/2.1_continuous_narration.tscn"
-prototype_2_scene = "res://Scene/2.1_narrator_agency.tscn"
-earlier_scene = "res://Scene/2.0_00_onboarding.tscn"
+prototype_1_scene = "res://Scene/Prototypes/2_1/2.1_continuous_narration.tscn"
+prototype_2_scene = "res://Scene/Prototypes/2_1/2.1_narrator_agency.tscn"
+earlier_scene = "res://Scene/Prototypes/2_0/2.0_00_onboarding.tscn"
 back_scene = "res://Scene/00_main_menu.tscn"
 
 [node name="Panel" type="Panel" parent="." unique_id=1179351320]

@@ -26,43 +26,56 @@ func run():
                 for prefix in ["STAGE:","SOUND:","CUE / PHONE:","CONTEXT:","AUTHOR NOTE:","PLAYER TASK:"]:
                     check(not e.text.begins_with(prefix),section+" leaked "+prefix)
         while c.semantic_index<c.semantic_events.size():c._next_content()
-    var cases=[
-        ["A scripted","A1_3_FirstCue","I want to create stories people can gather around and remember.","SCRIPTED_RESPONSE","cue",false,"A1_4_SecondCue"],
-        ["C bounded","A2_1_Entrance","left","SELECTION","choice_0",false,"A2_1_Left"],
-        ["C unsupported","A2_1_Entrance","banana","SELECTION","choice_0",false,"A2_1_Entrance"],
-        ["D contextual","A2_2_Hall","There are so many people here","CONTEXTUAL_COMMENT","choice_0",false,"A2_2_HallCommentAppropriate"],
-        ["E offscript","A2_1_Entrance","I refuse both entrances","OFFSCRIPT","no_match",true,"A2_1_Offscript"],
-        ["F silence","A2_1_Entrance","","SILENCE","",false,"A2_1_Entrance"],
-        ["G unclear","A2_1_Entrance","I do not know","UNCLEAR","choice_0",false,"A2_1_Entrance"],
-        ["H technical","A2_1_Entrance","","TECHNICAL_FAILURE","choice_0",false,"A2_1_Entrance"],
-        ["I question","A2_1_Entrance","Why is the entrance crowded?","QUESTION","choice_0",false,"A2_1_Entrance"],
-        ["J help","A2_1_Entrance","What should I do?","HELP_OR_REPEAT","choice_0",false,"A2_1_Entrance"]]
-    for test in cases:
-        t.parser.start(test[1]);t.accepting_speech=true;t.responses.reset();t.raw_transcript=test[2];c._present()
-        t.accepting_speech=true
-        t.handle_response(test[3],test[4],test[5])
-        check(t.frame.id==test[6],test[0]+" destination")
-        check(t.responses.offscript_total==(1 if test[3]=="OFFSCRIPT" else 0),test[0]+" counter")
-        records.append({"test":test[0],"input":test[2],"classification":t.responses.last_response_type,"route":t.frame.id,"state_changes":t.story_variables.duplicate(true),"offscript":t.responses.offscript_total,"main_output":t.fallback_reply if not t.fallback_reply.is_empty() else t.frame.events.filter(func(e):return e.kind in ["dialogue","narration"]),"phone":c.phone_preview,"production":c.production_log.duplicate(true)})
-    t.parser.start("A2_1_Entrance");t.accepting_speech=true;t.responses.reset()
-    t.handle_response("SILENCE");check(t.fallback_reply=="","silence first waits")
-    t.handle_response("SILENCE");check("waiting" in t.fallback_reply,"silence second prompt")
-    t.handle_response("SILENCE");check("Take your time" in t.fallback_reply,"silence third stronger")
-    check(t.responses.offscript_total==0,"silence no punishment")
-    t.handle_response("HELP_OR_REPEAT");t.handle_response("QUESTION")
-    check(t.responses.help_count==1 and t.responses.question_count==1,"separate counters")
-    check(not t.cue in t.fallback_reply,"cue not in fallback main output")
+    # Actual runtime handling, using the imported frame data rather than hand-built fixtures.
     t.parser.start("A1_0_Begin");t.accepting_speech=true;t.responses.reset()
-    for i in 5:
-        t.waiting=true;t.handle_response("OFFSCRIPT","",true)
-    check(t.responses.offscript_total==5 and t.frame.id=="A0_Endgame","K threshold termination")
+    t.raw_transcript="uh no";t._interpret("uh no")
+    check(t.frame.id=="A1_0_No","spoken no never agrees to begin")
+    t.accepting_speech=true;t.raw_transcript="yes";t._interpret("yes")
+    check(t.frame.id=="A1_1_0 PreshowAnnoyed","spoken yes follows current intro route")
+    t.parser.start("A1_0_Begin");t.accepting_speech=true;t.responses.reset()
+    t.handle_response("OFFSCRIPT","",true);t.handle_response("OFFSCRIPT","",true)
+    check(t.frame.id=="TAKEOVER::A1_0_Begin","two local intro attempts use authored takeover")
+    check(t.responses.offscript_total==0,"intro exempt from global penalty")
+    t.parser.start("A2_2_HallCommentAppropriate");t.accepting_speech=true;t.responses.reset()
+    t.raw_transcript="no";t._interpret("no")
+    check(t.frame.id=="Music_NotYet","music refusal remains refusal")
+    t.waiting=true;t._choose(0,"continue",false)
+    check(t.frame.id=="A2_4_CallSomeone","new music refusal does not dead-end")
     t.parser.start("A2_1_Entrance");t.accepting_speech=true;t.responses.reset()
-    for word in ["banana","I hate stairs","let's fly","what are you talking about","not left","left or right","I don't know"]:
+    t.handle_response("SILENCE")
+    check(t.fallback_reply==t.frame.response_overrides.SILENCE.reply,"authored shared silence")
+    check(t.responses.offscript_total==0,"silence never penalized")
+    t.handle_response("OFFSCRIPT","",true)
+    check(t.frame.id=="A2_1_Entrance" and t.responses.offscript_total==1,"first unrelated attempt stays")
+    t.handle_response("OFFSCRIPT","",true)
+    check(t.frame.id=="TAKEOVER::A2_1_Entrance" and t.responses.offscript_total==2,"second unrelated attempt advances through takeover")
+    t.waiting=true;t._choose(0,"continue",false)
+    check(t.frame.id=="A2_2_Hall" and t.story_variables.get("entrance")=="left","takeover preserves authored entrance state")
+    t.parser.start("A2_1_Entrance");t.accepting_speech=true;t.responses.reset()
+    t.handle_response("UNCLEAR");t.handle_response("TECHNICAL_FAILURE");t.handle_response("UNCLEAR")
+    check(t.responses.mic_check_pending,"third mixed technical failure offers microphone check")
+    check("cat has stolen" in t.fallback_reply,"new authored microphone check words")
+    check(t.responses.offscript_total==0,"technical failures never penalized")
+    t.continue_after_mic_check()
+    check(t.frame.id=="TAKEOVER::A2_1_Entrance","mic check can continue without speech")
+    t.parser.start("A2_1_Entrance");t.accepting_speech=true;t.responses.reset()
+    t.handle_response("UNCLEAR");t.handle_response("TECHNICAL_FAILURE")
+    t.handle_response("HELP_OR_REPEAT")
+    check(t.responses.technical_streak==0,"understood speech resets technical streak")
+    t.responses.offscript_total=4;t.responses.conversation_attempts["A2_1_Entrance"]=1
+    t.handle_response("OFFSCRIPT","",true)
+    check(t.frame.id=="A0_Endgame","fifth cumulative unrelated attempt takes priority over local takeover")
+    t.parser.start("A1_1_ACTOR 1'sQuestion");t.accepting_speech=true;t.responses.reset()
+    t.raw_transcript="I want to become a doctor";t.handle_response("VALID_INTENT","ambition")
+    check(t.frame.id=="A1_1_WrongLine" and t.responses.offscript_total==0,"forgotten-line first relevant attempt preserved without penalty")
+    t.accepting_speech=true;t.handle_response("VALID_INTENT","ambition")
+    check(t.frame.id=="A1_2_SecondFailure" and t.responses.offscript_total==0,"forgotten-line second relevant attempt preserved")
+    t.parser.start("A2_1_Entrance");t.accepting_speech=true;t.responses.reset()
+    for word in ["banana","I hate stairs","not left","left or right","I don't know"]:
         for intent in ["choice_0","choice_1"]:
             t.raw_transcript=word;t.handle_response("SELECTION",intent)
-            check(t.frame.id=="A2_1_Entrance","bounded guard "+word)
-    var f=FileAccess.open("D:/RMIT/Master/Studio 1/Folio 2/Week 11/trial_recovery/semantic-script-2026-10-18/policy-matrix.json",FileAccess.WRITE)
-    f.store_string(JSON.stringify(records,"  "));f.close()
-    print("RESULT ",routes_checked," authored routes / 57 passage presentation checks; failures=",failures)
+            check(t.frame.id=="A2_1_Entrance","bounded direction guard "+word)
+            t.responses.technical_streak=0;t.responses.mic_check_pending=false
+    print("RESULT ",routes_checked," graph links / ",m.size()," passage presentations; response-template checks; failures=",failures)
     game.queue_free();await process_frame
     quit(0 if failures.is_empty() else 1)

@@ -21,7 +21,7 @@ grow_vertical = 2
 theme = ExtResource("MenuTheme")
 script = ExtResource("1_m1ph0")
 prototype_1_scene = "uid://dydu8om56n80a"
-prototype_2_scene = "res://Scene/2.2_c_increased_agency.tscn"
+prototype_2_scene = "res://Scene/Prototypes/2_2/2.2_c_increased_agency.tscn"
 previous_scene = "res://Scene/00_previous_prototypes_menu.tscn"
 stage_scene = "res://Scene/StageActs/stage_graph_game.tscn"
 

@@ -5,7 +5,7 @@ export type StagePreviewFixture = {
   cues: StageChannels;
 };
 
-const shortPrompt = "Speak the next sentence clearly.";
+const shortPrompt = "Halo\nevery\nnyan";
 const shortPrivate = "Pause, then look across the stage.";
 const longPrompt = Array.from({ length: 8 }, () =>
   "This preview line is only for layout. It is not a live cue. It checks that a long prompt wraps inside the reading area and can be scrolled without leaving the screen.",

@@ -124,12 +124,13 @@ func _signal(value: String):
     $Layout/Result.text=""
     var definitions=JSON.parse_string(FileAccess.get_file_as_string(ai_meanings_file))
     var policy: Dictionary=definitions.get(str(frame.get("id","")),{}) if definitions is Dictionary else {}
-    forced_route=int(policy.get("continue_route",-1))
+    forced_route=-1 if frame.get("template_version",0)==2 else int(policy.get("continue_route",-1))
     route_kinds=frame.get("routes",[])
     if forced_route>=route_kinds.size():forced_route=-1
     cue=frame.get("cue","")
     $Layout/Cue.text=cue
     mode="continue" if forced_route>=0 or (route_kinds.size()==1 and route_kinds[0] in ["next","watch"]) else "draft"
+    if frame.get("template_version",0)==2:mode="continue" if frame.get("input_mode","")=="continue" else "draft"
 func _dialogue(speaker,words: String,options: Array[String]):
     super._dialogue(speaker,words,options)
     ai_history.append({"section":frame.get("id",""),"dialogue":words})
@@ -158,6 +159,9 @@ func _dialogue(speaker,words: String,options: Array[String]):
     $Layout/Debug.text="Your turn — speak when ready." if waiting else "Story — read, then Continue."
 func _continue():
     if ai_busy:return
+    if frame.get("template_version",0)==2 and responses.mic_check_pending:
+        continue_after_mic_check()
+        return
     if forced_route>=0 and not mic.recording and mic.pid<=0:
         waiting=true
         _choose(forced_route,"Story continues",false)
@@ -256,6 +260,10 @@ func _interpret(words: String):
     ai_question=str(frame.get("id",""))
     var definitions=JSON.parse_string(FileAccess.get_file_as_string(ai_meanings_file))
     var meanings: Dictionary=definitions.get(ai_question,{}) if definitions is Dictionary else {}
+    if frame.get("template_version",0)==2:
+        meanings={}
+        for kind in frame.get("allowed_authored_intents",{}):
+            meanings[kind]=frame.allowed_authored_intents[kind].meaning
     var help_words=" ".join(tokens(words))
     if help_words in ["help","repeat","say that again","what do i say","i don t understand","i do not understand","what should i do","what should i say","what am i supposed to do","can you repeat that","could you repeat that","what are you talking about"]:
         handle_response("HELP_OR_REPEAT")
@@ -339,7 +347,13 @@ func handle_response(category: String, intent: String = "", deliberate: bool = f
             intent=""
     interpreted_intent=intent
     last_response_debug.result=category+(" / "+intent if not intent.is_empty() else "")
-    var consequence=responses.record(category,deliberate)
+    var template_result={}
+    var consequence=0
+    if frame.get("template_version",0)==2:
+        template_result=responses.record_template(category,deliberate,frame)
+        consequence=int(template_result.consequence)
+    else:
+        consequence=responses.record(category,deliberate)
     off_script_count=responses.offscript_total
     silence_elapsed=0
     var policy=responses.resolve(str(frame.get("id","")),str(frame.get("group","")),category)
@@ -357,6 +371,15 @@ func handle_response(category: String, intent: String = "", deliberate: bool = f
         last_response_debug.outcome="Consequence → "+ending
         if story.starts.has(ending):parser.start(ending)
         return
+    if frame.get("template_version",0)==2:
+        if template_result.get("takeover",false):
+            _start_authored_takeover()
+            return
+        if template_result.get("mic_check",false):
+            fallback_reply=str(frame.get("mic_check_reply",""))
+            last_response_debug.outcome="Microphone check · retry or continue through authored takeover"
+            $Layout/Result.text=fallback_reply
+            return
     if policy.get("action","")=="ignore":
         last_response_debug.outcome="Ignored outside player turn"
         return
@@ -381,7 +404,7 @@ func handle_response(category: String, intent: String = "", deliberate: bool = f
     fallback_reply=str(policy.get("reply",""))
     if category=="SILENCE":
         turn_silences+=1
-        if turn_silences==1:
+        if turn_silences==1 and frame.get("template_version",0)!=2:
             fallback_reply=""
             last_response_debug.outcome="Stay here · waiting quietly"
             return
@@ -487,3 +510,16 @@ func _recover_legacy_story():
         recovered.nodes["1_"+suffix]={"speaker":"","dialogue":"\n\n".join(text),"options":options}
     story=recovered
     push_warning("Recovered outdated story display data from the last Twine import. Reload the story graph in the editor before saving it.")
+
+func _start_authored_takeover():
+    var target=str(frame.get("takeover_start",""))
+    if not story.starts.has(target):return
+    _cancel_ai()
+    responses.mic_check_pending=false
+    responses.technical_streak=0
+    last_response_debug.outcome="Authored takeover → "+target
+    parser.start(target)
+
+func continue_after_mic_check():
+    if not responses.mic_check_pending or mic.recording or mic.pid>0:return
+    _start_authored_takeover()
