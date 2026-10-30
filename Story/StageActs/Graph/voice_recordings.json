@@ -454,5 +454,147 @@
     "speaker": "Actor 2",
     "text": "Do you remember yesterday?",
     "audio": "res://Sound/Voice/Actor2/A3_5_End__ACTOR2_02.mp3"
+  },
+  {
+    "id": "A3_4_FollowPlay__ACTOR2_02",
+    "speaker": "Actor 2",
+    "text": "But the script won't answer everything.\n\n\n\nThe one who keeps pulling the string...",
+    "audio": "res://Sound/Voice/Actor2/A3_4_FollowPlay__ACTOR2_02.mp3"
+  },
+  {
+    "id": "A1_0_Begin__SM01",
+    "speaker": "Stage Manager",
+    "text": "SILENCESSSs, everyone.",
+    "audio": "res://Sound/Voice/StageManager/A1_0_Begin__SM01.wav"
+  },
+  {
+    "id": "A1_0_Begin__SM02",
+    "speaker": "Stage Manager",
+    "text": "We are now hopping upon a wonderful fairy-tale story that I'm sure you've never heard before.",
+    "audio": "res://Sound/Voice/StageManager/A1_0_Begin__SM02.wav"
+  },
+  {
+    "id": "A1_0_Begin__SM03",
+    "speaker": "Stage Manager",
+    "text": "Without further ado...\n\nLet the show begin.",
+    "audio": "res://Sound/Voice/StageManager/A1_0_Begin__SM03.wav"
+  },
+  {
+    "id": "A1_0_Forced start__SM01",
+    "speaker": "Stage Manager",
+    "text": "Whatever. Staff, Roll the curtains",
+    "audio": "res://Sound/Voice/StageManager/A1_0_Forced start__SM01.wav"
+  },
+  {
+    "id": "A1_0_No__SM01",
+    "speaker": "Stage Manager",
+    "text": "Excusez-moi… what?",
+    "audio": "res://Sound/Voice/StageManager/A1_0_No__SM01.wav"
+  },
+  {
+    "id": "A1_0_No__SM02",
+    "speaker": "Stage Manager",
+    "text": "Fine. We can wait.",
+    "audio": "res://Sound/Voice/StageManager/A1_0_No__SM02.wav"
+  },
+  {
+    "id": "A1_0_No__SM03",
+    "speaker": "Stage Manager",
+    "text": "But the show is waiting for you. Ready anytime....\n\nNOW?....",
+    "audio": "res://Sound/Voice/StageManager/A1_0_No__SM03.wav"
+  },
+  {
+    "id": "A1_0_NoAgain__SM01",
+    "speaker": "Stage Manager",
+    "text": "I.... We really do need to begin the show Now. Drop the act now.",
+    "audio": "res://Sound/Voice/StageManager/A1_0_NoAgain__SM01.wav"
+  },
+  {
+    "id": "A1_0_STH__SM01",
+    "speaker": "Stage Manager",
+    "text": "Let's be serious here. This is not a joke, we should get going in any time now.\n\nI'm asking you again.\n\nShall we kicks off the show?",
+    "audio": "res://Sound/Voice/StageManager/A1_0_STH__SM01.wav"
+  },
+  {
+    "id": "A1_1_0 PreshowAnnoyed__SM01",
+    "speaker": "Stage Manager",
+    "text": "Good. Please don't do that again and be serious",
+    "audio": "res://Sound/Voice/StageManager/A1_1_0 PreshowAnnoyed__SM01.wav"
+  },
+  {
+    "id": "A1_1_0 PreshowHappy__SM01",
+    "speaker": "Stage Manager",
+    "text": "My pleasure.",
+    "audio": "res://Sound/Voice/StageManager/A1_1_0 PreshowHappy__SM01.wav"
+  },
+  {
+    "id": "UNIVERSAL__SM_SILENCE",
+    "speaker": "Stage Manager",
+    "text": "We are waiting for your line.",
+    "audio": "res://Sound/Voice/StageManager/UNIVERSAL__SM_SILENCE.wav"
+  },
+  {
+    "id": "UNIVERSAL__SM_OFFSCRIPT",
+    "speaker": "Stage Manager",
+    "text": "Stay with the script.",
+    "audio": "res://Sound/Voice/StageManager/UNIVERSAL__SM_OFFSCRIPT.wav"
+  },
+  {
+    "id": "UNIVERSAL__SM_TAKEOVER",
+    "speaker": "Stage Manager",
+    "text": "We will take it from here.",
+    "audio": "res://Sound/Voice/StageManager/UNIVERSAL__SM_TAKEOVER.wav"
+  },
+  {
+    "id": "UNIVERSAL__TECHNICAL_RETRY",
+    "speaker": "Stage Manager",
+    "text": "Hello? I can't hear you well. Repeat again.",
+    "audio": "res://Sound/Voice/StageManager/UNIVERSAL__TECHNICAL_RETRY.wav"
+  },
+  {
+    "id": "UNIVERSAL__MIC_CHECK",
+    "speaker": "Stage Manager",
+    "text": "It seems some cat has stolen your tongue. Do you mind checking your “device” again?",
+    "audio": "res://Sound/Voice/StageManager/UNIVERSAL__MIC_CHECK.wav"
+  },
+  {
+    "id": "A2_0_DeclarationDay__NARRATION",
+    "speaker": "",
+    "text": "One month passes.\n\nThe day of the celebration finally arrives.\n\nPeople from around the kingdom gather for the princess's birthday and declaration.",
+    "audio": "res://Sound/Voice/StageManager/A2_0_DeclarationDay__NARRATION.wav"
+  },
+  {
+    "id": "A1_1_Once upon a time__SM01",
+    "speaker": "Stage Manager",
+    "text": "Once upon a time, there is a lovely family in the town.\n\nThere, they just bore a new little princess.\n\n\n\nShe grows up with brilliant beauty, with a majestic voice, blonde hair, and a marvelous, gentle personality.\n\nA month before their daughters turn eighteen, her mother was having tea in the garden, looking at her.",
+    "parts": [
+      {
+        "text": "Once upon a time, there is a lovely family in the town.\n\nThere, they just bore a new little princess.",
+        "audio": "res://Sound/Voice/StageManager/A1_1_Once upon a time__SM01__P1.wav"
+      },
+      {
+        "text": "She grows up with brilliant beauty, with a majestic voice, blonde hair, and a marvelous, gentle personality.",
+        "audio": "res://Sound/Voice/StageManager/A1_1_Once upon a time__SM01__P2.wav"
+      },
+      {
+        "text": "A month before their daughters turn eighteen, her mother was having tea in the garden, looking at her.",
+        "audio": "res://Sound/Voice/StageManager/A1_1_Once upon a time__SM01__P3.wav"
+      }
+    ]
+  },
+  {
+    "id": "A1_5_EndAct1__NARRATION",
+    "speaker": "",
+    "text": "Preparations begin throughout the kingdom.\n\nThe princess's eighteenth birthday is approaching.\n\nIn this world, reaching eighteen is not only a birthday.\n\nIt is also the moment when a young person stands before the people around them and announces the social position, vocation, or path they intend to follow as an adult.",
+    "parts": [
+      {
+        "text": "Preparations begin throughout the kingdom.\n\nThe princess's eighteenth birthday is approaching.",
+        "audio": "res://Sound/Voice/StageManager/A1_5_EndAct1__NARRATION__P1.wav"
+      },
+      {
+        "text": "In this world, reaching eighteen is not only a birthday.\n\nIt is also the moment when a young person stands before the people around them and announces the social position, vocation, or path they intend to follow as an adult.",
+        "audio": "res://Sound/Voice/StageManager/A1_5_EndAct1__NARRATION__P2.wav"
+      }
+    ]
   }
 ]

@@ -97,6 +97,7 @@ export const stageFrameSettings = {
     bounceSeconds: 0.4,
     flipSeconds: 0.65,
     minDialoguesPerPose: 2,
+    reactionHoldSeconds: 2.2,
     handDrawnMotion: true,
     motionFps: 8,
   },

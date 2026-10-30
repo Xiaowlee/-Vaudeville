@@ -56,3 +56,29 @@ test("talking can update without starting a flip", () => {
   assert.equal(state.flipping, false);
   assert.equal(state.shown, "Default");
 });
+
+
+test("cue artwork overrides idle hold; reactions get their own card-free pose", async () => {
+  const { phoneDisplayPresentation } = await import("./stage-presentation.ts");
+  let state = createPoseController("Waiting");
+  state.dialoguesSinceChange = 0;
+  const cue = phoneDisplayPresentation(true, {expression:"Waiting"}, null);
+  assert.equal(cue.expression,"Cue");
+  state = applyPoseRequest(state,cue);
+  assert.equal(state.flipTo,"Cue");
+  const reaction=phoneDisplayPresentation(true,{expression:"Waiting"},{expression:"Angry"});
+  assert.equal(reaction.expression,"Angry");
+  state=applyPoseRequest(state,reaction);
+  assert.equal(state.flipTo,"Angry");
+  const restored=phoneDisplayPresentation(true,{expression:"Waiting"},null);
+  assert.equal(restored.expression,"Cue");
+  assert.equal(phoneDisplayPresentation(false,{expression:"Accept"},null).expression,"Waiting");
+});
+
+test("repeated priority updates do not restart the same flip", () => {
+  const state=applyPoseRequest(createPoseController("Waiting"),{expression:"Cue",priority:true});
+  const repeated=applyPoseRequest(state,{expression:"Cue",priority:true});
+  assert.equal(repeated.flipTo,state.flipTo);
+  assert.equal(repeated.shown,state.shown);
+  assert.equal(repeated.dialoguesSinceChange,state.dialoguesSinceChange);
+});

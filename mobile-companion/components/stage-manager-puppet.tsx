@@ -54,6 +54,7 @@ export function StageManagerPuppet({
         expression: presentation.expression,
         talking: presentation.talking,
         dialogueBoundary: presentation.dialogueBoundary,
+        priority: presentation.priority,
       },
     });
   }, [presentation?.sequence]);
@@ -95,7 +96,7 @@ export function StageManagerPuppet({
       <div className={styles.characterSwing}>
         <div className={styles.characterCard}>
           <img alt="" className={styles.characterArt} draggable={false} src={src} />
-          {children}
+          <div style={{ visibility: pose.shown === "Cue" && (!pose.flipping || pose.flipTo === "Cue") ? "visible" : "hidden" }}>{children}</div>
         </div>
       </div>
     </div>

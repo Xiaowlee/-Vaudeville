@@ -24,6 +24,7 @@ export type StagePresentationRequest = {
   expression?: StageManagerExpression | null;
   talking?: boolean | null;
   dialogueBoundary?: boolean;
+  priority?: boolean;
 };
 
 export type StagePoseController = {
@@ -84,6 +85,12 @@ export function applyPoseRequest(
     next.pending = null;
   }
 
+  if (request.priority && request.expression) {
+    if (state.flipping && state.flipTo === request.expression) return next;
+    if (request.expression === state.shown && !state.flipping) return { ...next, pending: null };
+    // Readability and response poses must not wait for two unrelated dialogue events.
+    return { ...next, flipping:true, flipFrom:state.shown, flipTo:request.expression, pending:null, dialoguesSinceChange:0 };
+  }
   if (request.dialogueBoundary) {
     next.dialoguesSinceChange += 1;
     next = tryBeginFlip(next, minDialogues);
@@ -130,3 +137,16 @@ export function completeFlip(state: StagePoseController): StagePoseController {
 export function presentationFromController(state: StagePoseController): StagePresentation {
   return { expression: state.shown, talking: state.talking };
 }
+
+/** Functional card pose wins over idle/speaking updates; reactions briefly hide the card. */
+export function phoneDisplayPresentation(
+  hasCue: boolean,
+  latest: StagePresentationRequest,
+  reaction: StagePresentationRequest | null,
+): StagePresentationRequest {
+  if (reaction) return { ...reaction, priority:true };
+  if (hasCue) return { expression:"Cue", talking:false, dialogueBoundary:true, priority:true };
+  if (latest.expression && (PHONE_REACTIONS as readonly string[]).includes(latest.expression)) return { expression:"Waiting", talking:false, priority:true };
+  return { ...latest, priority:true };
+}
+export const PHONE_REACTIONS = ["Accept","Confused","Angry","Menancing","Unexpected","Disappointed"] as const;

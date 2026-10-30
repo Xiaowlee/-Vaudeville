@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bvnkrl4ybarmn"
+path="res://.godot/imported/A1_1_Once upon a time__SM01__P3.wav-946ce69c17f1b21f970c63508cbf50cf.sample"
+
+[deps]
+
+source_file="res://Sound/Voice/StageManager/A1_1_Once upon a time__SM01__P3.wav"
+dest_files=["res://.godot/imported/A1_1_Once upon a time__SM01__P3.wav-946ce69c17f1b21f970c63508cbf50cf.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

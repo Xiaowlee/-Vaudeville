@@ -33,6 +33,13 @@ var ai_busy := false
 var ai_turn := -1
 var ai_allowed: Array = []
 var ai_history: Array = []
+@export var log_interpretations := true
+var interpretation_log: Array=[]
+var interpretation_context: Dictionary={}
+var raw_ai_response := ""
+var ai_started_at := 0
+var ai_elapsed_ms := 0
+const FITS=["supported","unrelated","uncertain","question","help"]
 var frame: Dictionary = {}
 var pending_visual_commands: Array=[]
 var route_kinds: Array = []
@@ -42,6 +49,9 @@ var off_script_count := 0
 var off_script_reason := ""
 func _ready():
     _recover_legacy_story()
+    if log_interpretations:
+        var log_file=FileAccess.open("user://interpretation_log.jsonl",FileAccess.WRITE)
+        if log_file!=null:log_file.close()
     responses.definitions=JSON.parse_string(FileAccess.get_file_as_string("res://Story/StageActs/Graph/response_policy.json"))
     ai_request=HTTPRequest.new()
     ai_request.timeout=ai_timeout_seconds
@@ -224,6 +234,7 @@ func submit_words(words: String):
         handle_response("OUT_OF_TURN")
         return
     response_origin="Rules"
+    interpretation_context={};raw_ai_response="";ai_elapsed_ms=0
     raw_transcript=words
     silence_elapsed=0
     turn_silences=0
@@ -318,9 +329,9 @@ func _interpret(words: String):
         if direct>=0:
             last_meaning=route_kinds[direct]
             handle_response("SELECTION",str(route_kinds[direct]))
-        else:
-            _narrative_retry(false)
-        return
+            return
+        # An unoffered yes/no is not a supported route. Let contextual interpretation
+        # distinguish an intelligible refusal from uncertainty instead of an endless retry.
     var options=[]
     for i in mini(routes.size(),route_kinds.size()):
         var kind=route_kinds[i]
@@ -329,8 +340,11 @@ func _interpret(words: String):
         if not kind in ai_allowed:ai_allowed.append(kind)
         options.append({"intent":kind,"authored_response":routes[i],"meaning":meanings.get(kind,routes[i])})
     var context={"section":frame.get("id",""),"dialogue":$Layout/Dialogue.text,"cue":cue,"history":ai_history.slice(maxi(0,ai_history.size()-3)),"story_variables":story_variables,"authored_choices":story_state,"off_script_count":off_script_count,"last_off_script_reason":off_script_reason,"allowed_authored_intents":options,"context":frame.get("context",""),"player_task":frame.get("player_task",""),"allowed_system_categories":["UNCLEAR","QUESTION","HELP_OR_REPEAT","OFFSCRIPT"]}
+    interpretation_context=context.duplicate(true)
     var rules=FileAccess.get_file_as_string(ai_rules_file)
-    var payload={"model":ai_model,"stream":false,"think":false,"keep_alive":"10m","messages":[{"role":"system","content":rules+"\nScene context: "+JSON.stringify(context)},{"role":"user","content":JSON.stringify(words)}],"format":{"type":"object","properties":{"intent":{"type":"string","enum":ai_allowed},"category":{"type":"string","enum":ResponsePolicy.TYPES},"deliberate":{"type":"boolean"}},"required":["intent","category","deliberate"],"additionalProperties":false},"options":{"temperature":0,"num_ctx":4096,"num_predict":160}}
+    var schema={"type":"object","properties":{"fit":{"type":"string","enum":FITS},"intent":{"type":"string","enum":ai_allowed},"evidence":{"type":"string","maxLength":180},"reason":{"type":"string","maxLength":200}},"required":["fit","intent","evidence","reason"],"additionalProperties":false}
+    var payload={"model":ai_model,"stream":false,"think":false,"keep_alive":"10m","messages":[{"role":"system","content":rules+"\nScene context: "+JSON.stringify(context)},{"role":"user","content":JSON.stringify(words)}],"format":schema,"options":{"temperature":0,"num_ctx":4096,"num_predict":260}}
+    ai_started_at=Time.get_ticks_msec()
     ai_turn=turn
     var error=ai_request.request("http://127.0.0.1:11435/api/chat",["Content-Type: application/json"],HTTPClient.METHOD_POST,JSON.stringify(payload))
     ai_busy=error==OK
@@ -340,6 +354,8 @@ func _interpret(words: String):
 func _ai_completed(result: int, code: int, _headers: PackedStringArray, bytes: PackedByteArray):
     if not ai_busy or ai_turn!=turn:return
     ai_busy=false
+    ai_elapsed_ms=Time.get_ticks_msec()-ai_started_at
+    raw_ai_response=bytes.get_string_from_utf8()
     if result!=HTTPRequest.RESULT_SUCCESS or code!=200:
         handle_response("TECHNICAL_FAILURE")
         return
@@ -347,15 +363,36 @@ func _ai_completed(result: int, code: int, _headers: PackedStringArray, bytes: P
     var answer=null
     if envelope is Dictionary and envelope.get("message") is Dictionary and envelope.get("done_reason","")!="length":
         answer=JSON.parse_string(str(envelope.message.get("content","")))
-    if not answer is Dictionary or not answer.get("intent") in ai_allowed or not answer.get("category") in ResponsePolicy.TYPES or not answer.get("deliberate") is bool:
+    response_origin="AI · "+ai_model
+    if not answer is Dictionary or not answer.get("intent") in ai_allowed or not answer.get("fit") in FITS or not answer.get("evidence") is String or not answer.get("reason") is String:
         handle_response("TECHNICAL_FAILURE")
         return
-    response_origin="AI · "+ai_model
-    last_meaning=answer.intent
-    var category=str(answer.category)
-    # A model cannot declare a hardware failure, actual silence, or turn timing.
-    if category in ["SILENCE","TECHNICAL_FAILURE","OUT_OF_TURN"]:category="UNCLEAR"
-    handle_response(category,last_meaning,answer.deliberate)
+    var fit=str(answer.fit)
+    var evidence=" ".join(tokens(str(answer.evidence)))
+    var spoken=" ".join(tokens(raw_transcript))
+    # Reject invented evidence or contradictions between the fit and route, not just invalid IDs.
+    if evidence.is_empty() or not (" "+evidence+" ") in (" "+spoken+" "):
+        interpretation_context["validation"]="Evidence is absent from current player speech"
+        handle_response("UNCLEAR")
+        return
+    if fit=="supported":
+        if not answer.intent in frame.get("allowed_authored_intents",{}):
+            interpretation_context["validation"]="Supported fit without a current authored intent"
+            handle_response("UNCLEAR")
+            return
+        last_meaning=str(answer.intent)
+        handle_response("VALID_INTENT",last_meaning)
+        return
+    if not answer.intent in ["unclear","no_match"]:
+        interpretation_context["validation"]="Nonmatching fit attempted a story route"
+        handle_response("UNCLEAR")
+        return
+    last_meaning="no_match"
+    match fit:
+        "unrelated":handle_response("OFFSCRIPT","",true)
+        "question":handle_response("QUESTION")
+        "help":handle_response("HELP_OR_REPEAT")
+        _:handle_response("UNCLEAR")
 func _exit_tree():
     _cancel_ai()
 
@@ -364,6 +401,24 @@ func _narrative_retry(_allow_authored_route: bool):
     handle_response("UNCLEAR")
 
 func handle_response(category: String, intent: String = "", deliberate: bool = false):
+    var entry={"time":Time.get_datetime_string_from_system(),"node":str(frame.get("id","")),"transcript":raw_transcript,"source":response_origin,"model":ai_model if response_origin.begins_with("AI") else "","allowed":frame.get("allowed_authored_intents",{}).duplicate(true),"cue":cue,"context":interpretation_context.duplicate(true),"raw_ai":raw_ai_response,"ai_ms":ai_elapsed_ms,"requested_category":category,"requested_intent":intent,"offscript_before":responses.offscript_total}
+    _apply_response(category,intent,deliberate)
+    entry["decision"]=last_response_debug.duplicate(true)
+    entry["offscript_after"]=responses.offscript_total
+    entry["unclear_count"]=responses.unclear_count
+    entry["technical_count"]=responses.technical_failure_count
+    entry["next_node"]=str(frame.get("id",""))
+    interpretation_log.append(entry)
+    if interpretation_log.size()>200:interpretation_log.pop_front()
+    if log_interpretations:
+        print("[Interpretation] "+JSON.stringify(entry))
+        var file=FileAccess.open("user://interpretation_log.jsonl",FileAccess.READ_WRITE)
+        if file!=null:file.seek_end();file.store_line(JSON.stringify(entry));file.close()
+func copy_interpretation_log():
+    var report={"model":ai_model,"rules_sha256":FileAccess.get_sha256(ai_rules_file),"entries":interpretation_log}
+    DisplayServer.clipboard_set(JSON.stringify(report,"  "))
+    print("Interpretation log copied: ",interpretation_log.size()," entries. Local log: ",ProjectSettings.globalize_path("user://interpretation_log.jsonl"))
+func _apply_response(category: String, intent: String = "", deliberate: bool = false):
     last_response_debug={"source":("System" if category in ["SILENCE","TECHNICAL_FAILURE","OUT_OF_TURN"] else response_origin),"node":str(frame.get("id","")),"proposed":category+" / "+intent,"result":"","outcome":"","fallback":""}
     if not category in ResponsePolicy.TYPES:category="UNCLEAR"
     if not waiting or not accepting_speech:category="OUT_OF_TURN"
@@ -478,17 +533,21 @@ func _build_response_debug():
     var box=VBoxContainer.new()
     panel.add_child(box)
     var title=Label.new()
-    title.text="Response testing · F3 to close · synthetic input"
+    title.text="Interpretation diagnostics · F3 to close"
     box.add_child(title)
     response_debug_label=Label.new()
     box.add_child(response_debug_label)
+    var copy_log=Button.new()
+    copy_log.text="Copy interpretation log"
+    copy_log.pressed.connect(func():copy_interpretation_log();copy_log.text="Copied — paste into chat")
+    box.add_child(copy_log)
     debug_category=OptionButton.new()
     for category in ResponsePolicy.TYPES:debug_category.add_item(category)
     box.add_child(debug_category)
     debug_intent=OptionButton.new()
     box.add_child(debug_intent)
     var trigger=Button.new()
-    trigger.text="Test selected response type"
+    trigger.text="Manual category test — bypasses AI"
     trigger.pressed.connect(func():
         if mic.recording or mic.pid>0:return
         _cancel_ai()

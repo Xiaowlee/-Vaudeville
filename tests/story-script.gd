@@ -98,6 +98,36 @@ func run():
     # A real linked transition must execute visual nodes, not bypass them via the frame signal.
     t.parser.start("A1_1_Once upon a time");t.waiting=true;t._choose(0,"continue",false)
     check(t.frame.get("visual_cues",[]).size()>0,"linked visual cue commands reach main story")
+    # Real model responses must prove a current meaning; invalid evidence never advances.
+    t.parser.start("A2_4_CallSomeone");t.waiting=true;t.accepting_speech=true;t.responses.reset()
+    t.raw_transcript="I want to eat pizza.";t.ai_allowed=["unclear","no_match","choice_0"]
+    var response_turn=t.turn
+    t.ai_busy=true;t.ai_turn=t.turn
+    t._ai_completed(HTTPRequest.RESULT_SUCCESS,200,PackedStringArray(),JSON.stringify({"message":{"content":JSON.stringify({"fit":"supported","intent":"choice_0","evidence":"CALL CHIEF","reason":"cue is not player evidence"})},"done_reason":"stop"}).to_utf8_buffer())
+    check(t.turn==response_turn and t.responses.offscript_total==0,"invented AI evidence cannot advance or punish")
+    t.ai_busy=true;t.ai_turn=t.turn
+    t._ai_completed(HTTPRequest.RESULT_SUCCESS,200,PackedStringArray(),JSON.stringify({"message":{"content":JSON.stringify({"fit":"unrelated","intent":"no_match","evidence":"I want to eat pizza.","reason":"clear unrelated statement"})},"done_reason":"stop"}).to_utf8_buffer())
+    check(t.turn==response_turn and t.responses.offscript_total==1,"understood unrelated response counts and does not accept call route")
+    check(not t.interpretation_log.is_empty() and t.interpretation_log.back().has("raw_ai"),"copyable interpretation evidence is retained")
+    c.last_group="Act 2";c.curtain_enabled=true;c.curtain_openness=1.0
+    t.parser.start("A3_1_Actor2");c._present()
+    check(not c.opening and c.transition_phase=="","Act2 to Act3 is continuous")
+    check(game.get_node("World/Performers/Actor2").visible,"intruder visible without act curtain")
+    # Supplied multi-file recordings must retain every spoken part in source order.
+    var voice_catalog=JSON.parse_string(FileAccess.get_file_as_string(c.voice_catalog_path))
+    for entry in voice_catalog:
+        var recording=c._recorded_voice(entry.speaker,entry.text)
+        check(recording!=null and recording.get_length()>0,str(entry.id)+" voice resource loads")
+        if entry.has("parts"):
+            var combined=""
+            for part in entry.parts:combined+=str(part.text)
+            check(c._voice_text_key(entry.speaker,combined)==c._voice_text_key(entry.speaker,entry.text),str(entry.id)+" recorded parts preserve words")
+            check(recording is AudioStreamPlaylist and not recording.loop,str(entry.id)+" finite voice sequence")
+    t.parser.start("A1_1_Once upon a time");c.last_group="Act 1";c._present()
+    var story_voice_parts=0
+    for event in c.semantic_events:
+        if event.get("speaker","")=="Stage Manager":story_voice_parts+=1
+    check(story_voice_parts==3,"fairytale narration plays allthree supplied parts")
     print("RESULT ",routes_checked," graph links / ",m.size()," passage presentations; response-template checks; failures=",failures)
     game.queue_free();await process_frame
     quit(0 if failures.is_empty() else 1)

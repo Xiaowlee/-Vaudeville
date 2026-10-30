@@ -16,6 +16,8 @@ import {
 } from "../lib/stage-phone";
 import { createRelayClient, type RelayStatus } from "../lib/websocket";
 import { StageFrame } from "./stage-frame";
+import { phoneDisplayPresentation, PHONE_REACTIONS, type StagePresentationRequest } from "../lib/stage-presentation";
+import { stageFrameSettings } from "./stage-frame-settings";
 import type { StampedPresentation } from "./stage-manager-puppet";
 
 export function StagePhoneClient() {
@@ -35,6 +37,14 @@ export function StagePhoneClient() {
     const recipient = resolveStageRecipient(window.location.search);
     let channels = emptyStageChannels();
     let sequence = 0;
+    let latest: StagePresentationRequest = { expression:"Waiting", talking:false };
+    let reaction: StagePresentationRequest | null = null;
+    let reactionTimer = 0;
+    const publishPresentation = () => {
+      const hasCue = Boolean(channels.prompt?.text.trim() || channels.ifb?.text.trim());
+      setPresentation({ ...phoneDisplayPresentation(hasCue, latest, reaction), sequence:++sequence });
+    };
+    const clearReaction = () => { window.clearTimeout(reactionTimer);reactionTimer=0;reaction=null; };
     let keepalive = 0;
     let context: AudioContext | null = null;
     let disposed = false;
@@ -111,13 +121,7 @@ export function StagePhoneClient() {
           stopSound("all");
           channels = emptyStageChannels();
           setCues(channels);
-          sequence += 1;
-          setPresentation({
-            expression: "Default",
-            talking: false,
-            dialogueBoundary: true,
-            sequence,
-          });
+          clearReaction();latest={expression:"Waiting",talking:false};publishPresentation();
         }
       },
       onMessage: (raw) => {
@@ -142,16 +146,20 @@ export function StagePhoneClient() {
           setCues(channels);
         }
         if (result.presentation) {
-          sequence += 1;
-          setPresentation({ ...result.presentation, sequence });
+          latest = { ...latest, ...result.presentation };
+          if (result.presentation.expression && (PHONE_REACTIONS as readonly string[]).includes(result.presentation.expression)) {
+            clearReaction();reaction={ ...result.presentation, talking:false };
+            reactionTimer=window.setTimeout(() => { reaction=null;reactionTimer=0;publishPresentation(); }, stageFrameSettings.managerMotion.reactionHoldSeconds*1000);
+          }
         }
+        publishPresentation();
         if (result.ackRequestId) client.send(stageAck(result.ackRequestId));
       },
     });
 
     client.connect();
     return () => {
-      disposed = true;unlockSound.current = null;stopSound("all");
+      disposed = true;clearReaction();unlockSound.current = null;stopSound("all");
       if (context) void context.close();
       clearKeepalive();
       client.disconnect();

@@ -85,9 +85,27 @@ func _load_voice_catalog():
     var entries=JSON.parse_string(FileAccess.get_file_as_string(voice_catalog_path))
     if not entries is Array:return
     for entry in entries:
-        recorded_voices[_voice_text_key(str(entry.speaker),str(entry.text))]=str(entry.audio)
+        recorded_voices[_voice_text_key(str(entry.speaker),str(entry.text))]=entry
+        for part in entry.get("parts",[]):
+            recorded_voices[_voice_text_key(str(entry.speaker),str(part.text))]=part
+func _recorded_parts(speaker: String, words: String) -> Array:
+    return recorded_voices.get(_voice_text_key(speaker,words),{}).get("parts",[])
 func _recorded_voice(speaker: String, words: String) -> AudioStream:
-    var path=str(recorded_voices.get(_voice_text_key(speaker,words),""))
+    var key=_voice_text_key(speaker,words)
+    var entry: Dictionary=recorded_voices.get(key,{})
+    if entry.has("parts"):
+        var cache_key="playlist:"+key
+        if not voice_stream_cache.has(cache_key):
+            var playlist=AudioStreamPlaylist.new()
+            playlist.loop=false;playlist.shuffle=false;playlist.fade_time=0.0
+            playlist.stream_count=entry.parts.size()
+            for i in entry.parts.size():
+                var path=str(entry.parts[i].audio)
+                if not voice_stream_cache.has(path):voice_stream_cache[path]=load(path)
+                playlist.set_list_stream(i,voice_stream_cache[path])
+            voice_stream_cache[cache_key]=playlist
+        return voice_stream_cache[cache_key] as AudioStream
+    var path=str(entry.get("audio",""))
     if path.is_empty():return null
     if not voice_stream_cache.has(path):voice_stream_cache[path]=load(path)
     return voice_stream_cache[path] as AudioStream
@@ -161,6 +179,11 @@ func _present():
         var event=runtime.frame.events[index].duplicate(true)
         event["recording_key"]=section+":"+str(index)
         if event.kind in ["dialogue","narration"]:
+            var recorded_parts=_recorded_parts(str(event.get("speaker","")),str(event.text))
+            if not recorded_parts.is_empty():
+                for clip in recorded_parts:
+                    var part=event.duplicate(true);part.text=str(clip.text);semantic_events.append(part)
+                continue
             # A recorded unit stays intact: don't split its text and cut/restart its take.
             var pages=PackedStringArray([str(event.text)]) if recorded_voices.has(_voice_text_key(str(event.get("speaker","")),str(event.text))) else _pages(str(event.text))
             for words in pages:
@@ -177,7 +200,7 @@ func _present():
         visual_state.clear();view.current_visual_state.clear()
         state="OPENING_DELAY";response_elapsed=0
         ui.play_dialogue("",null,"",false);ui.set_speaker("")
-    elif group!=last_group and act_titles.has(group):
+    elif group!=last_group and act_titles.has(group) and not (last_group=="Act 2" and group=="Act 3"):
         _begin_act(group)
     else:
         _set_stage_cast(group)

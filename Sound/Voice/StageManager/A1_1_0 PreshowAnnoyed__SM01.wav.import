@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bdooxlhk81f6c"
+path="res://.godot/imported/A1_1_0 PreshowAnnoyed__SM01.wav-f7a6a1c86df1f9c9837ec5083a6cff6e.sample"
+
+[deps]
+
+source_file="res://Sound/Voice/StageManager/A1_1_0 PreshowAnnoyed__SM01.wav"
+dest_files=["res://.godot/imported/A1_1_0 PreshowAnnoyed__SM01.wav-f7a6a1c86df1f9c9837ec5083a6cff6e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
