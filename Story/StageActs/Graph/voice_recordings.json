@@ -1,0 +1,458 @@
+[
+  {
+    "id": "A1_1_ACTOR 1'sQuestion__ACTOR1_01",
+    "speaker": "Actor 1",
+    "text": "My dear, you're almost eighteen.",
+    "audio": "res://Sound/Voice/Actor1/A1_1_ACTOR 1'sQuestion__ACTOR1_01.mp3"
+  },
+  {
+    "id": "A1_1_ACTOR 1'sQuestion__ACTOR1_03",
+    "speaker": "Actor 1",
+    "text": "Have you decided what you want to become?",
+    "audio": "res://Sound/Voice/Actor1/A1_1_ACTOR 1'sQuestion__ACTOR1_03.mp3"
+  },
+  {
+    "id": "A1_1_ACTOR 1'sQuestion__OFFSCRIPT_01",
+    "speaker": "Actor 1",
+    "text": "...Hey. I know you love joking but this isn't funny. We are in front of the crowd",
+    "audio": "res://Sound/Voice/Actor1/A1_1_ACTOR 1'sQuestion__OFFSCRIPT_01.mp3"
+  },
+  {
+    "id": "A1_1_ACTOR 1'sQuestion__OFFSCRIPT_02",
+    "speaker": "Actor 1",
+    "text": "Say it again.",
+    "audio": "res://Sound/Voice/Actor1/A1_1_ACTOR 1'sQuestion__OFFSCRIPT_02.mp3"
+  },
+  {
+    "id": "A1_1_Silence__ACTOR1_01",
+    "speaker": "Actor 1",
+    "text": "Hey",
+    "audio": "res://Sound/Voice/Actor1/A1_1_Silence__ACTOR1_01.mp3"
+  },
+  {
+    "id": "A1_1_Silence__ACTOR1_02",
+    "speaker": "Actor 1",
+    "text": "Your linesss. The scriptttttt!!!",
+    "audio": "res://Sound/Voice/Actor1/A1_1_Silence__ACTOR1_02.mp3"
+  },
+  {
+    "id": "A1_1_WrongLine__ACTOR1_01",
+    "speaker": "Actor 1",
+    "text": "...pss hey. That isn't supposed to be your line.",
+    "audio": "res://Sound/Voice/Actor1/A1_1_WrongLine__ACTOR1_01.mp3"
+  },
+  {
+    "id": "A1_2_SecondFailure__ACTOR1_01",
+    "speaker": "Actor 1",
+    "text": "... You actually forgot your script. Guess we have to turn to plan B.",
+    "audio": "res://Sound/Voice/Actor1/A1_2_SecondFailure__ACTOR1_01.mp3"
+  },
+  {
+    "id": "A1_2_SecondFailure__ACTOR1_02",
+    "speaker": "Actor 1",
+    "text": "Look on your side. See anything?",
+    "audio": "res://Sound/Voice/Actor1/A1_2_SecondFailure__ACTOR1_02.mp3"
+  },
+  {
+    "id": "A1_3_FirstCue__ACTOR1_02",
+    "speaker": "Actor 1",
+    "text": "And what sort of writer will you be?",
+    "audio": "res://Sound/Voice/Actor1/A1_3_FirstCue__ACTOR1_02.mp3"
+  },
+  {
+    "id": "A1_4_SecondCue__ACTOR1_01",
+    "speaker": "Actor 1",
+    "text": "A lovely ambition.",
+    "audio": "res://Sound/Voice/Actor1/A1_4_SecondCue__ACTOR1_01.mp3"
+  },
+  {
+    "id": "A1_4_SecondCue__ACTOR1_02",
+    "speaker": "Actor 1",
+    "text": "That's lovely, dear, but I hope you won't get overwhelmed by the sheer pain in your fingers and getting calluses, writing so much with you.",
+    "audio": "res://Sound/Voice/Actor1/A1_4_SecondCue__ACTOR1_02.mp3"
+  },
+  {
+    "id": "A1_5_EndAct1__ACTOR1_01",
+    "speaker": "Actor 1",
+    "text": "Great. Now go on.\n\n\n\nWe should have a lot of work to do before your birthday comes.\n\n\n\nMe and father are gonna organize a big party.\n\n\n\nWe're gonna invite people all around the kingdom to visit, to attend your own birthday.",
+    "audio": "res://Sound/Voice/Actor1/A1_5_EndAct1__ACTOR1_01.mp3"
+  },
+  {
+    "id": "A2_0_DeclarationDay__ACTOR1_01",
+    "speaker": "Actor 1",
+    "text": "Look at that, child.\n\nToday is the day.\n\nI can not believe it.\n\nYou're gonna be a true adult.",
+    "audio": "res://Sound/Voice/Actor1/A2_0_DeclarationDay__ACTOR1_01.mp3"
+  },
+  {
+    "id": "A2_0_DeclarationDay__TAKEOVER_01",
+    "speaker": "Actor 1",
+    "text": "A little nervous? Come along.\"",
+    "audio": "res://Sound/Voice/Actor1/A2_0_DeclarationDay__TAKEOVER_01.mp3"
+  },
+  {
+    "id": "A2_1_Entrance__ACTOR1_01",
+    "speaker": "Actor 1",
+    "text": "What, I am sure you can do great things. You are the Millers.\n\nYou are destined to be a great figure since you were born.",
+    "audio": "res://Sound/Voice/Actor1/A2_1_Entrance__ACTOR1_01.mp3"
+  },
+  {
+    "id": "A2_1_Entrance__ACTOR1_02",
+    "speaker": "Actor 1",
+    "text": "But don't you think it's getting difficult to move through there.",
+    "audio": "res://Sound/Voice/Actor1/A2_1_Entrance__ACTOR1_02.mp3"
+  },
+  {
+    "id": "A2_1_Entrance__ACTOR1_03",
+    "speaker": "Actor 1",
+    "text": "How about we take a detour from the main gate. Which entrance should we use?",
+    "audio": "res://Sound/Voice/Actor1/A2_1_Entrance__ACTOR1_03.mp3"
+  },
+  {
+    "id": "A2_1_Entrance__TAKEOVER_01",
+    "speaker": "Actor 1",
+    "text": "Then I'll choose. The western stairs. Come with me.\"",
+    "audio": "res://Sound/Voice/Actor1/A2_1_Entrance__TAKEOVER_01.mp3"
+  },
+  {
+    "id": "A2_1_Left__ACTOR1_01",
+    "speaker": "Actor 1",
+    "text": "The western stairs, then. Here we go",
+    "audio": "res://Sound/Voice/Actor1/A2_1_Left__ACTOR1_01.mp3"
+  },
+  {
+    "id": "A2_1_Left__ACTOR1_02",
+    "speaker": "Actor 1",
+    "text": "We should avoid most of the guests that way.",
+    "audio": "res://Sound/Voice/Actor1/A2_1_Left__ACTOR1_02.mp3"
+  },
+  {
+    "id": "A2_1_Right__ACTOR1_01",
+    "speaker": "Actor 1",
+    "text": "Through the eastern entrance, then.",
+    "audio": "res://Sound/Voice/Actor1/A2_1_Right__ACTOR1_01.mp3"
+  },
+  {
+    "id": "A2_1_Right__ACTOR1_02",
+    "speaker": "Actor 1",
+    "text": "It'll be busier, but we'll manage.",
+    "audio": "res://Sound/Voice/Actor1/A2_1_Right__ACTOR1_02.mp3"
+  },
+  {
+    "id": "A2_2_AgreeAwkward__ACTOR1_01",
+    "speaker": "Actor 1",
+    "text": "Very bold, aren't you?",
+    "audio": "res://Sound/Voice/Actor1/A2_2_AgreeAwkward__ACTOR1_01.mp3"
+  },
+  {
+    "id": "A2_2_AgreeAwkward__ACTOR1_02",
+    "speaker": "Actor 1",
+    "text": "psss hey, you are giving me a hard time here, just follow the script, I mean the cue if you don't remember it",
+    "audio": "res://Sound/Voice/Actor1/A2_2_AgreeAwkward__ACTOR1_02.mp3"
+  },
+  {
+    "id": "A2_2_AgreeAwkward__ACTOR1_03",
+    "speaker": "Actor 1",
+    "text": "Fine. I'll give them the signal.",
+    "audio": "res://Sound/Voice/Actor1/A2_2_AgreeAwkward__ACTOR1_03.mp3"
+  },
+  {
+    "id": "A2_2_Hall__ACTOR1_01",
+    "speaker": "Actor 1",
+    "text": "Oo deer, I realise. It seems people have already filled the hall right.",
+    "audio": "res://Sound/Voice/Actor1/A2_2_Hall__ACTOR1_01.mp3"
+  },
+  {
+    "id": "A2_2_Hall__TAKEOVER_01",
+    "speaker": "Actor 1",
+    "text": "Never mind. Let's get ready.\"",
+    "audio": "res://Sound/Voice/Actor1/A2_2_Hall__TAKEOVER_01.mp3"
+  },
+  {
+    "id": "A2_2_HallCommentAppropriate__ACTOR1_01",
+    "speaker": "Actor 1",
+    "text": "Well, that is... a very mature comment I would say.",
+    "audio": "res://Sound/Voice/Actor1/A2_2_HallCommentAppropriate__ACTOR1_01.mp3"
+  },
+  {
+    "id": "A2_2_HallCommentAppropriate__ACTOR1_02",
+    "speaker": "Actor 1",
+    "text": "The musicians must have been ready. .Shall I tell them to begin my girl?",
+    "audio": "res://Sound/Voice/Actor1/A2_2_HallCommentAppropriate__ACTOR1_02.mp3"
+  },
+  {
+    "id": "A2_2_HallCommentAppropriate__TAKEOVER_01",
+    "speaker": "Actor 1",
+    "text": "We can't keep everyone waiting. I'll signal them myself.\"",
+    "audio": "res://Sound/Voice/Actor1/A2_2_HallCommentAppropriate__TAKEOVER_01.mp3"
+  },
+  {
+    "id": "A2_2_HallCommentAwkward__ACTOR1_01",
+    "speaker": "Actor 1",
+    "text": "Er.... Yeah, sure darl?\n\n\n\nBut please keep your manners.",
+    "audio": "res://Sound/Voice/Actor1/A2_2_HallCommentAwkward__ACTOR1_01.mp3"
+  },
+  {
+    "id": "A2_3_Agree__ACTOR1_01",
+    "speaker": "Actor 1",
+    "text": "I'll give them the signal.",
+    "audio": "res://Sound/Voice/Actor1/A2_3_Agree__ACTOR1_01.mp3"
+  },
+  {
+    "id": "A2_4_CallSomeone__ACTOR1_01",
+    "speaker": "Actor 1",
+    "text": "Say...\n\nThe declaration scroll is still backstage.",
+    "audio": "res://Sound/Voice/Actor1/A2_4_CallSomeone__ACTOR1_01.mp3"
+  },
+  {
+    "id": "A2_4_CallSomeone__ACTOR1_02",
+    "speaker": "Actor 1",
+    "text": "We need someone to fetch it. Can you help me call the Chief  to grab it?",
+    "audio": "res://Sound/Voice/Actor1/A2_4_CallSomeone__ACTOR1_02.mp3"
+  },
+  {
+    "id": "A2_4_CallSomeone__TAKEOVER_01",
+    "speaker": "Actor 1",
+    "text": "I'll call them. Chief! The scroll, please.\"",
+    "audio": "res://Sound/Voice/Actor1/A2_4_CallSomeone__TAKEOVER_01.mp3"
+  },
+  {
+    "id": "A2_6_ScriptChange__ACTOR1_01",
+    "speaker": "Actor 1",
+    "text": "Right. Now. Before you make the declaration\n\n\n\nI just want to make some confirmation.",
+    "audio": "res://Sound/Voice/Actor1/A2_6_ScriptChange__ACTOR1_01.mp3"
+  },
+  {
+    "id": "A2_6_ScriptChange__ACTOR1_02",
+    "speaker": "Actor 1",
+    "text": "You'll tell everyone that you're entering the writing profession, won't you?",
+    "audio": "res://Sound/Voice/Actor1/A2_6_ScriptChange__ACTOR1_02.mp3"
+  },
+  {
+    "id": "A2_6_ScriptChange__TAKEOVER_01",
+    "speaker": "Actor 1",
+    "text": "We'll speak about it later. They're waiting for us.\"",
+    "audio": "res://Sound/Voice/Actor1/A2_6_ScriptChange__TAKEOVER_01.mp3"
+  },
+  {
+    "id": "A2_7_Agree__ACTOR1_02",
+    "speaker": "Actor 1",
+    "text": "...Very well.",
+    "audio": "res://Sound/Voice/Actor1/A2_7_Agree__ACTOR1_02.mp3"
+  },
+  {
+    "id": "A2_7_Agree__ACTOR1_03",
+    "speaker": "Actor 1",
+    "text": "There's still time before the declaration.",
+    "audio": "res://Sound/Voice/Actor1/A2_7_Agree__ACTOR1_03.mp3"
+  },
+  {
+    "id": "A2_7_ChangeYourMind__ACTOR1_01",
+    "speaker": "Actor 1",
+    "text": "What?",
+    "audio": "res://Sound/Voice/Actor1/A2_7_ChangeYourMind__ACTOR1_01.mp3"
+  },
+  {
+    "id": "A2_7_ChangeYourMind__ACTOR1_02",
+    "speaker": "Actor 1",
+    "text": "Hey, why you go off the script again this time",
+    "audio": "res://Sound/Voice/Actor1/A2_7_ChangeYourMind__ACTOR1_02.mp3"
+  },
+  {
+    "id": "A2_7_Decline__ACTOR1_01",
+    "speaker": "Actor 1",
+    "text": "No?",
+    "audio": "res://Sound/Voice/Actor1/A2_7_Decline__ACTOR1_01.mp3"
+  },
+  {
+    "id": "A2_7_Decline__ACTOR1_03",
+    "speaker": "Actor 1",
+    "text": "But... ehm...Very well.",
+    "audio": "res://Sound/Voice/Actor1/A2_7_Decline__ACTOR1_03.mp3"
+  },
+  {
+    "id": "A2_7_NotSure__ACTOR1_03",
+    "speaker": "Actor 1",
+    "text": "...Fine then..",
+    "audio": "res://Sound/Voice/Actor1/A2_7_NotSure__ACTOR1_03.mp3"
+  },
+  {
+    "id": "A2_7_NotSure__ACTOR1_04",
+    "speaker": "Actor 1",
+    "text": "You still have some time before the Chief arrives",
+    "audio": "res://Sound/Voice/Actor1/A2_7_NotSure__ACTOR1_04.mp3"
+  },
+  {
+    "id": "A3_3_ACTOR 1Interrupts__ACTOR1_01",
+    "speaker": "Actor 1",
+    "text": "Enough.",
+    "audio": "res://Sound/Voice/Actor1/A3_3_ACTOR 1Interrupts__ACTOR1_01.mp3"
+  },
+  {
+    "id": "A3_3_ACTOR 1Interrupts__ACTOR1_02",
+    "speaker": "Actor 1",
+    "text": "Her decision has been made.",
+    "audio": "res://Sound/Voice/Actor1/A3_3_ACTOR 1Interrupts__ACTOR1_02.mp3"
+  },
+  {
+    "id": "A3_3_ACTOR 1Interrupts__ACTOR1_03",
+    "speaker": "Actor 1",
+    "text": "We are here to celebrate my daughter's eighteenth birthday and declaration.",
+    "audio": "res://Sound/Voice/Actor1/A3_3_ACTOR 1Interrupts__ACTOR1_03.mp3"
+  },
+  {
+    "id": "A3_4_Conflict__ACTOR1_01",
+    "speaker": "Actor 1",
+    "text": "Darling.",
+    "audio": "res://Sound/Voice/Actor1/A3_4_Conflict__ACTOR1_01.mp3"
+  },
+  {
+    "id": "A3_4_Conflict__ACTOR1_02",
+    "speaker": "Actor 1",
+    "text": "Ignore him.",
+    "audio": "res://Sound/Voice/Actor1/A3_4_Conflict__ACTOR1_02.mp3"
+  },
+  {
+    "id": "A3_4_Conflict__ACTOR1_03",
+    "speaker": "Actor 1",
+    "text": "The guests are waiting.",
+    "audio": "res://Sound/Voice/Actor1/A3_4_Conflict__ACTOR1_03.mp3"
+  },
+  {
+    "id": "Music_NotYet__ACTOR1_01",
+    "speaker": "Actor 1",
+    "text": "All right. We'll give them a moment. Let's fetch the scroll first.",
+    "audio": "res://Sound/Voice/Actor1/Music_NotYet__ACTOR1_01.mp3"
+  },
+  {
+    "id": "Hall_AfterForced__ACTOR1_01",
+    "speaker": "Actor 1",
+    "text": "The musicians must be ready. Shall I tell them to begin, my girl?",
+    "audio": "res://Sound/Voice/Actor1/Hall_AfterForced__ACTOR1_01.mp3"
+  },
+  {
+    "id": "A3_1_Actor2__ACTOR2_01",
+    "speaker": "Actor 2",
+    "text": "A princess.",
+    "audio": "res://Sound/Voice/Actor2/A3_1_Actor2__ACTOR2_01.mp3"
+  },
+  {
+    "id": "A3_1_Actor2__ACTOR2_02",
+    "speaker": "Actor 2",
+    "text": "A writer.",
+    "audio": "res://Sound/Voice/Actor2/A3_1_Actor2__ACTOR2_02.mp3"
+  },
+  {
+    "id": "A3_1_Actor2__ACTOR2_03",
+    "speaker": "Actor 2",
+    "text": "Her daughter.",
+    "audio": "res://Sound/Voice/Actor2/A3_1_Actor2__ACTOR2_03.mp3"
+  },
+  {
+    "id": "A3_1_Actor2__ACTOR2_04",
+    "speaker": "Actor 2",
+    "text": "Is that who you are?",
+    "audio": "res://Sound/Voice/Actor2/A3_1_Actor2__ACTOR2_04.mp3"
+  },
+  {
+    "id": "A3_2_FirstQuestion__ACTOR2_01",
+    "speaker": "Actor 2",
+    "text": "You say you're going to become a writer.",
+    "audio": "res://Sound/Voice/Actor2/A3_2_FirstQuestion__ACTOR2_01.mp3"
+  },
+  {
+    "id": "A3_2_FirstQuestion__ACTOR2_02",
+    "speaker": "Actor 2",
+    "text": "Did you choose that yourself?",
+    "audio": "res://Sound/Voice/Actor2/A3_2_FirstQuestion__ACTOR2_02.mp3"
+  },
+  {
+    "id": "A3_2_FirstQuestion__TAKEOVER_01",
+    "speaker": "Actor 2",
+    "text": "They won't let this pause last, will they?\"",
+    "audio": "res://Sound/Voice/Actor2/A3_2_FirstQuestion__TAKEOVER_01.mp3"
+  },
+  {
+    "id": "A3_2_No__ACTOR2_01",
+    "speaker": "Actor 2",
+    "text": "Then why are you about to declare it?",
+    "audio": "res://Sound/Voice/Actor2/A3_2_No__ACTOR2_01.mp3"
+  },
+  {
+    "id": "A3_2_Unclear__ACTOR2_01",
+    "speaker": "Actor 2",
+    "text": "You don't have to answer quickly.",
+    "audio": "res://Sound/Voice/Actor2/A3_2_Unclear__ACTOR2_01.mp3"
+  },
+  {
+    "id": "A3_2_Unclear__ACTOR2_02",
+    "speaker": "Actor 2",
+    "text": "Maybe that's the first honest thing you've done tonight.",
+    "audio": "res://Sound/Voice/Actor2/A3_2_Unclear__ACTOR2_02.mp3"
+  },
+  {
+    "id": "A3_2_Yes__ACTOR2_01",
+    "speaker": "Actor 2",
+    "text": "Then say it without reading it.",
+    "audio": "res://Sound/Voice/Actor2/A3_2_Yes__ACTOR2_01.mp3"
+  },
+  {
+    "id": "A3_3_ACTOR 1Interrupts__ACTOR2_01",
+    "speaker": "Actor 2",
+    "text": "Then let her tell us herself.",
+    "audio": "res://Sound/Voice/Actor2/A3_3_ACTOR 1Interrupts__ACTOR2_01.mp3"
+  },
+  {
+    "id": "A3_4_Conflict__ACTOR2_01",
+    "speaker": "Actor 2",
+    "text": "Why writing?",
+    "audio": "res://Sound/Voice/Actor2/A3_4_Conflict__ACTOR2_01.mp3"
+  },
+  {
+    "id": "A3_4_Conflict__ACTOR2_02",
+    "speaker": "Actor 2",
+    "text": "Because you love it?",
+    "audio": "res://Sound/Voice/Actor2/A3_4_Conflict__ACTOR2_02.mp3"
+  },
+  {
+    "id": "A3_4_Conflict__ACTOR2_03",
+    "speaker": "Actor 2",
+    "text": "Or because someone handed you the answer?",
+    "audio": "res://Sound/Voice/Actor2/A3_4_Conflict__ACTOR2_03.mp3"
+  },
+  {
+    "id": "A3_4_Conflict__TAKEOVER_01",
+    "speaker": "Actor 2",
+    "text": "They're moving us on.\"",
+    "audio": "res://Sound/Voice/Actor2/A3_4_Conflict__TAKEOVER_01.mp3"
+  },
+  {
+    "id": "A3_4_EngageActor2__ACTOR2_01",
+    "speaker": "Actor 2",
+    "text": "Good.",
+    "audio": "res://Sound/Voice/Actor2/A3_4_EngageActor2__ACTOR2_01.mp3"
+  },
+  {
+    "id": "A3_4_EngageActor2__ACTOR2_02",
+    "speaker": "Actor 2",
+    "text": "You heard that Karl. You can't help hiding it forever.",
+    "audio": "res://Sound/Voice/Actor2/A3_4_EngageActor2__ACTOR2_02.mp3"
+  },
+  {
+    "id": "A3_4_FollowPlay__ACTOR2_01",
+    "speaker": "Actor 2",
+    "text": "...All right.",
+    "audio": "res://Sound/Voice/Actor2/A3_4_FollowPlay__ACTOR2_01.mp3"
+  },
+  {
+    "id": "A3_5_End__ACTOR2_01",
+    "speaker": "Actor 2",
+    "text": "Then ask yourself something.",
+    "audio": "res://Sound/Voice/Actor2/A3_5_End__ACTOR2_01.mp3"
+  },
+  {
+    "id": "A3_5_End__ACTOR2_02",
+    "speaker": "Actor 2",
+    "text": "Do you remember yesterday?",
+    "audio": "res://Sound/Voice/Actor2/A3_5_End__ACTOR2_02.mp3"
+  }
+]

@@ -41,9 +41,9 @@ func build_form():
     loading=true
     if is_instance_valid(form):remove_child(form);form.queue_free()
     form=VBoxContainer.new();form.custom_minimum_size.x=290;add_child(form)
-    var kinds=["cut_in","text","atmosphere"]
+    var kinds=["cut_in","text","atmosphere","pose"]
     var selector=OptionButton.new()
-    for item in ["Cut-in illustration","Text effect","Stage atmosphere"]:selector.add_item(item)
+    for item in ["Cut-in illustration","Text effect","Stage atmosphere","Character pose / flip"]:selector.add_item(item)
     selector.select(maxi(kinds.find(payload.get("kind","cut_in")),0))
     selector.item_selected.connect(func(i):change("kind",kinds[i],true))
     form.add_child(selector)
@@ -54,13 +54,32 @@ func build_form():
                 choice("Position area","placement",["NPC — right","MC — left","Custom area"],int(payload.get("placement",0)))
                 choice("Picture","picture_source",["Character close-up","Separate illustration"],int(payload.get("picture_source",0)))
                 if int(payload.get("picture_source",0))==0:
-                    choice("Character","character",["Actor 1","Player","Actor 2"],int(payload.get("character",0)))
+                    choice("Character","character",["Actor 1","Player","Actor 2","Stage Manager"],int(payload.get("character",0)))
                 else:picture_field("Illustration","texture")
                 number("Width / height (0 = picture)","aspect",float(payload.get("aspect",1.9)),0,4,0.05)
                 number("Size within placement area","fill",float(payload.get("fill",1.0)),0.3,1,0.05)
                 number("Seconds (0 = until Hide node)","hold",float(payload.get("hold",0)),0,30,0.25)
                 var crop=payload.get("crop",[0.05,0,0.9,0.48])
                 for i in 4:number(["Crop left","Crop top","Crop width","Crop height"][i],"crop_"+str(i),float(crop[i]),0,1,0.01)
+        "pose":
+            add_label("Character")
+            var actor=OptionButton.new()
+            var names=["Player","Actor1","Actor2","StageManager"]
+            for name in names:actor.add_item(name)
+            actor.select(maxi(names.find(str(payload.get("actor","Player"))),0))
+            actor.item_selected.connect(func(i):change("actor",names[i],true))
+            form.add_child(actor)
+            var folder={"Player":"MC","Actor1":"Actor1","Actor2":"Intruder","StageManager":"StageManager"}.get(payload.get("actor","Player"),"MC")
+            var poses=DirAccess.get_files_at("res://Visual Asset/Stage/Characters/"+folder)
+            var pick=OptionButton.new()
+            for file in poses:
+                if file.ends_with(".png"):pick.add_item(file.get_basename())
+            for i in pick.item_count:
+                if pick.get_item_text(i)==payload.get("pose",""):pick.select(i)
+            pick.item_selected.connect(func(i):change("pose",pick.get_item_text(i)))
+            form.add_child(pick)
+            number("Hold at least this many dialogues","hold_dialogues",float(payload.get("hold_dialogues",2)),2,12,1)
+            add_label(str(payload.get("review_note","Provisional assignment — review against the story.")))
         "text":
             choice("Text movement","mode",["Normal / still","Pop and settle","Gentle wave","Jitter"],int(payload.get("mode",1)))
             number("Motion strength","amount",float(payload.get("amount",0.7)),0,5,0.1)
@@ -75,6 +94,18 @@ func build_form():
             number("Scroll horizontally","speed_x",float(speed[0]),-0.1,0.1,0.001)
             number("Scroll vertically","speed_y",float(speed[1]),-0.1,0.1,0.001)
             number("Pattern tile size","tile_size",float(payload.get("tile_size",420)),80,1200,10)
+    add_label("Story passage (keeps cue when reimporting Twine)")
+    var passage=LineEdit.new()
+    passage.text=str(payload.get("source_passage",""))
+    passage.text_submitted.connect(func(value):change("source_passage",value))
+    passage.focus_exited.connect(func():change("source_passage",passage.text))
+    form.add_child(passage)
+    add_label("At text (empty = passage entry)")
+    var trigger=LineEdit.new()
+    trigger.text=str(payload.get("when_text",""))
+    trigger.text_submitted.connect(func(value):change("when_text",value))
+    trigger.focus_exited.connect(func():change("when_text",trigger.text))
+    form.add_child(trigger)
     var note=Label.new();note.text="Connect before the affected line.
 Cut-ins persist until a Hide cue.";note.modulate=Color(0.7,0.75,0.85);form.add_child(note)
     set_slot(0,true,0,Color.WHITE,true,0,Color.WHITE)
@@ -121,6 +152,7 @@ func _from_dict(data: Dictionary) -> Array[String]:
 
 func defaults(kind: String) -> Dictionary:
     match kind:
+        "pose":return {"kind":"pose","actor":"Player","pose":"MCDefault"}
         "text":return {"kind":"text","mode":1,"amount":0.7,"rate":0.6,"reveal":38}
         "atmosphere":return {"kind":"atmosphere","enabled":true,"texture":"","ink":"5740edff","paper":"b88fdbff","speed":[0.012,0.004],"tile_size":420}
     return {"kind":"cut_in","action":"show","placement":0,"character":0,"picture_source":0,"crop":[0.05,0,0.9,0.48],"aspect":1.9,"fill":1.0,"hold":0}

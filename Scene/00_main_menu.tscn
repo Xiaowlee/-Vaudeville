@@ -1,113 +1,105 @@
 [gd_scene format=3 uid="uid://c4ufa2d402kxg"]
 
-[ext_resource type="Script" uid="uid://cxl7vctt17165" path="res://Script/intro.gd" id="1_m1ph0"]
-[ext_resource type="Texture2D" uid="uid://cm7wdbvnte2jr" path="res://Visual Asset/BG.jpg" id="2_lebhk"]
-[ext_resource type="Texture2D" uid="uid://diu3clejabikd" path="res://Visual Asset/2.3/logo2.png" id="3_xi1yc"]
-[ext_resource type="PackedScene" path="res://Scene/UI/android_microphone_settings.tscn" id="AndroidMic"]
-[ext_resource type="PackedScene" path="res://Scene/UI/microphone_settings.tscn" id="DesktopMic"]
-[ext_resource type="Theme" uid="uid://p3m2d0y1qrtb" path="res://UI/prototype_theme.tres" id="MenuTheme"]
-[ext_resource type="PackedScene" uid="uid://cubvhdryuidcv" path="res://UI/phone_pairing.tscn" id="PhoneQR"]
+[ext_resource type="Texture2D" uid="uid://bgb4du53ckjqa" path="res://Visual Asset/Stage/Background/leftCurtain.png" id="Background"]
+[ext_resource type="Texture2D" uid="uid://rlxo08eq0mvp" path="res://Visual Asset/Stage/Background/rightCurtain.png" id="Curtain"]
+[ext_resource type="PackedScene" uid="uid://dgv2puox2d00q" path="res://Scene/UI/microphone_settings.tscn" id="DesktopMic"]
+[ext_resource type="FontFile" uid="uid://cjd32xc5x3pgb" path="res://Font/LavishlyYours-Regular.ttf" id="Heading"]
+[ext_resource type="Script" uid="uid://cxl7vctt17165" path="res://Script/intro.gd" id="Menu"]
+[ext_resource type="PackedScene" uid="uid://cubvhdryuidcv" path="res://UI/phone_pairing.tscn" id="Pairing"]
+[ext_resource type="Shader" uid="uid://c72hbpcw0ijdr" path="res://Script/Stage/Shaders/curtain_light.gdshader" id="Spotlight"]
+[ext_resource type="Theme" uid="uid://p3m2d0y1qrtb" path="res://UI/game_theme.tres" id="Theme"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_onfqo"]
-texture = ExtResource("2_lebhk")
+[sub_resource type="ShaderMaterial" id="CurtainSpotlight"]
+shader = ExtResource("Spotlight")
+shader_parameter/focus = Vector2(0.5, 0.5)
+shader_parameter/screen_size = Vector2(1280, 720)
+shader_parameter/slide = Vector2(0, 0)
+shader_parameter/radius = 0.28
+shader_parameter/dimming = 0.65
 
-[node name="Control" type="Control" unique_id=707068634]
+[node name="MainMenu" type="Control" unique_id=1151164446]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("MenuTheme")
-script = ExtResource("1_m1ph0")
-prototype_1_scene = "uid://dydu8om56n80a"
-prototype_2_scene = "res://Scene/Prototypes/2_2/2.2_c_increased_agency.tscn"
-previous_scene = "res://Scene/00_previous_prototypes_menu.tscn"
-stage_scene = "res://Scene/StageActs/stage_graph_game.tscn"
+theme = ExtResource("Theme")
+script = ExtResource("Menu")
 
-[node name="Panel" type="Panel" parent="." unique_id=1179351320]
-layout_mode = 1
-anchors_preset = 15
+[node name="Backing" type="ColorRect" parent="." unique_id=1142808060]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_onfqo")
+mouse_filter = 2
+color = Color(0.08, 0.06, 0.17, 1)
 
-[node name="GameTitle" type="Label" parent="." unique_id=338494146]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.12
-anchor_top = 0.2
-anchor_right = 0.88
-anchor_bottom = 0.43
-theme_override_font_sizes/font_size = 72
-text = "Where is my line?"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="." unique_id=406773399]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -426.66663
-offset_top = -310.0
-offset_right = 426.66663
-offset_bottom = 10.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3_xi1yc")
+[node name="Background" type="TextureRect" parent="." unique_id=1368353974]
+material = SubResource("CurtainSpotlight")
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource("Background")
 expand_mode = 1
 
-[node name="Menu" type="VBoxContainer" parent="." unique_id=2091905211]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.3
-anchor_top = 0.53
-anchor_right = 0.7
-anchor_bottom = 0.91
-grow_horizontal = 2
-theme_override_constants/separation = 18
+[node name="Dim" type="ColorRect" parent="." unique_id=226535431]
+visible = false
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.04, 0.03, 0.12, 0.66)
+
+[node name="Curtain" type="TextureRect" parent="." unique_id=388662168]
+material = SubResource("CurtainSpotlight")
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource("Curtain")
+expand_mode = 1
+
+[node name="Title" type="Label" parent="." unique_id=205802047]
+layout_mode = 0
+anchor_left = 0.08
+anchor_top = 0.23
+anchor_right = 0.92
+anchor_bottom = 0.46
+theme_override_fonts/font = ExtResource("Heading")
+theme_override_font_sizes/font_size = 120
+text = "Beneath the Lines"
+horizontal_alignment = 1
+vertical_alignment = 1
+max_lines_visible = 2
+
+[node name="Menu" type="VBoxContainer" parent="." unique_id=1311572343]
+layout_mode = 0
+anchor_left = 0.35
+anchor_top = 0.49
+anchor_right = 0.65
+anchor_bottom = 0.9
+theme_override_constants/separation = 15
 alignment = 1
 
-[node name="StagePrototype" type="Button" parent="Menu" unique_id=1875296074]
+[node name="Play" type="Button" parent="Menu" unique_id=1030264986]
 layout_mode = 2
 text = "Play"
 
-[node name="Previous" type="Button" parent="Menu" unique_id=58717708]
-layout_mode = 2
-text = "Previous prototypes"
-
-[node name="Microphone" type="Button" parent="Menu" unique_id=215329419]
+[node name="Settings" type="Button" parent="Menu" unique_id=1653345846]
 layout_mode = 2
 text = "Settings"
 
-[node name="Quit" type="Button" parent="Menu" unique_id=965762882]
+[node name="Quit" type="Button" parent="Menu" unique_id=964503560]
 layout_mode = 2
 text = "Quit"
 
-[node name="PhonePairing" parent="." unique_id=1732744416 instance=ExtResource("PhoneQR")]
+[node name="Developer" type="CheckButton" parent="Menu" unique_id=1989628555]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Developer mode"
+
+[node name="PhonePairing" parent="." unique_id=1271851037 instance=ExtResource("Pairing")]
 layout_mode = 1
 
-[node name="GameTitle2" type="Label" parent="." unique_id=781973200]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.12
-anchor_top = 0.2
-anchor_right = 0.88
-anchor_bottom = 0.43
-offset_left = -106.23999
-offset_top = 568.0
-offset_right = -392.76
-offset_bottom = 432.0
-theme_override_font_sizes/font_size = 33
-text = "2.5"
-vertical_alignment = 1
-
-[node name="MicrophoneSettings" parent="." unique_id=1290389715 instance=ExtResource("AndroidMic")]
-
-[node name="DesktopMicrophoneSettings" parent="." unique_id=1813949930 instance=ExtResource("DesktopMic")]
+[node name="DesktopMicrophoneSettings" parent="." unique_id=1698706411 instance=ExtResource("DesktopMic")]

@@ -1,18 +1,44 @@
 /**
- * Browser-side rules for the stage phone. These follow Script/StageActs/mobile_display.gd.
- * An acknowledgement means the cue reached this page. It does not mean the line was performed.
+ * Browser-side rules for the stage phone. These follow Script/StageActs/mobile_display.gd
+ * and Script/phone_cue_bridge.gd. An acknowledgement means the cue reached this page.
+ * It does not mean the line was performed.
  */
 
 export const STAGE_RELAY_PORT = 8787;
 export const STAGE_RECONNECT_MS = 2000;
 export const STAGE_KEEPALIVE_MS = 60_000;
 
+const EXPRESSIONS = [
+  "Default",
+  "Waiting",
+  "Cue",
+  "Accept",
+  "Confused",
+  "Angry",
+  "Menancing",
+  "Unexpected",
+  "Disappointed",
+  "Speaking",
+  "Speech",
+] as const;
+
+export type StageManagerExpression = (typeof EXPRESSIONS)[number];
+
 export type StageChannelName = "prompt" | "ifb";
+
+export type StagePresentationRequest = {
+  expression?: StageManagerExpression | null;
+  talking?: boolean | null;
+  dialogueBoundary?: boolean;
+};
 
 export type StageCue = {
   requestId: string;
   text: string;
   cueType: string;
+  expression?: StageManagerExpression;
+  talking?: boolean;
+  dialogueBoundary?: boolean;
 };
 
 export type StageChannels = {
@@ -28,6 +54,10 @@ const CHANNELS: readonly StageChannelName[] = ["prompt", "ifb"];
 
 export function emptyStageChannels(): StageChannels {
   return { prompt: null, ifb: null };
+}
+
+export function emptyStagePresentation() {
+  return { expression: "Default" as StageManagerExpression, talking: false };
 }
 
 export function stageHello(recipient: string) {
@@ -67,41 +97,82 @@ function channelOf(value: unknown): StageChannelName | null {
   return null;
 }
 
+function isStageManagerExpression(value: unknown): value is StageManagerExpression {
+  return typeof value === "string" && (EXPRESSIONS as readonly string[]).includes(value);
+}
+
+function presentationFields(raw: Record<string, unknown>): StagePresentationRequest | null {
+  const request: StagePresentationRequest = {};
+  let useful = false;
+  if (isStageManagerExpression(raw.expression)) {
+    request.expression = raw.expression;
+    useful = true;
+  }
+  if (typeof raw.talking === "boolean") {
+    request.talking = raw.talking;
+    useful = true;
+  }
+  if (raw.dialogueBoundary === true) {
+    request.dialogueBoundary = true;
+    useful = true;
+  }
+  return useful ? request : null;
+}
+
 export function applyStageMessage(
   state: StageChannels,
   message: unknown,
-): { state: StageChannels; ackRequestId: string | null } {
-  if (!message || typeof message !== "object") return { state, ackRequestId: null };
+): {
+  state: StageChannels;
+  ackRequestId: string | null;
+  presentation: StagePresentationRequest | null;
+} {
+  if (!message || typeof message !== "object") {
+    return { state, ackRequestId: null, presentation: null };
+  }
   const kind = (message as { kind?: unknown }).kind;
+  const raw = message as Record<string, unknown>;
+
+  if (kind === "stage_presentation") {
+    return { state, ackRequestId: null, presentation: presentationFields(raw) };
+  }
 
   if (kind === "stage_cue") {
-    const raw = message as { channel?: unknown; requestId?: unknown; text?: unknown; cueType?: unknown };
     const channel = channelOf(raw.channel);
-    if (!channel) return { state, ackRequestId: null };
-    if (typeof raw.requestId !== "string" || raw.requestId.length === 0) return { state, ackRequestId: null };
-    if (typeof raw.text !== "string") return { state, ackRequestId: null };
+    if (!channel) return { state, ackRequestId: null, presentation: null };
+    if (typeof raw.requestId !== "string" || raw.requestId.length === 0) {
+      return { state, ackRequestId: null, presentation: null };
+    }
+    if (typeof raw.text !== "string") return { state, ackRequestId: null, presentation: null };
     const cueType = typeof raw.cueType === "string" ? raw.cueType : "";
+    const cue: StageCue = { requestId: raw.requestId, text: raw.text, cueType };
+    const presentation = presentationFields(raw);
+    if (presentation?.expression) cue.expression = presentation.expression;
+    if (typeof presentation?.talking === "boolean") cue.talking = presentation.talking;
+    if (presentation?.dialogueBoundary) cue.dialogueBoundary = true;
     return {
-      state: {
-        ...state,
-        [channel]: { requestId: raw.requestId, text: raw.text, cueType },
-      },
+      state: { ...state, [channel]: cue },
       ackRequestId: raw.requestId,
+      presentation,
     };
   }
 
   if (kind === "stage_cancel") {
-    const requestId = (message as { requestId?: unknown }).requestId;
-    if (typeof requestId !== "string" || requestId.length === 0) return { state, ackRequestId: null };
+    const requestId = raw.requestId;
+    if (typeof requestId !== "string" || requestId.length === 0) {
+      return { state, ackRequestId: null, presentation: null };
+    }
     let prompt = state.prompt;
     let ifb = state.ifb;
     if (prompt?.requestId === requestId) prompt = null;
     if (ifb?.requestId === requestId) ifb = null;
-    if (prompt === state.prompt && ifb === state.ifb) return { state, ackRequestId: null };
-    return { state: { prompt, ifb }, ackRequestId: null };
+    if (prompt === state.prompt && ifb === state.ifb) {
+      return { state, ackRequestId: null, presentation: null };
+    }
+    return { state: { prompt, ifb }, ackRequestId: null, presentation: null };
   }
 
-  return { state, ackRequestId: null };
+  return { state, ackRequestId: null, presentation: null };
 }
 
 export function stageView(relay: StageRelayStatus, cues: StageChannels): StageView {
@@ -113,4 +184,16 @@ export function stageView(relay: StageRelayStatus, cues: StageChannels): StageVi
   if (relay === "open") return "waiting";
   if (relay === "closed" || relay === "error") return "disconnected";
   return "connecting";
+}
+
+/** Allowlisted sound controls; never accept a remote audio URL from the relay. */
+export function parseStageSound(message: unknown): { sound: "tea" | "suspense" | "all"; action: "play" | "stop"; volumeDb: number; requestId: string } | null {
+  if (!message || typeof message !== "object") return null;
+  const raw = message as Record<string, unknown>;
+  if (raw.kind !== "stage_sound" || !["tea", "suspense", "all"].includes(String(raw.sound))) return null;
+  if (raw.action !== "play" && raw.action !== "stop") return null;
+  if (raw.sound === "all" && raw.action !== "stop") return null;
+  if (typeof raw.requestId !== "string" || !raw.requestId) return null;
+  if (typeof raw.volumeDb !== "number" || !Number.isFinite(raw.volumeDb)) return null;
+  return { sound: raw.sound as "tea" | "suspense" | "all", action: raw.action, volumeDb: Math.max(-60, Math.min(0, raw.volumeDb)), requestId: raw.requestId };
 }

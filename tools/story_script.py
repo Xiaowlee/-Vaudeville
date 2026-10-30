@@ -6,11 +6,6 @@ FIELDS={'CONTEXT':'context','NARRATOR':'narration','STAGE':'stage','SOUND':'soun
 HOOKS=['ON ENTER','ON LISTEN','ON ACCEPT','ON UNCLEAR','ON SILENCE','ON QUESTION','ON OFFSCRIPT']
 HEADER=re.compile(r'^(CONTEXT|NARRATOR|STAGE|SOUND|CUE\s*/\s*PHONE|PLAYER TASK|AUTHOR NOTE|MC BEHAVIOUR|NPC BEHAVIOUR|HUD|ASSETS REQUIRED|STATE CHANGES|NARRATIVE PURPOSE|ON ENTER|ON LISTEN|ON ACCEPT|ON UNCLEAR|ON SILENCE|ON QUESTION|ON OFFSCRIPT|ACTOR\s*\d+|ACTOR|STAGE MANAGER|THE MAIN ACTOR|MC|YOU)(?:\s*,[^:]+)?\s*:+\s*(.*)$',re.I)
 SPEAKERS={'ACTOR':'Actor 1','ACTOR 1':'Actor 1','ACTOR 2':'Actor 2','STAGE MANAGER':'Stage Manager','THE MAIN ACTOR':'MC','MC':'MC','YOU':'MC'}
-SAFE={'tranditional':'traditional','stagae':'stage','lookes':'looks','waitng':'waiting','nuging':'nudging','becase':'because','grumpling':'grumbling','marchs':'marches','atire':'attire','befused':'bemused','squeesh':'squeeze','hand written':'handwritten','pops on on':'pops up','eys':'eyes','If your keep':'If you keep','unseries':'unserious','He stand in':'He stands in','He take a moment':'He takes a moment','He quickly fix':'He quickly fixes','She quietly signal':'She quietly signals','She swiftly leave':'She swiftly leaves','before she continue':'before she continues','She stands there':'She stands there','The stage are':'The stage is','The Actor and the audience is':'The Actor and the audience are','All the eyes of the audience is':'All the eyes of the audience are','The one who keep':'The one who keeps','suppose to be':'supposed to be','acrossed':'across','packed the theater':'packed theater','gets stiff up':'stiffens','she back down':'she backs down','atire':'attire','ligh stripes':'light stripes','sometime before':'some time before'}
-def clean_words(text):
- for a,b in SAFE.items():text=re.sub(r'\b'+re.escape(a)+r'\b',b,text)
- return text
-
 def parse_script(body):
  body=re.sub(r'<<.*?>>','',body,flags=re.S)
  body=html.unescape(re.sub(r'<img\b[^>]*>','',body,flags=re.I))
@@ -91,63 +86,7 @@ def parse_script(body):
  flush()
  return {'events':events,'context':'\n'.join(context),'player_task':'\n'.join(task),'author_notes':notes,'grammar_warnings':warnings,'production_hooks':hooks}
 
-def clean_working_copy(source):
- out=[]
- for m in re.finditer(r'^:: (.+?)\n(.*?)(?=^:: |\Z)',source.replace('\r\n','\n'),re.M|re.S):
-  header,body=m[1],m[2];name=re.split(r' \[| \{',header)[0].strip()
-  if name=='AUTHOR_TEMPLATE':
-   out.append(':: '+header+'\nCONTEXT:\n\nNARRATOR:\n\nACTOR 1:\n\nSTAGE:\n\nSOUND:\n\nCUE / PHONE:\n\nPLAYER TASK:\n\nPLAYER RESPONSE:\n\nAUTHOR NOTE:\n');continue
-  if not(name=='Start' or name.startswith(('A1_','A2_','A3_','\\ A1_')) or name=='A0_Endgame'):
-   out.append(':: '+header+'\n'+body.rstrip());continue
-  # Legacy STAGE/SOUND inline notes end at the paragraph. Explicit cleaned fields do not.
-  scene=body.split('!! Scene script — in order',1)[-1].split('!! Player response')[0].split('!! Author note')[0]
-  # Add explicit narration boundaries after legacy production paragraphs.
-  scene=re.sub(r'((?:STAGE|SOUND):[^\n]*\n(?:[^\n]+\n)*?)\n',r'\1\nNARRATOR:\n',scene)
-  # Preserve speaker across prose but clear the displayed label on every prose event.
-  scene=re.sub(r'(<div class="cue">.*?</div>)',r'\1\n\nNARRATOR:',scene)
-  scene=scene.replace('NARRATOR\n','NARRATOR:\n')
-  # Unlabelled continuation in the opening is unmistakably the manager finishing his sentence.
-  scene=scene.replace('Without further ado...\nLet the show begin."','STAGE MANAGER: "Without further ado...\nLet the show begin."')
-  prefix=body.split('!! Scene script — in order')[0] if '!! Scene script — in order' in body else ''
-  meta=parse_script(prefix+'!! Scene script — in order\n'+scene)
-  # A quoted cue-board description is a phone instruction, not the real player speaking as MC.
-  if name=='A1_3_FirstCue':
-   for e in meta['events']:
-    if e['speaker']=='MC' and e['text'].lower()=='i want to become a writer, just like you.':e['kind']='phone';e['speaker']=''
-  chunks=[':: '+header]
-  if meta['context']:chunks+=['CONTEXT:\n'+meta['context']]
-  for e in meta['events']:
-   label=e['speaker'].upper() if e['kind']=='dialogue' else next((k for k,v in FIELDS.items() if v==e['kind']),e['kind'].upper())
-   text=clean_words(e['text'])
-   chunks+=[label+':\n'+('"'+text+'"' if e['kind']=='dialogue' else text)]
-  if meta['player_task']:chunks+=['PLAYER TASK:\n'+meta['player_task']]
-  route_section=body.split('!! Player response',1)[1].split('!! Author note')[0] if '!! Player response' in body else ''
-  links=re.findall(r'\[\[[^\n]+',route_section)
-  if links:chunks+=['PLAYER RESPONSE:\n\n'+'\n\n'.join(links)]
-  note=body.split('!! Author note',1)[1].strip() if '!! Author note' in body else ''
-  if meta['grammar_warnings']:note+='\nREVIEW: '+' '.join(meta['grammar_warnings'])
-  if note:chunks+=['AUTHOR NOTE:\n'+note]
-  out.append('\n\n'.join(chunks))
- return '\n\n\n'.join(out)+'\n'
-
-def route_metadata(links,kinds,cue):
- allowed={};fallbacks={};bounds={};issues=[]
- for (label,dest),kind in zip(links,kinds):
-  low=label.lower().strip(' .')
-  if kind=='silence':fallbacks['SILENCE']={'action':'route','route':kind};continue
-  if any(x in low for x in ['unrelated','off-topic','off the script','something else']):
-   fallbacks['OFFSCRIPT']={'action':'route','route':kind}
-   continue
-  if kind in ['next','watch']:continue
-  allowed[kind]={'meaning':label,'destination':dest}
-  if low in ['left','right']:bounds[kind]=[low,'west' if low=='left' else 'east','western' if low=='left' else 'eastern']
- interactive=bool(allowed or fallbacks)
- task='Read the phone cue aloud.' if any('read ' in x[0].lower() for x in links) else ('Choose an entrance verbally.' if bounds else ('Respond to the current scene.' if interactive else ''))
- if cue.upper()=='COMMENT ON THE HALL':task='Comment on the hall or the people gathered there.'
- return {'allowed_authored_intents':allowed,'response_overrides':fallbacks,'bounded_evidence':bounds,'input_mode':'speech' if interactive else 'continue','player_task':task,'narrative_purpose':'','mc_behaviour':[],'npc_behaviour':[],'assets_required':[],'state_changes':{},'missing_logic':issues}
-
-
-def import_response_template(project, source):
+def import_response_template(project, source, visual_cues=None):
  from html.parser import HTMLParser
  import json, hashlib, datetime, shutil
  class Export(HTMLParser):
@@ -231,6 +170,15 @@ def import_response_template(project, source):
   manifest[n]=d;x,y=original_positions[d['source_passage']];original_positions[n]=(x,y+950)
  for n,d in manifest.items():
   for _,dest in d['links']:assert dest in manifest,(n,dest)
+ if visual_cues is None:
+  visual_cues=[]
+  saved_graph=project/'Story/StageActs/Graph/acts_0_3_cleaned.tres'
+  if saved_graph.exists():
+   for encoded in re.findall(r'"signalValue":\s*("(?:\\.|[^"\\])*")',saved_graph.read_text(encoding='utf-8')):
+    signal=json.loads(encoded)
+    if signal.startswith('stage_visual:'):
+     cue=json.loads(signal.removeprefix('stage_visual:'))
+     if cue.get('source_passage') in manifest:visual_cues.append(cue)
  nodes={};starts={};ids={n:i+1 for i,n in enumerate(manifest)}
  def value(a):
   if isinstance(a,tuple):return 'Vector2('+','.join(map(str,a))+')'
@@ -243,7 +191,16 @@ def import_response_template(project, source):
   i=ids[n];x,y=original_positions[n];start='0_'+str(i);signal='3_'+str(i);dialogue='1_'+str(i);starts[n]=start;d['node']=dialogue
   nodes[start]={'start_id':n,'link':signal,'offset':(x,y),'size':(190,100)}
   nodes[signal]={'signalValue':'frame:'+json.dumps(d['frame'],ensure_ascii=False),'link':dialogue,'offset':(x+210,y),'size':(230,150)}
-  nodes[dialogue]={'speaker':'','dialogue':'\n\n'.join(e['text'] for e in d['frame']['events'] if e['kind'] in ['dialogue','narration']),'options':{j:{'text':label,'link':'3_'+str(ids[dest]),'condition':[]} for j,(label,dest) in enumerate(d['links'])},'offset':(x+470,y),'size':(310,420)}
+  nodes[dialogue]={'speaker':'','dialogue':'\n\n'.join(e['text'] for e in d['frame']['events'] if e['kind'] in ['dialogue','narration']),'options':{j:{'text':label,'link':'0_'+str(ids[dest]),'condition':[]} for j,(label,dest) in enumerate(d['links'])},'offset':(x+470,y),'size':(310,420)}
+ for name in manifest:
+  commands=[c for c in visual_cues if c.get('source_passage')==name]
+  if not commands:continue
+  start=starts[name];entry=nodes[start]['link'];x,y=original_positions[name]
+  for index,command in enumerate(commands):
+   cue_id='9_'+str(ids[name])+'_'+str(index)
+   next_id='9_'+str(ids[name])+'_'+str(index+1) if index+1<len(commands) else entry
+   nodes[cue_id]={'visual':command,'signalValue':'stage_visual:'+json.dumps(command,ensure_ascii=False),'link':next_id,'offset':(x+index*380,y-420),'size':(310,320)}
+  nodes[start]['link']='9_'+str(ids[name])+'_0'
  root=project/'Story/StageActs/Graph';backup=project.parent/'Week 11/trial_recovery/story-imports'/datetime.datetime.now().strftime('%Y%m%d-%H%M%S-%f');backup.mkdir(parents=True)
  for name in ['acts_0_3_cleaned.tres','acts_0_3_manifest.json','source_sync.json']:
   if (root/name).exists():shutil.copy2(root/name,backup/name)

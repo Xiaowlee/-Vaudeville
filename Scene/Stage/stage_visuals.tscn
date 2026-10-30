@@ -1,0 +1,270 @@
+[gd_scene format=3 uid="uid://ccgsnvuc71q0j"]
+
+[ext_resource type="FontFile" uid="uid://cjd32xc5x3pgb" path="res://Font/LavishlyYours-Regular.ttf" id="5_4yk0k"]
+[ext_resource type="Texture2D" uid="uid://cr0l78w2vkqh0" path="res://Visual Asset/Stage/Characters/Actor1/Actor1Default1.png" id="7_1s7fh"]
+[ext_resource type="Script" uid="uid://bnjhepbh07n3d" path="res://Script/Stage/frame_cut_in.gd" id="CutIn"]
+[ext_resource type="FontFile" uid="uid://ctskr61g8oa87" path="res://Font/InstrumentSerif-Regular.ttf" id="Font"]
+[ext_resource type="Texture2D" uid="uid://d2125wtelqaco" path="res://Visual Asset/Stage/CutIn/FramecutinBorder_1.png" id="OrnamentBacking"]
+[ext_resource type="Texture2D" uid="uid://dgu2hyyhqitaj" path="res://Visual Asset/Stage/CutIn/FramecutinBorder_2.png" id="OrnamentDecoration"]
+[ext_resource type="PackedScene" uid="uid://dxwbi0dj7ckni" path="res://Scene/Stage/stage_base.tscn" id="Stage"]
+[ext_resource type="Script" uid="uid://dr7u5v7isonfx" path="res://Script/Stage/dialogue_view.gd" id="Trial"]
+[ext_resource type="Script" uid="uid://b7k4ftd8pdwk8" path="res://Script/Stage/dialogue_zone.gd" id="ZoneGuide"]
+
+[sub_resource type="Theme" id="Theme"]
+default_font = ExtResource("Font")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d75pr"]
+atlas = ExtResource("7_1s7fh")
+region = Rect2(12.5, 5, 27, 20.16)
+
+[node name="StageVisuals" unique_id=1097638679 instance=ExtResource("Stage")]
+
+[node name="Art" parent="World/FrontCurtain" parent_id_path=PackedInt32Array(105983517) index="0" unique_id=956529032]
+position = Vector2(-7.6293945e-06, -8.000011)
+scale = Vector2(0.33570218, 0.32920358)
+
+[node name="DialogueView" type="CanvasLayer" parent="." index="2" unique_id=475118217]
+layer = 2
+script = ExtResource("Trial")
+text_outline_color = Color(0.1795299, 0.15935865, 0.38266388, 1)
+motion_safety_margin = 0.0
+dialogue_space_reserve = 0.2
+text_size = 28
+text_color = Color(0.98305744, 0.89366907, 0.99036914, 1)
+panel_color = Color(0.17828992, 0.15939167, 0.38399628, 0.8784314)
+
+[node name="Layout" type="Control" parent="DialogueView" index="0" unique_id=507139167]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme")
+
+[node name="PlacementZones" type="Control" parent="DialogueView/Layout" index="0" unique_id=1305866213]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Narration" type="Control" parent="DialogueView/Layout/PlacementZones" index="0" unique_id=1724614863]
+layout_mode = 1
+anchor_left = 0.2
+anchor_top = 0.8
+anchor_right = 0.8
+anchor_bottom = 0.94
+offset_top = -8.0
+offset_bottom = 0.2000122
+mouse_filter = 2
+script = ExtResource("ZoneGuide")
+guide_label = "Narration - bottom centre"
+
+[node name="StageManager" type="Control" parent="DialogueView/Layout/PlacementZones" index="1" unique_id=521436953]
+layout_mode = 1
+anchor_left = 0.2
+anchor_top = 0.75
+anchor_right = 0.8
+anchor_bottom = 0.94
+mouse_filter = 2
+script = ExtResource("ZoneGuide")
+guide_label = "Stage Manager - bottom centre"
+
+[node name="BesideLeft" type="Control" parent="DialogueView/Layout/PlacementZones" index="2" unique_id=1974894802]
+anchors_preset = 0
+anchor_left = 0.035
+anchor_top = 0.28
+anchor_right = 0.295
+anchor_bottom = 0.68
+mouse_filter = 2
+script = ExtResource("ZoneGuide")
+guide_label = "Player dialogue - left"
+
+[node name="BesideRight" type="Control" parent="DialogueView/Layout/PlacementZones" index="3" unique_id=468136037]
+anchors_preset = 0
+anchor_left = 0.705
+anchor_top = 0.28
+anchor_right = 0.965
+anchor_bottom = 0.68
+mouse_filter = 2
+script = ExtResource("ZoneGuide")
+guide_label = "NPC dialogue - right"
+
+[node name="LowerLeft" type="Control" parent="DialogueView/Layout/PlacementZones" index="4" unique_id=378934206]
+anchors_preset = 0
+anchor_left = 0.035
+anchor_top = 0.68
+anchor_right = 0.295
+anchor_bottom = 0.94
+mouse_filter = 2
+script = ExtResource("ZoneGuide")
+guide_label = "Lower panel - left"
+
+[node name="LowerRight" type="Control" parent="DialogueView/Layout/PlacementZones" index="5" unique_id=1460425187]
+anchors_preset = 0
+anchor_left = 0.705
+anchor_top = 0.68
+anchor_right = 0.965
+anchor_bottom = 0.94
+mouse_filter = 2
+script = ExtResource("ZoneGuide")
+guide_label = "Lower panel - right"
+
+[node name="Text" type="Control" parent="DialogueView/Layout" index="3" unique_id=974233849]
+anchors_preset = 0
+offset_left = 272.0
+offset_top = 580.0
+offset_right = 1008.0
+offset_bottom = 580.0
+mouse_filter = 2
+
+[node name="Name" type="Label" parent="DialogueView/Layout/Text" index="0" unique_id=811189944]
+visible = false
+layout_mode = 0
+offset_right = 736.0
+offset_bottom = 58.0
+theme_override_colors/font_color = Color(0.98305744, 0.89366907, 0.99036914, 1)
+theme_override_colors/font_outline_color = Color(0.1795299, 0.15935865, 0.38266388, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("5_4yk0k")
+theme_override_font_sizes/font_size = 36
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Words" type="RichTextLabel" parent="DialogueView/Layout/Text" index="1" unique_id=254880900]
+visible = false
+layout_mode = 0
+offset_right = 736.0
+size_flags_vertical = 0
+theme_override_colors/default_color = Color(0.98305744, 0.89366907, 0.99036914, 1)
+theme_override_colors/font_outline_color = Color(0.1795299, 0.15935865, 0.38266388, 1)
+theme_override_constants/line_separation = 3
+theme_override_constants/outline_size = 2
+theme_override_fonts/normal_font = ExtResource("Font")
+theme_override_font_sizes/normal_font_size = 28
+bbcode_enabled = true
+text = "[center][stagepop base=0]The voice of the grumpy stage manager can be heard again from the left side of the stage.[/stagepop][/center]"
+scroll_active = false
+horizontal_alignment = 1
+
+[node name="FrameCutInLayer" type="CanvasLayer" parent="." index="3" unique_id=1279768638]
+
+[node name="FrameCutIn" type="Control" parent="FrameCutInLayer" index="0" unique_id=777981272]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+script = ExtResource("CutIn")
+auto_place_ornaments = false
+
+[node name="RightArea" type="Control" parent="FrameCutInLayer/FrameCutIn" index="0" unique_id=1175096764]
+anchors_preset = 0
+anchor_left = 0.47
+anchor_top = 0.23
+anchor_right = 0.91
+anchor_bottom = 0.7
+mouse_filter = 2
+script = ExtResource("ZoneGuide")
+guide_label = "Cut-in RightArea"
+guide_color = Color(1, 0.3, 0.8, 0.65)
+
+[node name="LeftArea" type="Control" parent="FrameCutInLayer/FrameCutIn" index="1" unique_id=25223866]
+anchors_preset = 0
+anchor_left = 0.09
+anchor_top = 0.23
+anchor_right = 0.53
+anchor_bottom = 0.7
+mouse_filter = 2
+script = ExtResource("ZoneGuide")
+guide_label = "Cut-in LeftArea"
+guide_color = Color(1, 0.3, 0.8, 0.65)
+
+[node name="CustomArea" type="Control" parent="FrameCutInLayer/FrameCutIn" index="2" unique_id=24493126]
+anchors_preset = 0
+anchor_left = 0.29
+anchor_top = 0.17
+anchor_right = 0.71
+anchor_bottom = 0.63
+mouse_filter = 2
+script = ExtResource("ZoneGuide")
+guide_label = "Cut-in CustomArea"
+guide_color = Color(1, 0.3, 0.8, 0.65)
+
+[node name="Panel" type="Control" parent="FrameCutInLayer/FrameCutIn" index="3" unique_id=1218454594]
+anchors_preset = 0
+offset_left = 601.6
+offset_top = 186.58945
+offset_right = 1164.8
+offset_bottom = 483.01053
+pivot_offset = Vector2(281.60004, 148.21054)
+mouse_filter = 2
+
+[node name="Clip" type="Control" parent="FrameCutInLayer/FrameCutIn/Panel" index="0" unique_id=1058458187]
+clip_contents = true
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+mouse_filter = 2
+
+[node name="Fill" type="ColorRect" parent="FrameCutInLayer/FrameCutIn/Panel/Clip" index="0" unique_id=1254123913]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.81, 0.79, 0.9, 1)
+
+[node name="Picture" type="TextureRect" parent="FrameCutInLayer/FrameCutIn/Panel/Clip" index="1" unique_id=1027879995]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -37.599976
+offset_top = -46.589447
+offset_right = -37.599976
+offset_bottom = -46.589447
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("AtlasTexture_d75pr")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Backing" type="TextureRect" parent="FrameCutInLayer/FrameCutIn/Panel" index="1" unique_id=970168531]
+z_index = 2
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -172.80005
+offset_top = -171.01053
+offset_right = 48.0
+offset_bottom = 49.78952
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("OrnamentBacking")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Decoration" type="TextureRect" parent="FrameCutInLayer/FrameCutIn/Panel" index="2" unique_id=492643063]
+layout_mode = 0
+offset_left = -25.599976
+offset_top = -50.589447
+offset_right = 212.80005
+offset_bottom = 187.81058
+mouse_filter = 2
+texture = ExtResource("OrnamentDecoration")
+expand_mode = 1
+stretch_mode = 5

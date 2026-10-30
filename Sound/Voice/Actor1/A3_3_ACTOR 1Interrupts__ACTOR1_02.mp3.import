@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://em0akn0t8nsf"
+path="res://.godot/imported/A3_3_ACTOR 1Interrupts__ACTOR1_02.mp3-4421245c714050efcf7c625db4facbff.mp3str"
+
+[deps]
+
+source_file="res://Sound/Voice/Actor1/A3_3_ACTOR 1Interrupts__ACTOR1_02.mp3"
+dest_files=["res://.godot/imported/A3_3_ACTOR 1Interrupts__ACTOR1_02.mp3-4421245c714050efcf7c625db4facbff.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

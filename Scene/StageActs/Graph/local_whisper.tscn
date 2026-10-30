@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3]
 [ext_resource type="Script" path="res://Script/StageActs/Graph/local_whisper.gd" id="1"]
-[node name="LocalWhisperTest" type="Control"]
+[node name="LocalWhisper" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

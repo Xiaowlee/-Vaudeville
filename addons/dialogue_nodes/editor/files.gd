@@ -173,7 +173,9 @@ func save_as(path: String) -> void:
 
 func save_all() -> void:
 	for idx in range(item_count):
-		save_file(idx)
+		# Unedited open tabs must not overwrite an externally refreshed story.
+		if get_item_metadata(idx)["modified"]:
+			save_file(idx)
 
 
 func close_file(idx := cur_idx) -> void:

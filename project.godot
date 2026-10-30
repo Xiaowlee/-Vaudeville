@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Folio 2 Test 2"
+config/name="Beneath the Lines"
 run/main_scene="res://Scene/00_main_menu.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
@@ -24,24 +24,20 @@ driver/enable_input=true
 
 PhoneSession="*res://Script/phone_session.gd"
 UIAudio="*res://Scene/Shared/00_shared_ui_audio.tscn"
-DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 
 [display]
 
-window/size/viewport_height=800
-window/size/window_width_override=1152
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/window_width_override=1280
 window/size/window_height_override=800
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogue_nodes/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg", "res://addons/godot_ai/plugin.cfg", "res://addons/mobile_display_export/plugin.cfg", "res://addons/android_speech/plugin.cfg")
-
-[internationalization]
-
-locale/translations_pot_files=PackedStringArray("res://Story/StageActs/Test.dialogue")
+enabled=PackedStringArray("res://addons/dialogue_nodes/plugin.cfg", "res://addons/godot_ai/plugin.cfg", "res://addons/mobile_display_export/plugin.cfg")
 
 [physics]
 

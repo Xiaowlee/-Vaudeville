@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cubvhdryuidcv"]
 
-[ext_resource type="FontFile" uid="uid://di3h2p4jyrmkt" path="res://Font/JacquesFrancois-Regular.ttf" id="2_f2fp1"]
+[ext_resource type="FontFile" path="res://Font/InstrumentSerif-Regular.ttf" id="2_f2fp1"]
 [ext_resource type="Script" uid="uid://0ffi41yy65rc" path="res://Script/phone_pairing.gd" id="Script"]
 
 [sub_resource type="StyleBoxFlat" id="CardStyle"]

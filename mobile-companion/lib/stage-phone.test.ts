@@ -3,6 +3,7 @@ import test from "node:test";
 import { artCropStyle, railBounds } from "../components/stage-frame-settings.ts";
 import {
   applyStageMessage,
+  parseStageSound,
   emptyStageChannels,
   resolveStageRecipient,
   resolveStageRelayUrl,
@@ -42,6 +43,8 @@ test("prompt and private cues stay independent and each is acknowledged", () => 
     requestId: "p1",
     text: "Say the line.",
     cueType: "PROMPTER",
+    expression: "Cue",
+    dialogueBoundary: true,
   });
   const both = applyStageMessage(prompt.state, {
     kind: "stage_cue",
@@ -51,10 +54,34 @@ test("prompt and private cues stay independent and each is acknowledged", () => 
     cueType: "PRIVATE",
   });
   assert.equal(prompt.ackRequestId, "p1");
+  assert.equal(prompt.presentation?.expression, "Cue");
   assert.equal(both.ackRequestId, "i1");
   assert.equal(both.state.prompt?.requestId, "p1");
   assert.equal(both.state.ifb?.text, "Look across.");
   assert.equal(stageView("open", both.state), "cues");
+});
+
+test("optional presentation messages do not change cue channels", () => {
+  const withCue = applyStageMessage(channels, {
+    kind: "stage_cue",
+    channel: "prompt",
+    requestId: "p1",
+    text: "Say the line.",
+    cueType: "PROMPTER",
+  });
+  const posed = applyStageMessage(withCue.state, {
+    kind: "stage_presentation",
+    expression: "Waiting",
+    talking: false,
+    dialogueBoundary: true,
+  });
+  assert.equal(posed.state, withCue.state);
+  assert.equal(posed.ackRequestId, null);
+  assert.deepEqual(posed.presentation, {
+    expression: "Waiting",
+    talking: false,
+    dialogueBoundary: true,
+  });
 });
 
 test("a missing channel is the private cue, and an unknown channel is ignored", () => {
@@ -126,4 +153,15 @@ test("ornament crops ignore transparent padding", () => {
   assert.equal(right.right, 1080);
   const crop = artCropStyle(right, 1080, 2400);
   assert.ok(Number.parseFloat(crop.left) < 0);
+});
+
+test("phone sound accepts only named assets and bounded volumes", () => {
+  const command = {kind:"stage_sound", sound:"tea", action:"play", volumeDb:-22, requestId:"sound_1"};
+  assert.equal(parseStageSound(command)?.sound, "tea");
+  assert.equal(parseStageSound({...command, volumeDb:8})?.volumeDb, 0);
+  assert.equal(parseStageSound({...command, volumeDb:-90})?.volumeDb, -60);
+  assert.equal(parseStageSound({...command, sound:"https://elsewhere/audio.mp3"}), null);
+  assert.equal(parseStageSound({...command, sound:"all"}), null);
+  assert.equal(parseStageSound({...command, volumeDb:NaN}), null);
+  assert.equal(parseStageSound({...command, action:"stop", sound:"all"})?.action, "stop");
 });

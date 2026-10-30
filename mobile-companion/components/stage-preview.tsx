@@ -8,5 +8,5 @@ import { stagePreviewFixture } from "./stage-preview-fixtures";
 export function StagePreview() {
   const params = useSearchParams();
   const fixture = stagePreviewFixture(params.get("fixture"));
-  return <StageFrame cues={fixture.cues} relay={fixture.relay} />;
+  return <StageFrame cues={fixture.cues} presentation={fixture.presentation} relay={fixture.relay} />;
 }

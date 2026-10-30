@@ -6,6 +6,7 @@ import type { StageChannels, StageCue, StageRelayStatus, StageView } from "../li
 import { stageView } from "../lib/stage-phone";
 import styles from "./stage-frame.module.css";
 import { stageFrameSettings } from "./stage-frame-settings";
+import { StageManagerPuppet, type StampedPresentation } from "./stage-manager-puppet";
 
 const settings = stageFrameSettings;
 
@@ -148,7 +149,15 @@ function fitCardText(box: HTMLElement) {
   box.style.justifyContent = fits(box) ? "center" : "flex-start";
 }
 
-export function StageFrame({ relay, cues }: { relay: StageRelayStatus; cues: StageChannels }) {
+export function StageFrame({
+  relay,
+  cues,
+  presentation = null,
+}: {
+  relay: StageRelayStatus;
+  cues: StageChannels;
+  presentation?: StampedPresentation | null;
+}) {
   const view = stageView(relay, cues);
   const prompt = cues.prompt && cues.prompt.text !== "" ? cues.prompt : null;
   const ifb = cues.ifb && cues.ifb.text !== "" ? cues.ifb : null;
@@ -179,17 +188,18 @@ export function StageFrame({ relay, cues }: { relay: StageRelayStatus; cues: Sta
         <img alt="" className={styles.layer} draggable={false} src={settings.assets.bottom} />
         <img alt="" className={styles.layer} draggable={false} src={settings.assets.top} />
         <div className={styles.character}>
-          <img alt="" className={styles.characterArt} draggable={false} src={settings.assets.character} />
-          <div aria-live="polite" className={styles.cardText} ref={cardRef}>
-            {view === "cues" ? (
-              <div className={styles.column}>
-                {prompt ? <CueRegion channel="prompt" cue={prompt} showHeading={both} /> : null}
-                {ifb ? <CueRegion channel="ifb" cue={ifb} showHeading /> : null}
-              </div>
-            ) : (
-              <p className={styles.status}>{statusCopy[view]}</p>
-            )}
-          </div>
+          <StageManagerPuppet presentation={presentation}>
+            <div aria-live="polite" className={styles.cardText} ref={cardRef}>
+              {view === "cues" ? (
+                <div className={styles.column}>
+                  {prompt ? <CueRegion channel="prompt" cue={prompt} showHeading={both} /> : null}
+                  {ifb ? <CueRegion channel="ifb" cue={ifb} showHeading /> : null}
+                </div>
+              ) : view === "connecting" || view === "disconnected" ? (
+                <p className={styles.status}>{statusCopy[view]}</p>
+              ) : null}
+            </div>
+          </StageManagerPuppet>
         </div>
       </div>
     </main>

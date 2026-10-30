@@ -65,6 +65,36 @@
   aspect-ratio: 1;
   transform: translateX(-50%);
   top: calc(var(--curtain-top) + (var(--opening-height) - min(var(--opening-width), var(--opening-height))) / 2);
+  pointer-events: none;
+}
+
+.characterMotion {
+  position: absolute;
+  inset: 0;
+}
+
+/* Feet sit on the bottom edge of the square; sway pivots there. */
+.characterSwing {
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 100%;
+  animation: manager-sway var(--sway-seconds, 2.85s) ease-in-out infinite;
+}
+
+.characterMotion[data-talking="true"] .characterSwing {
+  animation:
+    manager-sway var(--sway-seconds, 2.85s) ease-in-out infinite,
+    manager-bounce var(--bounce-seconds, 0.4s) ease-in-out infinite;
+}
+
+.characterCard {
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 50%;
+}
+
+.characterMotion[data-flipping="true"] .characterCard {
+  animation: manager-flip var(--flip-seconds, 0.65s) linear forwards;
 }
 
 .characterArt {
@@ -74,6 +104,41 @@
   object-fit: fill;
   pointer-events: none;
   user-select: none;
+}
+
+@keyframes manager-sway {
+  0%,
+  100% {
+    transform: rotate(calc(var(--sway-degrees, 1.5deg) * -1));
+  }
+  50% {
+    transform: rotate(var(--sway-degrees, 1.5deg));
+  }
+}
+
+@keyframes manager-bounce {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 calc(var(--bounce-height, 7px) * -1);
+  }
+}
+
+@keyframes manager-flip {
+  0% {
+    transform: scaleX(1);
+  }
+  49% {
+    transform: scaleX(0.015);
+  }
+  51% {
+    transform: scaleX(0.015);
+  }
+  100% {
+    transform: scaleX(1);
+  }
 }
 
 .cardText {
@@ -225,5 +290,13 @@
   .wiggleMotion[data-wiggle] {
     animation: none;
     transform: none;
+  }
+
+  .characterSwing,
+  .characterMotion[data-talking="true"] .characterSwing,
+  .characterMotion[data-flipping="true"] .characterCard {
+    animation: none;
+    transform: none;
+    translate: none;
   }
 }

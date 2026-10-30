@@ -2,12 +2,21 @@ export function installProtocol(wss) {
 // One local game and phone; retain only the current request, never face success.
 // Stage cues are retained per channel so a prompt and a private IFB never replace each other.
 const STAGE_CHANNELS = ["prompt", "ifb"];
+const STAGE_EXPRESSIONS = ["Default","Waiting","Cue","Accept","Confused","Angry","Menancing","Unexpected","Disappointed","Speaking","Speech"];
 let game = null;
 let request = null;
 let speechTurn = null;
 const speechClients = () => [...wss.clients].filter(c => c.role === "speech_client" && c.readyState === 1);
 const tellSpeech = message => { for (const c of speechClients()) send(c,message); };
 const stageCues = {prompt: null, ifb: null};
+let stagePresentation = null;
+function presentationFields(message) {
+  const out = {};
+  if (STAGE_EXPRESSIONS.includes(message.expression)) out.expression = message.expression;
+  if (typeof message.talking === "boolean") out.talking = message.talking;
+  if (message.dialogueBoundary === true) out.dialogueBoundary = true;
+  return out;
+}
 function stagePhones() { return [...wss.clients].filter(c => c.role === "stage_phone" && c.readyState === 1); }
 function matchesStage(phone, cue) { return !!cue && (!cue.recipient || cue.recipient === phone.recipient); }
 function clearStage(channel) {
@@ -68,6 +77,7 @@ wss.on("connection", (socket, req) => {
         socket.stageAcks = new Set();
         console.log("[relay] stage phone connected");
         for (const name of STAGE_CHANNELS) if (matchesStage(socket, stageCues[name])) send(socket, stageCues[name]);
+        if (stagePresentation) send(socket, stagePresentation);
       } else if (message.role === "phone") {
         socket.role = "phone";
         if (request) send(socket, request);
@@ -84,12 +94,30 @@ wss.on("connection", (socket, req) => {
         if (typeof message.requestId !== "string" || typeof message.text !== "string" || typeof message.recipient !== "string") return;
         const channel = STAGE_CHANNELS.includes(message.channel) ? message.channel : "ifb";
         clearStage(channel);
-        const cue = {kind:"stage_cue", channel, requestId:message.requestId, text:message.text, recipient:message.recipient, cueType:["PROMPTER","PRIVATE","SCRIPT_UPDATE","WARNING"].includes(message.cueType) ? message.cueType : "PRIVATE"};
+        const cue = {kind:"stage_cue", channel, requestId:message.requestId, text:message.text, recipient:message.recipient, cueType:["PROMPTER","PRIVATE","SCRIPT_UPDATE","WARNING"].includes(message.cueType) ? message.cueType : "PRIVATE", ...presentationFields(message)};
         stageCues[channel] = cue;
+        if (cue.expression || typeof cue.talking === "boolean" || cue.dialogueBoundary) {
+          stagePresentation = {kind:"stage_presentation", ...presentationFields(cue)};
+        }
         const targets = stagePhones().filter(phone => matchesStage(phone, cue));
         for (const phone of targets) send(phone, cue);
         console.log(`[relay] ${channel} cue ${cue.requestId} forwarded to ${targets.length} stage phone(s)`);
         stageStatus();
+        return;
+      }
+      if (message.kind === "stage_sound") {
+        if (!["tea","suspense","all"].includes(message.sound) || !["play","stop"].includes(message.action)) return;
+        if (message.sound === "all" && message.action !== "stop") return;
+        if (typeof message.requestId !== "string" || !message.requestId || !Number.isFinite(message.volumeDb)) return;
+        const sound = {kind:"stage_sound", sound:message.sound, action:message.action, volumeDb:Math.max(-60,Math.min(0,message.volumeDb)), requestId:message.requestId};
+        for (const phone of stagePhones()) send(phone, sound);
+        return; // One-shot events are not retained/replayed when a phone reconnects.
+      }
+      if (message.kind === "stage_presentation") {
+        const fields = presentationFields(message);
+        if (!fields.expression && typeof fields.talking !== "boolean" && !fields.dialogueBoundary) return;
+        stagePresentation = {kind:"stage_presentation", ...(stagePresentation || {}), ...fields};
+        for (const phone of stagePhones()) send(phone, {kind:"stage_presentation", ...fields});
         return;
       }
       if (message.kind === "stage_cancel") {
@@ -123,7 +151,10 @@ wss.on("connection", (socket, req) => {
     if (socket === game) {
       console.log("[relay] game disconnected; clearing stage cues");
       clearStage();
+      stagePresentation = null;
       for (const phone of phones()) send(phone, {kind: "face_cancel", requestId: request?.requestId});
+      for (const phone of stagePhones()) send(phone, {kind:"stage_presentation", expression:"Default", talking:false, dialogueBoundary:true});
+      for (const phone of stagePhones()) send(phone, {kind:"stage_sound", sound:"all", action:"stop", volumeDb:-20, requestId:"game_closed_"+Date.now()});
       game = null;
       request = null;
       tellSpeech({type:"speech_control",action:"stop",session_id:speechTurn?.session_id});

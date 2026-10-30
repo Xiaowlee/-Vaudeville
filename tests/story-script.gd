@@ -11,6 +11,8 @@ func run():
     game.get_node("PhoneCueBridge").enabled=false
     root.add_child(game)
     var c=game.get_node("GameController")
+    game.get_node("DialogueView").act_title_enabled=false
+    c.curtain_enabled=false
     c.set_process(false);t.set_process(false)
     var m=JSON.parse_string(FileAccess.get_file_as_string("res://Story/StageActs/Graph/acts_0_3_manifest.json"))
     var routes_checked=0
@@ -76,6 +78,26 @@ func run():
             t.raw_transcript=word;t.handle_response("SELECTION",intent)
             check(t.frame.id=="A2_1_Entrance","bounded direction guard "+word)
             t.responses.technical_streak=0;t.responses.mic_check_pending=false
+    var view=game.get_node("DialogueView")
+    var stage_ui=game.get_node("StageUI")
+    stage_ui.set_developer_mode(false)
+    check(not t.visible and view.visible,"normal play hides developer controls")
+    stage_ui.set_developer_mode(true)
+    check(t.visible and not view.visible,"developer controls accessible")
+    stage_ui.set_developer_mode(false)
+    check(game.get_node("World/Atmosphere").enabled and game.get_node("World/Atmosphere").outside_mask!=null,"supplied masked pattern configured")
+    for name in ["Player","Actor1","Actor2","StageManager"]:
+        var actor=game.get_node("World/Performers/"+name)
+        check(actor.pose_frames!=null and actor.pose_frames.get_frame_count("poses")>=2,name+" supplied pose bank")
+        check(actor.pose_names.size()==actor.pose_frames.get_frame_count("poses"),name+" named poses survive inheritance")
+        var original=actor.position
+        actor.position+=Vector2(0,-20)
+        game.apply_layout(Vector2(1280,800))
+        check(actor.position==original+Vector2(0,-20),name+" authored position survives resizing")
+        actor.position=original
+    # A real linked transition must execute visual nodes, not bypass them via the frame signal.
+    t.parser.start("A1_1_Once upon a time");t.waiting=true;t._choose(0,"continue",false)
+    check(t.frame.get("visual_cues",[]).size()>0,"linked visual cue commands reach main story")
     print("RESULT ",routes_checked," graph links / ",m.size()," passage presentations; response-template checks; failures=",failures)
     game.queue_free();await process_frame
     quit(0 if failures.is_empty() else 1)

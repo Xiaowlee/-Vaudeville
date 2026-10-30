@@ -2,3 +2,4 @@
 [ext_resource type="Script" path="res://Script/phone_cue_bridge.gd" id="Script"]
 [node name="PhoneCueBridge" type="Node"]
 script = ExtResource("Script")
+enabled = true

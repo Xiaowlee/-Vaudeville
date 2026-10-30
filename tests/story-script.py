@@ -2,7 +2,7 @@ from pathlib import Path
 import sys,re,json
 p=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(p/'tools'))
-from story_script import parse_script,clean_working_copy
+from story_script import parse_script
 fixture='''CONTEXT:
 Hidden context.
 NARRATOR:
@@ -35,10 +35,6 @@ assert r['context']=='Hidden context.' and r['player_task']=='Choose an entrance
 assert r['author_notes']==['Hidden note.']
 assert parse_script('ACTOR 3:\n"Hello."')['events'][0]['speaker']=='Actor 3'
 assert parse_script('AUTHOR NOTE:\nCONTEXT: Secret meaning.')['context']=='Secret meaning.'
-source=p.parent/'Week 11/2.4 StoryLine_Preproduct_W12.twee'
-original=source.read_text(encoding='utf-8-sig');clean=clean_working_copy(original)
-links=lambda s:re.findall(r'\[\[[^\n]+',s)
-assert links(original)==links(clean),'Story links changed during cleanup'
 m=json.loads((p/'Story/StageActs/Graph/acts_0_3_manifest.json').read_text(encoding='utf-8'))
 sync=json.loads((p/'Story/StageActs/Graph/source_sync.json').read_text(encoding='utf-8'))
 assert len(m)==sync['passages']+sync['takeovers']

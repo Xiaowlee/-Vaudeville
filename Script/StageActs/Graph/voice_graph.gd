@@ -1,11 +1,14 @@
 extends "res://Script/StageActs/Graph/voice_graph_base.gd"
+@export_group("Temporary progression guard")
+@export_range(2,6,1) var intro_refusals_before_takeover := 2
+var intro_refusals := 0
+@export_group("Interpretation")
 @export var ai_enabled := true
 @export var ai_model := "qwen3:4b"
 @export_file("*.txt") var ai_rules_file := "res://Story/StageActs/Graph/interpretation_rules.txt"
-@export_file("*.ps1") var ai_service_launcher := "D:/RMIT/Master/Studio 1/Folio 2/folio-2-test-2/tools/start_local_intent.ps1"
+@export_file("*.ps1") var ai_service_launcher := "res://tools/start_local_intent.ps1"
 @export_range(5,120) var ai_timeout_seconds := 60.0
 var ai_request: HTTPRequest
-@export_file("*.json") var ai_meanings_file := "res://Story/StageActs/Graph/interpretation_meanings.json"
 @export_multiline var unmatched_feedback := "That answer does not select an available response. Please try again, or use Testing controls."
 signal cue_requested
 var turn_silences := 0
@@ -31,6 +34,7 @@ var ai_turn := -1
 var ai_allowed: Array = []
 var ai_history: Array = []
 var frame: Dictionary = {}
+var pending_visual_commands: Array=[]
 var route_kinds: Array = []
 var story_variables: Dictionary = {}
 var story_state: Dictionary = {}
@@ -43,16 +47,34 @@ func _ready():
     ai_request.timeout=ai_timeout_seconds
     add_child(ai_request)
     ai_request.request_completed.connect(_ai_completed)
-    if ai_enabled and FileAccess.file_exists(ai_service_launcher):
-        OS.create_process("powershell.exe",PackedStringArray(["-NoProfile","-ExecutionPolicy","Bypass","-File",ai_service_launcher]),false)
+    if ai_enabled:
+        if OS.has_feature("editor") and FileAccess.file_exists(ai_service_launcher):
+            OS.create_process("powershell.exe",PackedStringArray(["-NoProfile","-ExecutionPolicy","Bypass","-File",ProjectSettings.globalize_path(ai_service_launcher)]),false)
+        elif OS.get_name()=="Windows":
+            var folder=OS.get_executable_path().get_base_dir().path_join(".local-speech")
+            var engine=folder.path_join("ollama/ollama.exe")
+            if FileAccess.file_exists(engine):
+                OS.set_environment("OLLAMA_HOST","127.0.0.1:11435")
+                OS.set_environment("OLLAMA_MODELS",folder.path_join("intent-models"))
+                OS.set_environment("OLLAMA_NO_CLOUD","1")
+                OS.create_process(engine,PackedStringArray(["serve"]),false)
     super._ready()
     _build_response_debug()
     mic.technical_failure.connect(func(_detail): handle_response("TECHNICAL_FAILURE"))
     $Layout/RouteTest/Apply.pressed.connect(_manual_route)
     for key in story.starts.keys():
         var start_node=story.nodes.get(story.starts[key],{})
-        var signal_node=story.nodes.get(start_node.get("link",""),{})
-        var info=JSON.parse_string(str(signal_node.get("signalValue","")).trim_prefix("frame:"))
+        var cursor=str(start_node.get("link",""))
+        var visited={}
+        var info: Variant=null
+        while story.nodes.has(cursor) and not visited.has(cursor):
+            visited[cursor]=true
+            var entry=story.nodes[cursor]
+            var signal_value=str(entry.get("signalValue",""))
+            if signal_value.begins_with("frame:"):
+                info=JSON.parse_string(signal_value.trim_prefix("frame:"))
+                break
+            cursor=str(entry.get("link",""))
         var label=str(info.get("group",""))+" / "+str(key) if info is Dictionary else str(key)
         $Layout/Jump/Section.add_item(label)
         $Layout/Jump/Section.set_item_metadata($Layout/Jump/Section.item_count-1,key)
@@ -107,12 +129,20 @@ func _restart():
     $Layout/Heard.text="Heard: —"
     $Layout/Result.text="Game response: Ready." if parser.is_running() else $Layout/Debug.text
 func _signal(value: String):
+    if value.begins_with("stage_visual:"):
+        var command=JSON.parse_string(value.trim_prefix("stage_visual:"))
+        if command is Dictionary and get_parent().has_node("DialogueView"):
+            pending_visual_commands.append(command)
+        return
     if not value.begins_with("frame:"):return
     _cancel_ai()
     frame=JSON.parse_string(value.trim_prefix("frame:"))
+    frame["visual_cues"]=pending_visual_commands.duplicate(true)
+    pending_visual_commands.clear()
     silence_elapsed=0
     turn_silences=0
     if frame.get("reset",false):
+        intro_refusals=0
         responses.reset()
         story_variables.clear()
         story_state.clear()
@@ -122,10 +152,9 @@ func _signal(value: String):
     fallback_reply=""
     interpretation_trace=""
     $Layout/Result.text=""
-    var definitions=JSON.parse_string(FileAccess.get_file_as_string(ai_meanings_file))
-    var policy: Dictionary=definitions.get(str(frame.get("id","")),{}) if definitions is Dictionary else {}
-    forced_route=-1 if frame.get("template_version",0)==2 else int(policy.get("continue_route",-1))
+    forced_route=-1
     route_kinds=frame.get("routes",[])
+    if route_kinds.is_empty():routes.clear();waiting=false
     if forced_route>=route_kinds.size():forced_route=-1
     cue=frame.get("cue","")
     $Layout/Cue.text=cue
@@ -258,8 +287,7 @@ func _cancel_ai():
 func _interpret(words: String):
     ai_allowed=["unclear","no_match"]
     ai_question=str(frame.get("id",""))
-    var definitions=JSON.parse_string(FileAccess.get_file_as_string(ai_meanings_file))
-    var meanings: Dictionary=definitions.get(ai_question,{}) if definitions is Dictionary else {}
+    var meanings: Dictionary={}
     if frame.get("template_version",0)==2:
         meanings={}
         for kind in frame.get("allowed_authored_intents",{}):
@@ -372,6 +400,12 @@ func handle_response(category: String, intent: String = "", deliberate: bool = f
         if story.starts.has(ending):parser.start(ending)
         return
     if frame.get("template_version",0)==2:
+        if frame.get("intro_exempt",false) and category in accepted and intent=="no":
+            intro_refusals+=1
+            if intro_refusals>intro_refusals_before_takeover:
+                last_response_debug.outcome="Repeated refusal → authored forced progression"
+                _start_authored_takeover()
+                return
         if template_result.get("takeover",false):
             _start_authored_takeover()
             return

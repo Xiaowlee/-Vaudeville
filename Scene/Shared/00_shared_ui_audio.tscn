@@ -5,3 +5,5 @@
 script = ExtResource("Script")
 stream = ExtResource("Click")
 volume_db = -12.0
+
+[node name="Music" type="AudioStreamPlayer" parent="."]

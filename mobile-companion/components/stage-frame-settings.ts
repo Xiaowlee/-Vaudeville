@@ -8,10 +8,26 @@
  * `bounds` names the visible pixels. `right` and `bottom` are exclusive.
  *
  * Fonts are copies of Font/InstrumentSerif-Regular.ttf and Font/LavishlyYours-Regular.ttf.
- * character-mobile.png is an unchanged copy of Game Asset/2.5/Character/mobile.png.
+ * Stage Manager poses are unchanged copies of Game Asset/2.5/CharSpriteSheet/StageManager.
  */
 
+import type { StageManagerExpression } from "../lib/stage-presentation";
+
 export type PixelBounds = { x: number; y: number; right: number; bottom: number };
+
+const stageManagerPoses: Record<StageManagerExpression, string> = {
+  Default: "/stage-frame/stage-manager/StageManager_Default.png",
+  Waiting: "/stage-frame/stage-manager/StageManager_Waiting.png",
+  Cue: "/stage-frame/stage-manager/StageManager_Cue.png",
+  Accept: "/stage-frame/stage-manager/StageManager_Accept.png",
+  Confused: "/stage-frame/stage-manager/StageManager_Confused.png",
+  Angry: "/stage-frame/stage-manager/StageManager_Angry.png",
+  Menancing: "/stage-frame/stage-manager/StageManager_Menancing.png",
+  Unexpected: "/stage-frame/stage-manager/StageManager_Unexpected.png",
+  Disappointed: "/stage-frame/stage-manager/StageManager_Disappointed.png",
+  Speaking: "/stage-frame/stage-manager/StageManager_Speaking.png",
+  Speech: "/stage-frame/stage-manager/StageManager_Speech.png",
+};
 
 export const stageFrameSettings = {
   background: "#0e1430",
@@ -23,7 +39,7 @@ export const stageFrameSettings = {
     curtain: "/stage-frame/phone-ui-comp-2-curtain.png",
     bottom: "/stage-frame/phone-ui-comp-3-bottom.png",
     top: "/stage-frame/phone-ui-comp-4-top.png",
-    character: "/stage-frame/character-mobile.png",
+    stageManager: stageManagerPoses,
   },
   bounds: {
     rails: { x: 0, y: 223, right: 1080, bottom: 2192 },
@@ -41,11 +57,11 @@ export const stageFrameSettings = {
   headingLineHeight: "1.05",
   regionGap: "0.35em",
   /**
-   * Blank paper on character-mobile.png, in that image's pixels.
-   * The top starts below the clip. right and bottom are exclusive.
+   * Blank paper on StageManager_Cue.png, in that image's pixels.
+   * The top starts below the gripping fingers. right and bottom are exclusive.
    */
   characterSourceSize: 1752,
-  cardText: { x: 640, y: 470, right: 1680, bottom: 1420 },
+  cardText: { x: 580, y: 420, right: 1620, bottom: 1480 },
   cardTextColor: "#2a3480",
   /** Largest body size as a fraction of the card width. Text shrinks to fit the card. */
   cardFontScale: 0.2,
@@ -69,6 +85,20 @@ export const stageFrameSettings = {
     rotationDeg: 0.2,
     posesPerSecond: 7,
     cyclePoses: 8,
+  },
+  /**
+   * Stage Manager puppet motion. Matches the desktop puppet defaults closely.
+   * Reduced-motion users get still art and instant pose swaps.
+   */
+  managerMotion: {
+    swayDegrees: 1.5,
+    swaySeconds: 2.85,
+    bounceHeightPx: 7,
+    bounceSeconds: 0.4,
+    flipSeconds: 0.65,
+    minDialoguesPerPose: 2,
+    handDrawnMotion: true,
+    motionFps: 8,
   },
 };
 

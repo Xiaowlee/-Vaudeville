@@ -1,0 +1,384 @@
+[gd_scene format=3 uid="uid://dxwbi0dj7ckni"]
+
+[ext_resource type="Texture2D" uid="uid://d22c5yq35fvgq" path="res://Visual Asset/Stage/Characters/Actor1/Actor1Accept.png" id="Actor1Named0"]
+[ext_resource type="Texture2D" uid="uid://cr0l78w2vkqh0" path="res://Visual Asset/Stage/Characters/Actor1/Actor1Default1.png" id="Actor1Named1"]
+[ext_resource type="Texture2D" uid="uid://brfxiyg5w8345" path="res://Visual Asset/Stage/Characters/Actor1/Actor1Default2.png" id="Actor1Named2"]
+[ext_resource type="Texture2D" uid="uid://c0t8rdts0lhdl" path="res://Visual Asset/Stage/Characters/Actor1/Actor1Disappoint.png" id="Actor1Named3"]
+[ext_resource type="Texture2D" uid="uid://btgli0ugbdmi8" path="res://Visual Asset/Stage/Characters/Actor1/Actor1Listening.png" id="Actor1Named4"]
+[ext_resource type="Texture2D" uid="uid://dqy8ddl670ceb" path="res://Visual Asset/Stage/Characters/Intruder/Intruder1.png" id="Actor2Named0"]
+[ext_resource type="Texture2D" uid="uid://dqcjx1udx428v" path="res://Visual Asset/Stage/Characters/Intruder/Intruder2.png" id="Actor2Named1"]
+[ext_resource type="Script" uid="uid://dnqu1452oy4b7" path="res://Script/Stage/surround_pattern.gd" id="Atmosphere"]
+[ext_resource type="Script" uid="uid://ejj83qnfiumy" path="res://Script/Stage/audience_motion.gd" id="Audience"]
+[ext_resource type="Texture2D" uid="uid://de83sqi7d6dr2" path="res://Visual Asset/Stage/Background/BG_Main__Audience.png" id="BG0"]
+[ext_resource type="Texture2D" uid="uid://g748mvrgcpti" path="res://Visual Asset/Stage/Background/BG_Main__Back Curtain.png" id="BG1"]
+[ext_resource type="Texture2D" uid="uid://b1ds1nf25ap0e" path="res://Visual Asset/Stage/Background/BG_Main__Backdrop.png" id="BG2"]
+[ext_resource type="Texture2D" uid="uid://bhpn32tb6tx1c" path="res://Visual Asset/Stage/Background/BG_Main__Chair.png" id="BG3"]
+[ext_resource type="Texture2D" uid="uid://1woa8yw4vgm3" path="res://Visual Asset/Stage/Background/BG_Main__Frame.png" id="BG5"]
+[ext_resource type="Texture2D" uid="uid://d4a7du2e8r4n2" path="res://Visual Asset/Stage/Background/BG_Main__FrontCurtain.png" id="BG6"]
+[ext_resource type="Texture2D" uid="uid://umirxf7hhie1" path="res://Visual Asset/Stage/Background/BG_Main__Lamp.png" id="BG7"]
+[ext_resource type="Texture2D" uid="uid://s2x2dcikjwav" path="res://Visual Asset/Stage/Background/BG_Main__Light.png" id="BG8"]
+[ext_resource type="Texture2D" uid="uid://dmmtt0v84h4rg" path="res://Visual Asset/Stage/Background/BG_Main__MidCurtain.png" id="BG9"]
+[ext_resource type="Texture2D" uid="uid://1p0s2374fjq" path="res://Visual Asset/Stage/Background/BG_Main__Sofa.png" id="BG10"]
+[ext_resource type="Texture2D" uid="uid://tfln5chkkya1" path="res://Visual Asset/Stage/Background/BG_Main__Table.png" id="BG11"]
+[ext_resource type="Texture2D" uid="uid://ch6t3rbaflg3j" path="res://Visual Asset/Stage/Background/BG_Main__TopCurtain.png" id="BG12"]
+[ext_resource type="Script" uid="uid://dx4wmc1msumpd" path="res://Script/Stage/depth_layer.gd" id="Depth"]
+[ext_resource type="Texture2D" uid="uid://cdntpys4smag3" path="res://Visual Asset/Stage/Background/BG_Main_Floor.png" id="Floor"]
+[ext_resource type="Script" uid="uid://bxuisjwuhcs23" path="res://Script/Stage/stage_layout.gd" id="Layout"]
+[ext_resource type="Script" uid="uid://dwewnd7cw8fh6" path="res://Script/Stage/stage_lighting.gd" id="Light"]
+[ext_resource type="Shader" uid="uid://bsccaponh7sjs" path="res://Script/Stage/Shaders/stage_lighting.gdshader" id="LightShader"]
+[ext_resource type="Texture2D" uid="uid://pogli38q6naq" path="res://Visual Asset/Stage/Background/mask.jpg" id="Mask"]
+[ext_resource type="Texture2D" uid="uid://ceydi0r7w6sce" path="res://Visual Asset/Stage/Background/Pattern_0.png" id="Pattern"]
+[ext_resource type="Texture2D" uid="uid://7a6dgpkdhh55" path="res://Visual Asset/Stage/Characters/MC/MCActing.png" id="PlayerNamed0"]
+[ext_resource type="Texture2D" uid="uid://c2yr4mfh5ijqg" path="res://Visual Asset/Stage/Characters/MC/MCActing2.png" id="PlayerNamed1"]
+[ext_resource type="Texture2D" uid="uid://bq81bnhadfoa4" path="res://Visual Asset/Stage/Characters/MC/MCConfused.png" id="PlayerNamed2"]
+[ext_resource type="Texture2D" uid="uid://c4jbsun5ehbg4" path="res://Visual Asset/Stage/Characters/MC/MCControl.png" id="PlayerNamed3"]
+[ext_resource type="Texture2D" uid="uid://birv11v7q5p" path="res://Visual Asset/Stage/Characters/MC/MCDefault.png" id="PlayerNamed4"]
+[ext_resource type="Texture2D" uid="uid://b05oo5a43elno" path="res://Visual Asset/Stage/Characters/MC/MCSilly.png" id="PlayerNamed5"]
+[ext_resource type="Texture2D" uid="uid://c862abgwgk57y" path="res://Visual Asset/Stage/Characters/MC/MCThreaten.png" id="PlayerNamed6"]
+[ext_resource type="Script" uid="uid://bhise1g4u8f4w" path="res://Script/Stage/puppet.gd" id="Puppet"]
+[ext_resource type="Texture2D" uid="uid://c67ju0xjlyai6" path="res://Visual Asset/Stage/Characters/StageManager/StageManager_Accept.png" id="StageManagerNamed0"]
+[ext_resource type="Texture2D" uid="uid://6bpm1y8532xg" path="res://Visual Asset/Stage/Characters/StageManager/StageManager_Angry.png" id="StageManagerNamed1"]
+[ext_resource type="Texture2D" uid="uid://bxl53270jiwq8" path="res://Visual Asset/Stage/Characters/StageManager/StageManager_Confused.png" id="StageManagerNamed2"]
+[ext_resource type="Texture2D" uid="uid://cor8ng4081w02" path="res://Visual Asset/Stage/Characters/StageManager/StageManager_Cue.png" id="StageManagerNamed3"]
+[ext_resource type="Texture2D" uid="uid://ctl1r7bob3q5v" path="res://Visual Asset/Stage/Characters/StageManager/StageManager_Default.png" id="StageManagerNamed4"]
+[ext_resource type="Texture2D" uid="uid://vvhqmrcnwgdg" path="res://Visual Asset/Stage/Characters/StageManager/StageManager_Disappointed.png" id="StageManagerNamed5"]
+[ext_resource type="Texture2D" uid="uid://blccjeiln61mh" path="res://Visual Asset/Stage/Characters/StageManager/StageManager_Menancing.png" id="StageManagerNamed6"]
+[ext_resource type="Texture2D" uid="uid://cgv52dgmasyuy" path="res://Visual Asset/Stage/Characters/StageManager/StageManager_Speaking.png" id="StageManagerNamed7"]
+[ext_resource type="Texture2D" uid="uid://bm6en2u4s8vha" path="res://Visual Asset/Stage/Characters/StageManager/StageManager_Speech.png" id="StageManagerNamed8"]
+[ext_resource type="Texture2D" uid="uid://bfk4secknq3ts" path="res://Visual Asset/Stage/Characters/StageManager/StageManager_Unexpected.png" id="StageManagerNamed9"]
+[ext_resource type="Texture2D" uid="uid://cd7afi4m1hj7i" path="res://Visual Asset/Stage/Characters/StageManager/StageManager_Waiting.png" id="StageManagerNamed10"]
+
+[sub_resource type="ShaderMaterial" id="LightMaterial"]
+shader = ExtResource("LightShader")
+shader_parameter/feet = Vector2(302.10938, 201.5)
+shader_parameter/top_y = -360.0
+shader_parameter/beam_width = 300.0
+shader_parameter/pool_size = Vector2(340, 90)
+shader_parameter/softness = 0.35
+shader_parameter/top_softness = 0.05
+shader_parameter/light_color = Color(0.95, 0.49, 0.92, 1)
+shader_parameter/beam_opacity = 0.0
+shader_parameter/pool_opacity = 0.0
+shader_parameter/shadow_opacity = 0.0
+
+[sub_resource type="SpriteFrames" id="PlayerFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("PlayerNamed0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("PlayerNamed1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("PlayerNamed2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("PlayerNamed3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("PlayerNamed4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("PlayerNamed5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("PlayerNamed6")
+}],
+"loop": 0,
+"name": &"poses",
+"speed": 8.0
+}]
+
+[sub_resource type="SpriteFrames" id="Actor1Frames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("Actor1Named0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("Actor1Named1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("Actor1Named2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("Actor1Named3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("Actor1Named4")
+}],
+"loop": 0,
+"name": &"poses",
+"speed": 8.0
+}]
+
+[sub_resource type="SpriteFrames" id="Actor2Frames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("Actor2Named0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("Actor2Named1")
+}],
+"loop": 0,
+"name": &"poses",
+"speed": 8.0
+}]
+
+[sub_resource type="SpriteFrames" id="StageManagerFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("StageManagerNamed0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("StageManagerNamed1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("StageManagerNamed2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("StageManagerNamed3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("StageManagerNamed4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("StageManagerNamed5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("StageManagerNamed6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("StageManagerNamed7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("StageManagerNamed8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("StageManagerNamed9")
+}, {
+"duration": 1.0,
+"texture": ExtResource("StageManagerNamed10")
+}],
+"loop": 0,
+"name": &"poses",
+"speed": 8.0
+}]
+
+[node name="Stage" type="Node2D" unique_id=567089119]
+script = ExtResource("Layout")
+backdrop_color = Color(0.15, 0.12, 0.28, 1)
+
+[node name="World" type="Node2D" parent="." unique_id=1412223415]
+position = Vector2(640, 360)
+
+[node name="Backdrop" type="Polygon2D" parent="World" unique_id=385492339]
+visible = false
+
+[node name="Atmosphere" type="Node2D" parent="World" unique_id=349148047]
+script = ExtResource("Atmosphere")
+enabled = true
+pattern = ExtResource("Pattern")
+outside_mask = ExtResource("Mask")
+opening = PackedVector2Array(0.055, 0.06, 0.945, 0.06, 0.98, 0.3, 0.965, 0.73, 0.94, 0.82, 0.85, 0.88, 0.74, 0.918, 0.62, 0.943, 0.5, 0.95, 0.38, 0.943, 0.26, 0.918, 0.15, 0.88, 0.06, 0.82, 0.035, 0.73, 0.02, 0.3, 0.035, 0.12)
+
+[node name="RearBackdrop" type="Node2D" parent="World" unique_id=1348831869]
+script = ExtResource("Depth")
+travel = Vector2(4, 2)
+
+[node name="Art" type="Sprite2D" parent="World/RearBackdrop" unique_id=1786201706]
+scale = Vector2(0.3248731, 0.3185841)
+texture = ExtResource("BG2")
+
+[node name="BackCurtain" type="Node2D" parent="World" unique_id=1155765760]
+script = ExtResource("Depth")
+travel = Vector2(7, 3)
+
+[node name="Art" type="Sprite2D" parent="World/BackCurtain" unique_id=1701797613]
+scale = Vector2(0.3248731, 0.3185841)
+texture = ExtResource("BG1")
+
+[node name="Floor" type="Node2D" parent="World" unique_id=1514132029]
+script = ExtResource("Depth")
+travel = Vector2(12, 5)
+
+[node name="Art" type="Sprite2D" parent="World/Floor" unique_id=2038858888]
+scale = Vector2(0.3248731, 0.3185841)
+texture = ExtResource("Floor")
+
+[node name="Sofa" type="Node2D" parent="World" unique_id=1927581291]
+script = ExtResource("Depth")
+travel = Vector2(12, 5)
+
+[node name="Art" type="Sprite2D" parent="World/Sofa" unique_id=382098306]
+scale = Vector2(0.3248731, 0.3185841)
+texture = ExtResource("BG10")
+
+[node name="Chair" type="Node2D" parent="World" unique_id=488158790]
+script = ExtResource("Depth")
+travel = Vector2(12, 5)
+
+[node name="Art" type="Sprite2D" parent="World/Chair" unique_id=1982667265]
+scale = Vector2(0.3248731, 0.3185841)
+texture = ExtResource("BG3")
+
+[node name="Table" type="Node2D" parent="World" unique_id=523784866]
+script = ExtResource("Depth")
+travel = Vector2(12, 5)
+
+[node name="Art" type="Sprite2D" parent="World/Table" unique_id=280438065]
+scale = Vector2(0.3248731, 0.3185841)
+texture = ExtResource("BG11")
+
+[node name="Lamp" type="Node2D" parent="World" unique_id=69796011]
+script = ExtResource("Depth")
+travel = Vector2(12, 5)
+
+[node name="Art" type="Sprite2D" parent="World/Lamp" unique_id=1696558252]
+scale = Vector2(0.3248731, 0.3185841)
+texture = ExtResource("BG7")
+
+[node name="Lighting" type="Node2D" parent="World" unique_id=618145415]
+process_priority = 20
+visible = false
+material = SubResource("LightMaterial")
+script = ExtResource("Light")
+
+[node name="Performers" type="Node2D" parent="World" unique_id=2089674158]
+script = ExtResource("Depth")
+travel = Vector2(10, 4)
+
+[node name="Player" type="Node2D" parent="World/Performers" unique_id=2007219207]
+position = Vector2(-280, 205)
+script = ExtResource("Puppet")
+allowed_variation_poses = PackedStringArray("MCDefault","MCActing")
+hand_drawn_motion = true
+pose_names = PackedStringArray("MCActing", "MCActing2", "MCConfused", "MCControl", "MCDefault", "MCSilly", "MCThreaten")
+pose_frames = SubResource("PlayerFrames")
+starting_pose = 4
+
+[node name="Swing" type="Node2D" parent="World/Performers/Player" unique_id=2034712551]
+
+[node name="Card" type="Node2D" parent="World/Performers/Player/Swing" unique_id=539775012]
+
+[node name="Art" type="AnimatedSprite2D" parent="World/Performers/Player/Swing/Card" unique_id=266612824]
+position = Vector2(0, -190)
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("PlayerFrames")
+animation = &"poses"
+frame = 4
+
+[node name="Actor1" type="Node2D" parent="World/Performers" unique_id=1989233045]
+position = Vector2(285, 205)
+script = ExtResource("Puppet")
+allowed_variation_poses = PackedStringArray("Actor1Default1")
+hand_drawn_motion = true
+pose_names = PackedStringArray("Actor1Accept", "Actor1Default1", "Actor1Default2", "Actor1Disappoint", "Actor1Listening")
+pose_frames = SubResource("Actor1Frames")
+starting_pose = 1
+
+[node name="Swing" type="Node2D" parent="World/Performers/Actor1" unique_id=661272666]
+
+[node name="Card" type="Node2D" parent="World/Performers/Actor1/Swing" unique_id=387720927]
+
+[node name="Art" type="AnimatedSprite2D" parent="World/Performers/Actor1/Swing/Card" unique_id=695283561]
+position = Vector2(0, -190)
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("Actor1Frames")
+animation = &"poses"
+frame = 1
+
+[node name="Actor2" type="Node2D" parent="World/Performers" unique_id=1530124703]
+position = Vector2(0, 200)
+script = ExtResource("Puppet")
+allowed_variation_poses = PackedStringArray("Intruder1","Intruder2")
+hand_drawn_motion = true
+pose_names = PackedStringArray("Intruder1", "Intruder2")
+pose_frames = SubResource("Actor2Frames")
+
+[node name="Swing" type="Node2D" parent="World/Performers/Actor2" unique_id=1684204475]
+
+[node name="Card" type="Node2D" parent="World/Performers/Actor2/Swing" unique_id=1768523720]
+
+[node name="Art" type="AnimatedSprite2D" parent="World/Performers/Actor2/Swing/Card" unique_id=442119515]
+position = Vector2(0, -190)
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("Actor2Frames")
+animation = &"poses"
+
+[node name="StageManager" type="Node2D" parent="World/Performers" unique_id=257700961]
+position = Vector2(0, 205)
+script = ExtResource("Puppet")
+allowed_variation_poses = PackedStringArray("StageManager_Default","StageManager_Speaking","StageManager_Speech")
+hand_drawn_motion = true
+pose_names = PackedStringArray("StageManager_Accept", "StageManager_Angry", "StageManager_Confused", "StageManager_Cue", "StageManager_Default", "StageManager_Disappointed", "StageManager_Menancing", "StageManager_Speaking", "StageManager_Speech", "StageManager_Unexpected", "StageManager_Waiting")
+pose_frames = SubResource("StageManagerFrames")
+starting_pose = 4
+
+[node name="Swing" type="Node2D" parent="World/Performers/StageManager" unique_id=1728079501]
+
+[node name="Card" type="Node2D" parent="World/Performers/StageManager/Swing" unique_id=1012917962]
+
+[node name="Art" type="AnimatedSprite2D" parent="World/Performers/StageManager/Swing/Card" unique_id=1166881549]
+position = Vector2(0, -190)
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("StageManagerFrames")
+animation = &"poses"
+frame = 4
+
+[node name="MidCurtain" type="Node2D" parent="World" unique_id=1060790838]
+script = ExtResource("Depth")
+travel = Vector2(12, 4)
+
+[node name="Art" type="Sprite2D" parent="World/MidCurtain" unique_id=770440110]
+scale = Vector2(0.3248731, 0.3185841)
+texture = ExtResource("BG9")
+
+[node name="TopTrim" type="Node2D" parent="World" unique_id=371519159]
+script = ExtResource("Depth")
+travel = Vector2(4, 2)
+
+[node name="Art" type="Sprite2D" parent="World/TopTrim" unique_id=2029333263]
+scale = Vector2(0.3248731, 0.3185841)
+texture = ExtResource("BG12")
+
+[node name="Footlights" type="Node2D" parent="World" unique_id=456452930]
+script = ExtResource("Depth")
+travel = Vector2(8, 2)
+
+[node name="Art" type="Sprite2D" parent="World/Footlights" unique_id=1375378013]
+scale = Vector2(0.3248731, 0.3185841)
+texture = ExtResource("BG8")
+
+[node name="Audience" type="Node2D" parent="World" unique_id=1567803009]
+z_index = 1
+script = ExtResource("Audience")
+travel = Vector2(16, 5)
+
+[node name="Art" type="Sprite2D" parent="World/Audience" unique_id=1942643025]
+scale = Vector2(0.3248731, 0.3185841)
+texture = ExtResource("BG0")
+
+[node name="FrontCurtain" type="Node2D" parent="World" unique_id=105983517]
+z_index = 2
+script = ExtResource("Depth")
+travel = Vector2(10, 4)
+
+[node name="Art" type="Sprite2D" parent="World/FrontCurtain" unique_id=956529032]
+scale = Vector2(0.3248731, 0.3185841)
+texture = ExtResource("BG6")
+
+[node name="Frame" type="Node2D" parent="World" unique_id=696462628]
+z_index = 2
+script = ExtResource("Depth")
+travel = Vector2(0, 0)
+
+[node name="Art" type="Sprite2D" parent="World/Frame" unique_id=2006554053]
+scale = Vector2(0.3248731, 0.3185841)
+texture = ExtResource("BG5")
+
+[node name="Controls" type="CanvasLayer" parent="." unique_id=225730727]
+visible = false

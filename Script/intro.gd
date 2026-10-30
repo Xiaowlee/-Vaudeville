@@ -1,32 +1,27 @@
 extends Control
-## Scene routes only; menu wording and appearance belong to Intro.tscn.
-@export_file("*.tscn") var prototype_1_scene: String
-@export_file("*.tscn") var prototype_2_scene: String
-@export_file("*.tscn") var previous_scene: String
-@export_file("*.tscn") var stage_scene: String
-@export_file("*.tscn") var earlier_scene: String
-@export_file("*.tscn") var back_scene: String
+@export_file("*.tscn") var stage_scene := "res://Scene/StageActs/stage_graph_game.tscn"
+@export_range(0.02,1,.02) var spotlight_speed := 0.16
+@export_range(0.1,0.6,.01) var spotlight_radius := 0.3
+var spotlight_clock := 0.0
 var opening := false
-func _ready() -> void:
-	var microphone = get_node_or_null("Menu/Microphone")
-	if microphone != null:
-		microphone.visible = not OS.has_feature("web")
-		microphone.pressed.connect(func():
-			if OS.get_name()=="Android":$MicrophoneSettings.show_panel()
-			else:$DesktopMicrophoneSettings.show_panel())
-	if not stage_scene.is_empty(): PhoneSession.ensure_session()
-	for pair in [["Prototype1", prototype_1_scene], ["Prototype2", prototype_2_scene], ["PerformerA", "res://Scene/Prototypes/2_2/2.2_a_performer_baseline.tscn"], ["PerformerC", "res://Scene/Prototypes/2_2/2.2_c_increased_agency.tscn"], ["StagePrototype", stage_scene], ["Previous", previous_scene], ["Earlier", earlier_scene], ["Back", back_scene]]:
-		var button = get_node_or_null("Menu/" + pair[0])
-		if button != null: button.pressed.connect(_open.bind(pair[1]))
-	$Menu/Quit.visible = not OS.has_feature("web")
-	$Menu/Quit.pressed.connect(func(): get_tree().quit())
-	var first_button = get_node_or_null("Menu/StagePrototype")
-	if first_button == null: first_button = $Menu/Prototype1
-	first_button.grab_focus()
-func _open(path: String) -> void:
-	if opening: return
-	opening = true
-	var error := get_tree().change_scene_to_file(path)
-	if error != OK:
-		opening = false
-		push_error("[Menu] Could not open: " + path)
+func _ready():
+	$Menu/Play.pressed.connect(_open)
+	$Menu/Settings.pressed.connect(func():
+		$DesktopMicrophoneSettings.show_panel())
+	$Menu/Developer.set_pressed_no_signal(bool(PhoneSession.get_meta("developer_mode",false)))
+	$Menu/Developer.toggled.connect(func(value):PhoneSession.set_meta("developer_mode",value))
+	$Menu/Quit.visible=not OS.has_feature("web")
+	$Menu/Quit.pressed.connect(func():get_tree().quit())
+	$Menu/Play.grab_focus()
+func _open():
+	if opening:return
+	opening=true
+	var result=get_tree().change_scene_to_file(stage_scene)
+	if result!=OK:opening=false;push_error("Could not open main game")
+
+func _process(delta):
+	spotlight_clock+=delta*spotlight_speed
+	var mat=$Background.material
+	mat.set_shader_parameter("screen_size",size)
+	mat.set_shader_parameter("radius",spotlight_radius)
+	mat.set_shader_parameter("focus",Vector2(.5+sin(spotlight_clock)*.28,.46+cos(spotlight_clock*.73)*.18))

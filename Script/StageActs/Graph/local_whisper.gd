@@ -1,7 +1,7 @@
 extends Control
 signal transcript_ready(words: String)
 signal technical_failure(detail: String)
-## Isolated desktop experiment. Never changes the active story/backend.
+## Local desktop speech recognition used by the main game.
 @export_file("*.exe") var engine_path := "res://.local-speech/engine/Release/whisper-cli.exe"
 @export_file("*.bin") var model_path := "res://.local-speech/ggml-base.en.bin"
 @export_range(5, 120) var maximum_recording_seconds := 30.0
