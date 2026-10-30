@@ -20,6 +20,7 @@ var voice_stream_cache: Dictionary={}
 @export_range(0.05,4,.05) var curtain_seconds := 1.6
 @export var act_titles: Dictionary[String,String]={"Act 1":"","Act 2":"","Act 3":""}
 @export var completion_passages := PackedStringArray(["A3_5_End"])
+@export_file("*.tscn") var ending_menu_scene := "res://Scene/00_main_menu.tscn"
 @export_group("Speech and presentation")
 @export_range(0,3,.05) var response_delay := 0.0
 @export var show_player_transcript := true
@@ -444,6 +445,7 @@ func _begin_act(group: String):
         _move_curtain(1.0,func():transition_phase="TITLE")
     _move_curtain(0.0,reveal)
 func _finish_show():
+    if state=="COMPLETE" or transition_phase=="ENDING":return
     opening=true
     state="ACT_TRANSITION"
     transition_phase="ENDING"
@@ -454,7 +456,12 @@ func _finish_show():
         opening=false
         transition_phase=""
         state="COMPLETE"
-        audio.stop_all(0.3))
+        audio.stop_all(0.3)
+        _return_to_menu.call_deferred())
+func _return_to_menu():
+    if state!="COMPLETE" or not is_inside_tree():return
+    var error=get_tree().change_scene_to_file(ending_menu_scene)
+    if error!=OK:push_error("Could not return to main menu: "+ending_menu_scene)
 
 func _act_title(group: String) -> String:
     var override=str(act_titles.get(group,""))
