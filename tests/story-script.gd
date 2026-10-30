@@ -10,6 +10,8 @@ func run():
     t.ai_enabled=false
     game.get_node("PhoneCueBridge").enabled=false
     root.add_child(game)
+    check(not game.get_node("StageUI/Overlay/PhonePairing/ConnectPhone").visible,"Gameplay hides standalone phone launcher")
+    check(game.get_node("StageUI/Overlay/Settings").offset_right<=-32,"Settings keeps an inset from screen edge")
     var c=game.get_node("GameController")
     game.get_node("DialogueView").act_title_enabled=false
     c.curtain_enabled=false

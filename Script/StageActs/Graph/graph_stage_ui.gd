@@ -22,6 +22,8 @@ var pending_text := ""
 var line_age := 0.0
 var developer_mode := false
 func _ready():
+    # The shared pairing scene keeps its launcher for the main menu only.
+    $Overlay/PhonePairing/ConnectPhone.hide()
     var config=ConfigFile.new()
     config.load("user://dialogue.cfg")
     auto_advance=bool(config.get_value("dialogue","auto_advance",true))

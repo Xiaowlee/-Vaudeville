@@ -1,87 +1,132 @@
-[gd_scene format=3]
-[ext_resource type="PackedScene" path="res://Scene/Stage/stage_visuals.tscn" id="Visuals"]
-[ext_resource type="PackedScene" path="res://Scene/StageActs/Graph/story_runtime.tscn" id="Runtime"]
-[ext_resource type="Script" path="res://Script/StageActs/Graph/stage_graph.gd" id="Flow"]
-[ext_resource type="Script" path="res://Script/StageActs/Graph/graph_stage_ui.gd" id="UI"]
-[ext_resource type="PackedScene" path="res://Scene/Shared/00_shared_chapter_audio.tscn" id="Audio"]
+[gd_scene format=3 uid="uid://c4kgrkjp6gkoc"]
+
+[ext_resource type="Texture2D" uid="uid://cr0l78w2vkqh0" path="res://Visual Asset/Stage/Characters/Actor1/Actor1Default1.png" id="2_o5ho1"]
+[ext_resource type="PackedScene" uid="uid://bfa6133lesemv" path="res://Scene/Shared/00_shared_chapter_audio.tscn" id="Audio"]
+[ext_resource type="Script" uid="uid://by3db817nw7fp" path="res://Script/StageActs/Graph/stage_graph.gd" id="Flow"]
+[ext_resource type="PackedScene" uid="uid://cubvhdryuidcv" path="res://UI/phone_pairing.tscn" id="Pairing"]
 [ext_resource type="PackedScene" path="res://Scene/Shared/00_shared_phone_cue_bridge.tscn" id="Phone"]
-[ext_resource type="PackedScene" path="res://Scene/UI/microphone_settings.tscn" id="Settings"]
-[ext_resource type="Theme" path="res://UI/game_theme.tres" id="Theme"]
-[ext_resource type="PackedScene" path="res://UI/phone_pairing.tscn" id="Pairing"]
-[sub_resource type="StyleBoxFlat" id="TranscriptBacking"]
-bg_color = Color(0.17,0.045,0.19,0.92)
-content_margin_left = 12.0
-content_margin_right = 12.0
-content_margin_top = 8.0
-content_margin_bottom = 8.0
+[ext_resource type="PackedScene" path="res://Scene/StageActs/Graph/story_runtime.tscn" id="Runtime"]
+[ext_resource type="PackedScene" uid="uid://dgv2puox2d00q" path="res://Scene/UI/microphone_settings.tscn" id="Settings"]
+[ext_resource type="Theme" uid="uid://p3m2d0y1qrtb" path="res://UI/game_theme.tres" id="Theme"]
+[ext_resource type="Script" uid="uid://du10n3sopfdpq" path="res://Script/StageActs/Graph/graph_stage_ui.gd" id="UI"]
+[ext_resource type="PackedScene" uid="uid://ccgsnvuc71q0j" path="res://Scene/Stage/stage_visuals.tscn" id="Visuals"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ujtce"]
+atlas = ExtResource("2_o5ho1")
+region = Rect2(12.5, 5, 27, 20.16)
+
 [sub_resource type="SystemFont" id="GearFont"]
 font_names = PackedStringArray("Segoe UI Symbol")
-[node name="MainStage" instance=ExtResource("Visuals")]
-[node name="StoryRuntime" parent="." instance=ExtResource("Runtime")]
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="TranscriptBacking"]
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(0.17, 0.045, 0.19, 0.92)
+
+[node name="MainStage" unique_id=1072549704 instance=ExtResource("Visuals")]
+
+[node name="StageManager" parent="World/Performers" parent_id_path=PackedInt32Array(2089674158) index="3" unique_id=257700961]
+z_index = 101
+
+[node name="Fill" parent="FrameCutInLayer/FrameCutIn/Panel/Clip" parent_id_path=PackedInt32Array(1058458187) index="0" unique_id=1254123913]
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Picture" parent="FrameCutInLayer/FrameCutIn/Panel/Clip" parent_id_path=PackedInt32Array(1058458187) index="1" unique_id=1027879995]
+texture = SubResource("AtlasTexture_ujtce")
+
+[node name="StoryRuntime" parent="." index="4" unique_id=587513473 instance=ExtResource("Runtime")]
 visible = false
 z_index = 100
-[node name="ChapterAudio" parent="." instance=ExtResource("Audio")]
-[node name="PhoneCueBridge" parent="." instance=ExtResource("Phone")]
-[node name="DesktopMicrophoneSettings" parent="." instance=ExtResource("Settings")]
-[node name="StageUI" type="CanvasLayer" parent="."]
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ChapterAudio" parent="." index="5" unique_id=1891003111 instance=ExtResource("Audio")]
+
+[node name="PhoneCueBridge" parent="." index="6" unique_id=1911334633 instance=ExtResource("Phone")]
+
+[node name="DesktopMicrophoneSettings" parent="." index="7" unique_id=1401870838 instance=ExtResource("Settings")]
+
+[node name="StageUI" type="CanvasLayer" parent="." index="8" unique_id=2063275119]
 layer = 20
 script = ExtResource("UI")
-[node name="Voice" type="AudioStreamPlayer" parent="StageUI"]
-[node name="Overlay" type="Control" parent="StageUI"]
+
+[node name="Voice" type="AudioStreamPlayer" parent="StageUI" index="0" unique_id=526556666]
+
+[node name="Overlay" type="Control" parent="StageUI" index="1" unique_id=1159484656]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 theme = ExtResource("Theme")
-[node name="Settings" type="Button" parent="StageUI/Overlay"]
+
+[node name="Settings" type="Button" parent="StageUI/Overlay" index="0" unique_id=850388650]
+layout_mode = 0
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -62.0
-offset_top = 14.0
-offset_right = -16.0
-offset_bottom = 60.0
+offset_left = -82.0
+offset_top = 32.0
+offset_right = -36.0
+offset_bottom = 78.0
+grow_horizontal = 0
+tooltip_text = "Settings, phone QR and main menu"
 theme_override_fonts/font = SubResource("GearFont")
 theme_override_font_sizes/font_size = 28
 text = "⚙"
-tooltip_text = "Settings, phone QR and main menu"
-[node name="GameMenu" type="PanelContainer" parent="StageUI/Overlay"]
+
+[node name="GameMenu" type="PanelContainer" parent="StageUI/Overlay" index="1" unique_id=1280746437]
 visible = false
+layout_mode = 0
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -304.0
-offset_right = -16.0
-offset_top = 70.0
-[node name="Options" type="VBoxContainer" parent="StageUI/Overlay/GameMenu"]
+offset_left = -324.0
+offset_top = 88.0
+offset_right = -36.0
+
+[node name="Options" type="VBoxContainer" parent="StageUI/Overlay/GameMenu" index="0" unique_id=1485646876]
 layout_mode = 2
 theme_override_constants/separation = 8
-[node name="Microphone" type="Button" parent="StageUI/Overlay/GameMenu/Options"]
+
+[node name="Microphone" type="Button" parent="StageUI/Overlay/GameMenu/Options" index="0" unique_id=1849152854]
 layout_mode = 2
 text = "Microphone settings"
-[node name="PhoneQR" type="Button" parent="StageUI/Overlay/GameMenu/Options"]
+
+[node name="PhoneQR" type="Button" parent="StageUI/Overlay/GameMenu/Options" index="1" unique_id=1311086222]
 layout_mode = 2
 text = "Scan phone QR"
-[node name="AutoAdvance" type="CheckButton" parent="StageUI/Overlay/GameMenu/Options"]
+
+[node name="AutoAdvance" type="CheckButton" parent="StageUI/Overlay/GameMenu/Options" index="2" unique_id=1482912776]
 layout_mode = 2
-text = "Auto-advance dialogue"
 button_pressed = true
-[node name="MainMenu" type="Button" parent="StageUI/Overlay/GameMenu/Options"]
+text = "Auto-advance dialogue"
+
+[node name="MainMenu" type="Button" parent="StageUI/Overlay/GameMenu/Options" index="3" unique_id=1050269706]
 layout_mode = 2
 text = "Return to main menu"
-[node name="Resume" type="Button" parent="StageUI/Overlay/GameMenu/Options"]
+
+[node name="Resume" type="Button" parent="StageUI/Overlay/GameMenu/Options" index="4" unique_id=56859932]
 layout_mode = 2
 text = "Resume game"
-[node name="PhonePairing" parent="StageUI/Overlay" instance=ExtResource("Pairing")]
-[node name="ConnectPhone" parent="StageUI/Overlay/PhonePairing" index="0"]
-visible = false
-[node name="Speak" type="Button" parent="StageUI/Overlay"]
+
+[node name="PhonePairing" parent="StageUI/Overlay" index="2" unique_id=1289031007 instance=ExtResource("Pairing")]
+layout_mode = 1
+
+[node name="Speak" type="Button" parent="StageUI/Overlay" index="3" unique_id=1928939508]
+layout_mode = 0
 anchor_left = 0.3
-anchor_right = 0.7
 anchor_top = 1.0
+anchor_right = 0.7
 anchor_bottom = 1.0
 offset_top = -50.0
 offset_bottom = -12.0
 text = "Speak / X"
-[node name="Developer" type="CheckButton" parent="StageUI/Overlay"]
+
+[node name="Developer" type="CheckButton" parent="StageUI/Overlay" index="4" unique_id=56100268]
+layout_mode = 0
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 18.0
@@ -90,47 +135,58 @@ offset_right = 220.0
 offset_bottom = -12.0
 theme_override_font_sizes/font_size = 16
 text = "Developer mode"
-[node name="PreShowTranscriptZone" type="Control" parent="StageUI/Overlay"]
+
+[node name="PreShowTranscriptZone" type="Control" parent="StageUI/Overlay" index="5" unique_id=1169891787]
+anchors_preset = 0
 anchor_left = 0.24
+anchor_top = 0.7
 anchor_right = 0.76
-anchor_top = 0.70
 anchor_bottom = 0.79
 mouse_filter = 2
-[node name="TranscriptZone" type="Control" parent="StageUI/Overlay"]
+
+[node name="TranscriptZone" type="Control" parent="StageUI/Overlay" index="6" unique_id=2032529537]
+anchors_preset = 0
 anchor_left = 0.04
-anchor_right = 0.32
 anchor_top = 0.22
+anchor_right = 0.32
 anchor_bottom = 0.44
 mouse_filter = 2
-[node name="Transcript" type="Label" parent="StageUI/Overlay"]
-mouse_filter = 2
+
+[node name="Transcript" type="Label" parent="StageUI/Overlay" index="7" unique_id=305221833]
+layout_mode = 0
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("TranscriptBacking")
 autowrap_mode = 2
-[node name="ResponseCheck" type="Label" parent="StageUI/Overlay"]
+
+[node name="ResponseCheck" type="Label" parent="StageUI/Overlay" index="8" unique_id=418761728]
+layout_mode = 0
 anchor_left = 0.03
-anchor_right = 0.97
 anchor_top = 1.0
+anchor_right = 0.97
 anchor_bottom = 1.0
 offset_top = -84.0
 theme_override_font_sizes/font_size = 16
-mouse_filter = 2
 autowrap_mode = 2
-[node name="GameController" type="Node" parent="."]
+
+[node name="GameController" type="Node" parent="." index="9" unique_id=1823261374]
 script = ExtResource("Flow")
 
-[node name="StageManager" parent="World/Performers" index="3"]
-z_index = 101
-
-[node name="CurtainLayer" type="Node2D" parent="."]
-z_index = 100
+[node name="CurtainLayer" type="Node2D" parent="." index="10" unique_id=1734664726]
 visible = false
-[node name="Curtain" type="Control" parent="CurtainLayer"]
-mouse_filter = 2
+z_index = 100
+
+[node name="Curtain" type="Control" parent="CurtainLayer" index="0" unique_id=804567646]
 clip_contents = true
-[node name="Left" type="TextureRect" parent="CurtainLayer/Curtain"]
-expand_mode = 1
+layout_mode = 3
+anchors_preset = 0
 mouse_filter = 2
-[node name="Right" type="TextureRect" parent="CurtainLayer/Curtain"]
-expand_mode = 1
+
+[node name="Left" type="TextureRect" parent="CurtainLayer/Curtain" index="0" unique_id=1459011445]
+layout_mode = 0
 mouse_filter = 2
+expand_mode = 1
+
+[node name="Right" type="TextureRect" parent="CurtainLayer/Curtain" index="1" unique_id=853721114]
+layout_mode = 0
+mouse_filter = 2
+expand_mode = 1

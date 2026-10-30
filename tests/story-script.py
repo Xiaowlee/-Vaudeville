@@ -48,3 +48,10 @@ for name,row in m.items():
  for e in row['frame']['events']:
   assert e['kind']!='dialogue' or e['speaker'],name
 print('PASS semantic grammar, multiline production fields, metadata, actor labels and unchanged source links')
+
+# Selected-scene exports omitted autoload preloads and dynamically loaded assets.
+presets=(p/'export_presets.cfg').read_text(encoding='utf-8')
+windows=presets.split('[preset.0]',1)[1].split('[preset.0.options]',1)[0]
+assert 'export_filter="all_resources"' in windows, 'Windows build must include runtime dependencies'
+assert '.local-speech/*' in windows and 'mobile-companion/*' in windows, 'Keep local tools/web source outside game pack'
+print('PASS Windows export includes runtime assets and excludes local speech tools/web source')
