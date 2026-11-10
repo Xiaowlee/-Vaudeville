@@ -10,6 +10,20 @@ const speechClients = () => [...wss.clients].filter(c => c.role === "speech_clie
 const tellSpeech = message => { for (const c of speechClients()) send(c,message); };
 const stageCues = {prompt: null, ifb: null};
 let stagePresentation = null;
+let phoneReminder = null;
+function parsePhoneReminder(style) {
+  if (!style || typeof style.text !== "string" || style.text.length > 500) return null;
+  const { text, background, color, x, y, width, fontSize, lineHeight } = style;
+  if (![background, color].every(value => typeof value === "string" && /^#[a-f0-9]{8}$/i.test(value))) return null;
+  const limits = [[x, 0, 1], [y, 0, 1], [width, 25, 96], [fontSize, 3, 18], [lineHeight, 0.9, 2]];
+  if (!limits.every(([value, min, max]) => Number.isFinite(value) && value >= min && value <= max)) return null;
+  const layers = style.layers;
+  if (!Array.isArray(layers) || layers.length !== 4 ||
+      !layers.every(layer => Array.isArray(layer) && layer.length === 5 &&
+        layer.every(value => Number.isFinite(value) && Math.abs(value) <= 10) &&
+        layer[2] >= 0 && layer[3] >= 0 && layer[4] >= 0 && layer[4] <= 1)) return null;
+  return { text, background, color, x, y, width, fontSize, lineHeight, layers };
+}
 function presentationFields(message) {
   const out = {};
   if (STAGE_EXPRESSIONS.includes(message.expression)) out.expression = message.expression;
@@ -78,6 +92,7 @@ wss.on("connection", (socket, req) => {
         console.log("[relay] stage phone connected");
         for (const name of STAGE_CHANNELS) if (matchesStage(socket, stageCues[name])) send(socket, stageCues[name]);
         if (stagePresentation) send(socket, stagePresentation);
+        send(socket, {kind:"stage_phone_reminder", style:phoneReminder});
       } else if (message.role === "phone") {
         socket.role = "phone";
         if (request) send(socket, request);
@@ -90,6 +105,13 @@ wss.on("connection", (socket, req) => {
         tellSpeech(message); return;
       }
       if (["speech_observation","speech_attempt"].includes(message.type)) { tellSpeech(message); return; }
+      if (message.kind === "stage_phone_reminder") {
+        const style = parsePhoneReminder(message.style);
+        if (style === null && message.style !== null) return;
+        phoneReminder = style;
+        for (const phone of stagePhones()) send(phone, {kind:"stage_phone_reminder", style});
+        return;
+      }
       if (message.kind === "stage_cue") {
         if (typeof message.requestId !== "string" || typeof message.text !== "string" || typeof message.recipient !== "string") return;
         const channel = STAGE_CHANNELS.includes(message.channel) ? message.channel : "ifb";

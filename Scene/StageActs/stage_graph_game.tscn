@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://du10n3sopfdpq" path="res://Script/StageActs/Graph/graph_stage_ui.gd" id="UI"]
 [ext_resource type="PackedScene" uid="uid://ccgsnvuc71q0j" path="res://Scene/Stage/stage_visuals.tscn" id="Visuals"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ujtce"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_o5ho1"]
 atlas = ExtResource("2_o5ho1")
 region = Rect2(12.5, 5, 27, 20.16)
 
@@ -36,7 +36,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Picture" parent="FrameCutInLayer/FrameCutIn/Panel/Clip" parent_id_path=PackedInt32Array(1058458187) index="1" unique_id=1027879995]
-texture = SubResource("AtlasTexture_ujtce")
+texture = SubResource("AtlasTexture_o5ho1")
 
 [node name="StoryRuntime" parent="." index="4" unique_id=587513473 instance=ExtResource("Runtime")]
 visible = false
@@ -47,6 +47,7 @@ grow_vertical = 2
 [node name="ChapterAudio" parent="." index="5" unique_id=1891003111 instance=ExtResource("Audio")]
 
 [node name="PhoneCueBridge" parent="." index="6" unique_id=1911334633 instance=ExtResource("Phone")]
+clear_phone_reminder_on_connect = true
 
 [node name="DesktopMicrophoneSettings" parent="." index="7" unique_id=1401870838 instance=ExtResource("Settings")]
 
@@ -61,6 +62,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("Theme")
 

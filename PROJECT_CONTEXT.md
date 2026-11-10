@@ -655,3 +655,21 @@ Actual exported user log showed PhoneSession preload Story/phone_connection.tres
 
 ## October30 — gameplay settings corner cleanup
 User reports shared Connect phone launcher overlaps gear in exported gameplay. StageUI now explicitly hides shared PhonePairing/ConnectPhone on ready (main menu launcher retained); QR still opens through Settings > Scan phone QR. Gear inset36px right/32px top; dropdown shares36px right margin and sits below gear. Scene offsets remain editable. Added runtime regression assertions and re-exported Windows build to sibling2.6; existing ZIP remains older.
+
+## November 10 — Windows remote playtest voice repair
+The shared 2.6 Windows ZIP excluded the external Whisper executable, DLLs and English model, plus the local Ollama/Qwen runtime. The settings level meter used Godot audio capture, so its movement could coexist with a gameplay recognizer failure. Sampled the two exported playtest recordings and pregame mockup. Findings, acceptance criteria and remote pilot procedure are in the sibling 2.6 Fix/REMOTE-PLAYTEST-PLAN.md.
+
+Main-menu Settings now opens phone pairing. Play opens the same panel as Before the show, with an optional speech rehearsal and second screen, then Start show. Rehearsal uses the same Whisper scene as gameplay. The gameplay prompt distinguishes starting from recording; X is restricted to speech turns, and Space remains the advance shortcut. Settings offers Copy playtest report for a bounded session history with build, Windows version, passage, input and processing outcomes, and observed phone connection changes. The copied report omits transcripts, audio, device names and pairing credentials. Phone OS/browser are requested separately in the tester handoff.
+
+The versioned Windows playtest stages the external local tools beside the EXE/PCK. CPU Ollama libraries and the Qwen3:4b manifest/layers ship with the Whisper runtime. The distribution is separate from the previous export. Checks passed for 109 graph links and 69 passages, the rendered packaged setup, WAV-to-text with the bundled Whisper, clipboard report, and a structured CPU response with the bundled Qwen. A live microphone turn on a separate Windows computer, phone reconnect and simultaneous phone session isolation remain pilot checks. Existing Godot headless shutdown warnings remain.
+
+
+## Pregame revision — Windows 2.6.2
+Play opens the full-screen Figma sequence: Voice calibrate, Second Window, Pay attention, Shakespeare quote, then show. Voice rehearsal uses the same local recognizer as gameplay. A real relay status unlocks progress from Second Window. The desktop stage reconnects to the same room and sends cues to the phone. Keep the phone in normal play. A desktop-only experiment is separate from this build. Main-menu Settings still offers phone pairing, and the Settings window now scrolls with Done pinned below its content.
+
+P2 investigates the player experience using MDA: choose intended feelings, ask which moments players remember and what they thought or felt, then look at how the mechanics and responses produced those experiences. The phone remains a cue surface while its emotional contribution is explored.
+
+
+## Pregame correction — phone-only reminder
+Play opens Voice calibrate, then Second Window with a centered desktop QR and Start after real pairing. The decorated reminder is displayed by the paired phone website. Start fades to the Shakespeare quote, reveals it automatically, holds five seconds by default, then fades into the show. No intermediate confirmation. Losing the phone during the quote returns to pairing. The stage keeps the same room and clears the reminder when its bridge connects.
+Desktop layout is authored in Scene/Pregame.tscn. The Pregame root Inspector exposes Transitions and links to Scene/UI/phone_reminder.tscn. Edit that scene root for live 2D preview of reminder text, colour, size and placement. Curtain, Rails, Bottom and Top transfer their Layout, visibility and opacity to the phone. The phone companion uses the same four decorative assets and receives the reminder style from the relay. The website and relay must both carry this update for it to appear on a hosted phone.

@@ -103,3 +103,4 @@ text = "Developer mode"
 layout_mode = 1
 
 [node name="DesktopMicrophoneSettings" parent="." unique_id=1698706411 instance=ExtResource("DesktopMic")]
+offer_phone_pairing = true

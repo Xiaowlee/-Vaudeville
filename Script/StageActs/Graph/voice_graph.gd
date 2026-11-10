@@ -348,6 +348,7 @@ func _interpret(words: String):
     ai_turn=turn
     var error=ai_request.request("http://127.0.0.1:11435/api/chat",["Content-Type: application/json"],HTTPClient.METHOD_POST,JSON.stringify(payload))
     ai_busy=error==OK
+    mic.report("interpretation_requested", {"started": ai_busy})
     ai_history.append({"player":words})
     $Layout/Result.text="Game response: Interpreting with local "+ai_model+"…" if ai_busy else "Game response: Local AI unavailable. Retry or use Testing controls."
     if not ai_busy:handle_response("TECHNICAL_FAILURE")
@@ -355,6 +356,7 @@ func _ai_completed(result: int, code: int, _headers: PackedStringArray, bytes: P
     if not ai_busy or ai_turn!=turn:return
     ai_busy=false
     ai_elapsed_ms=Time.get_ticks_msec()-ai_started_at
+    mic.report("interpretation_returned", {"network_result": result, "http_status": code, "duration_ms": ai_elapsed_ms})
     raw_ai_response=bytes.get_string_from_utf8()
     if result!=HTTPRequest.RESULT_SUCCESS or code!=200:
         handle_response("TECHNICAL_FAILURE")
@@ -408,6 +410,10 @@ func handle_response(category: String, intent: String = "", deliberate: bool = f
     entry["unclear_count"]=responses.unclear_count
     entry["technical_count"]=responses.technical_failure_count
     entry["next_node"]=str(frame.get("id",""))
+    mic.report("story_response", {
+        "category": category, "source": entry["decision"].get("source", ""),
+        "result": entry["decision"].get("result", ""), "next_passage": entry["next_node"],
+    })
     interpretation_log.append(entry)
     if interpretation_log.size()>200:interpretation_log.pop_front()
     if log_interpretations:

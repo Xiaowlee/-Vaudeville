@@ -1,4 +1,23 @@
 extends Control
+
+const Report = preload("res://Script/playtest_report.gd")
+@export var show_input_meter := false
+var input_level := 0.0
+var input_capture: AudioEffectCapture
+var restore_input_device_on_exit := true
+var report_context := "Gameplay"
+var report_passage := ""
+
+func report(action: String, details: Dictionary = {}) -> void:
+	details["context"] = report_context
+	details["passage"] = report_passage
+	Report.record(action, details)
+
+func fail(detail: String, reason: String) -> void:
+	status.text = detail
+	report("speech_failed", {"reason": reason})
+	technical_failure.emit(detail)
+
 signal transcript_ready(words: String)
 signal technical_failure(detail: String)
 ## Local desktop speech recognition used by the main game.
@@ -30,12 +49,16 @@ func _ready() -> void:
 	$Layout/Start.pressed.connect(start_recording)
 	$Layout/Finish.pressed.connect(finish_recording)
 	$Layout/Fixture.pressed.connect(func(): transcribe(ProjectSettings.globalize_path("res://.local-speech/jfk.wav")))
+	bus_name += str(get_instance_id())
 	AudioServer.add_bus()
 	var index := AudioServer.bus_count - 1
 	AudioServer.set_bus_name(index, bus_name)
 	recorder = AudioEffectRecord.new()
 	recorder.format = AudioStreamWAV.FORMAT_16_BITS
 	AudioServer.add_bus_effect(index, recorder)
+	if show_input_meter:
+		input_capture = AudioEffectCapture.new()
+		AudioServer.add_bus_effect(index, input_capture)
 	AudioServer.set_bus_mute(index, true)
 	microphone = AudioStreamPlayer.new()
 	microphone.stream = AudioStreamMicrophone.new()
@@ -52,14 +75,18 @@ func set_controls(busy: bool) -> void:
 
 func start_recording() -> void:
 	if recording or pid > 0: return
-	if not FileAccess.file_exists(engine_path) or not FileAccess.file_exists(model_path):
-		status.text = "Engine or model missing. Check this scene's Inspector paths."
-		technical_failure.emit(status.text)
+	var has_engine := FileAccess.file_exists(engine_path)
+	var has_model := FileAccess.file_exists(model_path)
+	if not has_engine or not has_model:
+		report("speech_dependencies", {"engine_present": has_engine, "model_present": has_model})
+		fail("Speech files are missing. Extract the entire Windows playtest ZIP before opening the game.", "missing_runtime")
 		return
 	recording = true
+	if input_capture: input_capture.clear_buffer()
 	started = Time.get_ticks_msec()
 	microphone.play()
 	recorder.set_recording_active(true)
+	report("recording_started")
 	transcript.text = ""
 	set_controls(true)
 
@@ -68,17 +95,17 @@ func finish_recording() -> void:
 	recorder.set_recording_active(false)
 	microphone.stop()
 	recording = false
+	input_level = 0.0
 	var audio := recorder.get_recording()
 	if audio == null or audio.data.is_empty():
-		status.text = "No audio captured. Check Windows microphone permission and selected device."
-		technical_failure.emit(status.text)
+		fail("No audio captured. Check your microphone permissions and selected device.", "no_audio_frames")
 		set_controls(false)
 		return
+	report("recording_finished", {"duration_ms": Time.get_ticks_msec() - started, "audio_bytes": audio.data.size()})
 	# whisper.cpp resamples supported WAV sample rates internally.
 	wav_path = ProjectSettings.globalize_path("user://whisper_attempt_%s.wav" % Time.get_ticks_usec())
 	if audio.save_to_wav(wav_path) != OK:
-		status.text = "Could not save temporary recording."
-		technical_failure.emit(status.text)
+		fail("Could not save temporary recording.", "audio_write_failed")
 		set_controls(false)
 		return
 	transcribe(wav_path)
@@ -87,8 +114,7 @@ func transcribe(path: String) -> void:
 	if pid > 0 or recording: return
 	transcript.text = ""
 	if not FileAccess.file_exists(path):
-		status.text = "Recording file missing. No transcription started."
-		technical_failure.emit(status.text)
+		fail("Recording file missing. No transcription started.", "audio_file_missing")
 		cleanup()
 		return
 	output_path = ProjectSettings.globalize_path("user://whisper_result_%s" % Time.get_ticks_usec())
@@ -99,14 +125,21 @@ func transcribe(path: String) -> void:
 	started = Time.get_ticks_msec()
 	status.text = "Transcribing locally..."
 	set_controls(true)
+	if pid > 0: report("recognition_started")
 	if pid <= 0:
-		status.text = "Could not start Whisper. Check engine path in Inspector."
-		technical_failure.emit(status.text)
+		fail("Speech recognition could not start. Copy a playtest report from Settings.", "engine_launch_failed")
 		cleanup()
 
 func _process(_delta: float) -> void:
 	var seconds := (Time.get_ticks_msec() - started) / 1000.0
 	if recording:
+		if input_capture:
+			var frames := input_capture.get_frames_available()
+			if frames > 0:
+				var peak := 0.0
+				for sample in input_capture.get_buffer(frames):
+					peak = maxf(peak, maxf(absf(sample.x), absf(sample.y)))
+				input_level = clampf((linear_to_db(maxf(peak, 0.00001)) + 60.0) / 60.0, 0, 1)
 		status.text = "Recording %.1f seconds. Click Finish when done." % seconds
 		if seconds >= maximum_recording_seconds: finish_recording()
 	elif pid > 0:
@@ -115,16 +148,16 @@ func _process(_delta: float) -> void:
 				transcript.text = FileAccess.get_file_as_string(output_path + ".txt").strip_edges()
 				status.text = "Result in %.2f seconds after Finish. Compare the words below with what you said." % seconds
 			else:
-				status.text = "Whisper ended without a result. Check Godot Output and model/engine paths."
-				technical_failure.emit(status.text)
+				fail("Speech recognition exited without a result. Copy a playtest report from Settings.", "engine_no_result")
 			pid = -1
 			cleanup()
-			if status.text.begins_with("Result"):transcript_ready.emit(transcript.text)
+			if status.text.begins_with("Result"):
+				report("recognition_finished", {"has_words": not transcript.text.is_empty(), "duration_ms": roundi(seconds * 1000)})
+				transcript_ready.emit(transcript.text)
 		elif seconds > transcription_timeout_seconds:
 			OS.kill(pid)
 			pid = -1
-			status.text = "Transcription timed out. Try a shorter recording."
-			technical_failure.emit(status.text)
+			fail("Transcription timed out. Try a shorter recording.", "recognition_timeout")
 			cleanup()
 
 func cleanup() -> void:
@@ -137,7 +170,8 @@ func _exit_tree() -> void:
 	if pid > 0: OS.kill(pid)
 	if recorder: recorder.set_recording_active(false)
 	if microphone: microphone.stop()
-	AudioServer.input_device = previous_device
+	if restore_input_device_on_exit:
+		AudioServer.input_device = previous_device
 	var index := AudioServer.get_bus_index(bus_name)
 	if index >= 0: AudioServer.remove_bus(index)
 	for path in [wav_path, output_path + ".txt"]:
@@ -154,6 +188,7 @@ func cancel_recording() -> void:
 	if pid>0:OS.kill(pid)
 	pid=-1
 	recording=false
+	input_level=0.0
 	recorder.set_recording_active(false)
 	microphone.stop()
 	cleanup()

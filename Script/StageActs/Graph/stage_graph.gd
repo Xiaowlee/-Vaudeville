@@ -156,17 +156,19 @@ func _process(delta):
         if actors.get_node("Actor1").visible:actors.get_node("Actor1").flip_to_pose("Actor1Listening")
         _phase("ON LISTEN")
     if runtime.ai_busy:_button("Understanding…",false)
-    elif runtime.mic.recording:_button("Finish speaking / X",true)
+    elif runtime.mic.recording:_button("Recording… Press X to finish",true)
     elif runtime.mic.pid>0:_button("Recognising…",false)
     elif not runtime.fallback_reply.is_empty() and runtime.fallback_reply!=fallback_seen:
         fallback_seen=runtime.fallback_reply
         _show_fallback(fallback_seen);state="PRESENTING"
     elif runtime.waiting and runtime.responses.mic_check_pending:_button("Retry microphone / X · Continue without speech / Space",true)
-    elif runtime.waiting:_button("Speak / X",true)
+    elif runtime.waiting:_button("Your turn · Press X to start speaking",true)
     else:_button("Continue / Space",not runtime.routes.is_empty())
 func _present():
     _cancel_transition()
     section=str(runtime.frame.get("id",""))
+    runtime.mic.report_passage = section
+    preload("res://Script/playtest_report.gd").record("passage_opened", {"passage": section})
     used_visual_cues.clear();played_voice_keys.clear()
     view.current_visual_state["cut_in"]={"action":"hide"}
     view.apply_graph_visuals(view.current_visual_state)
@@ -268,6 +270,13 @@ func _show_fallback(words: String):
     ui.set_speaker(speaker)
     _phone_presentation("Speaking" if speaker=="Stage Manager" else "", speaker=="Stage Manager", true)
 func _button(words: String, enabled: bool):ui.set_prompt(words,enabled)
+func speak_input():
+    preload("res://Script/playtest_report.gd").record("speak_pressed", {
+        "passage": section, "state": state, "player_turn": runtime.waiting,
+    })
+    if runtime.waiting:
+        graph_input()
+
 func graph_input():
     if ui.overlay_open() or opening or state!="READY" or runtime.ai_busy:return
     if runtime.waiting:

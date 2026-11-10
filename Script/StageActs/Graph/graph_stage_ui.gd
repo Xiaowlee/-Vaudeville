@@ -124,7 +124,7 @@ func _input(event):
         else:controller.skip_dialogue()
         get_viewport().set_input_as_handled()
     elif event.keycode==KEY_X:
-        controller.graph_input();get_viewport().set_input_as_handled()
+        controller.speak_input();get_viewport().set_input_as_handled()
     elif event.keycode==KEY_SPACE:
         controller.skip_dialogue();get_viewport().set_input_as_handled()
 

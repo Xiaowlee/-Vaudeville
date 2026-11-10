@@ -54,6 +54,15 @@
   user-select: none;
 }
 
+.reminder {
+  position: absolute;
+  margin: 0;
+  text-align: center;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  transform: translate(-50%, -50%);
+}
+
 .character {
   --curtain-top: calc(100cqh * var(--curtain-fraction));
   --opening-height: calc(100cqh * var(--opening-fraction));

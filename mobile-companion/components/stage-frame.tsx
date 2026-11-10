@@ -10,6 +10,18 @@ import { StageManagerPuppet, type StampedPresentation } from "./stage-manager-pu
 
 const settings = stageFrameSettings;
 
+export type PhoneReminder = {
+  text: string;
+  background: string;
+  color: string;
+  x: number;
+  y: number;
+  width: number;
+  fontSize: number;
+  lineHeight: number;
+  layers: [number, number, number, number, number][];
+};
+
 function cssVars(): CSSProperties {
   const { bounds, sourceWidth, sourceHeight, railStrips, cardText, characterSourceSize } = settings;
   const opening = (bounds.bottom.y - bounds.curtain.bottom) / sourceHeight;
@@ -153,10 +165,12 @@ export function StageFrame({
   relay,
   cues,
   presentation = null,
+  reminder = null,
 }: {
   relay: StageRelayStatus;
   cues: StageChannels;
   presentation?: StampedPresentation | null;
+  reminder?: PhoneReminder | null;
 }) {
   const view = stageView(relay, cues);
   const prompt = cues.prompt && cues.prompt.text !== "" ? cues.prompt : null;
@@ -178,16 +192,32 @@ export function StageFrame({
     const observer = new ResizeObserver(fit);
     observer.observe(box);
     return () => observer.disconnect();
-  }, [copy]);
+  }, [copy, reminder]);
 
   return (
-    <main aria-label="Stage cues" className={styles.stage} data-stage-view={view} style={cssVars()}>
+    <main aria-label="Stage cues" className={styles.stage} data-stage-view={view} style={{ ...cssVars(), ...(reminder ? { background: reminder.background } : {}) }}>
       <div className={styles.stack}>
-        <img alt="" className={styles.layer} draggable={false} src={settings.assets.curtain} />
-        <img alt="" className={styles.layer} draggable={false} src={settings.assets.rails} />
-        <img alt="" className={styles.layer} draggable={false} src={settings.assets.bottom} />
-        <img alt="" className={styles.layer} draggable={false} src={settings.assets.top} />
-        <div className={styles.character}>
+        {(["curtain", "rails", "bottom", "top"] as const).map((name, index) => {
+          const art = reminder?.layers[index];
+          return <img key={name} alt="" className={styles.layer} draggable={false} src={settings.assets[name]} style={art ? {
+            inset: "auto",
+            left: art[0] * 100 + "%",
+            top: art[1] * 100 + "%",
+            width: art[2] * 100 + "%",
+            height: art[3] * 100 + "%",
+            opacity: art[4],
+          } : undefined} />;
+        })}
+        {reminder ? (
+          <p role="status" className={styles.reminder} style={{
+            left: `${reminder.x * 100}%`,
+            top: `${reminder.y * 100}%`,
+            width: `${reminder.width}%`,
+            fontSize: `${reminder.fontSize}cqw`,
+            lineHeight: reminder.lineHeight,
+            color: reminder.color,
+          }}>{reminder.text}</p>
+        ) : <div className={styles.character}>
           <StageManagerPuppet presentation={presentation}>
             <div aria-live="polite" className={styles.cardText} ref={cardRef}>
               {view === "cues" ? (
@@ -200,7 +230,7 @@ export function StageFrame({
               ) : null}
             </div>
           </StageManagerPuppet>
-        </div>
+        </div>}
       </div>
     </main>
   );

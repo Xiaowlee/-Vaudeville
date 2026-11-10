@@ -18,6 +18,9 @@ var acks: Dictionary = {}
 var acknowledged: bool:
     get: return acks.get("ifb", false)
     set(value): acks["ifb"] = value
+## Pairing screen is phone-only. Gameplay clears it when this room is handed over.
+@export var clear_phone_reminder_on_connect := false
+var phone_reminder: Variant
 var phone_connected := false
 var last_received_at := 0
 @export_range(3, 30, 1) var connection_timeout_seconds := 8.0
@@ -53,6 +56,8 @@ func send_presentation(expression: String, talking := false, dialogue_boundary :
     var message := {"kind":"stage_presentation", "talking":talking, "dialogueBoundary":dialogue_boundary}
     if not expression.is_empty(): message["expression"] = expression
     _send(message)
+func send_phone_reminder(style: Variant) -> void:
+    _send({"kind": "stage_phone_reminder", "style": style})
 func is_acknowledged(channel: String) -> bool:
     return acks.get(channel, false)
 func _process(_delta: float) -> void:
@@ -96,6 +101,8 @@ func _process(_delta: float) -> void:
         last_received_at = Time.get_ticks_msec()
         last_error = ""
         _send({"kind":"hello", "role":"game"})
+        if phone_reminder != null or clear_phone_reminder_on_connect:
+            send_phone_reminder(phone_reminder)
         for channel in pending: _send(pending[channel])
         keepalive_at = Time.get_ticks_msec() + int(keepalive_seconds * 1000)
     if Time.get_ticks_msec() >= keepalive_at:
@@ -109,7 +116,10 @@ func receive(message: Dictionary) -> void:
     if message.get("type", "") in ["speech_result", "speech_status", "speech_error"]:
         speech_received.emit(message)
     if message.get("kind") == "stage_phone_status":
-        phone_connected = message.get("connected", false)
+        var connected: bool = message.get("connected", false)
+        if connected != phone_connected:
+            preload("res://Script/playtest_report.gd").record("phone_status", {"connected": connected})
+        phone_connected = connected
         var acknowledged_ids: Array = message.get("acknowledged", [])
         for channel in pending:
             acks[channel] = phone_connected and acknowledged_ids.has(pending[channel].requestId)

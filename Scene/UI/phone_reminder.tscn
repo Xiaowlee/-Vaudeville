@@ -1,0 +1,66 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Script/phone_reminder.gd" id="Script"]
+[ext_resource type="FontFile" path="res://Font/InstrumentSerif-Regular.ttf" id="Font"]
+[ext_resource type="Texture2D" path="res://UI/PregameArt/curtain.png" id="curtain"]
+[ext_resource type="Texture2D" path="res://UI/PregameArt/rails.png" id="rails"]
+[ext_resource type="Texture2D" path="res://UI/PregameArt/bottom.png" id="bottom"]
+[ext_resource type="Texture2D" path="res://UI/PregameArt/top.png" id="top"]
+
+[node name="PhoneReminder" type="ColorRect"]
+offset_right = 540.0
+offset_bottom = 1200.0
+mouse_filter = 2
+color = Color(0.043137, 0.062745, 0.160784, 1)
+script = ExtResource("Script")
+
+[node name="Curtain" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+expand_mode = 1
+texture = ExtResource("curtain")
+
+[node name="Rails" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+expand_mode = 1
+texture = ExtResource("rails")
+
+[node name="Bottom" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+expand_mode = 1
+texture = ExtResource("bottom")
+
+[node name="Top" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+expand_mode = 1
+texture = ExtResource("top")
+
+[node name="Reminder" type="Label" parent="."]
+offset_left = 46.0
+offset_top = 500.0
+offset_right = 494.0
+offset_bottom = 748.0
+theme_override_fonts/font = ExtResource("Font")
+theme_override_font_sizes/font_size = 65
+theme_override_colors/font_color = Color(0.953, 0.902, 0.973, 1)
+text = "Keep this screen
+on while playing
+the game"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2

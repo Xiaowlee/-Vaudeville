@@ -15,7 +15,7 @@ import {
   type StageChannels,
 } from "../lib/stage-phone";
 import { createRelayClient, type RelayStatus } from "../lib/websocket";
-import { StageFrame } from "./stage-frame";
+import { StageFrame, type PhoneReminder } from "./stage-frame";
 import { phoneDisplayPresentation, PHONE_REACTIONS, type StagePresentationRequest } from "../lib/stage-presentation";
 import { stageFrameSettings } from "./stage-frame-settings";
 import type { StampedPresentation } from "./stage-manager-puppet";
@@ -24,6 +24,7 @@ export function StagePhoneClient() {
   const [audioReady, setAudioReady] = useState(false);
   const unlockSound = useRef<(() => void) | null>(null);
   const [relay, setRelay] = useState<RelayStatus>("connecting");
+  const [reminder, setReminder] = useState<PhoneReminder | null>(null);
   const [cues, setCues] = useState<StageChannels>(emptyStageChannels);
   const [presentation, setPresentation] = useState<StampedPresentation | null>({
     expression: "Default",
@@ -131,6 +132,10 @@ export function StagePhoneClient() {
         } catch {
           return;
         }
+        if (message && typeof message === "object" && "kind" in message && message.kind === "stage_phone_reminder" && "style" in message) {
+          setReminder(message.style as PhoneReminder | null);
+          return;
+        }
         const sound = parseStageSound(message);
         if (sound) {
           if (!lastIds.has(sound.requestId)) {
@@ -167,7 +172,7 @@ export function StagePhoneClient() {
   }, []);
 
   return <>
-    <StageFrame cues={cues} presentation={presentation} relay={relay} />
+    <StageFrame cues={cues} presentation={presentation} relay={relay} reminder={relay === "open" ? reminder : null} />
     {!audioReady && <button type="button" onClick={() => unlockSound.current?.()} style={{ position:"fixed", bottom:"max(12px, env(safe-area-inset-bottom))", right:12, zIndex:100, padding:"10px 16px", border:"1px solid #d7b9ef", borderRadius:8, background:"#21143c", color:"#fff", fontSize:16 }}>Enable phone sound</button>}
   </>;
 }

@@ -4,9 +4,9 @@
 
 [node name="DesktopMicrophoneSettings" type="Window" unique_id=937118890]
 oversampling_override = 1.0
-title = "Settings — microphone"
+title = "Settings"
 position = Vector2i(0, 36)
-size = Vector2i(700, 420)
+size = Vector2i(700, 515)
 visible = false
 exclusive = true
 script = ExtResource("1")
@@ -20,39 +20,61 @@ offset_top = 24.0
 offset_right = -24.0
 offset_bottom = -24.0
 
-[node name="Content" type="VBoxContainer" parent="Margin" unique_id=1192903726]
+[node name="Body" type="VBoxContainer" parent="Margin"]
 layout_mode = 2
+
+[node name="Scroll" type="ScrollContainer" parent="Margin/Body"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+follow_focus = true
+
+[node name="Content" type="VBoxContainer" parent="Margin/Body/Scroll" unique_id=1192903726]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 16
 
-[node name="Title" type="Label" parent="Margin/Content" unique_id=1375352897]
+[node name="Title" type="Label" parent="Margin/Body/Scroll/Content" unique_id=1375352897]
 layout_mode = 2
-text = "Choose your microphone"
+text = "Microphone and second screen"
 
-[node name="Devices" type="OptionButton" parent="Margin/Content" unique_id=1007163661]
+[node name="Devices" type="OptionButton" parent="Margin/Body/Scroll/Content" unique_id=1007163661]
 layout_mode = 2
 
-[node name="Refresh" type="Button" parent="Margin/Content" unique_id=2089213600]
+[node name="Refresh" type="Button" parent="Margin/Body/Scroll/Content" unique_id=2089213600]
 layout_mode = 2
 text = "Refresh microphones"
 
-[node name="Test" type="CheckButton" parent="Margin/Content" unique_id=610421277]
+[node name="Test" type="CheckButton" parent="Margin/Body/Scroll/Content" unique_id=610421277]
 layout_mode = 2
-text = "Test microphone input"
+text = "Check microphone level"
 
-[node name="Level" type="ProgressBar" parent="Margin/Content" unique_id=862561265]
+[node name="Level" type="ProgressBar" parent="Margin/Body/Scroll/Content" unique_id=862561265]
 layout_mode = 2
 show_percentage = false
 
-[node name="Status" type="Label" parent="Margin/Content" unique_id=1800098633]
+[node name="Status" type="Label" parent="Margin/Body/Scroll/Content" unique_id=1800098633]
 layout_mode = 2
 autowrap_mode = 2
 
-[node name="Help" type="Label" parent="Margin/Content" unique_id=1879923791]
+[node name="Help" type="Label" parent="Margin/Body/Scroll/Content" unique_id=1879923791]
 layout_mode = 2
-text = "No input? Check your system microphone permissions and mute switch.
-Playtest bypass: Ctrl+Enter (or Shift+Enter) skips to the first story route."
+text = "Practice: start the speech check, say a short sentence in English, then click Finish. In the show, press X when invited and X again when done. Speak into the computer microphone."
 autowrap_mode = 2
 
-[node name="Close" type="Button" parent="Margin/Content" unique_id=999996350]
+[node name="SpeechCheck" type="Button" parent="Margin/Body/Scroll/Content"]
+layout_mode = 2
+text = "Start speech check"
+
+[node name="Phone" type="Button" parent="Margin/Body/Scroll/Content"]
+visible = false
+layout_mode = 2
+text = "Connect phone"
+
+[node name="CopyReport" type="Button" parent="Margin/Body/Scroll/Content"]
+layout_mode = 2
+text = "Copy playtest report"
+
+[node name="Close" type="Button" parent="Margin/Body" unique_id=999996350]
 layout_mode = 2
 text = "Done"

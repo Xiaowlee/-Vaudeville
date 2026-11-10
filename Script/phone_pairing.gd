@@ -1,8 +1,14 @@
 extends Control
+signal panel_closed
 func _ready() -> void:
 	PhoneSession.changed.connect(_refresh)
 	$ConnectPhone.pressed.connect(show_panel)
-	$Card/Lines/Close.pressed.connect(func(): $Card.hide(); $ConnectPhone.grab_focus())
+	$Card/Lines/Close.pressed.connect(func():
+		$Card.hide()
+		panel_closed.emit()
+		if $ConnectPhone.is_visible_in_tree():
+			$ConnectPhone.grab_focus()
+	)
 	_refresh()
 func _refresh() -> void:
 	$Card/Lines/QR.texture = PhoneSession.qr
