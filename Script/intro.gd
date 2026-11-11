@@ -11,8 +11,6 @@ func _ready():
 	$PhonePairing.panel_closed.connect(settings.show_panel)
 	$Menu/Play.pressed.connect(_open)
 	$Menu/Settings.pressed.connect(func(): settings.show_panel())
-	$Menu/Developer.set_pressed_no_signal(bool(PhoneSession.get_meta("developer_mode",false)))
-	$Menu/Developer.toggled.connect(func(value):PhoneSession.set_meta("developer_mode",value))
 	$Menu/Quit.visible=not OS.has_feature("web")
 	$Menu/Quit.pressed.connect(func():get_tree().quit())
 	$Menu/Play.grab_focus()

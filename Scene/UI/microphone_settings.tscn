@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://dgv2puox2d00q"]
 
 [ext_resource type="Script" uid="uid://djs5piaskshxn" path="res://Script/microphone_settings.gd" id="1"]
+[ext_resource type="FontFile" uid="uid://ctskr61g8oa87" path="res://Font/InstrumentSerif-Regular.ttf" id="1_bwu86"]
+
+[ext_resource type="Script" path="res://Script/developer_unlock.gd" id="DeveloperUnlock"]
 
 [node name="DesktopMicrophoneSettings" type="Window" unique_id=937118890]
 oversampling_override = 1.0
@@ -9,7 +12,11 @@ position = Vector2i(0, 36)
 size = Vector2i(700, 515)
 visible = false
 exclusive = true
+theme_override_colors/title_color = Color(0.26418412, 0.48518562, 0.94384575, 1)
+theme_override_fonts/title_font = ExtResource("1_bwu86")
+theme_override_font_sizes/title_font_size = 31
 script = ExtResource("1")
+offer_phone_pairing = true
 
 [node name="Margin" type="MarginContainer" parent="." unique_id=960499006]
 anchors_preset = 15
@@ -20,14 +27,14 @@ offset_top = 24.0
 offset_right = -24.0
 offset_bottom = -24.0
 
-[node name="Body" type="VBoxContainer" parent="Margin"]
+[node name="Body" type="VBoxContainer" parent="Margin" unique_id=1397982816]
 layout_mode = 2
 
-[node name="Scroll" type="ScrollContainer" parent="Margin/Body"]
+[node name="Scroll" type="ScrollContainer" parent="Margin/Body" unique_id=424412999]
 layout_mode = 2
 size_flags_vertical = 3
-horizontal_scroll_mode = 0
 follow_focus = true
+horizontal_scroll_mode = 0
 
 [node name="Content" type="VBoxContainer" parent="Margin/Body/Scroll" unique_id=1192903726]
 layout_mode = 2
@@ -36,45 +43,63 @@ theme_override_constants/separation = 16
 
 [node name="Title" type="Label" parent="Margin/Body/Scroll/Content" unique_id=1375352897]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bwu86")
 text = "Microphone and second screen"
 
 [node name="Devices" type="OptionButton" parent="Margin/Body/Scroll/Content" unique_id=1007163661]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bwu86")
 
 [node name="Refresh" type="Button" parent="Margin/Body/Scroll/Content" unique_id=2089213600]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bwu86")
 text = "Refresh microphones"
 
 [node name="Test" type="CheckButton" parent="Margin/Body/Scroll/Content" unique_id=610421277]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bwu86")
 text = "Check microphone level"
 
 [node name="Level" type="ProgressBar" parent="Margin/Body/Scroll/Content" unique_id=862561265]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bwu86")
 show_percentage = false
 
 [node name="Status" type="Label" parent="Margin/Body/Scroll/Content" unique_id=1800098633]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bwu86")
 autowrap_mode = 2
 
 [node name="Help" type="Label" parent="Margin/Body/Scroll/Content" unique_id=1879923791]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bwu86")
 text = "Practice: start the speech check, say a short sentence in English, then click Finish. In the show, press X when invited and X again when done. Speak into the computer microphone."
 autowrap_mode = 2
 
-[node name="SpeechCheck" type="Button" parent="Margin/Body/Scroll/Content"]
+[node name="SpeechCheck" type="Button" parent="Margin/Body/Scroll/Content" unique_id=1718196973]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bwu86")
 text = "Start speech check"
 
-[node name="Phone" type="Button" parent="Margin/Body/Scroll/Content"]
+[node name="Phone" type="Button" parent="Margin/Body/Scroll/Content" unique_id=1251940748]
 visible = false
 layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bwu86")
 text = "Connect phone"
 
-[node name="CopyReport" type="Button" parent="Margin/Body/Scroll/Content"]
+[node name="CopyReport" type="Button" parent="Margin/Body/Scroll/Content" unique_id=2013022219]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bwu86")
 text = "Copy playtest report"
+
+[node name="Developer" type="CheckButton" parent="Margin/Body"]
+visible = false
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bwu86")
+text = "Developer mode"
+script = ExtResource("DeveloperUnlock")
 
 [node name="Close" type="Button" parent="Margin/Body" unique_id=999996350]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bwu86")
 text = "Done"

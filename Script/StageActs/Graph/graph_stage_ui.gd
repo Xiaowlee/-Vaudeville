@@ -1,5 +1,4 @@
 extends CanvasLayer
-@export var show_response_debug := false
 @onready var controller=get_node("../GameController")
 @onready var runtime=get_node("../StoryRuntime")
 @onready var view=get_node("../DialogueView")
@@ -9,9 +8,6 @@ var auto_advance := true
 var revealed_hold := 0.0
 var manual_advance := false
 var recorded_voice_active := false
-var transcript_anchor := Vector2.ZERO
-var transcript_offset := Vector2.ZERO
-var transcript_size := Vector2.ZERO
 var voice_end_mode := 1
 var voice_delay := 0.0
 var voice_volume_db := 0.0
@@ -21,6 +17,10 @@ var pending_speaker := ""
 var pending_text := ""
 var line_age := 0.0
 var developer_mode := false
+var developer_ui_open := false
+@onready var developer_ui_toggle: CheckButton = $Overlay/DeveloperUI
+@onready var developer_toggle = $Overlay/GameMenu/Options/Developer
+@onready var microphone_settings = get_node("../DesktopMicrophoneSettings")
 func _ready():
     # The shared pairing scene keeps its launcher for the main menu only.
     $Overlay/PhonePairing/ConnectPhone.hide()
@@ -42,22 +42,30 @@ func _ready():
     $Overlay/GameMenu/Options/MainMenu.pressed.connect(func():get_tree().change_scene_to_file("res://Scene/00_main_menu.tscn"))
     $Overlay/GameMenu/Options/Resume.pressed.connect(func():$Overlay/GameMenu.hide())
     $Overlay/Speak.pressed.connect(func():controller.graph_input())
-    $Overlay/Developer.toggled.connect(set_developer_mode)
+    $Overlay/GameMenu.visibility_changed.connect(developer_toggle.reset_access)
+    developer_toggle.toggled.connect(set_developer_mode)
+    developer_ui_toggle.toggled.connect(set_developer_ui)
+    microphone_settings.developer_toggle.toggled.connect(set_developer_mode)
+    runtime.get_node("Layout/Tools").hide()
     set_developer_mode(bool(PhoneSession.get_meta("developer_mode",false)))
 func set_developer_mode(value: bool):
     developer_mode=value
-    show_response_debug=value
     PhoneSession.set_meta("developer_mode",value)
-    $Overlay/Developer.set_pressed_no_signal(value)
-    runtime.visible=value
-    get_node("../FrameCutInLayer").visible=not value
-    view.visible=not value
-    $Overlay/ResponseCheck.visible=value
-    runtime.get_node("Layout/Tools").set_pressed_no_signal(value)
-    runtime.get_node("Layout/Typed").visible=value
-    runtime.get_node("Layout/RouteTest").visible=value
-    runtime.get_node("Layout/Jump").visible=value
-    runtime.get_node("Layout/Restart").visible=value
+    developer_toggle.set_pressed_no_signal(value)
+    microphone_settings.developer_toggle.set_pressed_no_signal(value)
+    developer_ui_toggle.visible = value
+    set_developer_ui(developer_ui_open)
+
+func set_developer_ui(value: bool) -> void:
+    developer_ui_open = developer_mode and value
+    developer_ui_toggle.set_pressed_no_signal(developer_ui_open)
+    runtime.visible = developer_ui_open
+    get_node("../FrameCutInLayer").visible = not developer_ui_open
+    view.visible = not developer_ui_open
+    $Overlay/ResponseCheck.visible = developer_ui_open
+    runtime.get_node("Layout/Tools").set_pressed_no_signal(developer_ui_open)
+    for path in ["Typed", "RouteTest", "Jump", "Restart"]:
+        runtime.get_node("Layout/" + path).visible = developer_ui_open
 func play_dialogue(words: String, stream: AudioStream, _actor_id := "", shown := true, _hide_when_done := false, wait_for_recording := false):
     stop_dialogue()
     recorded_voice_active=wait_for_recording and stream!=null
@@ -65,7 +73,9 @@ func play_dialogue(words: String, stream: AudioStream, _actor_id := "", shown :=
     content_shown=shown and not words.is_empty()
     line_age=0
     revealed_hold=0;manual_advance=false
-    $Overlay/Transcript.hide()
+    controller.transcript_words=""
+    controller.transcript_seconds_left=0.0
+    view.show_player_transcript("",false,false)
     $Voice.stream=stream
     if stream!=null:$Voice.play()
     if not shown:view.show_line("","",str(runtime.frame.get("id","")))
@@ -91,28 +101,25 @@ func set_prompt(words: String, enabled: bool):
     $Overlay/Speak.disabled=not enabled
     $Overlay/Speak.visible=not words.is_empty() and not runtime.route_kinds.is_empty()
 func show_transcript(words: String, shown: bool):
-    var label=$Overlay/Transcript
-    label.text=words
-    var player=get_node("../World/Performers/Player")
-    var zone=$Overlay/TranscriptZone if player.visible else $Overlay/PreShowTranscriptZone
-    label.position=zone.position
-    label.size=Vector2(zone.size.x,maxf(zone.size.y,label.get_minimum_size().y))
-    label.horizontal_alignment=HORIZONTAL_ALIGNMENT_LEFT if player.visible else HORIZONTAL_ALIGNMENT_CENTER
-    label.visible=shown and not words.is_empty()
+    view.show_player_transcript(words,shown,not controller.group_is_preshow())
 
 func _process(delta):
     runtime.size=get_viewport().get_visible_rect().size
     line_age+=delta
     if view.line_revealed() and not $Voice.playing and not overlay_open():revealed_hold+=delta
     if view.line_revealed() and not $Voice.playing:view.finish_talking()
-    if not developer_mode:return
+    if not developer_ui_open:return
     var data=runtime.last_response_debug
     var conversation=str(runtime.frame.get("conversation",runtime.frame.get("id","")))
     var count=" · Offscript %d/5 · Conversation %d/2" % [runtime.responses.offscript_total,runtime.responses.conversation_attempts.get(conversation,0)]
     $Overlay/ResponseCheck.text="AI is interpreting…" if runtime.ai_busy else (str(data.get("result",""))+" · "+str(data.get("outcome",""))+count)
 func _input(event):
     if not event is InputEventKey or not event.pressed or event.echo:return
+    if microphone_settings.visible:
+        return # The Settings window handles its own keyboard input.
     if overlay_open():
+        if $Overlay/GameMenu.visible:
+            developer_toggle.accept_code(event)
         if event.keycode==KEY_ESCAPE:
             $Overlay/GameMenu.hide()
             $Overlay/PhonePairing/Card.hide()

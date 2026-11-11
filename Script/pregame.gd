@@ -8,12 +8,19 @@ enum Step { VOICE, PHONE, QUOTE }
 @export_file("*.tscn") var menu_scene := "res://Scene/00_main_menu.tscn"
 @export_group("Transitions")
 @export_range(0.0, 3.0, 0.05) var fade_seconds := 0.4
-@export_range(0.0, 10.0, 0.05) var quote_reveal_seconds := 1.5
-@export_range(0.0, 30.0, 0.1) var quote_hold_seconds := 5.0
+@export_group("Quote Typing", "quote_")
+## Time to type the quote and author credit. Increase this to slow the typing. Set to 0 for instant text.
+@export_range(0.0, 15.0, 0.1, "or_greater", "suffix:s") var quote_typing_duration := 4.0
+## Reading pause after both the quote and author credit finish typing.
+@export_range(0.0, 30.0, 0.1, "suffix:s") var quote_hold_seconds := 5.0
 
 @export_group("Phone Reminder")
 ## Open this scene to edit and preview the real phone layout in 2D.
 @export var phone_reminder_scene: PackedScene = preload("res://Scene/UI/phone_reminder.tscn")
+
+@export_group("Developer Bypass")
+## Advance one pregame step in debug builds with Developer Mode enabled.
+@export var developer_skip_shortcut: Shortcut
 
 @onready var cover: ColorRect = $TransitionCover
 @onready var quotation: Label = $Design/Quote/Quotation
@@ -29,6 +36,7 @@ var design_size: Vector2
 var transitioning := false
 var quote_run := 0
 var quote_reveal: Tween
+var developer_skipped_pairing := false
 
 func _ready() -> void:
 	design_size = canvas.size
@@ -60,6 +68,28 @@ func _ready() -> void:
 	await _fade(false, true)
 	transitioning = false
 
+func _input(event: InputEvent) -> void:
+	if not OS.is_debug_build() or not bool(PhoneSession.get_meta("developer_mode", false)):
+		return
+	if developer_skip_shortcut == null or not event.is_pressed() or not developer_skip_shortcut.matches_event(event):
+		return
+	get_viewport().set_input_as_handled()
+	if event.is_echo() or transitioning:
+		return
+	match step:
+		Step.VOICE:
+			_transition_to(Step.PHONE)
+		Step.PHONE:
+			developer_skipped_pairing = true
+			_transition_to(Step.QUOTE)
+		Step.QUOTE:
+			if quote_reveal and quote_reveal.is_running():
+				quote_reveal.kill()
+			_leave_for(stage_scene)
+
+func _can_show_quote() -> bool:
+	return bridge.phone_connected or developer_skipped_pairing
+
 func _fit_design() -> void:
 	var factor := minf(size.x / design_size.x, size.y / design_size.y)
 	canvas.scale = Vector2.ONE * factor
@@ -83,12 +113,12 @@ func _transition_to(next_step: Step) -> void:
 	if quote_reveal and quote_reveal.is_running():
 		quote_reveal.kill()
 	await _fade(true)
-	if next_step == Step.QUOTE and not bridge.phone_connected:
+	if next_step == Step.QUOTE and not _can_show_quote():
 		next_step = Step.PHONE
 	_show_step(next_step)
 	await _fade(false)
 	transitioning = false
-	if step == Step.QUOTE and bridge.phone_connected:
+	if step == Step.QUOTE and _can_show_quote():
 		_play_quote(quote_run)
 
 func _show_step(next_step: Step) -> void:
@@ -103,6 +133,7 @@ func _show_step(next_step: Step) -> void:
 	Report.record("pregame_step", {"step": Step.keys()[step]})
 	match step:
 		Step.VOICE:
+			developer_skipped_pairing = false
 			voice.get_node("Devices").grab_focus()
 		Step.PHONE:
 			PhoneSession.ensure_session()
@@ -113,11 +144,14 @@ func _show_step(next_step: Step) -> void:
 
 func _play_quote(run: int) -> void:
 	quote_reveal = create_tween()
-	quote_reveal.tween_property(quotation, "visible_ratio", 1.0, quote_reveal_seconds * 0.85)
-	quote_reveal.tween_property(author, "visible_ratio", 1.0, quote_reveal_seconds * 0.15)
+	var quote_characters := quotation.get_total_character_count()
+	var total_characters := quote_characters + author.get_total_character_count()
+	var quote_duration := quote_typing_duration * float(quote_characters) / maxi(total_characters, 1)
+	quote_reveal.tween_property(quotation, "visible_ratio", 1.0, quote_duration)
+	quote_reveal.tween_property(author, "visible_ratio", 1.0, quote_typing_duration - quote_duration)
 	quote_reveal.tween_interval(quote_hold_seconds)
 	await quote_reveal.finished
-	if run == quote_run and bridge.phone_connected:
+	if run == quote_run and _can_show_quote():
 		_leave_for(stage_scene)
 
 func _check_voice() -> void:
@@ -159,7 +193,7 @@ func _process(_delta: float) -> void:
 		Step.PHONE:
 			_refresh_phone()
 		Step.QUOTE:
-			if not bridge.phone_connected:
+			if not _can_show_quote():
 				_transition_to(Step.PHONE)
 
 func _back() -> void:
@@ -182,7 +216,7 @@ func _leave_for(path: String) -> void:
 		return
 	transitioning = true
 	await _fade(true)
-	if step == Step.QUOTE and not bridge.phone_connected:
+	if step == Step.QUOTE and not _can_show_quote():
 		_show_step(Step.PHONE)
 		await _fade(false)
 		transitioning = false

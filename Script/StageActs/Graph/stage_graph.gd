@@ -24,6 +24,8 @@ var voice_stream_cache: Dictionary={}
 @export_group("Speech and presentation")
 @export_range(0,3,.05) var response_delay := 0.0
 @export var show_player_transcript := true
+@export_range(0.5,15,0.5) var transcript_hold_seconds := 5.0
+@export_range(0.1,1,0.05) var transcript_dot_seconds := 0.35
 @export_range(80,300,10) var dialogue_page_characters := 180
 @onready var runtime=get_node("../StoryRuntime")
 @onready var ui=get_node("../StageUI")
@@ -288,13 +290,13 @@ func skip_dialogue():
     elif state=="READY" and runtime.responses.mic_check_pending:runtime.continue_after_mic_check()
     elif state=="READY" and not runtime.waiting:runtime._continue()
 func _transcript_completed(words: String):
-    transcript_words=words;transcript_seconds_left=5.0
+    transcript_words=words;transcript_seconds_left=transcript_hold_seconds
 func _update_transcript(delta):
     transcript_seconds_left=maxf(0,transcript_seconds_left-delta)
     if not show_player_transcript:ui.show_transcript("",false);return
     if runtime.mic.recording:transcript_words="";transcript_seconds_left=0;ui.show_transcript("",false)
     elif runtime.mic.pid>0:
-        transcript_loading_elapsed+=delta;ui.show_transcript(".".repeat(1+int(transcript_loading_elapsed/.35)%3),true)
+        transcript_loading_elapsed+=delta;ui.show_transcript(".".repeat(1+int(transcript_loading_elapsed/maxf(transcript_dot_seconds,0.1))%3),true)
     else:ui.show_transcript(transcript_words,transcript_seconds_left>0)
 func _publish_cue():
     if not runtime.cue.is_empty():_send_phone(runtime.cue)
@@ -390,7 +392,7 @@ func _prepare_curtain():
 func _update_curtain():
     var layer=get_node_or_null("../CurtainLayer")
     if layer==null:return
-    layer.visible=curtain_enabled and curtain_left!=null and curtain_openness<0.999 and not ui.developer_mode
+    layer.visible=curtain_enabled and curtain_left!=null and curtain_openness<0.999 and not ui.developer_ui_open
     var size=get_viewport().get_visible_rect().size
     layer.transform=get_viewport().get_canvas_transform().affine_inverse()
     layer.get_node("Curtain").size=size

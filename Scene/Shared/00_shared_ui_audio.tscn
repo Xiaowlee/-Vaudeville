@@ -1,9 +1,12 @@
-[gd_scene load_steps=3 format=3]
-[ext_resource type="Script" path="res://Script/ui_audio.gd" id="Script"]
-[ext_resource type="AudioStream" path="res://Sound/clicksoundeffect.mp3" id="Click"]
-[node name="UIAudio" type="AudioStreamPlayer"]
-script = ExtResource("Script")
+[gd_scene format=3 uid="uid://bowh355451myi"]
+
+[ext_resource type="AudioStream" uid="uid://char0b0tuqv04" path="res://Sound/clicksoundeffect.mp3" id="Click"]
+[ext_resource type="Script" uid="uid://bh0w2sraaw2m5" path="res://Script/ui_audio.gd" id="Script"]
+
+[node name="UIAudio" type="AudioStreamPlayer" unique_id=556517081]
 stream = ExtResource("Click")
 volume_db = -12.0
+script = ExtResource("Script")
 
-[node name="Music" type="AudioStreamPlayer" parent="."]
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=2069373675]
+volume_db = 2.063

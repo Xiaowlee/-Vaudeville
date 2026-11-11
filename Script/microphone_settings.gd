@@ -11,6 +11,7 @@ var player: AudioStreamPlayer
 var bus := "MicrophoneSettingsTest"
 @onready var devices = $Margin/Body/Scroll/Content/Devices
 @onready var status = $Margin/Body/Scroll/Content/Status
+@onready var developer_toggle = $Margin/Body/Developer
 static func apply_saved() -> String:
     var config=ConfigFile.new()
     config.load(CONFIG)
@@ -19,6 +20,7 @@ static func apply_saved() -> String:
     AudioServer.input_device=preferred if preferred in available else "Default"
     return "" if preferred in available else "Saved microphone is disconnected. Using the system default."
 func _ready():
+    visibility_changed.connect(developer_toggle.reset_access)
     close_requested.connect(close_panel)
     $Margin/Body/Close.pressed.connect(close_panel)
     $Margin/Body/Scroll/Content/Refresh.pressed.connect(refresh)
@@ -35,6 +37,10 @@ func _ready():
         if not speech_check_busy():
             status.text = "Playtest report copied."
     )
+func _input(event: InputEvent) -> void:
+    if visible:
+        developer_toggle.accept_code(event)
+
 func show_panel():
     status.text = apply_saved()
     refresh()

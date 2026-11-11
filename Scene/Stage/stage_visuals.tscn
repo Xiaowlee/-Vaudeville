@@ -13,7 +13,7 @@
 [sub_resource type="Theme" id="Theme"]
 default_font = ExtResource("Font")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_d75pr"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_1s7fh"]
 atlas = ExtResource("7_1s7fh")
 region = Rect2(12.5, 5, 27, 20.16)
 
@@ -220,6 +220,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 color = Color(0.81, 0.79, 0.9, 1)
 
@@ -235,7 +237,7 @@ offset_bottom = 1.410553
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = SubResource("AtlasTexture_d75pr")
+texture = SubResource("AtlasTexture_1s7fh")
 expand_mode = 1
 stretch_mode = 6
 

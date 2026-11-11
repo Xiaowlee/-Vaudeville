@@ -19,6 +19,12 @@ var excerpt := 0
 @export_enum("Automatic", "Left", "Right", "Above", "Below") var preferred_placement := 0
 @export_storage var smart_box_size := Vector2(0.30,0.25)
 @export_range(0,100,1) var character_gap := 12.0
+## Window fractions; alternate widths stay compact when the authored zone is obstructed.
+@export var smart_safe_area := Rect2(0.035,0.05,0.93,0.88)
+@export_range(0.15,0.4,0.01) var smart_min_width := 0.20
+@export_range(0.2,0.45,0.01) var smart_max_width := 0.32
+## Only reduce type when no clear space fits at the authored size.
+@export_range(0.65,1,0.05) var minimum_reading_scale := 0.75
 ## Uses the existing grey puppet as a third occupancy stand-in, not new Actor 2 artwork.
 @export var show_third_character := false
 @export_group("Readability")
@@ -103,6 +109,7 @@ var last_side := 1
 var backing: ColorRect
 var placement_key := ""
 var cached_smart_box := Rect2()
+var cached_reading_px := 0
 var last_preview_page := -1
 var soft_backing: ColorRect
 var last_reading_rect := Rect2()
@@ -124,6 +131,10 @@ var paragraph_labels: Array[RichTextLabel]=[]
 var name_tag: ColorRect
 var text_effect: RichTextEffect
 var dialogue_elapsed := 0.0
+# Temporary player words use the same layout, without changing the story or lighting.
+var player_transcript: Dictionary = {}
+var transcript_elapsed := 0.0
+var backing_layer: Node2D
 var animation_key := ""
 var trial_camera: Camera2D
 var camera_zoom := 1.0
@@ -147,11 +158,15 @@ func _ready():
         backing.mouse_filter=Control.MOUSE_FILTER_IGNORE
         stage.get_node("World").add_child(backing)
         stage.get_node("World").move_child(backing,stage.get_node("World/Performers").get_index())
+    backing_layer=Node2D.new()
+    backing_layer.name="DialogueBackings"
+    stage.get_node("World").add_child(backing_layer)
+    stage.get_node("World").move_child(backing_layer,stage.get_node("World/Performers").get_index())
+    backing.reparent(backing_layer)
     soft_backing=ColorRect.new()
     soft_backing.name="TextBacking"
     soft_backing.mouse_filter=Control.MOUSE_FILTER_IGNORE
-    root.add_child(soft_backing)
-    root.move_child(soft_backing,root.get_node("Text").get_index())
+    backing_layer.add_child(soft_backing)
     text_effect=preload("res://Script/Stage/puppet_text_effect.gd").new()
     text_effect.controller=weakref(self)
     paragraph_labels.append(root.get_node("Text/Words"))
@@ -213,6 +228,7 @@ func present():
     arrange()
 func _process(delta):
     if not (title_running and title_blocks_dialogue):dialogue_elapsed+=delta
+    transcript_elapsed+=delta
     arrange()
 func arrange():
     if pages.is_empty() or backing==null or soft_backing==null:return
@@ -222,12 +238,21 @@ func arrange():
 
     stage.performer_scale_multiplier=(1.0-dialogue_space_reserve if character_fit_mode==1 else 1.0)
     stage.apply_layout(size)
+    if trial_camera!=null and is_instance_valid(trial_camera) and trial_camera.is_inside_tree():
+        # Keep the camera view inside the stage, including during title pullback.
+        var half_view=size/(2.0*maxf(camera_zoom,1.0))
+        trial_camera.position=(camera_focus*size).clamp(half_view,size-half_view)
+        trial_camera.zoom=Vector2.ONE*camera_zoom
+        trial_camera.force_update_scroll()
+
+    backing_layer.visible=visible
+    backing_layer.transform=stage.get_node("World").get_global_transform_with_canvas().affine_inverse()
     layout_font_scale=minf(size.x/1280.0,size.y/720.0)
     layout_padding=text_padding*layout_font_scale
     layout_name_extra=int(round(name_extra_size*layout_font_scale))
-    var page=pages[page_index]
+    var page=display_page()
     var narration=page["speaker"].is_empty() or page["speaker"]=="Stage Manager"
-    var side=0 if last_side==0 else 1
+    var side=0 if page["speaker"]=="MC" else 1
     var placement=narrator_bottom if narration else ((beside_left if side==0 else beside_right) if layout_style==0 else (lower_left if side==0 else lower_right))
     var box=Rect2(size*placement.position,size*placement.size)
     if placement_source==0 and root.has_node("PlacementZones"):
@@ -244,7 +269,8 @@ func arrange():
     name_label.add_theme_color_override("font_color",text_color)
     words.add_theme_color_override("default_color",text_color)
     if speaker_font!=null:name_label.add_theme_font_override("font",speaker_font)
-    name_label.visible=not page["speaker"].is_empty()
+    name_label.text=display_name()
+    name_label.visible=not name_label.text.is_empty()
     for label in [name_label,words]:
         label.add_theme_color_override("font_outline_color",text_outline_color)
         label.add_theme_constant_override("outline_size",text_outline_size if text_outline_enabled else 0)
@@ -255,19 +281,40 @@ func arrange():
     if cut_in!=null:
         var obstacle=cut_in.get_obstacle()
         if obstacle.has_area():movement_envelopes.append(obstacle)
-    var key=str([page_index,size,layout_style,preferred_placement,dialogue_width,character_gap,show_third_character,character_fit_mode,dialogue_space_reserve,smart_placement,protect_reading_area,placement_source,box,px,text_padding,text_block_width,character_block_alignment,block_horizontal_alignment,line_spacing,paragraph_spacing,speaker_text_gap,get_body_font().get_instance_id(),speaker_font.get_instance_id() if speaker_font!=null else 0,actor_layout_signature()])
+    var control_layout=[]
+    for path in ["StageUI/Overlay/Settings","StageUI/Overlay/Speak","StageUI/Overlay/DeveloperUI"]:
+        var control=stage.get_node_or_null(path)
+        if control!=null and control.is_visible_in_tree():
+            control_layout.append(control.get_global_rect())
+            movement_envelopes.append(control.get_global_rect().grow(character_gap*layout_font_scale))
+    var key=str([smart_safe_area,smart_min_width,smart_max_width,minimum_reading_scale,motion_safety_margin,control_layout,page["speaker"],display_name(),page["text"],page_index,size,layout_style,preferred_placement,dialogue_width,character_gap,show_third_character,character_fit_mode,dialogue_space_reserve,smart_placement,protect_reading_area,placement_source,box,px,text_padding,text_block_width,character_block_alignment,block_horizontal_alignment,line_spacing,paragraph_spacing,speaker_text_gap,get_body_font().get_instance_id(),speaker_font.get_instance_id() if speaker_font!=null else 0,actor_layout_signature()])
+    var refit_reading=false
     if not narration:
+        if key==placement_key and cached_reading_px>0:
+            px=cached_reading_px
+            name_label.add_theme_font_size_override("font_size",px+layout_name_extra)
         var current_safe=not overlaps_characters(reading_rect(cached_smart_box,px,false))
         if key!=placement_key or (protect_reading_area and not current_safe and not used_readability_fallback):
+            refit_reading=true
             if layout_style==0 and smart_placement:
                 cached_smart_box=choose_smart_box(size,"Player" if page["speaker"]=="MC" else ("Actor2" if page["speaker"]=="Actor 2" else "Actor1"),box,px)
             else:cached_smart_box=box
             placement_key=key
         box=cached_smart_box
+    if refit_reading and smart_placement and protect_reading_area and overlaps_characters(reading_rect(box,px,false)):
+        var authored_px=maxi(10,int(round(text_size*layout_font_scale)))
+        for step in [0.9,0.8,minimum_reading_scale]:
+            px=maxi(10,int(round(authored_px*maxf(step,minimum_reading_scale))))
+            name_label.add_theme_font_size_override("font_size",px+layout_name_extra)
+            box=choose_smart_box(size,"Player" if page["speaker"]=="MC" else ("Actor2" if page["speaker"]=="Actor 2" else "Actor1"),box,px)
+            if not overlaps_characters(reading_rect(box,px,false)):break
+    if not narration:
+        cached_reading_px=px
+        cached_smart_box=box
     var needed=measure_text(maxf((box.size.x-layout_padding.x*2)*text_block_width,40),px)
     box.size.y=needed.x+needed.y+current_speaker_gap()+layout_padding.y*2
     if not narration and layout_style==0:
-        box.position.y=clampf(box.position.y,size.y*0.10,maxf(size.y*0.91-box.size.y,size.y*0.10))
+        box.position.y=clampf(box.position.y,size.y*smart_safe_area.position.y,maxf(size.y*smart_safe_area.end.y-box.size.y,size.y*smart_safe_area.position.y))
     resolved_box=box
     var inner=(box.size-layout_padding*2).max(Vector2(40,40))
     var block_width=maxf(inner.x*text_block_width,40)
@@ -289,9 +336,9 @@ func arrange():
     last_reading_rect=Rect2(content_position,Vector2(block_width,total_height))
     var overlap=overlaps_characters(last_reading_rect)
     used_readability_fallback=overlap
-    # Decorative backing remains below the puppets; only the safety backing is above them.
+    # Backings sit behind actors; reading placement protects words above them.
     backing.scale=Vector2.ONE
-    backing.position=box.position-stage.get_node("World").position
+    backing.position=box.position
     backing.size=box.size
     backing.color=panel_color
     backing.visible=show_panel and layout_style==1
@@ -316,15 +363,9 @@ func arrange():
     backing.visible=backing.visible and not blocked and not page["speaker"].is_empty()
     soft_backing.visible=soft_backing.visible and not blocked
     name_tag.visible=name_tag.visible and not blocked
-    if trial_camera!=null and is_instance_valid(trial_camera) and trial_camera.is_inside_tree():
-        # Keep the camera view inside the stage, including during title pullback.
-        var half_view=size/(2.0*maxf(camera_zoom,1.0))
-        trial_camera.position=(camera_focus*size).clamp(half_view,size-half_view)
-        trial_camera.zoom=Vector2.ONE*camera_zoom
-        trial_camera.force_update_scroll()
 
 func body_paragraphs() -> PackedStringArray:
-    return str(pages[page_index]["text"]).split("\n\n",false)
+    return str(display_page()["text"]).split("\n\n",false)
 
 func measure_paragraph(text: String, width: float, px: int) -> float:
     var font=get_body_font()
@@ -333,7 +374,7 @@ func measure_paragraph(text: String, width: float, px: int) -> float:
 
 func measure_text(width: float, px: int) -> Vector2:
     var name_label=root.get_node("Text/Name")
-    var name_height=0.0 if str(pages[page_index]["speaker"]).is_empty() else name_label.get_theme_font("font").get_multiline_string_size(name_label.text,HORIZONTAL_ALIGNMENT_LEFT,maxf(width-8*layout_font_scale,20),px+layout_name_extra).y+6*layout_font_scale
+    var name_height=0.0 if display_name().is_empty() else name_label.get_theme_font("font").get_multiline_string_size(name_label.text,HORIZONTAL_ALIGNMENT_LEFT,maxf(width-8*layout_font_scale,20),px+layout_name_extra).y+6*layout_font_scale
     var body_height=0.0
     var paragraphs=body_paragraphs()
     for paragraph in paragraphs:body_height+=measure_paragraph(paragraph,width,px)
@@ -344,7 +385,7 @@ func get_body_font() -> Font:
     return body_font if body_font!=null else root.get_theme_default_font()
 
 func current_speaker_gap() -> float:
-    return 0.0 if str(pages[page_index]["speaker"]).is_empty() else speaker_text_gap*layout_font_scale
+    return 0.0 if display_name().is_empty() else speaker_text_gap*layout_font_scale
 
 func arrange_paragraphs(width: float, px: int, start: Vector2):
     var paragraphs=body_paragraphs()
@@ -355,7 +396,7 @@ func arrange_paragraphs(width: float, px: int, start: Vector2):
         paragraph_labels.append(label)
     var y=start.y
     var base=0
-    var narration=str(pages[page_index]["speaker"]).is_empty() or pages[page_index]["speaker"]=="Stage Manager"
+    var narration=str(display_page()["speaker"]).is_empty() or display_page()["speaker"]=="Stage Manager"
     var alignment=narrator_text_alignment if narration else character_text_alignment
     for i in range(paragraph_labels.size()):
         var label=paragraph_labels[i]
@@ -414,7 +455,7 @@ func character_rect(actor: Node2D) -> Rect2:
     # Reserve both poses and the complete bounce/sway path. A width-collapse flip must not
     # temporarily convince the layout that the puppet has disappeared.
     var frames=art.sprite_frames
-    for frame in visible_poses(art):
+    for frame in visible_poses(actor):
         var texture=frames.get_frame_texture(art.animation,frame)
         var local_bounds=texture_bounds(texture)
         local_bounds.position+=art.offset-(texture.get_size()*0.5 if art.centered else Vector2.ZERO)
@@ -425,7 +466,7 @@ func character_rect(actor: Node2D) -> Rect2:
                 swing.y*=actor.character_size
                 var stable_card=Transform2D(card.rotation,card.position)
                 stable_card.y*=card.scale.y
-                var transform=stage.global_transform.affine_inverse()*actor.global_transform*swing*stable_card*art.transform
+                var transform=actor.get_global_transform_with_canvas()*swing*stable_card*art.transform
                 var bounds=transform*local_bounds
                 result=bounds if first else result.merge(bounds)
                 first=false
@@ -433,17 +474,17 @@ func character_rect(actor: Node2D) -> Rect2:
     return result.grow(motion_safety_margin+maxf(absf(travel.x),absf(travel.y))*2)
 
 func choose_smart_box(size: Vector2, speaker_name: String, authored: Rect2, px: int) -> Rect2:
-    var safe=Rect2(size*Vector2(0.035,0.12),size*Vector2(0.93,0.78))
+    var safe=Rect2(size*smart_safe_area.position,size*smart_safe_area.size)
     var speaker=stage.get_node("World/Performers").get_node(speaker_name)
     var bounds=character_rect(speaker)
     if not overlaps_characters(reading_rect(authored,px,false)):
         return authored
-    var widths=[authored.size.x if placement_source==0 else size.x*dialogue_width]
+    var widths=[authored.size.x if placement_source==0 else size.x*dialogue_width,size.x*smart_min_width,size.x*smart_max_width]
     var candidates: Array[Rect2]=[]
     for width in widths:
         var body_width=maxf((width-layout_padding.x*2)*text_block_width,40)
         var content=measure_text(body_width,px)
-        var height=content.x+speaker_text_gap*layout_font_scale+content.y+layout_padding.y*2
+        var height=content.x+current_speaker_gap()+content.y+layout_padding.y*2
         var dims=Vector2(width,height)
         var gap=character_gap*layout_font_scale
         var centre=bounds.get_center()
@@ -451,6 +492,16 @@ func choose_smart_box(size: Vector2, speaker_name: String, authored: Rect2, px: 
         # Try adjacent blank areas without ever expanding into a full-width banner.
         for x in [bounds.position.x-gap-width,bounds.end.x+gap,centre.x-width*0.5]:
             for y in [size.y*0.20,size.y*0.38,size.y*0.56]:positions.append(Vector2(x,y))
+        for x in [safe.position.x,size.x*0.5-width*0.5,safe.end.x-width]:
+            for y in [safe.position.y,safe.end.y-height]:positions.append(Vector2(x,y))
+        for obstacle in movement_envelopes:
+            positions.append(Vector2(obstacle.end.x+gap,authored.position.y))
+            positions.append(Vector2(obstacle.position.x-gap-width,authored.position.y))
+            positions.append(Vector2(authored.position.x,obstacle.position.y-gap-height))
+            positions.append(Vector2(authored.position.x,obstacle.end.y+gap))
+        for column in range(9):
+            for row in range(7):
+                positions.append(safe.position+Vector2(maxf(safe.size.x-width,0)*column/8.0,maxf(safe.size.y-height,0)*row/6.0))
         for position in positions:
             var clamped=position.clamp(safe.position,Vector2(maxf(safe.end.x-width,safe.position.x),maxf(safe.end.y-height,safe.position.y)))
             candidates.append(Rect2(clamped,dims))
@@ -462,8 +513,8 @@ func choose_smart_box(size: Vector2, speaker_name: String, authored: Rect2, px: 
         for obstacle in movement_envelopes:
             if read.intersects(obstacle):overlap+=read.intersection(obstacle).get_area()
         var centre=candidate.get_center()
-        var cost=centre.distance_to(bounds.get_center())
-        cost+=overlap*4.0/maxf(layout_font_scale,0.01)
+        var cost=centre.distance_to(bounds.get_center())+absf(candidate.size.x-authored.size.x)*0.5
+        cost+=(size.x*size.y if overlap>0 else 0.0)+overlap*4.0/maxf(layout_font_scale,0.01)
         var direction=1 if centre.x<bounds.position.x else (2 if centre.x>bounds.end.x else (3 if centre.y<bounds.get_center().y else 4))
         if preferred_placement>0 and direction!=preferred_placement:cost+=size.x*0.18
         if cost<best_cost:
@@ -472,18 +523,18 @@ func choose_smart_box(size: Vector2, speaker_name: String, authored: Rect2, px: 
     return best
 
 func actor_layout_signature() -> Array:
-    var result=[]
+    var result=[get_viewport().get_canvas_transform()]
     var cut_in=stage.get_node_or_null("FrameCutInLayer/FrameCutIn")
     if cut_in!=null:result.append(cut_in.get_obstacle())
     for actor in stage.get_node("World/Performers").get_children():
-        result.append([actor.position,actor.scale,actor.character_size,actor.get_node("Swing/Card/Art").position,actor.get_node("Swing/Card/Art").frame])
+        result.append([actor.sway_degrees,actor.bounce_height,actor.get_node("Swing/Card/Art").animation,actor.visible,actor.target_pose,actor.pending_pose,actor.position,actor.scale,actor.character_size,actor.get_node("Swing/Card/Art").position,actor.get_node("Swing/Card/Art").frame])
     return result
 
 func character_bands(actor: Node2D) -> Array[Rect2]:
     var art=actor.get_node("Swing/Card/Art")
     var result: Array[Rect2]=[]
     var frames=art.sprite_frames
-    for i in visible_poses(art):
+    for i in visible_poses(actor):
         var texture=frames.get_frame_texture(art.animation,i)
         var id=texture.get_instance_id()
         if not band_cache.has(id):
@@ -505,13 +556,14 @@ func character_bands(actor: Node2D) -> Array[Rect2]:
         for band in band_cache[id]:
             var rect=band
             rect.position+=art.offset-(texture.get_size()*0.5 if art.centered else Vector2.ZERO)
-            for angle in [-actor.sway_degrees,actor.sway_degrees]:
+            for angle in [-actor.sway_degrees,0,actor.sway_degrees]:
                 for lift in [0.0,-actor.bounce_height]:
                     var swing=Transform2D(deg_to_rad(angle),Vector2(0,lift))
                     swing.x*=actor.character_size
                     swing.y*=actor.character_size
                     var stable_card=Transform2D(actor.get_node("Swing/Card").rotation,actor.get_node("Swing/Card").position)
-                    var transform=stage.global_transform.affine_inverse()*actor.global_transform*swing*stable_card*art.transform
+                    stable_card.y*=actor.get_node("Swing/Card").scale.y
+                    var transform=actor.get_global_transform_with_canvas()*swing*stable_card*art.transform
                     result.append((transform*rect).grow((motion_safety_margin+character_gap*0.5)*layout_font_scale))
     return result
 
@@ -599,7 +651,27 @@ func text_reveal_speed() -> float:
     return float(active_text_settings.get("reveal",characters_per_second))
 
 var current_visual_state: Dictionary={}
+func display_page() -> Dictionary:
+    return player_transcript if not player_transcript.is_empty() else pages[page_index]
+
+func display_name() -> String:
+    var page=display_page()
+    if not page.get("show_name",true):return ""
+    return "Player" if page["speaker"]=="MC" else str(page["speaker"])
+
+func display_elapsed() -> float:
+    return transcript_elapsed if not player_transcript.is_empty() else dialogue_elapsed
+
+func show_player_transcript(words: String, shown: bool, show_name: bool):
+    var next={"speaker":"MC","text":words,"show_name":show_name} if shown and not words.is_empty() else {}
+    if next==player_transcript:return
+    player_transcript=next
+    transcript_elapsed=0.0
+    placement_key=""
+    arrange()
+
 func show_line(speaker: String, words: String, key: String):
+    player_transcript.clear()
     if speaker=="Stage Manager":
         words=words.strip_edges()
         words=words.trim_prefix("“").trim_suffix("”").trim_prefix("\"").trim_suffix("\"")
@@ -626,10 +698,13 @@ func visual_command(command: Dictionary, id: String):
     current_visual_state[str(value.get("kind",""))]=value
     apply_graph_visuals(current_visual_state)
 
-func visible_poses(art: AnimatedSprite2D) -> Array[int]:
-    # Protect the current and next flip pose, not every unused future costume/prop pose.
+func visible_poses(actor: Node2D) -> Array[int]:
+    var art=actor.get_node("Swing/Card/Art")
+    var poses: Array[int]=[art.frame]
     var count=art.sprite_frames.get_frame_count(art.animation)
-    return [art.frame,(art.frame+1)%maxi(count,1)]
+    for candidate in [actor.target_pose if actor.flipping else -1,actor.pending_pose]:
+        if candidate>=0 and candidate<count and not poses.has(candidate):poses.append(candidate)
+    return poses
 
 func cancel_backdrop_title():
     if title_tween!=null:title_tween.kill()

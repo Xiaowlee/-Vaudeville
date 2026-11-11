@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cr0l78w2vkqh0" path="res://Visual Asset/Stage/Characters/Actor1/Actor1Default1.png" id="2_o5ho1"]
 [ext_resource type="PackedScene" uid="uid://bfa6133lesemv" path="res://Scene/Shared/00_shared_chapter_audio.tscn" id="Audio"]
+[ext_resource type="Script" uid="uid://jaigrxw7v36o" path="res://Script/developer_unlock.gd" id="DeveloperUnlock"]
 [ext_resource type="Script" uid="uid://by3db817nw7fp" path="res://Script/StageActs/Graph/stage_graph.gd" id="Flow"]
 [ext_resource type="PackedScene" uid="uid://cubvhdryuidcv" path="res://UI/phone_pairing.tscn" id="Pairing"]
 [ext_resource type="PackedScene" path="res://Scene/Shared/00_shared_phone_cue_bridge.tscn" id="Phone"]
@@ -11,7 +12,7 @@
 [ext_resource type="Script" uid="uid://du10n3sopfdpq" path="res://Script/StageActs/Graph/graph_stage_ui.gd" id="UI"]
 [ext_resource type="PackedScene" uid="uid://ccgsnvuc71q0j" path="res://Scene/Stage/stage_visuals.tscn" id="Visuals"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_o5ho1"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ujtce"]
 atlas = ExtResource("2_o5ho1")
 region = Rect2(12.5, 5, 27, 20.16)
 
@@ -19,12 +20,6 @@ region = Rect2(12.5, 5, 27, 20.16)
 font_names = PackedStringArray("Segoe UI Symbol")
 subpixel_positioning = 0
 
-[sub_resource type="StyleBoxFlat" id="TranscriptBacking"]
-content_margin_left = 12.0
-content_margin_top = 8.0
-content_margin_right = 12.0
-content_margin_bottom = 8.0
-bg_color = Color(0.17, 0.045, 0.19, 0.92)
 
 [node name="MainStage" unique_id=1072549704 instance=ExtResource("Visuals")]
 
@@ -36,7 +31,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Picture" parent="FrameCutInLayer/FrameCutIn/Panel/Clip" parent_id_path=PackedInt32Array(1058458187) index="1" unique_id=1027879995]
-texture = SubResource("AtlasTexture_o5ho1")
+texture = SubResource("AtlasTexture_ujtce")
 
 [node name="StoryRuntime" parent="." index="4" unique_id=587513473 instance=ExtResource("Runtime")]
 visible = false
@@ -107,11 +102,17 @@ layout_mode = 2
 button_pressed = true
 text = "Auto-advance dialogue"
 
-[node name="MainMenu" type="Button" parent="StageUI/Overlay/GameMenu/Options" index="3" unique_id=1050269706]
+[node name="Developer" type="CheckButton" parent="StageUI/Overlay/GameMenu/Options" index="3" unique_id=56100268]
+visible = false
+layout_mode = 2
+text = "Developer mode"
+script = ExtResource("DeveloperUnlock")
+
+[node name="MainMenu" type="Button" parent="StageUI/Overlay/GameMenu/Options" index="4" unique_id=1050269706]
 layout_mode = 2
 text = "Return to main menu"
 
-[node name="Resume" type="Button" parent="StageUI/Overlay/GameMenu/Options" index="4" unique_id=56859932]
+[node name="Resume" type="Button" parent="StageUI/Overlay/GameMenu/Options" index="5" unique_id=56859932]
 layout_mode = 2
 text = "Resume game"
 
@@ -120,48 +121,19 @@ layout_mode = 1
 
 [node name="Speak" type="Button" parent="StageUI/Overlay" index="3" unique_id=1928939508]
 layout_mode = 0
-anchor_left = 0.3
-anchor_top = 1.0
-anchor_right = 0.7
-anchor_bottom = 1.0
-offset_top = -50.0
-offset_bottom = -12.0
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -350.0
+offset_top = 32.0
+offset_right = -112.0
+offset_bottom = 78.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 20
 text = "Speak / X"
 
-[node name="Developer" type="CheckButton" parent="StageUI/Overlay" index="4" unique_id=56100268]
-layout_mode = 0
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 18.0
-offset_top = -48.0
-offset_right = 220.0
-offset_bottom = -12.0
-theme_override_font_sizes/font_size = 16
-text = "Developer mode"
 
-[node name="PreShowTranscriptZone" type="Control" parent="StageUI/Overlay" index="5" unique_id=1169891787]
-anchors_preset = 0
-anchor_left = 0.24
-anchor_top = 0.7
-anchor_right = 0.76
-anchor_bottom = 0.79
-mouse_filter = 2
 
-[node name="TranscriptZone" type="Control" parent="StageUI/Overlay" index="6" unique_id=2032529537]
-anchors_preset = 0
-anchor_left = 0.04
-anchor_top = 0.22
-anchor_right = 0.32
-anchor_bottom = 0.44
-mouse_filter = 2
-
-[node name="Transcript" type="Label" parent="StageUI/Overlay" index="7" unique_id=305221833]
-layout_mode = 0
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("TranscriptBacking")
-autowrap_mode = 2
-
-[node name="ResponseCheck" type="Label" parent="StageUI/Overlay" index="8" unique_id=418761728]
+[node name="ResponseCheck" type="Label" parent="StageUI/Overlay" index="4" unique_id=418761728]
 layout_mode = 0
 anchor_left = 0.03
 anchor_top = 1.0
@@ -170,6 +142,17 @@ anchor_bottom = 1.0
 offset_top = -84.0
 theme_override_font_sizes/font_size = 16
 autowrap_mode = 2
+
+[node name="DeveloperUI" type="CheckButton" parent="StageUI/Overlay" index="5" unique_id=183640677]
+visible = false
+layout_mode = 0
+offset_left = 36.0
+offset_top = 32.0
+offset_right = 240.0
+offset_bottom = 78.0
+tooltip_text = "Show or hide the developer panel"
+theme_override_font_sizes/font_size = 20
+text = "Developer UI"
 
 [node name="GameController" type="Node" parent="." index="9" unique_id=1823261374]
 script = ExtResource("Flow")

@@ -82,11 +82,30 @@ func run():
             t.responses.technical_streak=0;t.responses.mic_check_pending=false
     var view=game.get_node("DialogueView")
     var stage_ui=game.get_node("StageUI")
+    var developer_ui_toggle: CheckButton = stage_ui.get_node("Overlay/DeveloperUI")
     stage_ui.set_developer_mode(false)
-    check(not t.visible and view.visible,"normal play hides developer controls")
+    check(not developer_ui_toggle.visible and not t.visible and view.visible,"normal play hides developer controls")
     stage_ui.set_developer_mode(true)
-    check(t.visible and not view.visible,"developer controls accessible")
+    check(developer_ui_toggle.visible and not developer_ui_toggle.button_pressed and not t.visible and view.visible,"Developer Mode starts with panel closed")
+    developer_ui_toggle.button_pressed = true
+    check(t.visible and not view.visible,"Developer UI toggle opens the panel")
+    developer_ui_toggle.button_pressed = false
+    check(stage_ui.developer_mode and not t.visible and view.visible,"closing panel keeps Developer Mode enabled")
+    var bypass := InputEventKey.new()
+    bypass.keycode = KEY_ENTER
+    bypass.ctrl_pressed = true
+    bypass.pressed = true
+    c.opening = false
+    c.state = "PRESENTING"
+    stage_ui.manual_advance = false
+    stage_ui._input(bypass)
+    check(stage_ui.manual_advance,"developer shortcut works with panel closed")
+    developer_ui_toggle.button_pressed = true
     stage_ui.set_developer_mode(false)
+    check(not developer_ui_toggle.visible and not t.visible and view.visible,"turning mode off closes and hides panel")
+    stage_ui.manual_advance = false
+    stage_ui._input(bypass)
+    check(not stage_ui.manual_advance,"turning mode off disables the bypass")
     check(game.get_node("World/Atmosphere").enabled and game.get_node("World/Atmosphere").outside_mask!=null,"supplied masked pattern configured")
     for name in ["Player","Actor1","Actor2","StageManager"]:
         var actor=game.get_node("World/Performers/"+name)
@@ -97,6 +116,28 @@ func run():
         game.apply_layout(Vector2(1280,800))
         check(actor.position==original+Vector2(0,-20),name+" authored position survives resizing")
         actor.position=original
+    # Player words share the authored MC renderer; they cannot create a second NPC box.
+    t.parser.start("A1_0_Begin")
+    view.show_line("Stage Manager","Shall we begin?","transcript-test")
+    var authored_time=view.dialogue_elapsed
+    stage_ui.show_transcript("No?",true)
+    check(view.display_page().speaker=="MC" and view.body_paragraphs()[0]=="No?","transcript uses MC text renderer")
+    check(not view.root.get_node("Text/Name").visible,"pre-show transcript has no name tag")
+    check(view.pages[0].text=="Shall we begin?" and view.dialogue_elapsed==authored_time,"transcript does not change story or speech timing")
+    check(not stage_ui.has_node("Overlay/Transcript"),"no duplicate transcript overlay")
+    t.parser.start("A2_1_Entrance")
+    stage_ui.show_transcript("I will enter from the left.",true)
+    check(view.root.get_node("Text/Name").visible,"show transcript uses normal MC name tag")
+    c.transcript_words="old words";c.transcript_seconds_left=5
+    stage_ui.play_dialogue("Next reply",null)
+    stage_ui.set_speaker("Actor 1")
+    check(view.player_transcript.is_empty() and c.transcript_seconds_left==0,"new NPC reply retires player words")
+    check(view.display_page().speaker=="Actor 1" and view.body_paragraphs()[0]=="Next reply","NPC renderer contains only NPC words")
+    stage_ui.show_transcript("This should disappear.",true)
+    c.transcript_words="This should disappear.";c.transcript_seconds_left=0.01
+    c._update_transcript(0.02)
+    check(view.player_transcript.is_empty(),"expired transcript disappears")
+    check(view.soft_backing.get_parent()==view.backing_layer,"gradient backing draws below actors")
     # A real linked transition must execute visual nodes, not bypass them via the frame signal.
     t.parser.start("A1_1_Once upon a time");t.waiting=true;t._choose(0,"continue",false)
     check(t.frame.get("visual_cues",[]).size()>0,"linked visual cue commands reach main story")
