@@ -2,7 +2,7 @@
 
 import { useLayoutEffect, useRef, type CSSProperties } from "react";
 import { limitCueDisplay } from "../lib/cue-display";
-import type { StageChannels, StageCue, StageRelayStatus, StageView } from "../lib/stage-phone";
+import type { StageChannels, StageCue, StageRelayStatus } from "../lib/stage-phone";
 import { stageView } from "../lib/stage-phone";
 import styles from "./stage-frame.module.css";
 import { stageFrameSettings } from "./stage-frame-settings";
@@ -68,54 +68,10 @@ function splitCuePieces(text: string): CuePiece[] {
 
 function WiggleCue({ text }: { text: string }) {
   if (!settings.cueWiggle.enabled) return text;
-  const words = splitCuePieces(text).filter((piece) => piece.kind === "word");
-  return (
-    <>
-      <span className={styles.cueLayout}>{text}</span>
-      <span aria-hidden="true" className={styles.cueMotionLayer}>
-        {words.map((word, step) => (
-          <span
-            key={step}
-            className={styles.wiggleMotion}
-            data-wiggle={String(step % 4)}
-            style={{ ["--wiggle-index" as string]: String(step) }}
-          >
-            {word.value}
-          </span>
-        ))}
-      </span>
-    </>
-  );
-}
-
-/** Park each held copy on the already-wrapped word. Runs when the cue or card size changes, not every frame. */
-function placeCueMotions(root: HTMLElement) {
-  if (!settings.cueWiggle.enabled) return;
-  const paragraphs = root.querySelectorAll(`.${styles.cueText}`);
-  paragraphs.forEach((paragraph) => {
-    const layout = paragraph.querySelector(`.${styles.cueLayout}`);
-    const layer = paragraph.querySelector(`.${styles.cueMotionLayer}`);
-    const textNode = layout?.firstChild;
-    if (!layer || !textNode || textNode.nodeType !== Node.TEXT_NODE) return;
-    const origin = (layer as HTMLElement).getBoundingClientRect();
-    const motions = layer.querySelectorAll(`.${styles.wiggleMotion}`);
-    const source = textNode.textContent ?? "";
-    const words = /\S+/g;
-    let wordIndex = 0;
-    for (const match of source.matchAll(words)) {
-      const motion = motions[wordIndex] as HTMLElement | undefined;
-      if (!motion) break;
-      const range = document.createRange();
-      range.setStart(textNode, match.index ?? 0);
-      range.setEnd(textNode, (match.index ?? 0) + match[0].length);
-      const rect = range.getClientRects()[0];
-      if (rect) {
-        motion.style.left = `${rect.left - origin.left}px`;
-        motion.style.top = `${rect.top - origin.top}px`;
-      }
-      wordIndex += 1;
-    }
-  });
+  return splitCuePieces(text).map((piece, step) => piece.kind === "space" ? piece.value : (
+    <span key={step} className={styles.wiggleMotion} data-wiggle={String(step % 4)}
+      style={{ ["--wiggle-index" as string]: String(step) }}>{piece.value}</span>
+  ));
 }
 
 function cueLabel(channel: "prompt" | "ifb", cue: StageCue): string | null {
@@ -137,12 +93,6 @@ function CueRegion({ channel, cue, showHeading }: { channel: "prompt" | "ifb"; c
     </section>
   );
 }
-
-const statusCopy: Record<Exclude<StageView, "cues">, string> = {
-  connecting: "Connecting",
-  waiting: "Waiting",
-  disconnected: "Disconnected",
-};
 
 function fits(box: HTMLElement) {
   return box.scrollHeight <= box.clientHeight + 1 && box.scrollWidth <= box.clientWidth + 1;
@@ -186,12 +136,14 @@ export function StageFrame({
     if (!box) return;
     const fit = () => {
       fitCardText(box);
-      placeCueMotions(box);
+
     };
     fit();
     const observer = new ResizeObserver(fit);
     observer.observe(box);
-    return () => observer.disconnect();
+    let alive = true;
+    void document.fonts.ready.then(() => { if (alive) fit(); });
+    return () => { alive = false; observer.disconnect(); };
   }, [copy, reminder]);
 
   return (
@@ -217,7 +169,7 @@ export function StageFrame({
             lineHeight: reminder.lineHeight,
             color: reminder.color,
           }}>{reminder.text}</p>
-        ) : <div className={styles.character} style={{ visibility: presentation?.managerVisible === false ? "hidden" : "visible", filter: view === "waiting" ? "brightness(0.55)" : undefined }}>
+        ) : view === "disconnected" || view === "connecting" ? null : <div className={styles.character} style={{ visibility: presentation?.managerVisible === false ? "hidden" : "visible", filter: view === "waiting" ? "brightness(0.55)" : undefined }}>
           <StageManagerPuppet presentation={presentation}>
             <div aria-live="polite" className={styles.cardText} ref={cardRef}>
               {view === "cues" ? (
@@ -225,14 +177,12 @@ export function StageFrame({
                   {prompt ? <CueRegion channel="prompt" cue={prompt} showHeading={both} /> : null}
                   {ifb ? <CueRegion channel="ifb" cue={ifb} showHeading /> : null}
                 </div>
-              ) : view === "connecting" || view === "disconnected" ? (
-                <p className={styles.status}>{statusCopy[view]}</p>
               ) : null}
             </div>
           </StageManagerPuppet>
         </div>}
       </div>
-      {(view === "disconnected" || view === "connecting") && <p role="status" className={styles.connectionNotice}>The Stage Manager is nowhere to be seen. Please check your connection.</p>}
+      {(view === "disconnected" || view === "connecting") && <p role="status" className={styles.connectionNotice}>The Stage Manager is nowhere to be found. Please check your connection again.</p>}
     </main>
   );
 }

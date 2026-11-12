@@ -260,6 +260,10 @@ allowed_variation_poses = PackedStringArray("MCDefault", "MCActing")
 pose_names = PackedStringArray("MCActing", "MCActing2", "MCConfused", "MCControl", "MCDefault", "MCSilly", "MCThreaten")
 pose_frames = SubResource("PlayerFrames")
 starting_pose = 4
+recording_bounce_enabled = null
+recording_bounce_height = null
+recording_bounce_threshold = null
+recording_bounce_response = null
 
 [node name="Swing" type="Node2D" parent="World/Performers/Player" unique_id=2034712551]
 
@@ -280,6 +284,10 @@ allowed_variation_poses = PackedStringArray("Actor1Default1")
 pose_names = PackedStringArray("Actor1Accept", "Actor1Default1", "Actor1Default2", "Actor1Disappoint", "Actor1Listening")
 pose_frames = SubResource("Actor1Frames")
 starting_pose = 1
+recording_bounce_enabled = null
+recording_bounce_height = null
+recording_bounce_threshold = null
+recording_bounce_response = null
 
 [node name="Swing" type="Node2D" parent="World/Performers/Actor1" unique_id=661272666]
 
@@ -299,6 +307,10 @@ hand_drawn_motion = true
 allowed_variation_poses = PackedStringArray("Intruder1", "Intruder2")
 pose_names = PackedStringArray("Intruder1", "Intruder2")
 pose_frames = SubResource("Actor2Frames")
+recording_bounce_enabled = null
+recording_bounce_height = null
+recording_bounce_threshold = null
+recording_bounce_response = null
 
 [node name="Swing" type="Node2D" parent="World/Performers/Actor2" unique_id=1684204475]
 
@@ -318,6 +330,10 @@ allowed_variation_poses = PackedStringArray("StageManager_Default", "StageManage
 pose_names = PackedStringArray("StageManager_Accept", "StageManager_Angry", "StageManager_Confused", "StageManager_Cue", "StageManager_Default", "StageManager_Disappointed", "StageManager_Menancing", "StageManager_Speaking", "StageManager_Speech", "StageManager_Unexpected", "StageManager_Waiting")
 pose_frames = SubResource("StageManagerFrames")
 starting_pose = 4
+recording_bounce_enabled = null
+recording_bounce_height = null
+recording_bounce_threshold = null
+recording_bounce_response = null
 
 [node name="Swing" type="Node2D" parent="World/Performers/StageManager" unique_id=1728079501]
 

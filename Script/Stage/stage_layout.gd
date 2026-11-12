@@ -50,14 +50,16 @@ func apply_layout(size: Vector2):
     var fit=minf(available.x/maxf(design_size.x,1),available.y/maxf(design_size.y,1))
     stage_rect=Rect2(Vector2.ZERO,available)
     $World.scale=Vector2.ONE
-    $World.position=available*0.5+reaction_offset
+    $World.position=available*0.5
+    # A tool-script hot reload may leave new runtime-only fields unset in an already-open editor scene.
+    if not Engine.is_editor_hint() and reaction_offset is Vector2:$World.position+=reaction_offset
     # Characters and floor share a uniform scale. Surrounding scenery follows
     # both screen edges independently, like left/right + top/bottom constraints.
     var edge_scale=available/design_size
     for layer in $World.get_children():
         if layer.name=="Performers":
             layer.scale=Vector2.ONE*fit*(performer_scale_multiplier if layer.name=="Performers" else 1.0)
-        elif layer.name not in ["Backdrop", "Lighting"]:
+        elif layer.name not in ["Backdrop", "Lighting", "ReactionLayer"]:
             layer.scale=edge_scale
     $World/Backdrop.visible=false
     queue_redraw()

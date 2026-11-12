@@ -24,6 +24,8 @@ var voice_stream_cache: Dictionary={}
 @export_group("Speech and presentation")
 @export_range(0,3,.05) var response_delay := 0.0
 @export var show_player_transcript := true
+## Keep a private stage instruction through the following dialogue until replaced or the act changes.
+@export var keep_private_cue_until_replaced := true
 @export_range(0.5,15,0.5) var transcript_hold_seconds := 5.0
 @export_range(0.1,1,0.05) var transcript_dot_seconds := 0.35
 @export_range(80,300,10) var dialogue_page_characters := 180
@@ -37,8 +39,8 @@ var voice_stream_cache: Dictionary={}
 @export var reaction_boards_enabled := true
 @export var question_board: Texture2D=preload("res://Visual Asset/Stage/QuestionBoard.png")
 @export var takeover_board: Texture2D=preload("res://Visual Asset/Stage/XBoard.png")
-@export_range(0.5,6,0.1) var question_board_seconds := 2.5
-@export_range(0.5,6,0.1) var takeover_board_seconds := 3.0
+@export_range(0.5,6,0.1) var question_board_seconds := 5.0
+@export_range(0.5,6,0.1) var takeover_board_seconds := 5.0
 ## Fractions of the visible window; travel is intentionally separate from dialogue placement.
 @export var board_start := Vector2(-0.22,0.08)
 @export var board_end := Vector2(1.05,0.08)
@@ -46,12 +48,14 @@ var voice_stream_cache: Dictionary={}
 @export_range(0,15,0.5) var board_bob_pixels := 4.0
 @export_range(0,8,0.1) var board_sway_degrees := 1.5
 @export_group("Response motion")
-@export_range(0,15,0.5) var response_shake_pixels := 3.0
+@export_range(0,15,0.5) var response_shake_pixels := 7.0
 @export_range(0.1,2,0.05) var response_shake_seconds := 0.4
 var board_elapsed := -1.0
 var board_duration := 2.5
 var shake_elapsed := 100.0
-@onready var reaction_board=get_node("../ReactionLayer/Board")
+@export_range(0.5,8,0.1) var takeover_reaction_seconds := 3.0
+var takeover_reaction_left := 0.0
+@onready var reaction_board=get_node("../World/ReactionLayer/Board")
 signal production_event(passage: String, phase: String, event: Dictionary)
 var production_log: Array=[]
 var semantic_events: Array=[]
@@ -85,7 +89,6 @@ var phone_sound_state := ""
 var menacing_sound_played := false
 func _ready():
     reaction_board.hide()
-    runtime.takeover_started.connect(_takeover_feedback)
     _load_voice_catalog()
     UIAudio.start_playthrough()
     for actor in actors.get_children():actor.flip_started.connect(func():UIAudio.stage_effect(UIAudio.flip_sound,UIAudio.flip_volume_db))
@@ -204,8 +207,10 @@ func _present():
     fallback_lines.clear()
     state="PRESENTING";fallback_seen="";semantic_index=0;current_content={}
     runtime.accepting_speech=false
-    phone.cancel("prompt");phone.cancel("ifb");phone_preview=""
     var group=str(runtime.frame.get("group",""))
+    var retain_private=keep_private_cue_until_replaced and group==last_group and str(runtime.frame.get("cue","")).is_empty() and not runtime.frame.get("routes",[]).is_empty()
+    phone.cancel("prompt")
+    if not retain_private:phone.cancel("ifb");phone_preview=""
     active_settings=presentation.get(section)
     semantic_events=[]
     for index in runtime.frame.get("events",[]).size():
@@ -252,6 +257,9 @@ func _pages(words: String) -> PackedStringArray:
     if not current.is_empty():result.append(current)
     return result
 func _next_content():
+    if runtime.frame.get("is_takeover",false) and not used_visual_cues.has("takeover_feedback"):
+        used_visual_cues["takeover_feedback"]=true
+        _takeover_feedback()
     while semantic_index<semantic_events.size():
         var event: Dictionary=semantic_events[semantic_index];semantic_index+=1
         for i in runtime.frame.get("visual_cues",[]).size():
@@ -351,6 +359,7 @@ func _send_phone(words: String):
     var cue_type := "PRIVATE" if channel == "ifb" else "PROMPTER"
     phone.send_text(channel, words, "", cue_type, "Cue", false, true)
 func _phone_presentation(expression: String, talking := false, dialogue_boundary := true) -> void:
+    if takeover_reaction_left>0 and expression!="Angry":return
     if is_instance_valid(phone):
         phone.send_presentation(expression, talking, dialogue_boundary, not group_is_preshow())
         var desired="tea" if expression=="Waiting" else ""
@@ -536,11 +545,19 @@ func show_reaction_board(texture: Texture2D, seconds: float):
     reaction_board.show()
 
 func _takeover_feedback():
+    takeover_reaction_left=takeover_reaction_seconds
     shake_elapsed=0.0
     show_reaction_board(takeover_board,takeover_board_seconds)
     _phone_presentation("Angry",false,true)
+    var mc=actors.get_node("Player")
+    if mc.visible:mc.flip_to_pose("MCControl")
 
 func _update_feedback(delta: float):
+    if takeover_reaction_left>0:
+        takeover_reaction_left=maxf(0,takeover_reaction_left-delta)
+        if takeover_reaction_left==0:
+            _phone_presentation("Waiting",false,true)
+            if state=="READY" and runtime.waiting:_publish_cue()
     var mc=actors.get_node("Player")
     mc.recording_level=runtime.mic.input_level if runtime.mic.recording else 0.0
     shake_elapsed+=delta
@@ -550,6 +567,7 @@ func _update_feedback(delta: float):
     board_elapsed+=delta
     if board_elapsed>=board_duration:
         reaction_board.hide();board_elapsed=-1.0;return
+    reaction_board.get_parent().transform=actors.get_parent().get_global_transform_with_canvas().affine_inverse()
     var screen=get_viewport().get_visible_rect().size
     var height=screen.y*board_height_fraction
     var image_size=reaction_board.texture.get_size()

@@ -9,7 +9,7 @@ var opening := false
 @export var readiness_url := "http://127.0.0.1:11435"
 @export_range(5,120,1) var model_warmup_timeout_seconds := 60.0
 @export_range(1,15,1) var service_start_attempts := 8
-@export var playtest_report_folder := "user://playtests"
+@export var playtest_report_folder := "D:/RMIT/Master/Studio 1/Folio 2/2.6 Fix/Feedback/Playtest Reports"
 var preparation_ready := false
 var checking := false
 var readiness_request: HTTPRequest

@@ -182,7 +182,6 @@
   max-width: 100%;
 }
 
-.status,
 .cueText {
   margin: 0;
   font-family: "Instrument Serif", "Iowan Old Style", Palatino, serif;
@@ -196,18 +195,6 @@
 .cueText {
   position: relative;
   user-select: text;
-}
-
-.cueLayout {
-  color: transparent;
-}
-
-.cueMotionLayer {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  user-select: none;
-  color: var(--card-text-color);
 }
 
 .cueLabel {
@@ -228,7 +215,7 @@
 }
 
 .wiggleMotion {
-  position: absolute;
+  position: relative;
   display: inline-block;
   margin: 0;
   padding: 0;
@@ -310,4 +297,4 @@
   }
 }
 
-.connectionNotice { position:absolute; z-index:40; left:10%; right:10%; top:38%; padding:1rem; background:#10102ddd; color:#eedafc; text-align:center; font-size:clamp(20px,5vw,30px); }
+.connectionNotice { position:absolute; z-index:40; left:17%; right:17%; top:34%; bottom:16%; margin:0; display:flex; align-items:center; justify-content:center; color:var(--text-color); text-align:center; font-family:"Instrument Serif",serif; line-height:1.2; font-size:clamp(22px,7vw,48px); }

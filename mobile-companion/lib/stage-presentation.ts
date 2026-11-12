@@ -147,7 +147,7 @@ export function phoneDisplayPresentation(
 ): StagePresentationRequest {
   if (reaction) return { ...reaction, priority:true };
   if (hasCue) return { expression:"Cue", talking:false, dialogueBoundary:true, priority:true };
-  if (latest.expression && (PHONE_REACTIONS as readonly string[]).includes(latest.expression)) return { expression:"Waiting", talking:false, priority:true };
+  if (latest.expression === "Cue" || (latest.expression && (PHONE_REACTIONS as readonly string[]).includes(latest.expression))) return { expression:"Waiting", talking:false, priority:true };
   return { ...latest, priority:true };
 }
 export const PHONE_REACTIONS = ["Accept","Confused","Angry","Menancing","Unexpected","Disappointed"] as const;

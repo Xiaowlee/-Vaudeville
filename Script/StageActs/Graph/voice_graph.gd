@@ -81,7 +81,8 @@ var off_script_reason := ""
 func _ready():
     _recover_legacy_story()
     if log_interpretations:
-        var log_file=FileAccess.open("user://interpretation_log.jsonl",FileAccess.WRITE)
+        DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(preload("res://Script/playtest_report.gd").folder))
+        var log_file=FileAccess.open(preload("res://Script/playtest_report.gd").folder.path_join("interpretation_log.jsonl"),FileAccess.WRITE)
         if log_file!=null:log_file.close()
     responses.definitions=JSON.parse_string(FileAccess.get_file_as_string("res://Story/StageActs/Graph/response_policy.json"))
     ai_request=HTTPRequest.new()
@@ -168,6 +169,7 @@ func _signal(value: String):
     if not value.begins_with("frame:"):return
     _cancel_ai()
     frame=JSON.parse_string(value.trim_prefix("frame:"))
+    if frame.get("is_takeover",false):takeover_started.emit()
     frame["visual_cues"]=pending_visual_commands.duplicate(true)
     pending_visual_commands.clear()
     silence_elapsed=0
@@ -441,12 +443,12 @@ func handle_response(category: String, intent: String = "", deliberate: bool = f
     if interpretation_log.size()>200:interpretation_log.pop_front()
     if log_interpretations:
         print("[Interpretation] "+JSON.stringify(entry))
-        var file=FileAccess.open("user://interpretation_log.jsonl",FileAccess.READ_WRITE)
+        var file=FileAccess.open(preload("res://Script/playtest_report.gd").folder.path_join("interpretation_log.jsonl"),FileAccess.READ_WRITE)
         if file!=null:file.seek_end();file.store_line(JSON.stringify(entry));file.close()
 func copy_interpretation_log():
     var report={"model":ai_model,"rules_sha256":FileAccess.get_sha256(ai_rules_file),"entries":interpretation_log}
     DisplayServer.clipboard_set(JSON.stringify(report,"  "))
-    print("Interpretation log copied: ",interpretation_log.size()," entries. Local log: ",ProjectSettings.globalize_path("user://interpretation_log.jsonl"))
+    print("Interpretation log copied: ",interpretation_log.size()," entries. Local log: ",ProjectSettings.globalize_path(preload("res://Script/playtest_report.gd").folder.path_join("interpretation_log.jsonl")))
 func _apply_response(category: String, intent: String = "", deliberate: bool = false):
     last_response_debug={"source":("System" if category in ["SILENCE","TECHNICAL_FAILURE","OUT_OF_TURN"] else response_origin),"node":str(frame.get("id","")),"proposed":category+" / "+intent,"result":"","outcome":"","fallback":""}
     if not category in ResponsePolicy.TYPES:category="UNCLEAR"
@@ -640,7 +642,6 @@ func _start_authored_takeover():
     responses.mic_check_pending=false
     responses.technical_streak=0
     last_response_debug.outcome="Authored takeover → "+target
-    takeover_started.emit()
     parser.start(target)
 
 func continue_after_mic_check():

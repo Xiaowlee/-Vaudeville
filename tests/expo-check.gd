@@ -51,10 +51,45 @@ func run():
     var x=c.reaction_board.position.x
     c._update_feedback(0.5)
     check(c.reaction_board.position.x>x,"Board travels left to right")
-    c._update_feedback(3.0)
+    c._update_feedback(4.1)
     check(not c.reaction_board.visible,"Board hides at configured duration")
     c._takeover_feedback()
-    check(c.reaction_board.texture==c.takeover_board and is_equal_approx(c.board_duration,3.0),"Takeover uses supplied X artwork for three seconds")
+    check(c.reaction_board.texture==c.takeover_board and is_equal_approx(c.board_duration,5.0),"Takeover uses supplied X artwork for five seconds")
+    t.parser.start("A3_1_Actor2");c.last_group="Act 3";c._present()
+    while c.semantic_index<c.semantic_events.size():c._next_content()
+    check("DO NOT ENGAGE" in str(game.get_node("PhoneCueBridge").pending.get("ifb",{}).get("text","")),"Intruder entrance publishes authored private instruction")
+    t.parser.start("A3_2_FirstQuestion");c._present()
+    check("DO NOT ENGAGE" in str(game.get_node("PhoneCueBridge").pending.get("ifb",{}).get("text","")),"Private instruction survives into the player's following turn")
+    c.last_group="Act 3";t.parser.start("A2_1_Entrance");c._present()
+    check(not game.get_node("PhoneCueBridge").pending.has("ifb"),"Changing acts clears old private instruction")
+    var board_layer=c.reaction_board.get_parent()
+    var audience=game.get_node("World/Audience")
+    check(board_layer.get_parent()==audience.get_parent() and board_layer.z_index==audience.z_index and board_layer.get_index()<audience.get_index(),"Board draws behind audience in the same canvas")
+    check(is_equal_approx(c.question_board_seconds,5.0),"Question duration defaults to five editable seconds")
+    t.parser.start("A1_0_Begin");t.accepting_speech=true;t.responses.reset()
+    t.handle_response("OFFSCRIPT","",true);t.handle_response("OFFSCRIPT","",true)
+    c._present()
+    check(c.board_elapsed==0 and c.reaction_board.texture==c.takeover_board,"Real second offscript route presents the cross board")
+    check(c.takeover_reaction_left>0 and c.shake_elapsed==0,"Forced speech starts with held reaction and stage shake")
+    var held=c.board_elapsed
+    c._next_content()
+    check(c.board_elapsed==held,"Following forced lines do not restart the board")
+    c._set_stage_cast("Act 1");game.get_node("CurtainLayer").hide()
+    for screen in [Vector2i(1280,720),Vector2i(1280,800)]:
+        root.size=screen
+        await process_frame
+        view.show_line("Stage Manager","She grows up with brilliant beauty, with a majestic voice, blonde hair, and a marvelous, gentle personality.","backing-check")
+        view.reveal_line()
+        await process_frame
+        view.arrange()
+        for label in view.paragraph_labels:
+            if label.visible:
+                check(label.get_content_height()<=label.size.y,"Wrapped paragraph fits its measured height "+str(screen))
+                var bottom=view.root.get_node("Text").position.y+label.position.y+label.get_content_height()
+                check(bottom<=view.soft_backing.position.y+view.soft_backing.size.y,"Backing covers the final line "+str(screen))
+        if DisplayServer.get_name()!="headless":
+            await RenderingServer.frame_post_draw
+            root.get_texture().get_image().save_png("D:/RMIT/Master/Studio 1/Folio 2/2.6 Fix/Debug/dialogue-backing-"+str(screen.y)+".png")
     t.mic.recording=true;t.mic.input_level=0.4;c._update_feedback(0.01)
     var mc=game.get_node("World/Performers/Player")
     check(mc.recording_level>0,"Recording volume reaches MC motion")
@@ -70,7 +105,7 @@ func run():
     check("country" in whisper.transcript.text.to_lower(),"Actual Whisper transcribes the bundled audio fixture")
     print("RESULT Whisper fixture seconds=",recognition_wait)
     whisper.queue_free();await process_frame
-    Report.folder="user://expo-check-temporary"
+    Report.folder="D:/RMIT/Master/Studio 1/Folio 2/2.6 Fix/Debug/expo-check-temporary"
     Report.participant="CHECK-01"
     check(Report.begin_session(),"Report folder can be created")
     Report.record("recognition_finished",{"duration_ms":1000})
@@ -85,7 +120,7 @@ func run():
     var dir=DirAccess.open(Report.folder)
     for file in dir.get_files():dir.remove(file)
     DirAccess.remove_absolute(ProjectSettings.globalize_path(Report.folder))
-    Report.folder="user://playtests";Report.session_id="";Report.events.clear()
+    Report.folder="D:/RMIT/Master/Studio 1/Folio 2/2.6 Fix/Feedback/Playtest Reports";Report.session_id="";Report.events.clear()
     var menu=load("res://Scene/00_main_menu.tscn").instantiate()
     root.add_child(menu)
     check(menu.get_node("Menu/Play").disabled,"Play starts disabled while preparing")

@@ -82,3 +82,8 @@ test("repeated priority updates do not restart the same flip", () => {
   assert.equal(repeated.shown,state.shown);
   assert.equal(repeated.dialoguesSinceChange,state.dialoguesSinceChange);
 });
+
+test("cancelled cue cannot leave a blank prompting sheet", async () => {
+  const {phoneDisplayPresentation}=await import("./stage-presentation.ts");
+  assert.equal(phoneDisplayPresentation(false,{expression:"Cue"},null).expression,"Waiting");
+});

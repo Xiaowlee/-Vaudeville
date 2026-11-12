@@ -1,11 +1,11 @@
 extends RefCounted
-## Local text only. Files are kept in the game's user-data folder, never beside player assets.
+## Local text only. The main menu Inspector chooses the approved report folder.
 const BUILD := "2.6.3 Expo candidate"
 static var events: Array[Dictionary] = []
 static var active := false
 static var participant := "P01"
 static var session_id := ""
-static var folder := "user://playtests"
+static var folder := "D:/RMIT/Master/Studio 1/Folio 2/2.6 Fix/Feedback/Playtest Reports"
 static var started_ms := 0
 static var ended_ms := 0
 static var outcome := "In progress"

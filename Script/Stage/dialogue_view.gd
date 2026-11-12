@@ -160,6 +160,9 @@ func _ready():
         stage.get_node("World").move_child(backing,stage.get_node("World/Performers").get_index())
     backing_layer=Node2D.new()
     backing_layer.name="DialogueBackings"
+    # Audience/front-frame artwork must not erase the lower text backing.
+    # Characters can still sit in front of character dialogue decoration.
+    backing_layer.z_index=2
     stage.get_node("World").add_child(backing_layer)
     stage.get_node("World").move_child(backing_layer,stage.get_node("World/Performers").get_index())
     backing.reparent(backing_layer)
@@ -182,9 +185,10 @@ uniform vec4 tint : source_color;
 uniform float start_alpha;
 uniform float end_alpha;
 uniform int direction;
+uniform float fade_start = 0.95;
 void fragment(){
  float t=direction==0?UV.y:(direction==1?UV.x:1.0-UV.x);
- COLOR=vec4(tint.rgb,mix(start_alpha,end_alpha,t));
+ COLOR=vec4(tint.rgb,mix(start_alpha,end_alpha,smoothstep(fade_start,1.0,t)));
 }"""
     var gradient_material=ShaderMaterial.new()
     gradient_material.shader=gradient
@@ -252,6 +256,7 @@ func arrange():
     layout_name_extra=int(round(name_extra_size*layout_font_scale))
     var page=display_page()
     var narration=page["speaker"].is_empty() or page["speaker"]=="Stage Manager"
+    backing_layer.z_index=2 if narration else 0
     var side=0 if page["speaker"]=="MC" else 1
     var placement=narrator_bottom if narration else ((beside_left if side==0 else beside_right) if layout_style==0 else (lower_left if side==0 else lower_right))
     var box=Rect2(size*placement.position,size*placement.size)
@@ -356,6 +361,9 @@ func arrange():
     soft_backing.material.set_shader_parameter("start_alpha",narration_backing_opacity if narration else backing_start_opacity)
     soft_backing.material.set_shader_parameter("end_alpha",narration_backing_opacity*.65 if narration else backing_end_opacity)
     soft_backing.material.set_shader_parameter("direction",backing_gradient_direction)
+    var fade_padding=text_backing_padding.y*layout_font_scale if backing_gradient_direction==0 else text_backing_padding.x*layout_font_scale
+    var fade_extent=soft_backing.size.y if backing_gradient_direction==0 else soft_backing.size.x
+    soft_backing.material.set_shader_parameter("fade_start",1.0-fade_padding/maxf(fade_extent,1.0))
     soft_backing.visible=text_backing_enabled and not str(page["text"]).is_empty()
     update_act_title(size)
     var blocked=title_running and title_blocks_dialogue
@@ -369,8 +377,10 @@ func body_paragraphs() -> PackedStringArray:
 
 func measure_paragraph(text: String, width: float, px: int) -> float:
     var font=get_body_font()
-    var line_count=font.get_multiline_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,maxf(width-8*layout_font_scale,20),px).y/maxf(font.get_height(px),1)
-    return font.get_multiline_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,maxf(width-8*layout_font_scale,20),px).y+maxf(ceilf(line_count)-1,0)*line_spacing*layout_font_scale+(6+letter_pop_height)*layout_font_scale
+    var paragraph=TextParagraph.new()
+    paragraph.width=maxf(width-8*layout_font_scale,20)
+    paragraph.add_string(text,font,px)
+    return paragraph.get_size().y+maxi(paragraph.get_line_count()-1,0)*line_spacing*layout_font_scale+(6+letter_pop_height)*layout_font_scale
 
 func measure_text(width: float, px: int) -> Vector2:
     var name_label=root.get_node("Text/Name")
@@ -404,6 +414,8 @@ func arrange_paragraphs(width: float, px: int, start: Vector2):
         if not label.visible:continue
         label.horizontal_alignment=alignment
         label.scroll_active=false
+        label.add_theme_stylebox_override("normal",StyleBoxEmpty.new())
+        label.add_theme_stylebox_override("focus",StyleBoxEmpty.new())
         label.fit_content=false
         label.bbcode_enabled=true
         # Scene-saved effects have no live controller. Always bind this trial's
