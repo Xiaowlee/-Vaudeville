@@ -21,6 +21,7 @@ var screen_size := Vector2(1280,720)
 @export_enum("Mouse", "Slow automatic", "Flat / off") var movement_mode := 0
 var aim := Vector2.ZERO
 var clock := 0.0
+var reaction_offset := Vector2.ZERO
 var actors: Array
 func _ready():
     actors=$World/Performers.get_children()
@@ -49,7 +50,7 @@ func apply_layout(size: Vector2):
     var fit=minf(available.x/maxf(design_size.x,1),available.y/maxf(design_size.y,1))
     stage_rect=Rect2(Vector2.ZERO,available)
     $World.scale=Vector2.ONE
-    $World.position=available*0.5
+    $World.position=available*0.5+reaction_offset
     # Characters and floor share a uniform scale. Surrounding scenery follows
     # both screen edges independently, like left/right + top/bottom constraints.
     var edge_scale=available/design_size

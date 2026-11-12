@@ -202,6 +202,7 @@ func _back() -> void:
 	match step:
 		Step.VOICE:
 			mic.cancel_recording()
+			Report.finish("Stopped during pregame")
 			_leave_for(menu_scene)
 		Step.PHONE:
 			bridge.send_phone_reminder(null)

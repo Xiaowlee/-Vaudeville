@@ -27,6 +27,7 @@ function parsePhoneReminder(style) {
 function presentationFields(message) {
   const out = {};
   if (STAGE_EXPRESSIONS.includes(message.expression)) out.expression = message.expression;
+  if (typeof message.managerVisible === "boolean") out.managerVisible = message.managerVisible;
   if (typeof message.talking === "boolean") out.talking = message.talking;
   if (message.dialogueBoundary === true) out.dialogueBoundary = true;
   return out;
@@ -79,6 +80,7 @@ wss.on("connection", (socket, req) => {
         console.log(`[relay] game connected ${socket.address}`);
         game = socket;
         socket.role = "game";
+        for (const phone of stagePhones()) send(phone, {kind:"stage_game_connection", connected:true});
         request = null;
       } else if (message.role === "speech_client") {
         if (speechClients().length) { socket.close(1008, "One speech tester per session"); return; }
@@ -93,6 +95,7 @@ wss.on("connection", (socket, req) => {
         for (const name of STAGE_CHANNELS) if (matchesStage(socket, stageCues[name])) send(socket, stageCues[name]);
         if (stagePresentation) send(socket, stagePresentation);
         send(socket, {kind:"stage_phone_reminder", style:phoneReminder});
+        send(socket, {kind:"stage_game_connection", connected:game?.readyState === 1});
       } else if (message.role === "phone") {
         socket.role = "phone";
         if (request) send(socket, request);
@@ -119,7 +122,7 @@ wss.on("connection", (socket, req) => {
         const cue = {kind:"stage_cue", channel, requestId:message.requestId, text:message.text, recipient:message.recipient, cueType:["PROMPTER","PRIVATE","SCRIPT_UPDATE","WARNING"].includes(message.cueType) ? message.cueType : "PRIVATE", ...presentationFields(message)};
         stageCues[channel] = cue;
         if (cue.expression || typeof cue.talking === "boolean" || cue.dialogueBoundary) {
-          stagePresentation = {kind:"stage_presentation", ...presentationFields(cue)};
+          stagePresentation = {kind:"stage_presentation", ...(stagePresentation || {}), ...presentationFields(cue)};
         }
         const targets = stagePhones().filter(phone => matchesStage(phone, cue));
         for (const phone of targets) send(phone, cue);
@@ -137,7 +140,7 @@ wss.on("connection", (socket, req) => {
       }
       if (message.kind === "stage_presentation") {
         const fields = presentationFields(message);
-        if (!fields.expression && typeof fields.talking !== "boolean" && !fields.dialogueBoundary) return;
+        if (!fields.expression && typeof fields.talking !== "boolean" && typeof fields.managerVisible !== "boolean" && !fields.dialogueBoundary) return;
         stagePresentation = {kind:"stage_presentation", ...(stagePresentation || {}), ...fields};
         for (const phone of stagePhones()) send(phone, {kind:"stage_presentation", ...fields});
         return;
@@ -178,6 +181,7 @@ wss.on("connection", (socket, req) => {
       for (const phone of stagePhones()) send(phone, {kind:"stage_presentation", expression:"Default", talking:false, dialogueBoundary:true});
       for (const phone of stagePhones()) send(phone, {kind:"stage_sound", sound:"all", action:"stop", volumeDb:-20, requestId:"game_closed_"+Date.now()});
       game = null;
+      for (const phone of stagePhones()) send(phone, {kind:"stage_game_connection", connected:false});
       request = null;
       tellSpeech({type:"speech_control",action:"stop",session_id:speechTurn?.session_id});
       speechTurn = null;

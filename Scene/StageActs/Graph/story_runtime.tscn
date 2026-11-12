@@ -19,6 +19,7 @@ script = ExtResource("2")
 
 [node name="Whisper" parent="." unique_id=172699020 instance=ExtResource("4")]
 visible = false
+show_input_meter = true
 layout_mode = 1
 grow_horizontal = 2
 grow_vertical = 2

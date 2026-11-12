@@ -12,6 +12,8 @@
 [ext_resource type="Script" uid="uid://du10n3sopfdpq" path="res://Script/StageActs/Graph/graph_stage_ui.gd" id="UI"]
 [ext_resource type="PackedScene" uid="uid://ccgsnvuc71q0j" path="res://Scene/Stage/stage_visuals.tscn" id="Visuals"]
 
+[ext_resource type="Texture2D" path="res://Visual Asset/Stage/QuestionBoard.png" id="QuestionBoard"]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_ujtce"]
 atlas = ExtResource("2_o5ho1")
 region = Rect2(12.5, 5, 27, 20.16)
@@ -176,3 +178,28 @@ expand_mode = 1
 layout_mode = 0
 mouse_filter = 2
 expand_mode = 1
+
+[node name="ConfirmSpeech" type="Button" parent="StageUI/Overlay"]
+visible = false
+layout_mode = 0
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -350.0
+offset_top = 84.0
+offset_right = -112.0
+offset_bottom = 126.0
+theme_override_font_sizes/font_size = 22
+text = "Confirm / Space"
+
+[node name="ReactionLayer" type="CanvasLayer" parent="."]
+layer = 1
+
+[node name="Board" type="TextureRect" parent="ReactionLayer"]
+offset_left = 100.0
+offset_top = 60.0
+offset_right = 260.0
+offset_bottom = 620.0
+mouse_filter = 2
+texture = ExtResource("QuestionBoard")
+expand_mode = 1
+stretch_mode = 5

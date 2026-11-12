@@ -2,6 +2,36 @@ extends "res://Script/StageActs/Graph/voice_graph_base.gd"
 @export_group("Temporary progression guard")
 @export_range(2,6,1) var intro_refusals_before_takeover := 2
 var intro_refusals := 0
+var review_this_attempt := false
+var pending_transcript := ""
+var review_turn := -1
+
+func awaiting_review() -> bool:
+    return review_turn==turn and not pending_transcript.is_empty() and waiting
+
+func _speak():
+    if awaiting_review():
+        mic.report("transcript_redo")
+        pending_transcript="";review_turn=-1
+    if not mic.recording:
+        review_this_attempt=preload("res://Script/microphone_settings.gd").review_speech_enabled()
+    super._speak()
+
+func _transcript(words: String):
+    if recording_turn!=turn or not waiting:return
+    if review_this_attempt and not words.strip_edges().is_empty():
+        pending_transcript=words;review_turn=turn;silence_elapsed=0.0
+        mic.report("transcript_review_ready",{"word_count":tokens(words).size()})
+        return
+    submit_words(words)
+
+func confirm_transcript():
+    if not awaiting_review() or mic.recording or mic.pid>0 or ai_busy:return
+    var words=pending_transcript
+    pending_transcript="";review_turn=-1;silence_elapsed=0.0
+    mic.report("transcript_confirmed")
+    submit_words(words)
+
 @export_group("Interpretation")
 @export var ai_enabled := true
 @export var ai_model := "qwen3:4b"
@@ -10,6 +40,7 @@ var intro_refusals := 0
 @export_range(5,120) var ai_timeout_seconds := 60.0
 var ai_request: HTTPRequest
 @export_multiline var unmatched_feedback := "That answer does not select an available response. Please try again, or use Testing controls."
+signal takeover_started
 signal cue_requested
 var turn_silences := 0
 signal response_resolved(category: String, intent: String, consequence: int)
@@ -57,17 +88,7 @@ func _ready():
     ai_request.timeout=ai_timeout_seconds
     add_child(ai_request)
     ai_request.request_completed.connect(_ai_completed)
-    if ai_enabled:
-        if OS.has_feature("editor") and FileAccess.file_exists(ai_service_launcher):
-            OS.create_process("powershell.exe",PackedStringArray(["-NoProfile","-ExecutionPolicy","Bypass","-File",ProjectSettings.globalize_path(ai_service_launcher)]),false)
-        elif OS.get_name()=="Windows":
-            var folder=OS.get_executable_path().get_base_dir().path_join(".local-speech")
-            var engine=folder.path_join("ollama/ollama.exe")
-            if FileAccess.file_exists(engine):
-                OS.set_environment("OLLAMA_HOST","127.0.0.1:11435")
-                OS.set_environment("OLLAMA_MODELS",folder.path_join("intent-models"))
-                OS.set_environment("OLLAMA_NO_CLOUD","1")
-                OS.create_process(engine,PackedStringArray(["serve"]),false)
+    if ai_enabled:start_local_service(ai_service_launcher)
     super._ready()
     _build_response_debug()
     mic.technical_failure.connect(func(_detail): handle_response("TECHNICAL_FAILURE"))
@@ -258,12 +279,12 @@ func _continue_disabled(busy: bool) -> bool:
 func _process(_delta):
     if response_debug_label!=null:
         response_debug_label.text="Node: %s\nHeard: %s\nMeaning: %s / %s\nOff-script total: %d · streak: %d\nSilence: %d · unclear: %d · technical failures: %d · help: %d · questions: %d" % [frame.get("id",""),raw_transcript,responses.last_response_type,interpreted_intent,responses.offscript_total,responses.offscript_streak,responses.silence_count,responses.unclear_count,responses.technical_failure_count,responses.help_count,responses.question_count]
-    if waiting and accepting_speech and not ai_busy and not mic.recording and mic.pid<=0:
+    if waiting and accepting_speech and not awaiting_review() and not ai_busy and not mic.recording and mic.pid<=0:
         silence_elapsed+=_delta
         if silence_elapsed>=float(responses.definitions.get("silence_seconds",15)):
             silence_elapsed=0
             handle_response("SILENCE")
-    var busy=mic.recording or mic.pid>0 or ai_busy
+    var busy=mic.recording or mic.pid>0 or ai_busy or awaiting_review()
     $Layout/Silence.visible=false
     $Layout/Continue.disabled=_continue_disabled(busy)
     $Layout/Continue.text="Watch the show" if "watch" in route_kinds else "Continue"
@@ -292,6 +313,7 @@ func _process(_delta):
 
 
 func _cancel_ai():
+    pending_transcript="";review_turn=-1
     if ai_request!=null:ai_request.cancel_request()
     ai_busy=false
     ai_turn=-1
@@ -356,7 +378,7 @@ func _ai_completed(result: int, code: int, _headers: PackedStringArray, bytes: P
     if not ai_busy or ai_turn!=turn:return
     ai_busy=false
     ai_elapsed_ms=Time.get_ticks_msec()-ai_started_at
-    mic.report("interpretation_returned", {"network_result": result, "http_status": code, "duration_ms": ai_elapsed_ms})
+    mic.report("interpretation_returned", {"network_result": result, "http_status": code, "duration_ms": ai_elapsed_ms, "model":ai_model, "error":bytes.get_string_from_utf8().left(800) if code!=200 else ""})
     raw_ai_response=bytes.get_string_from_utf8()
     if result!=HTTPRequest.RESULT_SUCCESS or code!=200:
         handle_response("TECHNICAL_FAILURE")
@@ -413,6 +435,7 @@ func handle_response(category: String, intent: String = "", deliberate: bool = f
     mic.report("story_response", {
         "category": category, "source": entry["decision"].get("source", ""),
         "result": entry["decision"].get("result", ""), "next_passage": entry["next_node"],
+        "transcript":raw_transcript,"reason":interpretation_context.get("validation",""),"offscript":responses.offscript_total,"outcome":entry["decision"].get("outcome","") ,
     })
     interpretation_log.append(entry)
     if interpretation_log.size()>200:interpretation_log.pop_front()
@@ -617,8 +640,22 @@ func _start_authored_takeover():
     responses.mic_check_pending=false
     responses.technical_streak=0
     last_response_debug.outcome="Authored takeover → "+target
+    takeover_started.emit()
     parser.start(target)
 
 func continue_after_mic_check():
     if not responses.mic_check_pending or mic.recording or mic.pid>0:return
     _start_authored_takeover()
+
+# The menu and story use the same portable service and model directory.
+static func start_local_service(launcher: String = "res://tools/start_local_intent.ps1") -> void:
+    if OS.has_feature("editor") and FileAccess.file_exists(launcher):
+        OS.create_process("powershell.exe",PackedStringArray(["-NoProfile","-ExecutionPolicy","Bypass","-File",ProjectSettings.globalize_path(launcher)]),false)
+    elif OS.get_name()=="Windows":
+        var folder=OS.get_executable_path().get_base_dir().path_join(".local-speech")
+        var engine=folder.path_join("ollama/ollama.exe")
+        if FileAccess.file_exists(engine):
+            OS.set_environment("OLLAMA_HOST","127.0.0.1:11435")
+            OS.set_environment("OLLAMA_MODELS",folder.path_join("intent-models"))
+            OS.set_environment("OLLAMA_NO_CLOUD","1")
+            OS.create_process(engine,PackedStringArray(["serve"]),false)

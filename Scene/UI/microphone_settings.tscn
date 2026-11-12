@@ -103,3 +103,34 @@ script = ExtResource("DeveloperUnlock")
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_bwu86")
 text = "Done"
+
+[node name="ReviewSpeech" type="CheckButton" parent="Margin/Body/Scroll/Content"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bwu86")
+theme_override_font_sizes/font_size = 26
+text = "Review speech before sending"
+
+[node name="ReportTitle" type="Label" parent="Margin/Body/Scroll/Content"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bwu86")
+theme_override_font_sizes/font_size = 26
+text = "Playtest report · local text only"
+
+[node name="Participant" type="LineEdit" parent="Margin/Body/Scroll/Content"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bwu86")
+theme_override_font_sizes/font_size = 26
+placeholder_text = "Participant number, e.g. P01 (no name needed)"
+max_length = 40
+
+[node name="SaveReport" type="Button" parent="Margin/Body/Scroll/Content"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bwu86")
+theme_override_font_sizes/font_size = 26
+text = "Save playtest report"
+
+[node name="NewReport" type="Button" parent="Margin/Body/Scroll/Content"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bwu86")
+theme_override_font_sizes/font_size = 26
+text = "Save and start a new report"

@@ -33,6 +33,25 @@ var voice_stream_cache: Dictionary={}
 @onready var actors=get_node("../World/Performers")
 @onready var audio=get_node("../ChapterAudio")
 @onready var phone=get_node("../PhoneCueBridge")
+@export_group("Reaction board trial")
+@export var reaction_boards_enabled := true
+@export var question_board: Texture2D=preload("res://Visual Asset/Stage/QuestionBoard.png")
+@export var takeover_board: Texture2D=preload("res://Visual Asset/Stage/XBoard.png")
+@export_range(0.5,6,0.1) var question_board_seconds := 2.5
+@export_range(0.5,6,0.1) var takeover_board_seconds := 3.0
+## Fractions of the visible window; travel is intentionally separate from dialogue placement.
+@export var board_start := Vector2(-0.22,0.08)
+@export var board_end := Vector2(1.05,0.08)
+@export_range(0.1,1,0.01) var board_height_fraction := 0.78
+@export_range(0,15,0.5) var board_bob_pixels := 4.0
+@export_range(0,8,0.1) var board_sway_degrees := 1.5
+@export_group("Response motion")
+@export_range(0,15,0.5) var response_shake_pixels := 3.0
+@export_range(0.1,2,0.05) var response_shake_seconds := 0.4
+var board_elapsed := -1.0
+var board_duration := 2.5
+var shake_elapsed := 100.0
+@onready var reaction_board=get_node("../ReactionLayer/Board")
 signal production_event(passage: String, phase: String, event: Dictionary)
 var production_log: Array=[]
 var semantic_events: Array=[]
@@ -44,6 +63,7 @@ var state := "PRESENTING"
 var section := ""
 var seen_turn := -1
 var fallback_seen := ""
+var fallback_lines: Array[Dictionary]=[]
 var response_elapsed := 0.0
 var opening := false
 var transition_phase := ""
@@ -64,6 +84,8 @@ var opening_texture_played := false
 var phone_sound_state := ""
 var menacing_sound_played := false
 func _ready():
+    reaction_board.hide()
+    runtime.takeover_started.connect(_takeover_feedback)
     _load_voice_catalog()
     UIAudio.start_playthrough()
     for actor in actors.get_children():actor.flip_started.connect(func():UIAudio.stage_effect(UIAudio.flip_sound,UIAudio.flip_volume_db))
@@ -113,6 +135,7 @@ func _recorded_voice(speaker: String, words: String) -> AudioStream:
     if not voice_stream_cache.has(path):voice_stream_cache[path]=load(path)
     return voice_stream_cache[path] as AudioStream
 func _process(delta):
+    _update_feedback(delta)
     _update_curtain()
     _update_transcript(delta)
     if ui.overlay_open():
@@ -141,6 +164,7 @@ func _process(delta):
     if state=="PRESENTING":
         _button("",false)
         if not ui.dialogue_finished():return
+        if not fallback_lines.is_empty():_next_fallback();return
         if semantic_index<semantic_events.size():_next_content();return
         if runtime.frame.get("routes",[]).is_empty() or section in completion_passages:
             _finish_show()
@@ -151,13 +175,16 @@ func _process(delta):
         if response_elapsed<response_delay:return
         state="READY"
         runtime.accepting_speech=runtime.waiting
-        if runtime.waiting:_phone_presentation("Waiting", false, true)
+        if runtime.waiting:
+            _phone_presentation("Waiting", false, true)
+            _publish_cue()
         if not runtime.waiting and not runtime.routes.is_empty():runtime._continue();return
         if runtime.route_kinds.count("next")>1:
             runtime.waiting=true;runtime._choose(0,"Continue act",false);return
         if actors.get_node("Actor1").visible:actors.get_node("Actor1").flip_to_pose("Actor1Listening")
         _phase("ON LISTEN")
     if runtime.ai_busy:_button("Understanding…",false)
+    elif runtime.awaiting_review():_button("Record again / X",true)
     elif runtime.mic.recording:_button("Recording… Press X to finish",true)
     elif runtime.mic.pid>0:_button("Recognising…",false)
     elif not runtime.fallback_reply.is_empty() and runtime.fallback_reply!=fallback_seen:
@@ -174,6 +201,7 @@ func _present():
     used_visual_cues.clear();played_voice_keys.clear()
     view.current_visual_state["cut_in"]={"action":"hide"}
     view.apply_graph_visuals(view.current_visual_state)
+    fallback_lines.clear()
     state="PRESENTING";fallback_seen="";semantic_index=0;current_content={}
     runtime.accepting_speech=false
     phone.cancel("prompt");phone.cancel("ifb");phone_preview=""
@@ -260,13 +288,26 @@ func _next_content():
         ui.play_dialogue("",null,"",false);ui.set_speaker("")
         _phone_presentation("", false, false)
 func _show_fallback(words: String):
+    fallback_lines.clear()
     var speaker=""
-    var text=words
-    for name in ["Stage Manager","Actor 1","Actor 2","MC"]:
-        if words.begins_with(name+":"):
-            speaker=name;text=words.trim_prefix(name+":").strip_edges();break
-    # Multiple authored response paragraphs remain sequential dialogue, not developer text.
-    ui.release_to_player=true
+    # Each authored paragraph is a separate spoken turn. Strip its own speaker label,
+    # rather than leaving later labels inside the displayed words/audio lookup.
+    for paragraph in words.split("\n\n",false):
+        var text=paragraph.strip_edges()
+        for name in ["Stage Manager","Actor 1","Actor 2","MC"]:
+            if text.begins_with(name+":"):
+                speaker=name
+                text=text.trim_prefix(name+":").strip_edges()
+                break
+        if not text.is_empty():fallback_lines.append({"speaker":speaker,"text":text})
+    _next_fallback()
+
+func _next_fallback():
+    if fallback_lines.is_empty():return
+    var line: Dictionary=fallback_lines.pop_front()
+    var speaker=str(line.speaker)
+    var text=str(line.text)
+    ui.release_to_player=fallback_lines.is_empty()
     var recorded=_recorded_voice(speaker,text)
     ui.play_dialogue(text,recorded,"",true,false,recorded!=null)
     ui.set_speaker(speaker)
@@ -284,15 +325,19 @@ func graph_input():
     if runtime.waiting:
         runtime.fallback_reply="";fallback_seen="";runtime._speak()
     else:runtime._continue()
-func skip_dialogue():
+func skip_dialogue(force := false):
     if ui.overlay_open() or opening or state=="OPENING_DELAY":return
-    if state=="PRESENTING":ui.skip_current_passage()
+    if runtime.mic.recording or runtime.mic.pid>0 or runtime.ai_busy:return
+    if runtime.awaiting_review():runtime.confirm_transcript();return
+    if state=="PRESENTING":
+        if force:view.reveal_line()
+        ui.skip_current_passage()
     elif state=="READY" and runtime.responses.mic_check_pending:runtime.continue_after_mic_check()
     elif state=="READY" and not runtime.waiting:runtime._continue()
 func _transcript_completed(words: String):
     transcript_words=words;transcript_seconds_left=transcript_hold_seconds
 func _update_transcript(delta):
-    transcript_seconds_left=maxf(0,transcript_seconds_left-delta)
+    if not runtime.awaiting_review():transcript_seconds_left=maxf(0,transcript_seconds_left-delta)
     if not show_player_transcript:ui.show_transcript("",false);return
     if runtime.mic.recording:transcript_words="";transcript_seconds_left=0;ui.show_transcript("",false)
     elif runtime.mic.pid>0:
@@ -307,7 +352,7 @@ func _send_phone(words: String):
     phone.send_text(channel, words, "", cue_type, "Cue", false, true)
 func _phone_presentation(expression: String, talking := false, dialogue_boundary := true) -> void:
     if is_instance_valid(phone):
-        phone.send_presentation(expression, talking, dialogue_boundary)
+        phone.send_presentation(expression, talking, dialogue_boundary, not group_is_preshow())
         var desired="tea" if expression=="Waiting" else ""
         if phone_sound_state!=desired:
             phone.send_sound("tea","stop");phone_sound_state=desired
@@ -361,6 +406,7 @@ func _response_production(category: String,_intent: String,consequence: int):
     var conversation=str(runtime.frame.get("conversation",section))
     var local=int(runtime.responses.conversation_attempts.get(conversation,0))
     if category=="OFFSCRIPT":
+        shake_elapsed=0.0
         UIAudio.stage_effect(UIAudio.boing_sound,UIAudio.boing_volume_db)
         if mc.visible:mc.flip_to_pose("MCThreaten" if total>=4 else ("MCControl" if local>=2 else "MCSilly"))
         if actor1.visible:actor1.flip_to_pose("Actor1Disappoint")
@@ -368,7 +414,8 @@ func _response_production(category: String,_intent: String,consequence: int):
         if total>=4:_phone_presentation("Menancing", false, true)
         elif streak>=2:_phone_presentation("Angry", false, true)
         else:_phone_presentation("Disappointed", false, true)
-    elif category in ["UNCLEAR","TECHNICAL_FAILURE"]:
+    elif category=="UNCLEAR":
+        show_reaction_board(question_board,question_board_seconds)
         if mc.visible:mc.flip_to_pose("MCConfused")
         _phone_presentation("Confused", false, true)
     elif category in ["SCRIPTED_RESPONSE","VALID_INTENT","CONTEXTUAL_COMMENT","SELECTION","COMMAND"]:
@@ -377,6 +424,7 @@ func _response_production(category: String,_intent: String,consequence: int):
         _phone_presentation("Accept", false, true)
 
 func _exit_tree():
+    preload("res://Script/playtest_report.gd").finish("Stopped before the ending")
     UIAudio.leave_game()
     if is_instance_valid(phone):phone.send_sound("all","stop")
     if is_instance_valid(phone):phone.cancel("prompt");phone.cancel("ifb")
@@ -470,6 +518,7 @@ func _finish_show():
         audio.stop_all(0.3)
         _return_to_menu.call_deferred())
 func _return_to_menu():
+    preload("res://Script/playtest_report.gd").finish("Failed" if "Endgame" in section else "Completed")
     if state!="COMPLETE" or not is_inside_tree():return
     var error=get_tree().change_scene_to_file(ending_menu_scene)
     if error!=OK:push_error("Could not return to main menu: "+ending_menu_scene)
@@ -479,3 +528,32 @@ func _act_title(group: String) -> String:
     if not override.strip_edges().is_empty():return override
     var name=str({"Act 1":view.act_one_name,"Act 2":view.act_two_name,"Act 3":view.act_three_name}.get(group,""))
     return group+(": "+name if not name.strip_edges().is_empty() else "")
+
+func show_reaction_board(texture: Texture2D, seconds: float):
+    if not reaction_boards_enabled or texture==null:return
+    reaction_board.texture=texture
+    board_duration=maxf(seconds,0.5);board_elapsed=0.0
+    reaction_board.show()
+
+func _takeover_feedback():
+    shake_elapsed=0.0
+    show_reaction_board(takeover_board,takeover_board_seconds)
+    _phone_presentation("Angry",false,true)
+
+func _update_feedback(delta: float):
+    var mc=actors.get_node("Player")
+    mc.recording_level=runtime.mic.input_level if runtime.mic.recording else 0.0
+    shake_elapsed+=delta
+    var strength=response_shake_pixels*(1.0-shake_elapsed/maxf(response_shake_seconds,0.01)) if shake_elapsed<response_shake_seconds else 0.0
+    get_parent().reaction_offset=Vector2(sin(shake_elapsed*89.0),cos(shake_elapsed*67.0))*strength
+    if board_elapsed<0.0:return
+    board_elapsed+=delta
+    if board_elapsed>=board_duration:
+        reaction_board.hide();board_elapsed=-1.0;return
+    var screen=get_viewport().get_visible_rect().size
+    var height=screen.y*board_height_fraction
+    var image_size=reaction_board.texture.get_size()
+    reaction_board.size=Vector2(height*image_size.x/maxf(image_size.y,1.0),height)
+    reaction_board.pivot_offset=Vector2(reaction_board.size.x/2.0,reaction_board.size.y)
+    reaction_board.position=board_start.lerp(board_end,board_elapsed/board_duration)*screen+Vector2(0,sin(board_elapsed*6.0)*board_bob_pixels)
+    reaction_board.rotation=deg_to_rad(board_sway_degrees)*sin(board_elapsed*5.0)

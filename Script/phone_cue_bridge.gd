@@ -52,8 +52,8 @@ func send_text(channel: String, text: String, recipient := "", cue_type := "PRIV
 	_send(pending[channel])
 ## Independent of cue text. The phone coalesces requests and flips only at dialogue boundaries.
 ## Empty expression updates talking / boundary without requesting a new pose.
-func send_presentation(expression: String, talking := false, dialogue_boundary := true) -> void:
-	var message := {"kind":"stage_presentation", "talking":talking, "dialogueBoundary":dialogue_boundary}
+func send_presentation(expression: String, talking := false, dialogue_boundary := true, manager_visible := true) -> void:
+	var message := {"kind":"stage_presentation", "talking":talking, "dialogueBoundary":dialogue_boundary, "managerVisible":manager_visible}
 	if not expression.is_empty(): message["expression"] = expression
 	_send(message)
 func send_phone_reminder(style: Variant) -> void:

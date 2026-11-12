@@ -79,6 +79,13 @@ func advance_flip(delta: float):
         # A pending request waits for a NEW dialogue, never a chained flip.
 
 var elapsed := 0.0
+@export_group("Player microphone motion")
+@export var recording_bounce_enabled := true
+@export_range(0,20,0.5) var recording_bounce_height := 5.0
+@export_range(0,0.95,0.01) var recording_bounce_threshold := 0.5
+@export_range(1,30,0.5) var recording_bounce_response := 12.0
+var recording_level := 0.0
+var recording_motion := 0.0
 var lift := 0.0
 func set_talking(value: bool) -> void:
     talking=value
@@ -91,6 +98,9 @@ func _process(delta):
     if flipping:advance_flip(delta)
     var sample_time=floorf(elapsed*motion_fps)/motion_fps if hand_drawn_motion else elapsed
     lift=-absf(sin(sample_time*TAU*bounce_speed))*bounce_height if talking and animate else 0.0
+    recording_motion=lerpf(recording_motion,clampf((recording_level-recording_bounce_threshold)/maxf(1.0-recording_bounce_threshold,0.05),0,1),1.0-exp(-recording_bounce_response*delta))
+    if recording_bounce_enabled and recording_motion>0.001 and animate:
+        lift=-absf(sin(sample_time*TAU*bounce_speed))*recording_bounce_height*recording_motion
     $Swing.position.y=lift
     $Swing.rotation=deg_to_rad(sway_degrees)*sin(sample_time*TAU*sway_speed) if animate else 0.0
     if Engine.is_editor_hint():queue_redraw()

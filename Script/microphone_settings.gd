@@ -19,7 +19,25 @@ static func apply_saved() -> String:
     var available=AudioServer.get_input_device_list()
     AudioServer.input_device=preferred if preferred in available else "Default"
     return "" if preferred in available else "Saved microphone is disconnected. Using the system default."
+static func review_speech_enabled() -> bool:
+    var config=ConfigFile.new()
+    config.load("user://dialogue.cfg")
+    return bool(config.get_value("dialogue","review_speech",false))
+
 func _ready():
+    var content=$Margin/Body/Scroll/Content
+    content.get_node("ReviewSpeech").set_pressed_no_signal(review_speech_enabled())
+    content.get_node("ReviewSpeech").toggled.connect(func(enabled):
+        var config=ConfigFile.new()
+        config.load("user://dialogue.cfg")
+        config.set_value("dialogue","review_speech",enabled)
+        config.save("user://dialogue.cfg"))
+    content.get_node("Participant").text=Report.participant
+    content.get_node("Participant").text_changed.connect(func(words):Report.participant=words.strip_edges().left(40))
+    content.get_node("SaveReport").pressed.connect(func():status.text=Report.save())
+    content.get_node("NewReport").pressed.connect(func():
+        var saved=Report.begin_session()
+        status.text="New playtest report started. Previous session saved." if saved else Report.save_error)
     visibility_changed.connect(developer_toggle.reset_access)
     close_requested.connect(close_panel)
     $Margin/Body/Close.pressed.connect(close_panel)

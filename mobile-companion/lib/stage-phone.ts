@@ -27,6 +27,7 @@ export type StageManagerExpression = (typeof EXPRESSIONS)[number];
 export type StageChannelName = "prompt" | "ifb";
 
 export type StagePresentationRequest = {
+  managerVisible?: boolean;
   expression?: StageManagerExpression | null;
   talking?: boolean | null;
   dialogueBoundary?: boolean;
@@ -104,6 +105,7 @@ function isStageManagerExpression(value: unknown): value is StageManagerExpressi
 function presentationFields(raw: Record<string, unknown>): StagePresentationRequest | null {
   const request: StagePresentationRequest = {};
   let useful = false;
+  if (typeof raw.managerVisible === "boolean") { request.managerVisible = raw.managerVisible; useful = true; }
   if (isStageManagerExpression(raw.expression)) {
     request.expression = raw.expression;
     useful = true;

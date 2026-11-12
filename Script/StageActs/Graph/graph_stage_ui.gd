@@ -4,7 +4,7 @@ extends CanvasLayer
 @onready var view=get_node("../DialogueView")
 var release_to_player := true
 @export_range(0,8,.25) var current_sentence_seconds := 3.0
-var auto_advance := true
+var auto_advance := false
 var revealed_hold := 0.0
 var manual_advance := false
 var recorded_voice_active := false
@@ -26,7 +26,7 @@ func _ready():
     $Overlay/PhonePairing/ConnectPhone.hide()
     var config=ConfigFile.new()
     config.load("user://dialogue.cfg")
-    auto_advance=bool(config.get_value("dialogue","auto_advance",true))
+    auto_advance=bool(config.get_value("dialogue","auto_advance",false))
     $Overlay/GameMenu/Options/AutoAdvance.set_pressed_no_signal(auto_advance)
     $Overlay/GameMenu/Options/AutoAdvance.toggled.connect(func(value):
         auto_advance=value
@@ -41,6 +41,7 @@ func _ready():
         $Overlay/PhonePairing.show_panel())
     $Overlay/GameMenu/Options/MainMenu.pressed.connect(func():get_tree().change_scene_to_file("res://Scene/00_main_menu.tscn"))
     $Overlay/GameMenu/Options/Resume.pressed.connect(func():$Overlay/GameMenu.hide())
+    $Overlay/ConfirmSpeech.pressed.connect(runtime.confirm_transcript)
     $Overlay/Speak.pressed.connect(func():controller.graph_input())
     $Overlay/GameMenu.visibility_changed.connect(developer_toggle.reset_access)
     developer_toggle.toggled.connect(set_developer_mode)
@@ -91,6 +92,10 @@ func dialogue_finished() -> bool:
 func dialogue_playing() -> bool:return $Voice.playing
 func stop_dialogue():$Voice.stop()
 func skip_current_passage() -> bool:
+    if not view.line_revealed():
+        view.reveal_line()
+        revealed_hold=0.0
+        return false
     view.reveal_line()
     stop_dialogue()
     line_age=100000
@@ -104,6 +109,7 @@ func show_transcript(words: String, shown: bool):
     view.show_player_transcript(words,shown,not controller.group_is_preshow())
 
 func _process(delta):
+    $Overlay/ConfirmSpeech.visible=runtime.awaiting_review() and not overlay_open()
     runtime.size=get_viewport().get_visible_rect().size
     line_age+=delta
     if view.line_revealed() and not $Voice.playing and not overlay_open():revealed_hold+=delta
@@ -128,7 +134,7 @@ func _input(event):
     if developer_mode and event.keycode in [KEY_ENTER,KEY_KP_ENTER] and (event.ctrl_pressed or event.shift_pressed):
         if controller.state=="READY" and runtime.waiting and not runtime.routes.is_empty():
             runtime.mic.cancel_recording();runtime._cancel_ai();runtime._choose(0,"Developer bypass (not speech)",false)
-        else:controller.skip_dialogue()
+        else:controller.skip_dialogue(true)
         get_viewport().set_input_as_handled()
     elif event.keycode==KEY_X:
         controller.speak_input();get_viewport().set_input_as_handled()

@@ -186,6 +186,7 @@ outside_mask = ExtResource("Mask")
 opening = PackedVector2Array(0.055, 0.06, 0.945, 0.06, 0.98, 0.3, 0.965, 0.73, 0.94, 0.82, 0.85, 0.88, 0.74, 0.918, 0.62, 0.943, 0.5, 0.95, 0.38, 0.943, 0.26, 0.918, 0.15, 0.88, 0.06, 0.82, 0.035, 0.73, 0.02, 0.3, 0.035, 0.12)
 
 [node name="RearBackdrop" type="Node2D" parent="World" unique_id=1348831869]
+modulate = Color(0.6426735, 0.6702361, 0.82767755, 1)
 script = ExtResource("Depth")
 travel = Vector2(4, 2)
 
@@ -254,8 +255,8 @@ travel = Vector2(10, 4)
 [node name="Player" type="Node2D" parent="World/Performers" unique_id=2007219207]
 position = Vector2(-280, 205)
 script = ExtResource("Puppet")
-allowed_variation_poses = PackedStringArray("MCDefault","MCActing")
 hand_drawn_motion = true
+allowed_variation_poses = PackedStringArray("MCDefault", "MCActing")
 pose_names = PackedStringArray("MCActing", "MCActing2", "MCConfused", "MCControl", "MCDefault", "MCSilly", "MCThreaten")
 pose_frames = SubResource("PlayerFrames")
 starting_pose = 4
@@ -274,8 +275,8 @@ frame = 4
 [node name="Actor1" type="Node2D" parent="World/Performers" unique_id=1989233045]
 position = Vector2(285, 205)
 script = ExtResource("Puppet")
-allowed_variation_poses = PackedStringArray("Actor1Default1")
 hand_drawn_motion = true
+allowed_variation_poses = PackedStringArray("Actor1Default1")
 pose_names = PackedStringArray("Actor1Accept", "Actor1Default1", "Actor1Default2", "Actor1Disappoint", "Actor1Listening")
 pose_frames = SubResource("Actor1Frames")
 starting_pose = 1
@@ -294,8 +295,8 @@ frame = 1
 [node name="Actor2" type="Node2D" parent="World/Performers" unique_id=1530124703]
 position = Vector2(0, 200)
 script = ExtResource("Puppet")
-allowed_variation_poses = PackedStringArray("Intruder1","Intruder2")
 hand_drawn_motion = true
+allowed_variation_poses = PackedStringArray("Intruder1", "Intruder2")
 pose_names = PackedStringArray("Intruder1", "Intruder2")
 pose_frames = SubResource("Actor2Frames")
 
@@ -312,8 +313,8 @@ animation = &"poses"
 [node name="StageManager" type="Node2D" parent="World/Performers" unique_id=257700961]
 position = Vector2(0, 205)
 script = ExtResource("Puppet")
-allowed_variation_poses = PackedStringArray("StageManager_Default","StageManager_Speaking","StageManager_Speech")
 hand_drawn_motion = true
+allowed_variation_poses = PackedStringArray("StageManager_Default", "StageManager_Speaking", "StageManager_Speech")
 pose_names = PackedStringArray("StageManager_Accept", "StageManager_Angry", "StageManager_Confused", "StageManager_Cue", "StageManager_Default", "StageManager_Disappointed", "StageManager_Menancing", "StageManager_Speaking", "StageManager_Speech", "StageManager_Unexpected", "StageManager_Waiting")
 pose_frames = SubResource("StageManagerFrames")
 starting_pose = 4

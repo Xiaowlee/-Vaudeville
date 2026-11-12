@@ -309,3 +309,5 @@
     translate: none;
   }
 }
+
+.connectionNotice { position:absolute; z-index:40; left:10%; right:10%; top:38%; padding:1rem; background:#10102ddd; color:#eedafc; text-align:center; font-size:clamp(20px,5vw,30px); }

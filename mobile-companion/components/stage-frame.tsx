@@ -217,7 +217,7 @@ export function StageFrame({
             lineHeight: reminder.lineHeight,
             color: reminder.color,
           }}>{reminder.text}</p>
-        ) : <div className={styles.character}>
+        ) : <div className={styles.character} style={{ visibility: presentation?.managerVisible === false ? "hidden" : "visible", filter: view === "waiting" ? "brightness(0.55)" : undefined }}>
           <StageManagerPuppet presentation={presentation}>
             <div aria-live="polite" className={styles.cardText} ref={cardRef}>
               {view === "cues" ? (
@@ -232,6 +232,7 @@ export function StageFrame({
           </StageManagerPuppet>
         </div>}
       </div>
+      {(view === "disconnected" || view === "connecting") && <p role="status" className={styles.connectionNotice}>The Stage Manager is nowhere to be seen. Please check your connection.</p>}
     </main>
   );
 }

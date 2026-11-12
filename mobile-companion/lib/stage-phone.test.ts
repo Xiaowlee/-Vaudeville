@@ -165,3 +165,10 @@ test("phone sound accepts only named assets and bounded volumes", () => {
   assert.equal(parseStageSound({...command, volumeDb:NaN}), null);
   assert.equal(parseStageSound({...command, action:"stop", sound:"all"})?.action, "stop");
 });
+
+
+test("pre-show visibility arrives independently of cue text", () => {
+  const result = applyStageMessage(emptyStageChannels(), {kind:"stage_presentation", managerVisible:false, expression:"Waiting"});
+  assert.equal(result.presentation?.managerVisible, false);
+  assert.equal(result.state.prompt, null);
+});

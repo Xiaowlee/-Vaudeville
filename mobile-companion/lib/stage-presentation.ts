@@ -21,6 +21,7 @@ export type StagePresentation = {
 };
 
 export type StagePresentationRequest = {
+  managerVisible?: boolean;
   expression?: StageManagerExpression | null;
   talking?: boolean | null;
   dialogueBoundary?: boolean;

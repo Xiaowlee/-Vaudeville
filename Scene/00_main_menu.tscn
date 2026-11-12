@@ -84,6 +84,7 @@ alignment = 1
 
 [node name="Play" type="Button" parent="Menu" unique_id=1030264986]
 layout_mode = 2
+disabled = true
 text = "Play"
 
 [node name="Settings" type="Button" parent="Menu" unique_id=1653345846]
@@ -99,3 +100,15 @@ layout_mode = 1
 
 [node name="DesktopMicrophoneSettings" parent="." unique_id=1698706411 instance=ExtResource("DesktopMic")]
 offer_phone_pairing = true
+
+[node name="Preparation" type="Label" parent="Menu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Preparing speech and AI…"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Retry" type="Button" parent="Menu"]
+visible = false
+layout_mode = 2
+text = "Retry preparation"

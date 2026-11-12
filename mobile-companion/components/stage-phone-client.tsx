@@ -24,6 +24,7 @@ export function StagePhoneClient() {
   const [audioReady, setAudioReady] = useState(false);
   const unlockSound = useRef<(() => void) | null>(null);
   const [relay, setRelay] = useState<RelayStatus>("connecting");
+  const [gamePresent, setGamePresent] = useState(true);
   const [reminder, setReminder] = useState<PhoneReminder | null>(null);
   const [cues, setCues] = useState<StageChannels>(emptyStageChannels);
   const [presentation, setPresentation] = useState<StampedPresentation | null>({
@@ -43,7 +44,7 @@ export function StagePhoneClient() {
     let reactionTimer = 0;
     const publishPresentation = () => {
       const hasCue = Boolean(channels.prompt?.text.trim() || channels.ifb?.text.trim());
-      setPresentation({ ...phoneDisplayPresentation(hasCue, latest, reaction), sequence:++sequence });
+      setPresentation({ managerVisible: latest.managerVisible ?? true, ...phoneDisplayPresentation(hasCue, latest, reaction), sequence:++sequence });
     };
     const clearReaction = () => { window.clearTimeout(reactionTimer);reactionTimer=0;reaction=null; };
     let keepalive = 0;
@@ -136,6 +137,10 @@ export function StagePhoneClient() {
           setReminder(message.style as PhoneReminder | null);
           return;
         }
+        if (message && typeof message === "object" && "kind" in message && message.kind === "stage_game_connection" && "connected" in message ) {
+          setGamePresent(message.connected === true); return;
+        }
+        if (message && typeof message === "object" && "kind" in message && ["stage_presentation", "stage_cue"].includes(String(message.kind))) setGamePresent(true);
         const sound = parseStageSound(message);
         if (sound) {
           if (!lastIds.has(sound.requestId)) {
@@ -172,7 +177,7 @@ export function StagePhoneClient() {
   }, []);
 
   return <>
-    <StageFrame cues={cues} presentation={presentation} relay={relay} reminder={relay === "open" ? reminder : null} />
+    <StageFrame cues={cues} presentation={presentation} relay={gamePresent ? relay : "closed"} reminder={relay === "open" && gamePresent ? reminder : null} />
     {!audioReady && <button type="button" onClick={() => unlockSound.current?.()} style={{ position:"fixed", bottom:"max(12px, env(safe-area-inset-bottom))", right:12, zIndex:100, padding:"10px 16px", border:"1px solid #d7b9ef", borderRadius:8, background:"#21143c", color:"#fff", fontSize:16 }}>Enable phone sound</button>}
   </>;
 }
